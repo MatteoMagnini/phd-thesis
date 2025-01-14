@@ -1,6 +1,7 @@
 .idea/
 out/
 phd-thesis.pdf
+example.pdf
 *~
 
 .vscode/
