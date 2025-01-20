@@ -66,7 +66,6 @@
     I thank my senior colleague, and de facto co-supervisor, prof. Giovanni Ciatto for his daily support and guidance especially during my first year as a research fellow and in the first year of my Ph.D.
     %
 
-
 \end{acknowledgements}
 
 %----------------------------------------------------------------------------------------
@@ -79,40 +78,187 @@
 
 %----------------------------------------------------------------------------------------
 \chapter{Introduction}
-\label{chap:introduction}
+\label{ch:introduction}
 %----------------------------------------------------------------------------------------
 
 Write your intro here.
 \sidenote{Add sidenotes in this way. They are named after the author of the thesis}
 
-\paragraph{Structure of the Thesis}
+
+\section{Research Background and Context}\label{sec:research-background-and-context}
+
+
+\section{Overview and Contributions}\label{sec:overview-and-contributions}
+
+
+\section{Structure of the Thesis}\label{sec:structure-of-the-thesis}
+
 
 \note{Racall to describe the structure of the paper}
 
-\part{First Part}
 
-\chapter{State of the art}
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
 
-I suggest referencing stuff as follows: \cref{fig:random-image} or \Cref{fig:random-image}
+\part{Background}\label{part:background}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=.8\linewidth]{figures/random-image.pdf}
-    \caption{Some random image}
-    \label{fig:random-image}
-\end{figure}
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
 
-\section{Some cool topic}
+\chapter{Intelligent Systems}\label{ch:intelligent-systems}
 
-\part{Second Part}
+\section{What is intelligence?}\label{sec:what-is-intelligence}
 
-\chapter{Contribution}
+\subsection{Intelligence in humans}\label{subsec:intelligence-in-humans}
 
-You may also put some code snippet (which is NOT float by default), eg: \cref{lst:random-code}.
+\subsection{Intelligence in animals}\label{subsec:intelligence-in-animals}
 
-\lstinputlisting[float,language=Java,label={lst:random-code}]{listings/HelloWorld.java}
+\section{Intelligence in computer science}\label{sec:intelligence-in-computer-science}
 
-\section{Fancy formulas here}
+\subsection{Reasoning}\label{subsec:reasoning}
+
+\subsection{Planning}\label{subsec:planning}
+
+\subsection{Adapting}\label{subsec:adapting}
+
+\subsection{Swarm intelligence}\label{subsec:swarm-intelligence}
+
+\subsection{Learning}\label{subsec:learning}
+
+\subsubsection{\Acl{RL}}\label{subsubsec:rl}
+
+%----------------------------------------------------------------------------------------
+
+\chapter{\Acl{AI}}\label{ch:ai}
+
+\section{Symbolic \ac{AI}}\label{sec:symbolic-ai}
+
+\subsection{Logic}\label{subsec:logic}
+
+\subsection{Expert Systems}\label{subsec:expert-systems}
+
+\subsection{Trees and other algorithms}\label{subsec:trees-and-other-algorithms}
+
+\section{Sub-symbolic \ac{AI}}\label{sec:sub-symbolic-ai}
+
+\subsection{\Aclp{NN}}\label{subsec:neural-networks}
+
+\section{\Acl{NeSy} \ac{AI}}\label{sec:nesy-ai}
+
+\subsection{\Acl{SKI}}\label{subsec:ski}
+
+\subsubsection{Structuring}\label{subsubsec:structuring}
+
+\subsubsection{Learning}\label{subsubsec:learning}
+
+\subsubsection{Embedding}\label{subsec:embedding}
+
+\subsection{\Acl{SKE}}\label{subsec:ske}
+
+\subsubsection{Local explanations}\label{subsubsec:local-explanations}
+
+\subsubsection{Global explanations}\label{subsubsec:global-explanations}
+
+%----------------------------------------------------------------------------------------
+
+\chapter{\Aclp{LLM}}\label{ch:llm}
+
+\section{Architectures}\label{sec:llm-architectures}
+
+\subsection{Transformer}\label{subsec:transformer}
+
+\subsection{Attention}\label{subsec:attention}
+
+\section{Fine-tuning}\label{sec:llm-fine-tuning}
+
+\section{\Acp{RAG}}\label{sec:rag}
+
+\section{Limitations and challenges}\label{sec:limitations-and-challenges}
+
+\subsection{Resources}\label{subsec:resources}
+
+\subsection{Data and privacy}\label{subsec:data-and-privacy}
+
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\part{Engineering of \ac{SKI} \& \ac{SKE}}\label{part:engineering-of-ski-ske}
+
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\chapter{Common Patterns}\label{ch:common-patterns}
+
+\section{Knowledge Representation}\label{sec:knowledge-representation}
+
+\subsection{Logic Rules}\label{subsec:logic-rules}
+
+\subsection{\Aclp{KG}}\label{subsec:kg}
+
+\subsection{Free text}\label{subsec:free-text}
+
+\section{From symbolic to sub-symbolic}\label{sec:from-symbolic-to-sub-symbolic}
+
+\subsection{Fuzzyfication}\label{subsec:fuzzyfication}
+
+\subsection{Delegation}\label{subsec:delegation}
+
+\section{From sub-symbolic to symbolic}\label{sec:from-sub-symbolic-to-symbolic}
+
+\subsection{Surrogate models}\label{subsec:surrogate-models}
+
+%----------------------------------------------------------------------------------------
+
+\chapter{\Acl{PSyKI}}\label{ch:psyki}
+
+\section{Implementation}\label{sec:implementation}
+
+\subsection{Goals}\label{subsec:goals}
+
+\subsection{Architecture}\label{subsec:architecture}
+
+\subsection{Details}\label{subsec:details}
+
+\section{Available \ac{SKI} methods}\label{sec:available-ski-methods}
+
+\subsection{\Acl{KBANN}}\label{subsec:kbann}
+
+\subsection{\Acl{KINS}}\label{subsec:kins}
+
+\subsection{\Acl{KILL}}\label{subsec:kill}
+
+\section{\Acl{QoS} for \ac{SKI}}\label{sec:qos}
+
+\section{Fairness}\label{sec:fairness}
+
+\subsection{\Acl{FaUCI}}\label{subsec:fauci}
+
+
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\part{Engineering of Intelligent Systems}\label{part:engineering-of-intelligent-systems}
+
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\chapter{Autonomous Learning}\label{ch:autonomous-learning}
+
+\section{Goals and Challenges}\label{sec:goals-and-challenges}
+
+\section{Applications}\label{sec:applications}
+
+\subsection{Exact Learning with \acp{LLM}}\label{subsec:exact-learning-with-ac{llm}}
+
+\subsection{\Acl{LLM4KB}}\label{subsec:llm4kb}
+
+%----------------------------------------------------------------------------------------
+
+\chapter{Conclusions}\label{ch:conclusions}
+
+\section{Discussion}\label{sec:discussion}
+
+\section{Future Work}\label{sec:future-work}
 
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
