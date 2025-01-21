@@ -15,21 +15,23 @@
 
 \begin{abstract}	
 % Max 2000 characters, strict.
-    \Ac{AI} is one of the most promising mankind's inventions in recent history, and it already has a significant impact on our daily lives.
+    \Ac{AI} is one of the most promising mankind's inventions in recent history, and it has already achieved a significant impact on our daily lives.
     %
-    During the last decade \ac{NeSy} \ac{AI}, that aims to develop systems that integrate symbolic and sub-symbolic \ac{AI}, has gained increasing attention.
+    During the last decade \ac{NeSy} \ac{AI}, that aims to develop systems that integrate \emph{symbolic} and \emph{sub-symbolic} \ac{AI}, has gained increasing attention.
     %
     The exploitation of both symbolic and sub-symbolic aspects of \ac{AI} is crucial to develop systems that can overcome the limitations of the two paradigms.
     %
-    Beyond all the possible research branches, \ac{SKI} and \ac{SKE} are two major areas that can have a key role in the development of intelligent systems.
+    Beyond all the possible research branches, \ac{SKI} and \ac{SKE} are two major areas that can have a key role in the development of \emph{intelligent systems}.
     %
-    At the writing of this thesis, we are experiencing a de facto Copernican revolution that is not limited to the \ac{AI} field but also involves the whole society: the advent of \acp{LLM}.
+    At the writing of this thesis, we are experiencing a de facto Copernican revolution that is not limited to the \ac{AI} field but also involves the whole society: the advent of the \acp{LLM}.
 
-    This thesis focuses on \ac{NeSy} \ac{AI}, in particular on \ac{SKI}, \ac{SKE} and on the engineering of intelligent software systems.
+    This thesis focuses on \ac{NeSy} \ac{AI}, in particular on \ac{SKI}, \ac{SKE} and on the engineering of \emph{intelligent software systems}.
     %
-    First, we reconcile the most relevant definitions and concepts after a comprehensive overview of the background and the state of the art in the field of \ac{NeSy} \ac{AI},
+    First, we introduce the reader to what intelligence is, both in carbonium -- humans and animals -- and in silico---computers.
     %
-    We then identify the challenges associated with \ac{NeSy} \ac{AI} and how we can address them.
+    We reconcile the most relevant definitions and concepts after a comprehensive overview of the background and the state of the art in the field of \ac{NeSy} \ac{AI}.
+    %
+    Then, we identify the challenges associated with \ac{NeSy} \ac{AI} and we present the research agenda we followed to address them.
     %
     In particular, present original contributions in terms of methodologies, algorithms, and tools for \ac{SKI} and \ac{SKE} that enable us to further develop \ac{NeSy} \ac{AI} systems.
     %
@@ -37,34 +39,26 @@
     %
     Ultimately, we present intelligent systems that can autonomously learn.
 
-
+    \sloppypar
+    Keywords -- \emph{\acl{AI}, \acl{NeSy} \ac{AI}, \acl{SKI}, \acl{SKE}, \aclp{LLM}, \aclp{MAS}, Intelligent Systems, Autonomous Learning Systems}
 
 \end{abstract}
 
 \begin{dedication} % this is optional
-``Whatever it takes`` -- Mario Draghi, July 26th 2012
+    %
+    ``The work of each individual contributes to a totality, and so becomes an undying part of the totality.
+    %
+    That totality of human lives—past and present and to come—forms a tapestry that has been in existence now for many tens of thousands of years and has been growing more elaborate and, on the whole, more beautiful in all that time.
+    %
+    % Even the Spacers are an offshoot of the tapestry and they, too, add to the elaborateness and beauty of the pattern.
+    %
+    [\dots] An individual life is one thread in the tapestry and what is one thread compared to the whole?
+    %
+    Daneel, keep your mind fixed firmly on the tapestry and do not let the trailing off of a single thread affect you.'' --- Isaac Asimov, \emph{Robots and Empire}
+    %
 \end{dedication}
 
 \begin{acknowledgements} % this is optional
-    %
-    First and foremost, I would like to thank my parents, Barbara and Marcello, for their unconditional love and support.
-    %
-    Both of them thought me the importance of hard work and perseverance.
-    %
-    My dad made me passionate in science and technology, my mom the interest for history.
-    %
-    I thank my grandparents, Mirka, Franca and Marco, for their love and presence.
-    %
-    Without them all, I would have not started a Ph.D., at least, not here in Italy.
-    %
-    The disgusting lack of financial support from the Italian government for the scientific research has always been -- since the infamous Gentile's reform -- a curse for the development of the country.
-
-    I would like to thank my supervisor, Prof. Andrea Omicini, for his knowledge, guidance, and support.
-    %
-    Beyond anything else, I really appreciated the freedom he gave me during my journey.
-    %
-    I thank my senior colleague, and de facto co-supervisor, prof. Giovanni Ciatto for his daily support and guidance especially during my first year as a research fellow and in the first year of my Ph.D.
-    %
 
 \end{acknowledgements}
 
@@ -81,21 +75,11 @@
 \label{ch:introduction}
 %----------------------------------------------------------------------------------------
 
-Write your intro here.
-\sidenote{Add sidenotes in this way. They are named after the author of the thesis}
-
-
 \section{Research Background and Context}\label{sec:research-background-and-context}
-
 
 \section{Overview and Contributions}\label{sec:overview-and-contributions}
 
-
 \section{Structure of the Thesis}\label{sec:structure-of-the-thesis}
-
-
-\note{Racall to describe the structure of the paper}
-
 
 %----------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------
@@ -121,11 +105,19 @@ Write your intro here.
 
 \subsection{Adapting}\label{subsec:adapting}
 
-\subsection{Swarm intelligence}\label{subsec:swarm-intelligence}
+\section{Learning}\label{sec:learning}
 
-\subsection{Learning}\label{subsec:learning}
+\subsection{Autonomous learning}\label{subsec:autonomous-learning}
 
 \subsubsection{\Acl{RL}}\label{subsubsec:rl}
+
+\subsection{\Aclp{MAS}}\label{subsec:mas}
+
+\subsubsection{Swarm intelligence}\label{subsubsec:swarm-intelligence}
+
+\subsubsection{\Acl{MARL}}\label{subsubsec:marl}
+
+\subsection{General learning}\label{subsec:general-learning}
 
 %----------------------------------------------------------------------------------------
 
@@ -147,13 +139,17 @@ Write your intro here.
 
 \subsection{\Acl{SKI}}\label{subsec:ski}
 
+\subsubsection{Motivations and goals}\label{subsubsec:ski-motivations-and-goals}
+
 \subsubsection{Structuring}\label{subsubsec:structuring}
 
 \subsubsection{Learning}\label{subsubsec:learning}
 
-\subsubsection{Embedding}\label{subsec:embedding}
+\subsubsection{Embedding}\label{subsubsec:embedding}
 
 \subsection{\Acl{SKE}}\label{subsec:ske}
+
+\subsubsection{Motivations and goals}\label{subsubsec:ske-motivations-and-goals}
 
 \subsubsection{Local explanations}\label{subsubsec:local-explanations}
 
@@ -233,7 +229,6 @@ Write your intro here.
 
 \subsection{\Acl{FaUCI}}\label{subsec:fauci}
 
-
 %----------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------
 
@@ -242,7 +237,31 @@ Write your intro here.
 %----------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------
 
-\chapter{Autonomous Learning}\label{ch:autonomous-learning}
+\chapter{\Ac{NeSy} \ac{AI} for Real World Applications}\label{ch:nesy-ai-for-real-world-applications}
+
+\section{Motivations}\label{sec:nesy-ai-motivations}
+
+\section{Goals and Challenges}\label{sec:nesy-ai-goals-and-challenges}
+
+\section{Applications}\label{sec:nesy-ai-applications}
+
+\subsection{\Ac{SKE} for Explainable Nutritional Recommenders}\label{subsec:ske-for-explainable-nutritional-recommenders}
+
+\subsection{A General-Purpose Protocol for Multi-Agent Based Explanations}\label{subsec:a-general-purpose-protocol-for-multi-agent-based-explanations}
+
+\subsection{\Acl{NeSy} \ac{AI} for Supporting Chronic Disease Diagnosis and Monitoring}\label{subsec:nesy-ai-for-supporting-chronic-disease-diagnosis-and-monitoring}
+
+\subsection{\Ac{LLM}-Based Solutions for Healthcare Chatbots: a Comparative Analysis}\label{subsec:llm-based-solutions-for-healthcare-chatbots-a-comparative-analysis}
+
+\subsection{Open-Source Small Language Models for Personal Medical Assistant Chatbots}\label{subsec:open-source-small-language-models-for-personal-medical-assistant-chatbots}
+
+\subsection{Applying \acl{RAG} on Open \acp{LLM} for a Medical Chatbot Supporting Hypertensive Patients}\label{subsec:applying-rag-on-open-llm-for-a-medical-chatbot-supporting-hypertensive-patients}
+
+%----------------------------------------------------------------------------------------
+
+\chapter{Autonomous Learning Systems}\label{ch:autonomous-learning-systems}
+
+\section{Motivations}\label{sec:motivations}
 
 \section{Goals and Challenges}\label{sec:goals-and-challenges}
 
@@ -250,7 +269,7 @@ Write your intro here.
 
 \subsection{Exact Learning with \acp{LLM}}\label{subsec:exact-learning-with-ac{llm}}
 
-\subsection{\Acl{LLM4KB}}\label{subsec:llm4kb}
+\subsection{\Aclp{LLM} as oracles for instantiating ontologies with domain-specific knowledge}\label{subsec:llm-as-oracles-for-instantiating-ontologies-with-domain-specific-knowledge}
 
 %----------------------------------------------------------------------------------------
 

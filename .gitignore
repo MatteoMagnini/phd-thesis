@@ -1,5 +1,6 @@
 .idea/
 out/
+tmp*
 phd-thesis.pdf
 example.pdf
 *~
