@@ -13,8 +13,8 @@
 \frontmatter
 \input{front}
 
-\begin{abstract}	
-% Max 2000 characters, strict.
+\begin{abstract}
+    %
     \Ac{AI} is one of the most promising mankind's inventions in recent history, and it has already achieved a significant impact on our daily lives.
     %
     During the last decade \ac{NeSy} \ac{AI}, that aims to develop systems that integrate \emph{symbolic} and \emph{sub-symbolic} \ac{AI}, has gained increasing attention.
@@ -75,11 +75,11 @@
 \label{ch:introduction}
 %----------------------------------------------------------------------------------------
 
-\section{Research Background and Context}\label{sec:research-background-and-context}
+\section{Research background and context}\label{sec:research-background-and-context}
 
-\section{Overview and Contributions}\label{sec:overview-and-contributions}
+\section{Overview and contributions}\label{sec:overview-and-contributions}
 
-\section{Structure of the Thesis}\label{sec:structure-of-the-thesis}
+\section{Structure of the thesis}\label{sec:structure-of-the-thesis}
 
 %----------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------
@@ -93,19 +93,25 @@
 
 \section{What is intelligence?}\label{sec:what-is-intelligence}
 
-\subsection{Intelligence in humans}\label{subsec:intelligence-in-humans}
-
 \subsection{Intelligence in animals}\label{subsec:intelligence-in-animals}
+
+\subsection{Intelligence in humans}\label{subsec:intelligence-in-humans}
 
 \section{Intelligence in computer science}\label{sec:intelligence-in-computer-science}
 
 \subsection{Reasoning}\label{subsec:reasoning}
+
+\subsection{Autonomy}\label{subsec:autonomy}
 
 \subsection{Planning}\label{subsec:planning}
 
 \subsection{Adapting}\label{subsec:adapting}
 
 \section{Learning}\label{sec:learning}
+
+\subsection{Actively learning}\label{subsec:actively-learning}
+
+\subsection{\Acl{PAC} learning}\label{subsec:pac-learning}
 
 \subsection{Autonomous learning}\label{subsec:autonomous-learning}
 
@@ -125,21 +131,47 @@
 
 \section{Symbolic \ac{AI}}\label{sec:symbolic-ai}
 
-\subsection{Logic}\label{subsec:logic}
+\subsection{\Acl{CL}}\label{subsec:cl}
+
+\subsubsection{\Acl{DL}}\label{subsubsec:dl}
+
+\subsubsection{Ontologies}\label{subsubsec:ontologies}
+
+\subsubsection{Horn logic}\label{subsubsec:horn-logic}
+
+\subsubsection{Higher-order logic}\label{subsubsec:higher-order-logic}
 
 \subsection{Expert Systems}\label{subsec:expert-systems}
 
 \subsection{Trees and other algorithms}\label{subsec:trees-and-other-algorithms}
 
+\subsection{Limits of symbolic \ac{AI}}\label{subsec:limits-of-symbolic-ai}
+
 \section{Sub-symbolic \ac{AI}}\label{sec:sub-symbolic-ai}
+
+\subsection{Random forests}\label{subsec:random-forests}
+
+\subsection{Bayesian methods}\label{subsec:bayesian-methods}
+
+\subsection{Evolutionary algorithms}\label{subsec:evolutionary-algorithms}
+
+\subsection{\Aclp{SVM}}\label{subsec:svm}
 
 \subsection{\Aclp{NN}}\label{subsec:neural-networks}
 
-\section{\Acl{NeSy} \ac{AI}}\label{sec:nesy-ai}
+\subsection{Limits of sub-symbolic \ac{AI}}\label{subsec:limits-of-sub-symbolic-ai}
 
-\subsection{\Acl{SKI}}\label{subsec:ski}
+%----------------------------------------------------------------------------------------
 
-\subsubsection{Motivations and goals}\label{subsubsec:ski-motivations-and-goals}
+\chapter{\Acl{NeSy} \ac{AI}}\label{ch:nesy-ai}
+
+\section{\Acl{SKI}}\label{sec:ski}
+
+\subsection{Motivations and goals}\label{subsec:ski-motivations-and-goals}
+
+\subsection{What to inject}\label{subsec:what-to-inject}
+
+\subsection{How to inject}\label{subsec:how-to-inject}
 
 \subsubsection{Structuring}\label{subsubsec:structuring}
 
@@ -147,13 +179,23 @@
 
 \subsubsection{Embedding}\label{subsubsec:embedding}
 
-\subsection{\Acl{SKE}}\label{subsec:ske}
+\subsection{Limitations and challenges of \ac{SKI}}\label{subsec:limitations-and-challenges-of-ski}
 
-\subsubsection{Motivations and goals}\label{subsubsec:ske-motivations-and-goals}
+\section{\Acl{SKE}}\label{sec:ske}
+
+\subsection{Motivations and goals}\label{subsec:ske-motivations-and-goals}
+
+\subsection{How to extract}\label{subsec:how-to-extract}
+
+\subsubsection{Decompositional \ac{SKE}}\label{subsubsec:decompositional-ske}
+
+\subsubsection{Pedagocial \ac{SKE}}\label{subsubsec:pedagogical-ske}
 
 \subsubsection{Local explanations}\label{subsubsec:local-explanations}
 
 \subsubsection{Global explanations}\label{subsubsec:global-explanations}
+
+\subsection{Limitations and challenges of \ac{SKE}}\label{subsec:limitations-and-challenges-of-ske}
 
 %----------------------------------------------------------------------------------------
 
@@ -175,6 +217,10 @@
 
 \subsection{Data and privacy}\label{subsec:data-and-privacy}
 
+\subsection{Hallucinations}\label{subsec:hallucinations}
+
+\subsection{Stochastic parrot or something more?}\label{subsec:stochastic-parrot-or-something-more}
+
 %----------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------
 
@@ -183,11 +229,11 @@
 %----------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------
 
-\chapter{Common Patterns}\label{ch:common-patterns}
+\chapter{Common patterns}\label{ch:common-patterns}
 
-\section{Knowledge Representation}\label{sec:knowledge-representation}
+\section{Knowledge representation}\label{sec:knowledge-representation}
 
-\subsection{Logic Rules}\label{subsec:logic-rules}
+\subsection{Logic rules}\label{subsec:logic-rules}
 
 \subsection{\Aclp{KG}}\label{subsec:kg}
 
@@ -202,6 +248,8 @@
 \section{From sub-symbolic to symbolic}\label{sec:from-sub-symbolic-to-symbolic}
 
 \subsection{Surrogate models}\label{subsec:surrogate-models}
+
+\subsection{De-fuzzyfication}\label{subsec:unfuzzyfication}
 
 %----------------------------------------------------------------------------------------
 
@@ -232,42 +280,42 @@
 %----------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------
 
-\part{Engineering of Intelligent Systems}\label{part:engineering-of-intelligent-systems}
+\part{Engineering of intelligent systems}\label{part:engineering-of-intelligent-systems}
 
 %----------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------
 
-\chapter{\Ac{NeSy} \ac{AI} for Real World Applications}\label{ch:nesy-ai-for-real-world-applications}
+\chapter{\Ac{NeSy} \ac{AI} for real world applications}\label{ch:nesy-ai-for-real-world-applications}
 
 \section{Motivations}\label{sec:nesy-ai-motivations}
 
-\section{Goals and Challenges}\label{sec:nesy-ai-goals-and-challenges}
+\section{Goals and challenges}\label{sec:nesy-ai-goals-and-challenges}
 
 \section{Applications}\label{sec:nesy-ai-applications}
 
-\subsection{\Ac{SKE} for Explainable Nutritional Recommenders}\label{subsec:ske-for-explainable-nutritional-recommenders}
+\subsection{\Ac{SKE} for explainable nutritional recommenders}\label{subsec:ske-for-explainable-nutritional-recommenders}
 
-\subsection{A General-Purpose Protocol for Multi-Agent Based Explanations}\label{subsec:a-general-purpose-protocol-for-multi-agent-based-explanations}
+\subsection{A general-purpose protocol for multi-agent based explanations}\label{subsec:a-general-purpose-protocol-for-multi-agent-based-explanations}
 
-\subsection{\Acl{NeSy} \ac{AI} for Supporting Chronic Disease Diagnosis and Monitoring}\label{subsec:nesy-ai-for-supporting-chronic-disease-diagnosis-and-monitoring}
+\subsection{\Acl{NeSy} \ac{AI} for supporting chronic disease diagnosis and monitoring}\label{subsec:nesy-ai-for-supporting-chronic-disease-diagnosis-and-monitoring}
 
-\subsection{\Ac{LLM}-Based Solutions for Healthcare Chatbots: a Comparative Analysis}\label{subsec:llm-based-solutions-for-healthcare-chatbots-a-comparative-analysis}
+\subsection{\Ac{LLM}-based solutions for healthcare chatbots: a comparative analysis}\label{subsec:llm-based-solutions-for-healthcare-chatbots-a-comparative-analysis}
 
-\subsection{Open-Source Small Language Models for Personal Medical Assistant Chatbots}\label{subsec:open-source-small-language-models-for-personal-medical-assistant-chatbots}
+\subsection{Open-source small language models for personal medical assistant chatbots}\label{subsec:open-source-small-language-models-for-personal-medical-assistant-chatbots}
 
-\subsection{Applying \acl{RAG} on Open \acp{LLM} for a Medical Chatbot Supporting Hypertensive Patients}\label{subsec:applying-rag-on-open-llm-for-a-medical-chatbot-supporting-hypertensive-patients}
+\subsection{Applying \acl{RAG} on open \acp{LLM} for a medical chatbot supporting hypertensive patients}\label{subsec:applying-rag-on-open-llm-for-a-medical-chatbot-supporting-hypertensive-patients}
 
 %----------------------------------------------------------------------------------------
 
-\chapter{Autonomous Learning Systems}\label{ch:autonomous-learning-systems}
+\chapter{Autonomous learning systems}\label{ch:autonomous-learning-systems}
 
 \section{Motivations}\label{sec:motivations}
 
-\section{Goals and Challenges}\label{sec:goals-and-challenges}
+\section{Goals and challenges}\label{sec:goals-and-challenges}
 
 \section{Applications}\label{sec:applications}
 
-\subsection{Exact Learning with \acp{LLM}}\label{subsec:exact-learning-with-ac{llm}}
+\subsection{Actively learning ontologies from \acp{LLM}}\label{subsec:exact-learning-with-ac{llm}}
 
 \subsection{\Aclp{LLM} as oracles for instantiating ontologies with domain-specific knowledge}\label{subsec:llm-as-oracles-for-instantiating-ontologies-with-domain-specific-knowledge}
 
@@ -277,7 +325,7 @@
 
 \section{Discussion}\label{sec:discussion}
 
-\section{Future Work}\label{sec:future-work}
+\section{Future work}\label{sec:future-work}
 
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
