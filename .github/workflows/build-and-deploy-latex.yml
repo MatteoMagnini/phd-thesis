@@ -30,6 +30,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install LaTeX
+        run: sudo apt-get update && sudo apt-get install -y texlive-full latexmk
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -43,17 +46,9 @@ jobs:
         run: |
           ruby bibtex_prettifier.rb
 
-      - name: Compile LaTeX first time
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: ${{ env.PAPER_BASE_NAME }}.tex
-          args: -pdf -file-line-error -interaction=nonstopmode -shell-escape
-
-      - name: Compile LaTeX second time
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: ${{ env.PAPER_BASE_NAME }}.tex
-          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -shell-escape
+      - name: Compile with latexmk
+        run: |
+          latexmk -pdf -interaction=nonstopmode -shell-escape ${{ env.PAPER_BASE_NAME }}.tex
 
       - name: Bump version
         id: bump-version
