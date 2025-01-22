@@ -43,7 +43,13 @@ jobs:
         run: |
           ruby bibtex_prettifier.rb
 
-      - name: Compile LaTeX
+      - name: Compile LaTeX first time
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: ${{ env.PAPER_BASE_NAME }}.tex
+          args: -pdf -file-line-error -interaction=nonstopmode -shell-escape
+
+      - name: Compile LaTeX second time
         uses: xu-cheng/latex-action@v3
         with:
           root_file: ${{ env.PAPER_BASE_NAME }}.tex
