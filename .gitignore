@@ -9,6 +9,7 @@ example.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
+*.mtc
 *.lof
 *.log
 *.lot

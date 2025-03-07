@@ -1,6 +1,7 @@
 \documentclass[12pt,a4paper,openright,twoside]{book}
 \usepackage[utf8]{inputenc}
 \usepackage{phd-thesis}
+\addbibresource[label=biblio]{phd-thesis.bib}
 
 \mainlinespacing{1.241} % line spacing in mainmatter, comment to default (1)
 
@@ -83,21 +84,29 @@
 %--------------------------------------- PART I -----------------------------------------
 %----------------------------------------------------------------------------------------
 
-\part{Background}\label{part:background}
+\part{Background}
+\label{part:background}
 
+\begin{refsection}
 \input{chapters/chapter_2_intelligent_systems}
 \input{chapters/chapter_3_artificial_intelligence}
 \input{chapters/chapter_4_neuro_symbolic}
 \input{chapters/chapter_5_llm}
+\printbibliography[title=References,heading=bibintoc]
+\end{refsection}
 
 %----------------------------------------------------------------------------------------
 %-------------------------------------- PART II -----------------------------------------
 %----------------------------------------------------------------------------------------
 
-\part{Engineering of \ac{SKI} \& \ac{SKE}}\label{part:engineering-of-ski-ske}
+\part{Engineering of \ac{SKI} \& \ac{SKE}}
+\label{part:engineering-of-ski-ske}
 
+\begin{refsection}
 \input{chapters/chapter_6_common_patterns}
 \input{chapters/chapter_7_psyki}
+\printbibliography[title=References,heading=bibintoc]
+\end{refsection}
 
 %----------------------------------------------------------------------------------------
 %------------------------------------- PART III -----------------------------------------
@@ -105,21 +114,13 @@
 
 \part{Engineering of intelligent systems}\label{part:engineering-of-intelligent-systems}
 
+\begin{refsection}
 \input{chapters/chapter_8_nesy_applications}
 \input{chapters/chapter_9_autonomous_learning_systems}
 \input{chapters/chapter_10_conclusions}
+\printbibliography[title=References,heading=bibintoc]
+\end{refsection}
 
-
-%----------------------------------------------------------------------------------------
-% BIBLIOGRAPHY
-%----------------------------------------------------------------------------------------
-
-\backmatter
-
-\part*{}
-
-\nocite{*} % comment this to only show the referenced entries from the .bib file
-\bibliographystyle{alpha}
-\bibliography{phd-thesis}
+\adjustmtc
 
 \end{document}
