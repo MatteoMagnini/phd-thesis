@@ -36,6 +36,7 @@ Thanks to
 %
 \ac{AI} finally flourished again.
 
+
 The first kind of \ac{AI} that was developed is \emph{symbolic}.
 %
 Symbolic means that there are \emph{symbols} with specific \emph{meanings} that are manipulated by algorithms.
@@ -44,23 +45,35 @@ Symbolic \ac{AI} follows the \emph{deductive} process of reasoning, where the sy
 %
 These kinds of \ac{AI} programs are pretty effective in well-defined domains where there are clear rules that always hold, e.g., board games,~\ac{TSP},~\acp{BWP}, etc.
 %
-\emph{Sub-symbolic} \ac{AI} came after, and it is based on the \emph{inductive} process of reasoning.
+\emph{Sub-symbolic} \ac{AI} is based on the \emph{inductive} process of reasoning.
 %
-Conversely to symbolic \ac{AI}, sub-symbolic \ac{AI} does not rely on symbols that have meanings for humans, but on \emph{patterns} that are learned from data.
+Conversely to symbolic \ac{AI}, sub-symbolic \ac{AI} does not rely on symbols that have meanings for humans, but on data \emph{patterns}.
 %
 Programs that uses sub-symbolic \ac{AI} to solve a certain task are said to perform \ac{ML}, because a model needs to first learn from examples before being able to generalize to unseen data.
 %
 \sidenote{consider to add a sentence or two about other different kinds of algorithms based on different learning principles like RL}
 %
-Sub-symbolic models like \acp{NN} can reach human or super-human performance in pre-defined tasks like image recognition, natural language processing, and many others.
-%
-However, to be properly effective, these models usually need a huge amount of data and hardware resources.
+Sub-symbolic models like \acp{NN} can reach \emph{super-human performance} in pre-defined tasks like image recognition, natural language processing, etc., but they require a huge amount of data and hardware resources to be trained.
 
-The natural evolution in \ac{AI} research is to use both symbolic and sub-symbolic approaches together.
+
+The natural evolution in \ac{AI} research is to use both symbolic and sub-symbolic approaches together in order to increase the performance and face more challenging tasks.
 %
-This is the idea behind \ac{NeSy} \ac{AI}, where the deductive reasoning of symbolic \ac{AI} is combined with the inductive learning of sub-symbolic models, especially \acp{NN}.
+This is the idea behind \emph{\ac{NeSy} \ac{AI}}, where the deductive reasoning of symbolic \ac{AI} is combined with the inductive learning of sub-symbolic models, especially \acp{NN}.
 %
-This branch of \ac{AI} is still relatively young; the first works that tried to combine logic rules within a \ac{NN} date back to the 90s~\cite{DBLP:conf/aaai/TowellSN90,DBLP:journals/ai/TowellS94}.
+This branch of \ac{AI} is relatively young; the first works that combined logic rules within a \ac{NN} date back to the 90s~\cite{DBLP:conf/aaai/TowellSN90,DBLP:journals/ai/TowellS94}.
+%
+The last past years have been quite prolific both in the design of new \ac{NeSy} techniques and in the development of intelligent systems that use them~\cite{DBLP:journals/csur/CiattoSAMO24}.
+
+
+Finally, the advent of \acp{LLM} has further transformed the landscape of \ac{AI}, offering unprecedented capabilities for natural language (and also multimodal data) generation.
+%
+\Acp{LLM} are huge \ac{NN} models up to \emph{hundreds of billions} of parameters that are trained on a large corpus of text data.
+%
+Despite the outstanding performance that \acp{LLM} have achieved in many tasks, their output is just a probability distribution over the vocabulary, therefore it is subject to errors (e.g., \emph{hallucinations}) and biases (e.g., from training data, from prompt engineering).
+%
+\Acp{LLM} are still a great resource for \ac{NeSy} \ac{AI} because of their performance, versatility and customizability.
+%
+Ultimately, the rapid progress in \ac{NeSy} \ac{AI} and the dazzling evolution of \acp{LLM} are significantly changing our world, leading to more and more intelligent systems, and possibly to the advent of the \emph{singularity}.
 
 
 \section{Overview and contributions}
