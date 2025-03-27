@@ -89,9 +89,12 @@ So, it follows that some of these skills -- if not all -- should be present in a
 %
 In particular, the activity of (autonomously) \emph{learning} is crucial in order to reach what in research is called \ac{AGI}.
 
+
 The journey to \ac{AGI} -- i.e., the development of an \ac{AI} system that is able to perform (possibly) any task -- is still far to be completed.
 %
 The roadmap that I propose follows a bottom-up approach.
+%
+\sidenote{ponder to add an image of the roadmap. In that case all the items in the nodes should be introduced also in the section}
 %
 First, \ac{AGI} is decomposed into a dependency graph of sub-problems and the elementary building blocks are identified (a.k.a., nodes with no dependencies).
 %
@@ -101,6 +104,73 @@ At the same time, the design and implementation of technological solutions are c
 %
 Incrementally, once a sub-problem has been sufficiently explored, the next one is tackled.
 
+
+\Ac{ML} models, such as \acp{NN}, are able to learn from data and generalize to unseen data.
+%
+So, in other words, they are able to perform \emph{inductive reasoning}.
+%
+On the other hand, symbolic \ac{AI} draws on logic rules to perform \emph{deductive reasoning}.
+%
+Humans are able to perform both kinds of reasoning, switching and possibly combining between them.
+%
+To let symbolic and sub-symbolic \ac{AI} systems ``talk'' to each other -- and therefore work together -- it is possible to use \emph{symbolic knowledge}.
+%
+Symbolic knowledge is a general term to refer to any kind of knowledge provided in a \emph{symbolic} form, e.g., logic rules, ontologies, free text, etc.
+
+
+\Ac{SKI} is the process of \emph{injecting} prior symbolic knowledge into sub-symbolic models.
+%
+In this way, the sub-symbolic model is able to leverage the prior domain expertise to improve its performance.
+%
+Conversely, \ac{SKE} is the dual process of \emph{extracting} symbolic knowledge from sub-symbolic models.
+%
+By doing so, the knowledge learned by the model from the data is made available to both humans and other symbolic systems.
+%
+\Ac{SKI} and \ac{SKE} are the two fundamental pillars upon which more advanced \ac{NeSy} \ac{AI} systems can be built.
+
+
+\subsection*{Research questions}
+%
+\begin{itemize}
+    \item[\textbf{RQ1}:]\label{itm:rq1} \emph{What are the characteristics of \ac{SKI} and \ac{SKE} techniques?}
+
+    There are different ways to perform \ac{SKI} and \ac{SKE}, depending on multiple dimensions.
+    %
+    From these dimensions -- such as the kind of supported sub-symbolic models, the formalism of the symbolic knowledge, the ways to inject/extract the knowledge, etc. -- it is possible to refine the main research question into more detailed sub-questions.
+    %
+    Ultimately, from the answers to these research questions it would be possible to define a comprehensive taxonomy of \ac{SKI} and \ac{SKE} techniques.
+    %
+    \item[\textbf{RQ2}:]\label{itm:rq2} \emph{How can the effects of \ac{SKI} and \ac{SKE} be measured?}
+
+    Accuracy and other popular metrics in \ac{ML} are not the only ones that should be considered when evaluating \ac{SKI} and \ac{SKE} techniques.
+    %
+    There are many other aspects that a scientist or the final user of the technology want to know.
+    %
+    For instance, how much resilient is the model with injected knowledge to data degradation?
+    %
+    \item[\textbf{RQ3}:]\label{itm:rq3}
+    \item[\textbf{RQ4}:]\label{itm:rq4}
+\end{itemize}
+
+\subsection*{Contributions}
+%
+In this thesis,
+%
+\begin{inlinelist}
+    %
+    \item I systematically collect and organise \ac{SKI} and \ac{SKE} methods and technologies,
+    %
+    \item I design and develop software libraries to support the development and integration of \ac{SKI} and \ac{SKE} methods in \ac{AI} systems,
+    %
+    \item I design, implement and validate new \ac{SKI} and \ac{SKE} methods,
+    %
+    \item I define new metrics to evaluate the performance of \ac{SKI} techniques,
+    %
+    \item I investigate how applying \ac{SKI} techniques affects the performance of the models under different data degradation scenarios, and
+    %
+    \item I design and develop \ac{NeSy} \ac{AI} systems that leverage \ac{SKI} and \ac{SKE} techniques in real-world scenarios.
+    %
+\end{inlinelist}
 
 
 \section{Structure of the thesis}
