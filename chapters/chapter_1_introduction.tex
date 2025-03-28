@@ -126,7 +126,7 @@ Conversely, \ac{SKE} is the dual process of \emph{extracting} symbolic knowledge
 %
 By doing so, the knowledge learned by the model from the data is made available to both humans and other symbolic systems.
 %
-\Ac{SKI} and \ac{SKE} are the two fundamental pillars upon which more advanced \ac{NeSy} \ac{AI} systems can be built.
+\Ac{SKI} and \ac{SKE} are the pillars upon which advanced \ac{NeSy} \ac{AI} systems can be built.
 
 
 \subsection*{Research questions}
@@ -144,12 +144,30 @@ By doing so, the knowledge learned by the model from the data is made available 
 
     Accuracy and other popular metrics in \ac{ML} are not the only ones that should be considered when evaluating \ac{SKI} and \ac{SKE} techniques.
     %
-    There are many other aspects that a scientist or the final user of the technology want to know.
+    There are many other aspects that a scientist or the final user of the technology wants to know.
     %
-    For instance, how much resilient is the model with injected knowledge to data degradation?
+    For instance,
     %
-    \item[\textbf{RQ3}:]\label{itm:rq3}
-    \item[\textbf{RQ4}:]\label{itm:rq4}
+    how much robust is the model with injected knowledge to data degradation,
+    %
+    how much the extracted knowledge is aligned with the actual behavior of the model,
+    %
+    is it possible to reduce the size of the model by injecting knowledge without losing performance, and so on.
+    %
+    \item[\textbf{RQ3}:]\label{itm:rq3} \emph{When and where should \ac{SKI} and \ac{SKE} be used?}
+
+    Traditionally, \ac{SKE} is born in the context of \ac{XAI}, where the objective is to provide a human-understandable explanation of the model's behavior.
+    %
+    \Ac{SKI}, on the other hand, is born to improve the performance of the model.
+    %
+    However, for both of them there are many other possible applications.
+    %
+    \item[\textbf{RQ4}:]\label{itm:rq4} \emph{How to design and develop \ac{NeSy} \ac{AI} systems that leverage \ac{SKI} and \ac{SKE}?}
+
+    The use of \ac{SKI} and \ac{SKE} enables a variety of new applications and research directions.
+    %
+    These new possibilities must be explored taking into account all the consequences and implications of the use of these techniques.
+    %
 \end{itemize}
 
 \subsection*{Contributions}
