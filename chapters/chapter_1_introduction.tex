@@ -92,7 +92,7 @@ In particular, the activity of (autonomously) \emph{learning} is crucial in orde
 
 The journey to \ac{AGI} -- i.e., the development of an \ac{AI} system that is able to perform (possibly) any task -- is still far to be completed.
 %
-The roadmap that I propose follows a bottom-up approach.
+The roadmap that we propose follows a bottom-up approach.
 %
 \sidenote{ponder to add an image of the roadmap. In that case all the items in the nodes should be introduced also in the section}
 %
@@ -131,8 +131,8 @@ By doing so, the knowledge learned by the model from the data is made available 
 
 \subsection*{Research questions}
 %
-\begin{itemize}
-    \item[\textbf{RQ1}:]\label{itm:rq1} \emph{What are the characteristics of \ac{SKI} and \ac{SKE} techniques?}
+\begin{questions}
+    \item \emph{What are the characteristics of \ac{SKI} and \ac{SKE} techniques?}
 
     There are different ways to perform \ac{SKI} and \ac{SKE}, depending on multiple dimensions.
     %
@@ -140,7 +140,9 @@ By doing so, the knowledge learned by the model from the data is made available 
     %
     Ultimately, from the answers to these research questions it would be possible to define a comprehensive taxonomy of \ac{SKI} and \ac{SKE} techniques.
     %
-    \item[\textbf{RQ2}:]\label{itm:rq2} \emph{How can the effects of \ac{SKI} and \ac{SKE} be measured?}
+    \label{itm:rq1}
+
+    \item \emph{How can the effects of \ac{SKI} and \ac{SKE} be measured?}
 
     Accuracy and other popular metrics in \ac{ML} are not the only ones that should be considered when evaluating \ac{SKI} and \ac{SKE} techniques.
     %
@@ -154,7 +156,9 @@ By doing so, the knowledge learned by the model from the data is made available 
     %
     is it possible to reduce the size of the model by injecting knowledge without losing performance, and so on.
     %
-    \item[\textbf{RQ3}:]\label{itm:rq3} \emph{When and where should \ac{SKI} and \ac{SKE} be used?}
+    \label{itm:rq2}
+
+    \item \emph{When and where should \ac{SKI} and \ac{SKE} be used?}
 
     Traditionally, \ac{SKE} is born in the context of \ac{XAI}, where the objective is to provide a human-understandable explanation of the model's behavior.
     %
@@ -162,33 +166,62 @@ By doing so, the knowledge learned by the model from the data is made available 
     %
     However, for both of them there are many other possible applications.
     %
-    \item[\textbf{RQ4}:]\label{itm:rq4} \emph{How to design and develop \ac{NeSy} \ac{AI} systems that leverage \ac{SKI} and \ac{SKE}?}
+    \label{itm:rq3}
+
+    \item \emph{How to design and develop \ac{NeSy} \ac{AI} systems that leverage \ac{SKI} and \ac{SKE}?}
 
     The use of \ac{SKI} and \ac{SKE} enables a variety of new applications and research directions.
     %
     These new possibilities must be explored taking into account all the consequences and implications of the use of these techniques.
     %
-\end{itemize}
+    \label{itm:rq4}
+\end{questions}
+
 
 \subsection*{Contributions}
 %
+The thesis mainly contributes to the field of \ac{NeSy} \ac{AI} and software engineering.
+%
+In particular, it focuses on \ac{SKI} and \ac{SKE} methods and on the development of \ac{AI} systems that leverage them.
+%
+The \textit{fil rouge} that binds all the contributions is the goal to design and develop intelligent systems, ultimately with capabilities of \emph{autonomous learning}.
+%
+The contributions are manifold, and they cover different aspects of \ac{NeSy} \ac{AI} including: \ac{SKI} and \ac{SKE}, software engineering, and social-technical systems.
+%
 In this thesis,
 %
-\begin{inlinelist}
+\begin{enumerate}[label=\emph{(\roman*)}]
+    \item \textbf{\ac{SKI} and \ac{SKE}}
+
+    \begin{enumerate}[label=\emph{(\arabic*)},resume]
+        %
+        \item we systematically collect and organise into a taxonomy \ac{SKI} and \ac{SKE} methods and technologies (\Cref{itm:rq1});
+        %
+        \item we design, implement and validate new \ac{SKI} and \ac{SKE} methods (\Cref{itm:rq1,itm:rq3});
+        %
+        \item we define new metrics to evaluate the performance of \ac{SKI} techniques (\Cref{itm:rq2,itm:rq3}).
+        %
+    \end{enumerate}
     %
-    \item I systematically collect and organise \ac{SKI} and \ac{SKE} methods and technologies,
+    \item \textbf{Software engineering}
+
+    \begin{enumerate}[label=\emph{(\arabic*)},resume]
+        %
+        \item we design and develop software libraries to support the development and integration of \ac{SKI} and \ac{SKE} methods in \ac{AI} systems (\Cref{itm:rq4});
+        %
+        \item we design and develop \ac{NeSy} \ac{AI} systems that leverage \ac{SKI} and \ac{SKE} techniques in real-world scenarios (\Cref{itm:rq3,itm:rq4});
+        %
+    \end{enumerate}
     %
-    \item I design and develop software libraries to support the development and integration of \ac{SKI} and \ac{SKE} methods in \ac{AI} systems,
+    \item \textbf{Social-technical systems}
+
+    \begin{enumerate}[label=\emph{(\arabic*)},resume]
+        %
+        \item we investigate how \ac{SKI} techniques can be used to mitigate the risk of bias in \ac{AI} systems (\Cref{itm:rq3,itm:rq4});
+        %
+    \end{enumerate}
     %
-    \item I design, implement and validate new \ac{SKI} and \ac{SKE} methods,
-    %
-    \item I define new metrics to evaluate the performance of \ac{SKI} techniques,
-    %
-    \item I investigate how applying \ac{SKI} techniques affects the performance of the models under different data degradation scenarios, and
-    %
-    \item I design and develop \ac{NeSy} \ac{AI} systems that leverage \ac{SKI} and \ac{SKE} techniques in real-world scenarios.
-    %
-\end{inlinelist}
+\end{enumerate}
 
 
 \section{Structure of the thesis}
