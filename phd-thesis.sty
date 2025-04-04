@@ -11,13 +11,14 @@
 \RequirePackage{code-lstlistings}
 \RequirePackage{notes}
 \RequirePackage{shortcuts}
-\RequirePackage{myacronyms}
 \RequirePackage{minitoc}
 \RequirePackage{biblatex}
 
 \newlist{questions}{enumerate}{2}
 \setlist[questions,1]{label=\textbf{(RQ\arabic*)},ref=RQ\arabic*}
 \setlist[questions,2]{label=(\alph*),ref=\thequestionsi(\alph*)}
+\crefname{questionsi}{RQ}{RQs}
+\Crefname{questionsi}{RQ}{RQs}
 
 \setcounter{secnumdepth}{4}
 
