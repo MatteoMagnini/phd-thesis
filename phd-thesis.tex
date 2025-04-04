@@ -1,7 +1,6 @@
 \documentclass[12pt,a4paper,openright,twoside]{book}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{phd-thesis}
-\RequirePackage{myacronyms}
 \addbibresource[label=biblio]{phd-thesis.bib}
 
 \mainlinespacing{1.241} % line spacing in mainmatter, comment to default (1)
@@ -10,6 +9,8 @@
 	
 \frontmatter
 \input{front}
+
+\phantom{\input{my-acronyms}}
 
 \begin{abstract}
     %
@@ -75,6 +76,7 @@
 \dominitoc
 \tableofcontents   
 \listoffigures     % (optional) comment if empty
+\listoftables      % (optional) comment if empty
 \lstlistoflistings % (optional) comment if empty
 %----------------------------------------------------------------------------------------
 
