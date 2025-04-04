@@ -12,40 +12,40 @@
 
 \begin{abstract}
     %
-    \Ac{AI} represents one of humanity's most transformative technological advancements, with roots in the mid-20th century and a rapidly growing impact on society.
+    \Gls{AI} represents one of humanity's most transformative technological advancements, with roots in the mid-20th century and a rapidly growing impact on society.
     %
-    Over the past decade, the field of \ac{NeSy} \ac{AI}, which seeks to integrate \emph{symbolic} and \emph{sub-symbolic} approaches, has gained increasing prominence as a promising paradigm for building intelligent systems.
+    Over the past decade, the field of \gls{NeSy} \gls{AI}, which seeks to integrate \emph{symbolic} and \emph{sub-symbolic} approaches, has gained increasing prominence as a promising paradigm for building intelligent systems.
     %
-    By combining the structured reasoning capabilities of symbolic \ac{AI} with the adaptability and scalability of sub-symbolic methods, \ac{NeSy} aims to overcome the inherent limitations of each paradigm, paving the way for more robust and interpretable \ac{AI} systems.
+    By combining the structured reasoning capabilities of symbolic \gls{AI} with the adaptability and scalability of sub-symbolic methods, \gls{NeSy} aims to overcome the inherent limitations of each paradigm, paving the way for more robust and interpretable \gls{AI} systems.
 
-    Within \ac{NeSy}, two foundational areas of research are \ac{SKI} and \ac{SKE}, which provide the essential tools to design hybrid systems.
+    Within \gls{NeSy}, two foundational areas of research are \gls{SKI} and \gls{SKE}, which provide the essential tools to design hybrid systems.
     %
-    \Ac{SKI} focuses on injecting structured knowledge into sub-symbolic models, enabling them to leverage prior domain expertise.
+    \Gls{SKI} focuses on injecting structured knowledge into sub-symbolic models, enabling them to leverage prior domain expertise.
     %
-    \Ac{SKE}, on the other hand, facilitates the extraction of human-understandable knowledge from these models, bridging the gap between their internal representations and user interpretability.
+    \Gls{SKE}, on the other hand, facilitates the extraction of human-understandable knowledge from these models, bridging the gap between their internal representations and user interpretability.
     %
     Together, these methods offer a pathway toward developing systems that are explainable, reliable, and effective in dynamic, real-world scenarios.
 
-    This thesis explores the challenges and opportunities of \ac{NeSy} \ac{AI}, with a particular focus on \ac{SKI},~\ac{SKE}, and their role in the engineering of intelligent systems.
+    This thesis explores the challenges and opportunities of \gls{NeSy} \gls{AI}, with a particular focus on \gls{SKI},~\gls{SKE}, and their role in the engineering of intelligent systems.
     %
     After an overview of the background and state of the art, we identify key challenges in integrating symbolic and sub-symbolic paradigms.
     %
-    We then present original contributions in the form of methodologies, algorithms, and tools designed to advance the capabilities of \ac{NeSy} systems.
+    We then present original contributions in the form of methodologies, algorithms, and tools designed to advance the capabilities of \gls{NeSy} systems.
 
-    The advent of \acp{LLM} has further transformed the landscape of \ac{AI}, offering unprecedented capabilities for understanding and generating natural language.
+    The advent of \glspl{LLM} has further transformed the landscape of \gls{AI}, offering unprecedented capabilities for understanding and generating natural language.
     %
-    This thesis investigates how \acp{LLM} can augment \ac{SKI} and \ac{SKE}, providing new avenues for designing systems that learn and adapt autonomously.
+    This thesis investigates how \glspl{LLM} can augment \gls{SKI} and \gls{SKE}, providing new avenues for designing systems that learn and adapt autonomously.
     %
     By leveraging these models, we demonstrate how hybrid approaches can address complex challenges, such as fairness and decision-making in healthcare, while ensuring interpretability and alignment with ethical principles.
 
-    Finally, we discuss how these advancements align with the broader vision of \ac{NeSy}, while also contributing to the specific goal of this thesis: enabling the development of systems capable of fully autonomous learning.
+    Finally, we discuss how these advancements align with the broader vision of \gls{NeSy}, while also contributing to the specific goal of this thesis: enabling the development of systems capable of fully autonomous learning.
     %
-    These systems integrate the structured reasoning of symbolic \ac{AI} with the adaptability of sub-symbolic models and the transformative potential of \acp{LLM}, opening pathways toward more versatile and intelligent applications.
+    These systems integrate the structured reasoning of symbolic \gls{AI} with the adaptability of sub-symbolic models and the transformative potential of \glspl{LLM}, opening pathways toward more versatile and intelligent applications.
     %
     Such progress not only advances the field but also hints at the distant horizon of general AI, bringing us closer to a future where machines can learn, reason, and adapt autonomously.
 
     \sloppypar
-    \textbf{Keywords} -- \emph{\acl{AI}, \acl{NeSy} \ac{AI}, \acl{SKI}, \acl{SKE}, \aclp{LLM}, Intelligent Systems, Autonomous Learning.}
+    \textbf{Keywords} -- \emph{\acrlong{AI}, \acrlong{NeSy} \gls{AI}, \acrlong{SKI}, \acrlong{SKE}, \glspl[long]{LLM}, Intelligent Systems, Autonomous Learning.}
 \end{abstract}
 
 
@@ -76,7 +76,7 @@
 \listoffigures     % (optional) comment if empty
 \listoftables      % (optional) comment if empty
 \lstlistoflistings % (optional) comment if empty
-\phantom{\input{my-acronyms}}
+\printglossaries
 %----------------------------------------------------------------------------------------
 
 \mainmatter
@@ -103,7 +103,7 @@
 %-------------------------------------- PART II -----------------------------------------
 %----------------------------------------------------------------------------------------
 
-\part{Engineering of \ac{SKI} \& \ac{SKE}}
+\part{Engineering of \gls{SKI} \& \gls{SKE}}
 \label{part:engineering-of-ski-ske}
 
 \begin{refsection}
