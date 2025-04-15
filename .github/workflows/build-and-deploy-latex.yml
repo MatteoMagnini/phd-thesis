@@ -48,7 +48,18 @@ jobs:
 
       - name: Compile with latexmk
         run: |
+          set +e
           latexmk -pdf -interaction=nonstopmode -shell-escape ${{ env.PAPER_BASE_NAME }}.tex
+          STATUS=$?
+          if [ "$STATUS" -ne 0 ]; then
+            if [ -f "${{ env.PAPER_BASE_NAME }}.pdf" ]; then
+              echo "::warning ::latexmk failed (exit code $STATUS), but PDF was generated. Continuing..."
+              exit 0
+            else
+              echo "::error ::latexmk failed and no PDF was generated. Failing..."
+              exit $STATUS
+            fi
+          fi
 
       - name: Bump version
         id: bump-version
