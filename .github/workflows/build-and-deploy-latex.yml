@@ -50,6 +50,7 @@ jobs:
         run: |
           set +e
           latexmk -pdf -interaction=nonstopmode -shell-escape ${{ env.PAPER_BASE_NAME }}.tex
+          latexmk -pdf -interaction=nonstopmode -shell-escape ${{ env.PAPER_BASE_NAME }}.tex
           STATUS=$?
           if [ "$STATUS" -ne 0 ]; then
             if [ -f "${{ env.PAPER_BASE_NAME }}.pdf" ]; then
