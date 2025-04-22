@@ -15,6 +15,10 @@
 \RequirePackage{biblatex}
 \RequirePackage{my-acronyms}
 
+\newtheorem{definition}{Definition}[chapter]
+\crefname{definition}{definition}{definitions}
+\Crefname{definition}{Definition}{Definitions}
+
 \newlist{questions}{enumerate}{2}
 \setlist[questions,1]{label=\textbf{(RQ\arabic*)},ref=RQ\arabic*}
 \setlist[questions,2]{label=(\alph*),ref=\thequestionsi(\alph*)}
