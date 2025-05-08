@@ -99,10 +99,17 @@ To do so, they need to navigate the environment, find food, avoid predators, rep
 
 \subsection{Intelligence in humans}\label{subsec:intelligence-in-humans}
 
-Humans have \emph{reasoning} capabilities that no other animal can match.
+Humans have developed two main characteristics about intelligence that are no match for any other animals: \emph{reasoning} and \emph{learning}.
+
+\subsubsection{Reasoning}\label{subsubsec:reasoning}
 %
-\note{TODO: talk about reasoning. Deductive vs inductive reasoning. Learning. Social animals and share of knowledge.}
+\note{TODO: talk about reasoning. Deductive vs inductive reasoning.}
 %
+
+\subsubsection{Learning}\label{subsubsec:learning}
+%
+\note{TODO: talk about Learning. Experience, reinforcement, share of knowledge.}
+
 
 
 \section{Intelligence in computer science}\label{sec:intelligence-in-computer-science}
@@ -111,8 +118,46 @@ Since the automation of computation with the invention of the computer, intellig
 %
 Officially, the field of \gls{AI} was born in 1956 at the Dartmouth Conference, where a group of researchers gathered to discuss the possibility of \emph{computing towards intelligence}.
 %
-In this section, we present how machines can perform intelligent tasks like the ones mentioned in \Cref{subsec:intelligence-in-animals,subsec:intelligence-in-humans} from an agent-based perspective.
+In this section, we present how machines can perform intelligent tasks, focussing in particular on reasoning and learning.
+
+\subsection{Reasoning}\label{subsec:reasoning}
 %
+\note{TODO: fill the section}
+
+\subsecection{Learning}\label{subsec:machine-learning}
+%
+The learning process performed by machines is referred to as \gls{ML}.
+%
+\gls{ML} is a wide umbrella term that encompasses a variety of different ways of learning and different learning tasks.
+%
+The ultimate goal consists in learning \emph{knowledge} about a certain domain or about how to perform a certain task.
+%
+The most common \gls{ML} macro tasks are:
+%
+\begin{itemize}
+    \item \textbf{Classification} $\rightarrow$ given the input data $X={x_1, x_2, \dots, x_n}$, the task is to predict a label $y$ (a.k.a., output) from a finite set of labels $Y=\{y_1, y_2, \dots, y_m\}$.
+    %
+    The input is made of numerical features $x_i$ that can either be binary, categorical, or continuous.
+    %
+    \item \textbf{Regression} $\rightarrow$ the task is to predict a continuous value $y$ from the input data $X$.
+    %
+    item \textbf{Clustering} $\rightarrow$ the task is to group the input data $X$ into $k$ clusters according to some strategy (e.g., usually a distance function).
+    %
+    A cluster is a subset of the input data $X$ that is \emph{similar to each other} and \emph{dissimilar from the data in other clusters}.
+\end{itemize}
+%
+The input can come in different shapes, e.g., \emph{tabular data}, \emph{images}, \emph{text}, etc.
+%
+
+\subsubsection{Supervised}\label{subsubsec:supervised}
+%
+A \gls{ML} process is \emph{supervised} if it is trained on a labelled dataset.
+
+\subsubsection{Unsupervised}\label{subsubsec:unsupervised}
+
+\subsubsection{\Glsentrylong{RL}}\label{subsubsec:rl}
+
+\subsubsection{Actively learning}\label{subsubsec:actively-learning}
 
 \subsection{Agents}\label{subsec:agents}
 %
@@ -134,33 +179,6 @@ However, it is a fundamental trait of living systems and life evolved towards mo
 
 
 A \emph{robot} -- i.e., an \emph{embodied agent} -- that is able to recognise when its battery is low and to recharge itself is more autonomous than a robot that needs to be recharged by a human.
-
-
-\subsubsection{Adapting}\label{subsubsec:adapting}
-
-
-
-\subsubsection{Planning}\label{subsubsec:planning}
-
-\subsection{Reasoning}\label{subsec:reasoning}
-
-
-\section{Learning}\label{sec:learning}
-
-Learning is the process that more than any other is perceived as part of intelligence.
-%
-Machines can learn in many different ways, like humans and animals do.
-%
-
-
-
-\subsection{\Glsentrylong{ML}}\label{subsec:machine-learning}
-
-\subsection{\Glsentrylong{RL}}\label{subsec:rl}
-
-\subsection{Actively learning}\label{subsec:actively-learning}
-
-% \subsection{\Glsentrylong{PAC} learning}\label{subsec:pac-learning}
 
 
 \section{Autonomous learning}\label{sec:autonomous-learning}
