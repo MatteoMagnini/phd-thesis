@@ -132,7 +132,7 @@ The learning process performed by machines is referred to as \gls{ML}.
 %
 The ultimate goal consists in learning \emph{knowledge} about a certain domain or about how to perform a certain task.
 %
-The most common \gls{ML} macro tasks are:
+The most common macro \gls{ML} tasks are:
 %
 \begin{itemize}
     \item \textbf{Classification} $\rightarrow$ given the input data $X={x_1, x_2, \dots, x_n}$, the task is to predict a label $y$ (a.k.a., output) from a finite set of labels $Y=\{y_1, y_2, \dots, y_m\}$.
@@ -145,8 +145,18 @@ The most common \gls{ML} macro tasks are:
     %
     A cluster is a subset of the input data $X$ that is \emph{similar to each other} and \emph{dissimilar from the data in other clusters}.
 \end{itemize}
+
+The software entity deputed to the learning process is a mathematical model that is trained on a dataset (i.e., a collection of input data and possibly their corresponding labels).
+%
+Usually it is simply called \emph{model}, but it is also referred to as \emph{predictor}, \emph{learner}, \emph{classifier}, etc.
 %
 The input can come in different shapes, e.g., \emph{tabular data}, \emph{images}, \emph{text}, etc.
+%
+Each input type is represented in a different way: an entry in a table is represented as a vector of features, an image is usually represented as a matrix, or a tensor, and a text can be represented as a vector of word embeddings.
+%
+The set of all the features is called \emph{feature space} and the set of all the possible outputs is called \emph{output space}.
+%
+Both spaces can be finite or infinite.
 %
 
 \subsubsection{Supervised}\label{subsubsec:supervised}
