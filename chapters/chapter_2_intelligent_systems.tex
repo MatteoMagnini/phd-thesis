@@ -113,14 +113,25 @@ There exists three main ways of reasoning:
     %
     For example, if we know that \emph{all humans are mortal} and \emph{Socrates is a human}, we can conclude that \emph{Socrates is mortal}.
     %
+    Deductive reasoning can be compared to what Kahneman calls \emph{System 2} in his book \emph{Thinking, Fast and Slow}~\cite{kahneman2011thinking}.
+    %
+    Kahneman describes the second system as \emph{slow thinking}, which is deliberate, effortful, logical and more rational.
+    %
     \item \textbf{Inductive reasoning} $\rightarrow$ it is a bottom-up approach that starts from specific observations and derives general conclusions.
     %
     For example, if we observe that \emph{the sun rises every day}, we can conclude that \emph{the sun will rise tomorrow}.
     %
-    \item \textbf{Abductive reasoning} $\rightarrow$ it is a form of reasoning that starts from an observation and seeks the simplest and most likely explanation.
+    Inductive reasoning can be mapped in the \emph{System 1} -- i.e., \emph{fast thinking} -- of Kahneman, which is automatic, effortless, intuitive and emotional.
+    %
+    \item \textbf{Abductive reasoning} $\rightarrow$ it is a form of reasoning that starts from an observation and seeks the simplest and most likely explanation (i.e., \emph{Occam's razor}).
     %
     For example, if we observe that \emph{the grass is wet}, we can conclude that \emph{it rained last night}.
     %
+    This kind of reasoning is the same that is adopted by detectives to solve crimes.
+    %
+    Abduction also requires the use of statistics and probabilities, and therefore it deals with uncertainty.
+    %
+    \emph{``Once you eliminate the impossible, whatever remains, no matter how improbable, must be the truth''---Arthur Conan Doyle}.
 \end{itemize}
 
 \subsubsection{Learning}\label{subsubsec:learning}
@@ -155,7 +166,11 @@ A widely adopted definition of \gls{ML} is the one given by Tom Mitchell in 1997
 %
 The software component deputed to learning is referred as \emph{model}, \emph{learner} or \emph{predictor} (and possibly other names).
 %
-The experience $E$ can be represented as a given dataset, i.e., a collection of input data (and possibly their corresponding labels), but this is not the only way (e.g., \Cref{subsubsec:rl}).
+The experience $E$ can be represented as a given dataset, i.e., a collection of input data, but there could be other ways (e.g., \Cref{subsubsec:rl}).
+%
+The input can come in different shapes, e.g., \emph{tabular data}, \emph{images}, \emph{text}, etc.
+%
+Each input type is represented in different ways to be interpreted by a machine: an entry in a table is represented as a vector of features, an image is usually represented as a matrix, or a tensor, and a text can be represented as a vector of word embeddings.
 %
 There can be a variety of different tasks $T$ and performance measures $P$.
 %
@@ -187,15 +202,6 @@ To approximate $\pi^{*}$, a learning algorithm is used.
 %
 Depending on the type of learning algorithm, the learning process can be \emph{supervised}, \emph{unsupervised}, or \emph{reinforcement} (see \Cref{subsubsec:supervised,subsubsec:unsupervised,subsubsec:rl}).
 %
-The input can come in different shapes, e.g., \emph{tabular data}, \emph{images}, \emph{text}, etc.
-%
-Each input type is represented in a different way: an entry in a table is represented as a vector of features, an image is usually represented as a matrix, or a tensor, and a text can be represented as a vector of word embeddings.
-%
-The set of all the features is called \emph{feature space} and the set of all the possible outputs is called \emph{output space}.
-%
-Both spaces can be finite or infinite.
-%
-
 
 \subsubsection{Supervised}\label{subsubsec:supervised}
 %
