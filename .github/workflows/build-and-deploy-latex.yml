@@ -46,9 +46,14 @@ jobs:
         run: |
           ruby bibtex_prettifier.rb
 
+#     # Why compile three times?
+#     # Symply because of this:
+#     # https://ctan.math.washington.edu/tex-archive/macros/latex/contrib/minitoc/minitoc.pdf
+#     # page 55, section 1.10
       - name: Compile with latexmk
         run: |
           set +e
+          latexmk -pdf -interaction=nonstopmode -shell-escape ${{ env.PAPER_BASE_NAME }}.tex
           latexmk -pdf -interaction=nonstopmode -shell-escape ${{ env.PAPER_BASE_NAME }}.tex
           latexmk -pdf -interaction=nonstopmode -shell-escape ${{ env.PAPER_BASE_NAME }}.tex
           STATUS=$?
