@@ -9,45 +9,66 @@
 
 \section{Overview}\label{sec:ai-overview}
 %
-The wide range of \gls{AI} techniques used to be divided into two main categories: \emph{symbolic} and \emph{sub-symbolic} \Gls{AI}.
+The wide range of \gls{AI} techniques used to be divided into two main categories: \emph{symbolic} and \emph{sub-symbolic} \gls{AI}.
 %
 The thing that distinguishes the two categories is the way they \emph{represent knowledge} and how they process it.
 %
 No intelligence can exist without knowledge and no computation can occur in lack of representation.
 %
-In the rest of the thesis, we will use the term symbolic (resp., sub-symbolic) \Gls{AI} and symbolic (resp., sub-symbolic) \Gls{KR} almost interchangeably.
+In the rest of the thesis, we will use the term symbolic (resp., sub-symbolic) \gls{AI} and symbolic (resp., sub-symbolic) \gls{KR} almost interchangeably.
 %
-Symbolic \Gls{AI} is based on \emph{symbols}, which come with a \emph{meaning} and could be manipulated according to the formalism and rules of a given \Gls{AI} system.
+Symbolic \gls{AI} is based on \emph{symbols}, which come with a \emph{meaning} and could be manipulated according to the formalism and rules of a given \gls{AI} system.
 %
-On the other hand, sub-symbolic \Gls{AI} is based on a numerical representation -- a.k.a., sub-symbolic -- where the numbers are not directly interpretable.
+On the other hand, sub-symbolic \gls{AI} is based on a numerical representation -- a.k.a., sub-symbolic -- where the numbers are not directly interpretable.
 %
-\todo{Talk more about the two systems in general}
+\note{Talk more about the two systems in general}
 %
-In the following sections, we will explore symbolic and sub-symbolic \Gls{AI} in more detail.
+In the following sections, we will explore symbolic and sub-symbolic \gls{AI} in more detail.
 
 
 \section{Symbolic \Gls{AI}}\label{sec:symbolic-ai}
 %
-Symbolic \Gls{AI} has been regarded as crucial since \Gls{AI}\'s inception.
+Symbolic \gls{AI} has been regarded as crucial since \gls{AI}'s inception.
 %
-Symbolic \Gls{KR} offers enhanced flexibility, expressiveness, and intelligibility, being interpretable both by machines and by humans.
+Symbolic \gls{KR} offers enhanced flexibility, expressiveness, and intelligibility, being interpretable both by machines and by humans.
+
+\paragraph{Intentional vs. extensional}
 %
-Historically, most \Gls{KR} formalisms and their enabling technologies have been rooted in \Gls{CL}.
+In formal logic, one may define concepts either \emph{extensionally} or \emph{intensionally}.
+%
+Extensional definitions are direct representations of data.
+%
+For example, the set of square numbers admits the extensional definition $\{0,1,4,9,16,\dots\}$ by listing every member explicitly.
+%
+Conversely, an \emph{intensional} definition is an indirect representation of data.
+%
+In \gle{FOL}, this corresponds to defining a relation via a formula; for instance, the set of square numbers can be defined as $\{\,x\mid \exists n\in\mathbb{Z}\,(x = n^2)\}$ which succinctly encodes an infinite extension with a single schema.
+%
+Recursive intensional predicates further enhance expressivity: for example, the ancestor relation can be axiomatized by $\mathit{Ancestor}(x,y)\;\Leftrightarrow\;\mathit{Parent}(x,y)\;\lor\;\exists z\,[\,\mathit{Parent}(x,z)\wedge\mathit{Ancestor}(z,y)\,]$ allowing a compact representation of an infinite set of pairs with a finite rule.
+%
+In formal logic, intensional definitions are prized for their ability to model potentially unbounded domains within finite logical formalisms.
+
+
+Historically, most \gls{KR} formalisms and their enabling technologies have been rooted in \gls{CL}.
+%
+Notable examples, for instance, include \gls{FOL}, \gls{HL}, \gls{DL}, and ontologies.
 %
 Increased expressiveness often comes at the cost of higher computational complexity, giving rise to the well-known \emph{expressiveness vs. tractability} trade-off~\cite{DBLP:conf/dlog/2003handbook}.
 %
-To balance these concerns, various fragments and extensions of \Gls{FOL} have been identified, each providing different tradeoffs between what can be expressed and what can be decided efficiently
+To balance these concerns, various fragments and extensions of \gls{FOL} have been identified, each providing different tradeoffs between what can be expressed and what can be decided efficiently.
+
+\paragraph{Expressiveness vs. tractability}
+%
+\note{complete this}
 
 
-\subsection{\Glsentrylong{CL}}\label{subsec:cl}
+\subsection{\Glsentrylong{FOL}}\label{subsec:first-order-logic}
 
 \subsection{\Glsentrylong{DL}}\label{subsec:dl}
 
 \subsection{Ontologies}\label{subsec:ontologies}
 
 \subsection{Horn logic}\label{subsec:horn-logic}
-
-\subsection{Higher-order logic}\label{subsec:higher-order-logic}
 
 \subsection{Expert Systems}\label{subsec:expert-systems}
 
