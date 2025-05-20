@@ -4,7 +4,6 @@
 %----------------------------------------------------------------------------------------
 \chapter[Artificial Intelligence]{\Glsentrylong{AI}}
 \label{ch:ai}
-\mtcaddchapter
 \minitoc
 %----------------------------------------------------------------------------------------
 
@@ -16,10 +15,28 @@ The thing that distinguishes the two categories is the way they \emph{represent 
 %
 No intelligence can exist without knowledge and no computation can occur in lack of representation.
 %
+In the rest of the thesis, we will use the term symbolic (resp., sub-symbolic) \Gls{AI} and symbolic (resp., sub-symbolic) \Gls{KR} almost interchangeably.
+%
+Symbolic \Gls{AI} is based on \emph{symbols}, which come with a \emph{meaning} and could be manipulated according to the formalism and rules of a given \Gls{AI} system.
+%
+On the other hand, sub-symbolic \Gls{AI} is based on a numerical representation -- a.k.a., sub-symbolic -- where the numbers are not directly interpretable.
+%
+\todo{Talk more about the two systems in general}
+%
+In the following sections, we will explore symbolic and sub-symbolic \Gls{AI} in more detail.
 
 
 \section{Symbolic \Gls{AI}}\label{sec:symbolic-ai}
 %
+Symbolic \Gls{AI} has been regarded as crucial since \Gls{AI}\'s inception.
+%
+Symbolic \Gls{KR} offers enhanced flexibility, expressiveness, and intelligibility, being interpretable both by machines and by humans.
+%
+Historically, most \Gls{KR} formalisms and their enabling technologies have been rooted in \Gls{CL}.
+%
+Increased expressiveness often comes at the cost of higher computational complexity, giving rise to the well-known \emph{expressiveness vs. tractability} trade-off~\cite{DBLP:conf/dlog/2003handbook}.
+%
+To balance these concerns, various fragments and extensions of \Gls{FOL} have been identified, each providing different tradeoffs between what can be expressed and what can be decided efficiently
 
 
 \subsection{\Glsentrylong{CL}}\label{subsec:cl}
