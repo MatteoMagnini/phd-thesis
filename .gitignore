@@ -4,6 +4,7 @@ tmp*
 phd-thesis.pdf
 example.pdf
 *~
+*SAVE-ERROR
 
 .vscode/
 

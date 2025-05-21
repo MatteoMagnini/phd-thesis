@@ -42,7 +42,7 @@ For example, the set of square numbers admits the extensional definition $\{0,1,
 %
 Conversely, an \emph{intensional} definition is an indirect representation of data.
 %
-In \gle{FOL}, this corresponds to defining a relation via a formula; for instance, the set of square numbers can be defined as $\{\,x\mid \exists n\in\mathbb{Z}\,(x = n^2)\}$ which succinctly encodes an infinite extension with a single schema.
+In \gls{FOL}, this corresponds to defining a relation via a formula; for instance, the set of square numbers can be defined as $\{\,x\mid \exists n\in\mathbb{Z}\,(x = n^2)\}$ which succinctly encodes an infinite extension with a single schema.
 %
 Recursive intensional predicates further enhance expressivity: for example, the ancestor relation can be axiomatized by $\mathit{Ancestor}(x,y)\;\Leftrightarrow\;\mathit{Parent}(x,y)\;\lor\;\exists z\,[\,\mathit{Parent}(x,z)\wedge\mathit{Ancestor}(z,y)\,]$ allowing a compact representation of an infinite set of pairs with a finite rule.
 %
@@ -57,9 +57,25 @@ Increased expressiveness often comes at the cost of higher computational complex
 %
 To balance these concerns, various fragments and extensions of \gls{FOL} have been identified, each providing different tradeoffs between what can be expressed and what can be decided efficiently.
 
+
 \paragraph{Expressiveness vs. tractability}
 %
-\note{complete this}
+Tractability addresses the theoretical question of whether a logic reasoner can determine the truth of a given formula within feasible time and space bounds.
+%
+The answer is deeply tied to the specific reasoning algorithm and the logic's formal properties.
+%
+Depending on the features a logic provides -- such as quantifiers, function symbols, or recursive definitions -- it may be more or less expressive.
+%
+The higher the expressiveness, the more complex the problems that can be represented and reasoned about, but this also increases the computational burden.
+%
+This well-known phenomenon is often referred to as the expressiveness/tractability trade-off~\cite{DBLP:journals/jlp/CadoliS93,BRACHMAN2004327,DBLP:journals/ci/LevesqueB87}.
+%
+In practice, highly expressive logics make it easier for human users to model rich domains, often requiring fewer and more concise formulas.
+%
+However, this comes at the cost of automated inference, which may become computationally intractable, undecidable, or non-terminating in the general case.
+%
+To mitigate this issue, many systems adopt restricted fragments of first-order logic—such as Horn clauses or decidable Description Logics—that preserve a useful degree of expressiveness while maintaining decidability and, often, practical efficiency~\cite{lloyd1987foundations,baader2003description}.
+
 
 
 \subsection{\Glsentrylong{FOL}}\label{subsec:first-order-logic}
