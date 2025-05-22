@@ -21,9 +21,46 @@ Symbolic \gls{AI} is based on \emph{symbols}, which come with a \emph{meaning} a
 %
 On the other hand, sub-symbolic \gls{AI} is based on a numerical representation -- a.k.a., sub-symbolic -- where the numbers are not directly interpretable.
 %
-\note{Talk more about the two systems in general}
+Numbers are technically symbols, but numbers, arrays and their functions are not recognised as means for symbolic \gls{KR}.
 %
-In the following sections, we will explore symbolic and sub-symbolic \gls{AI} in more detail.
+According to Van Gelder~\cite{DBLP:conf/ogai/Gelder90}, in order to be considered symbolic, \gls{KR} approaches must:
+%
+\begin{requirements}
+    %
+    \item \label{itm:symbolic-req-1} involve a set of symbols;
+    %
+    \item \label{itm:symbolic-req-2} the symbols can be combined following a set of grammatical rules;
+    %
+    \item \label{itm:symbolic-req-3} elementary symbols and combinations of symbols can be assigned a meaning.
+    %
+\end{requirements}
+
+
+\paragraph{Local vs. distributed}
+%
+Multidimensional arrays are the fundamental building block of sub-symbolic data representation.
+%
+Formally, a $D$-order array is an ordered container of real numbers, where $D$ indicates the number of indices required to access each element.
+%
+We refer to 1-order arrays as \emph{vectors}, 2-order arrays as \emph{matrices}, and arrays of order greater than two as \emph{tensors}.
+%
+In sub-symbolic tasks based on arrays, information is typically conveyed both by the values stored in the array and their position within it.
+%
+The dimensions of the array -- denoted as $(d_1 \times \dots \times d_D)$ -- also play a crucial role, as sub-symbolic systems are usually designed to operate on arrays of fixed shape.
+%
+That is, the values of $d_1, \dots, d_D$ are chosen at design time and remain unchanged thereafter.
+%
+This violates \Cref{itm:symbolic-req-2} above; accordingly, we define sub-symbolic \gls{KR} as the task of encoding information into rigid numeric arrays.
+%
+\emph{Local} and \emph{distributed} representations are two key modes for encoding data into such arrays~\cite{hinton1986learning}.
+%
+In local representations, each entry in the array corresponds to a well-defined concept from the target domain---its semantic meaning is clear and independent.
+%
+In distributed representations, by contrast, individual values carry little or no standalone meaning: their interpretation depends on the configuration of values across a neighbourhood in the indexing space.
+%
+Consequently, while the exact location of values is largely irrelevant in local representations, it becomes essential in distributed ones.
+%
+Notably, distributed representations violate \Cref{itm:symbolic-req-3}, and for this reason, recent literature often labels as \emph{sub-symbolic} those predictors that rely on distributed encoding of data.
 
 
 \section{Symbolic \Gls{AI}}\label{sec:symbolic-ai}

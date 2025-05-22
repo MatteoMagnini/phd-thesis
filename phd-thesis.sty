@@ -26,6 +26,12 @@
 \crefname{questionsi}{}{}
 \Crefname{questionsi}{}{}
 
+\newlist{requirements}{enumerate}{2}
+\setlist[requirements,1]{label=\textbf{(R\arabic*)},ref=R\arabic*}
+\setlist[requirements,2]{label=(\alph*),ref=\therequirementsi(\alph*)}
+\crefname{requirementsi}{}{}
+\Crefname{requirementsi}{}{}
+
 \setcounter{secnumdepth}{3}
 
 \fancypagestyle{plain}{
