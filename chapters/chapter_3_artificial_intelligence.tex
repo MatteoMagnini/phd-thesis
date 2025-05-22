@@ -86,15 +86,6 @@ Recursive intensional predicates further enhance expressivity: for example, the 
 In formal logic, intensional definitions are prized for their ability to model potentially unbounded domains within finite logical formalisms.
 
 
-Historically, most \gls{KR} formalisms and their enabling technologies have been rooted in \gls{CL}.
-%
-Notable examples, for instance, include \gls{FOL}, \gls{HL}, \gls{DL}, and ontologies.
-%
-Increased expressiveness often comes at the cost of higher computational complexity, giving rise to the well-known \emph{expressiveness vs. tractability} trade-off~\cite{DBLP:conf/dlog/2003handbook}.
-%
-To balance these concerns, various fragments and extensions of \gls{FOL} have been identified, each providing different tradeoffs between what can be expressed and what can be decided efficiently.
-
-
 \paragraph{Expressiveness vs. tractability}
 %
 Tractability addresses the theoretical question of whether a logic reasoner can determine the truth of a given formula within feasible time and space bounds.
@@ -111,8 +102,7 @@ In practice, highly expressive logics make it easier for human users to model ri
 %
 However, this comes at the cost of automated inference, which may become computationally intractable, undecidable, or non-terminating in the general case.
 %
-To mitigate this issue, many systems adopt restricted fragments of first-order logic -- such as Horn clauses or decidable Description Logics -- that preserve a useful degree of expressiveness while maintaining decidability and, often, practical efficiency.
-
+To mitigate this issue, various fragments and extensions of \gls{FOL} have been identified, each providing different tradeoffs between what can be expressed and what can be decided efficiently.
 
 
 \subsection{\Glsentrylong{FOL}}\label{subsec:first-order-logic}
