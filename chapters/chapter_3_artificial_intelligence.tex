@@ -106,18 +106,77 @@ To mitigate this issue, various fragments and extensions of \gls{FOL} have been 
 
 
 \subsection{\Glsentrylong{FOL}}\label{subsec:first-order-logic}
+%
+\Gls{FOL} is a general-purpose formalism that underpins most symbolic \gls{KR} systems.
+%
+It enables both human and computational agents to model entities and their interrelations through predicates and terms within a defined domain of discourse.
+%
+Its syntax comprises variables (quantified explicitly or implicitly), constants, function symbols, and predicate symbols, which are combined via logical operators such as conjunction (\(\wedge\)), disjunction (\(\vee\)), implication (\(\rightarrow\)), and equivalence (\(\leftrightarrow\)).
+%
+\Gls{FLO} allows for both \emph{extensional} and \emph{intensional} definitions.
+%
+Recursive intensional definitions, in particular, are powerful, enabling finite representations of infinite sets.
+%
+Despite its flexibility, \gls{FOL} is semi-decidable in general: there is no algorithm that can determine the truth of every \gls{FOL} formula in finite time, which limits its use in systems requiring guaranteed termination~\cite{DBLP:conf/dlog/2003handbook}.
+
+
+\subsection{Horn logic}\label{subsec:horn-logic}
+%
+Horn logic is a significant subset of \gls{FOL}, offering a balanced trade-off between theoretical expressiveness and practical tractability~\cite{DBLP:journals/jcss/Makowsky87}.
+%
+It is built around the concept of \emph{Horn clauses}~\cite{DBLP:journals/jsyml/Horn51}, which are formulas in \gls{FOL} that exclude quantifiers and consist of a disjunction of predicates, with at most one non-negated literal.
+%
+Alternatively, a Horn clause can be expressed as an implication where the consequent is a single predicate and the antecedent is a conjunction of predicates: \(h \gets b_1, \dots, b_n\).
+%
+Here, \(\gets\) denotes logical implication (from right to left), commas represent logical conjunctions, and \(b_i\) as well as \(h\) are predicates of arbitrary arity, potentially containing \gls{FOL} terms such as variables, constants, or functions.
+
+Horn clauses can be interpreted as \emph{if-then} rules written in reverse order, where only conjunctions of predicates are allowed in the antecedent.
+%
+In essence, Horn logic is a constrained subset of \gls{FOL} characterized by the following limitations:
+%
+\begin{inlinelist}
+%
+    \item formulas are reduced to clauses, containing only predicates, conjunctions, and a single implication operator;
+    %
+    \item operators such as \(\lor\), \(\leftrightarrow\), or \(\neg\) (negation) are not allowed;
+    %
+    \item variables are implicitly quantified; and
+    %
+    \item terms behave as they do in \gls{FOL}.
+    %
+\end{inlinelist}
+
+
+\subsection{Datalog}\label{subsec:datalog}
+%
+Datalog is a declarative query language and a restricted subset of \gls{FOL}, designed for deductive databases and knowledge representation~\cite{DBLP:journals/jcss/AjtaiG94}.
+%
+It represents knowledge using function-free \gls{Horn} clauses, as defined in \Cref{subsec:horn-logic}.
+%
+This restriction eliminates the use of function symbols, thereby forbidding structured terms such as recursive data structures.
+%
+As a result, Datalog is well-suited for applications requiring finite and decidable reasoning, as the absence of function symbols ensures termination of inference algorithms.
+%
+Similar to \gls{Horn} logic, Datalog’s knowledge bases consist of sets of function-free \gls{Horn} clauses, which are interpreted as rules and facts.
+%
+Rules in Datalog follow the form \(h \gets b_1, \dots, b_n\), where \(h\) is the head of the rule and \(b_1, \dots, b_n\) are the body predicates.
+%
+Unlike general \gls{FOL}, Datalog does not allow disjunctions, negations, or explicit quantifiers, as variables are implicitly universally quantified.
+%
+Datalog is widely used in areas such as \glspl{KG}, semantic web technologies, and database systems, where efficient reasoning over large datasets is required.
+%
+Its simplicity and computational efficiency make it a practical choice for symbolic \gls{AI} tasks that demand tractable reasoning.
+
 
 \subsection{\Glsentrylong{DL}}\label{subsec:dl}
 
-\subsection{Ontologies}\label{subsec:ontologies}
-
-\subsection{Horn logic}\label{subsec:horn-logic}
-
-\subsection{Expert Systems}\label{subsec:expert-systems}
+\subsection{Ontologies and \glsentrylong{KG}}\label{subsec:ontologies-and-kg}
 
 \subsection{Trees and other algorithms}\label{subsec:trees-and-other-algorithms}
 
 \subsection{Limits of symbolic \Gls{AI}}\label{subsec:limits-of-symbolic-ai}
+
+
 
 \section{Sub-symbolic \Gls{AI}}\label{sec:sub-symbolic-ai}
 
