@@ -169,6 +169,47 @@ Its simplicity and computational efficiency make it a practical choice for symbo
 
 
 \subsection{\Glsentrylong{DL}}\label{subsec:dl}
+%
+\Gls{DL} are a family of subsets of \gls{FOL}, typically involving limited or no quantifiers, no structured terms, and no \textit{n}-ary predicates where \(n \geq 3\)~\cite{DBLP:books/daglib/0041477}.
+%
+In essence, \gls{DL} represents knowledge using constants and variables, along with atomic, unary, and binary predicates.
+
+
+The differences among specific variants of \gls{DL} lie in the set of supported logical connectives and whether negation is allowed.
+%
+The wide variety of \gls{DL} stems from the well-known trade-off between expressiveness and tractability.
+%
+Depending on the application, one may prefer a more expressive \gls{DL} variant, which offers richer features at the cost of reduced tractability or even decidability of algorithms manipulating the knowledge, or vice versa.
+
+
+In \gls{DL}, it is common practice to use specific terminology for different elements of knowledge representation:
+%
+\begin{itemize}
+    %
+    \item Constant terms are referred to as \textit{individuals}, as each constant represents a single entity within a domain.
+    %
+    \item Unary predicates are called \textit{classes} or \textit{concepts}, grouping sets of individuals for which the predicate holds true.
+    %
+    \item Binary predicates are referred to as \textit{properties} or \textit{roles}, connecting pairs of individuals.
+    %
+\end{itemize}
+%
+
+Using this nomenclature, knowledge in \gls{DL} can be represented by associating entities with constants (e.g., URLs) and defining concepts and properties accordingly.
+%
+Binary predicates are particularly significant as they enable the connection of pairs of entities.
+%
+This is typically achieved through subject–predicate–object triplets, represented as ground binary predicates of the form \(\langle a \, f \, b\rangle\) or \(f(a, b)\), where \(a\) is the subject, \(f\) is the predicate, and \(b\) is the object.
+
+Collections of such triplets form \glspl{KG}, which are directed graphs where vertices represent individuals and arcs represent binary properties connecting these individuals.
+%
+\glspl{KG} may explicitly or implicitly instantiate a specific \gls{ontology}, which is a formal description of classes characterizing a domain, their relationships (e.g., inclusion, exclusion, intersection, equivalence), and the properties they must or must not include.
+
+
+\glspl{DL} are widely used in applications such as semantic web~\cite{DBLP:conf/coopis/GangemiM03} and ontology engineering~\cite{DBLP:books/ios/HGJKP2016}, where efficient reasoning and knowledge representation are essential.
+%
+Their ability to balance expressiveness and computational efficiency makes them a cornerstone of symbolic reasoning systems.
+
 
 \subsection{Ontologies and \glsentrylong{KG}}\label{subsec:ontologies-and-kg}
 

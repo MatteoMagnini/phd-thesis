@@ -1,5 +1,6 @@
 .idea/
 out/
+copilot_prompt.txt
 tmp*
 phd-thesis.pdf
 example.pdf
