@@ -212,6 +212,75 @@ Their ability to balance expressiveness and computational efficiency makes them 
 
 
 \subsection{Ontologies and \glsentrylong{KG}}\label{subsec:ontologies-and-kg}
+%
+An ontology is a formal and explicit specification of a shared conceptualisation of a domain~\cite{gruber1993}.
+%
+It provides a structured vocabulary to describe the entities relevant in that domain, along with their attributes and the relationships among them.
+%
+This organisation enables both human understanding and machine-based reasoning.
+
+Ontologies are typically expressed using \glspl{DL}, a family of logic-based formalisms for knowledge representation.
+%
+\Glspl{DL} define three main components:
+%
+\begin{inlinelist}
+    %
+    \item\emph{concepts} (or \emph{classes}), which group entities sharing similar features;
+    %
+    \item\emph{individuals} (or \emph{instances}), which are the concrete elements of the domain;
+    %
+    \item\emph{roles} (or \emph{properties}), which describe binary relationships between individuals.
+    %
+\end{inlinelist}
+%
+Different \glspl{DL} vary in their expressive power: for example, \gls{EL} supports only conjunction and existential quantification to ensure efficient reasoning, while more expressive DLs like \gls{ACL} allow for full Boolean operators and universal quantification.
+
+Concepts are typically denoted using capital italic letters, such as $\mathit{Animal}$ or $\mathit{Cat}$.
+%
+These can be combined using logical constructors like intersection ($\sqcap$), union ($\sqcup$), or negation ($\lnot$) to form more complex classes.
+%
+A statement like $\mathit{Cat} \sqsubseteq \mathit{Animal}$ expresses that all cats are animals.
+
+Individuals are constants representing specific entities in the domain and are usually written in monospaced lowercase, for example \texttt{tom}.
+%
+Membership of an individual in a concept is denoted using the ``is-a'' relation, written as \texttt{tom}~:~$\mathit{Cat}$, meaning ``Tom is a cat.''
+%
+Each individual may belong to multiple concepts.
+
+Roles represent binary relations between individuals and are written in lowercase sans-serif font, such as \textsf{eats}.
+%
+They connect pairs of individuals, and their domain and range can be restricted using expressions such as $\textsf{eats} \sqsubseteq \mathit{Animal} \times \mathit{Edible}$.
+%
+Assertions like $\textsf{eats}(\texttt{tom}, \texttt{mouse})$ state that Tom eats the mouse.
+
+The subsumption relation ($\sqsubseteq$) is used to express inclusion between concepts or roles.
+%
+For instance, $\mathit{Cat} \sqsubseteq \mathit{Animal}$ means that every cat is also an animal, and $\textsf{predatorOf} \sqsubseteq \textsf{eats}$ means that every predator-prey relationship implies eating.
+%
+Special concepts such as $\top$ and $\bot$ are used to denote the most general and the most specific concepts, respectively.
+
+Collections of such axioms form an ontology.
+%
+\Gls{TBOX} define concepts and roles and their interrelations, while \gls{ABOX} specify which individuals belong to which concepts or are related via which roles.
+
+\glspl{kg} also provide a structured way to represent knowledge as graphs.
+%
+They consist of triplets (or \emph{facts}) of the form $(s, p, o)$, where $s$ is the subject, $p$ is the predicate (or property), and $o$ is the object.
+%
+These triplets form a directed graph where nodes represent individuals and edges represent relationships.
+
+Unlike ontologies, KGs do not necessarily impose formal constraints on the structure or semantics of the triplets.
+%
+This flexibility allows for representing heterogeneous and incomplete data.
+%
+However, some \glspl{KG} are explicitly grounded in an ontology, and may follow its vocabulary and logical constraints.
+
+In summary, ontologies and knowledge graphs both aim to formally capture structured knowledge.
+%
+Ontologies provide formal semantics and enable logical reasoning, while knowledge graphs emphasise scalability and flexibility in representing factual data.
+
+
+
 
 \subsection{Trees and other algorithms}\label{subsec:trees-and-other-algorithms}
 
