@@ -113,7 +113,7 @@ It enables both human and computational agents to model entities and their inter
 %
 Its syntax comprises variables (quantified explicitly or implicitly), constants, function symbols, and predicate symbols, which are combined via logical operators such as conjunction (\(\wedge\)), disjunction (\(\vee\)), implication (\(\rightarrow\)), and equivalence (\(\leftrightarrow\)).
 %
-\Gls{FLO} allows for both \emph{extensional} and \emph{intensional} definitions.
+\Gls{FOL} allows for both \emph{extensional} and \emph{intensional} definitions.
 %
 Recursive intensional definitions, in particular, are powerful, enabling finite representations of infinite sets.
 %
@@ -151,13 +151,13 @@ In essence, Horn logic is a constrained subset of \gls{FOL} characterized by the
 %
 Datalog is a declarative query language and a restricted subset of \gls{FOL}, designed for deductive databases and knowledge representation~\cite{DBLP:journals/jcss/AjtaiG94}.
 %
-It represents knowledge using function-free \gls{Horn} clauses, as defined in \Cref{subsec:horn-logic}.
+It represents knowledge using function-free Horn clauses, as defined in \Cref{subsec:horn-logic}.
 %
 This restriction eliminates the use of function symbols, thereby forbidding structured terms such as recursive data structures.
 %
 As a result, Datalog is well-suited for applications requiring finite and decidable reasoning, as the absence of function symbols ensures termination of inference algorithms.
 %
-Similar to \gls{Horn} logic, Datalog’s knowledge bases consist of sets of function-free \gls{Horn} clauses, which are interpreted as rules and facts.
+Similar to Horn logic, Datalog’s knowledge bases consist of sets of function-free Horn clauses, which are interpreted as rules and facts.
 %
 Rules in Datalog follow the form \(h \gets b_1, \dots, b_n\), where \(h\) is the head of the rule and \(b_1, \dots, b_n\) are the body predicates.
 %
@@ -203,7 +203,7 @@ This is typically achieved through subject–predicate–object triplets, repres
 
 Collections of such triplets form \glspl{KG}, which are directed graphs where vertices represent individuals and arcs represent binary properties connecting these individuals.
 %
-\glspl{KG} may explicitly or implicitly instantiate a specific \gls{ontology}, which is a formal description of classes characterizing a domain, their relationships (e.g., inclusion, exclusion, intersection, equivalence), and the properties they must or must not include.
+\glspl{KG} may explicitly or implicitly instantiate a specific ontology, which is a formal description of classes characterizing a domain, their relationships (e.g., inclusion, exclusion, intersection, equivalence), and the properties they must or must not include.
 
 
 \glspl{DL} are widely used in applications such as semantic web~\cite{DBLP:conf/coopis/GangemiM03} and ontology engineering~\cite{DBLP:books/ios/HGJKP2016}, where efficient reasoning and knowledge representation are essential.
@@ -233,7 +233,7 @@ Ontologies are typically expressed using \glspl{DL}, a family of logic-based for
     %
 \end{inlinelist}
 %
-Different \glspl{DL} vary in their expressive power: for example, \gls{EL} supports only conjunction and existential quantification to ensure efficient reasoning, while more expressive DLs like \gls{ACL} allow for full Boolean operators and universal quantification.
+Different \glspl{DL} vary in their expressive power: for example, \gls{EL} supports only conjunction and existential quantification to ensure efficient reasoning, while more expressive DLs like \gls{ALC} allow for full Boolean operators and universal quantification.
 
 Concepts are typically denoted using capital italic letters, such as $\mathit{Animal}$ or $\mathit{Cat}$.
 %
@@ -263,7 +263,7 @@ Collections of such axioms form an ontology.
 %
 \Gls{TBOX} define concepts and roles and their interrelations, while \gls{ABOX} specify which individuals belong to which concepts or are related via which roles.
 
-\glspl{kg} also provide a structured way to represent knowledge as graphs.
+\Glspl{KG} also provide a structured way to represent knowledge as graphs.
 %
 They consist of triplets (or \emph{facts}) of the form $(s, p, o)$, where $s$ is the subject, $p$ is the predicate (or property), and $o$ is the object.
 %
