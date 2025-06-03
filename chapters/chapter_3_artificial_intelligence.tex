@@ -280,11 +280,45 @@ In summary, ontologies and knowledge graphs both aim to formally capture structu
 Ontologies provide formal semantics and enable logical reasoning, while knowledge graphs emphasise scalability and flexibility in representing factual data.
 
 
+\subsection{Propositional Logic}\label{subsec:propositional-logic}
+%
+Propositional logic is a restricted subset of \gls{FOL} in which quantifiers, terms, and non-atomic predicates are absent.  
+%
+Its language consists solely of atomic propositions—also called 0-ary predicates—combined using standard logical connectives such as conjunction ($\land$), disjunction ($\lor$), negation ($\lnot$), and implication ($\rightarrow$).  
+%
+Each proposition can be interpreted as a Boolean variable that takes a truth value in \{\texttt{true}, \texttt{false}\}.  
+%
+The semantics of propositional logic aligns with Boolean algebra, making it straightforward to evaluate the truth of a formula given the truth values of its atomic components.
 
+For example, a propositional formula such as $p \land \lnot q \rightarrow r$ can be interpreted as follows:  
+%
+$p$ might stand for the proposition ``it is raining,'' $q$ for ``there is a roof,'' and $r$ for ``the floor is wet.''  
+%
+In this case, the formula asserts that if it is raining and there is no roof, then the floor will be wet.
 
-\subsection{Trees and other algorithms}\label{subsec:trees-and-other-algorithms}
+Compared to \gls{FOL}, propositional logic is significantly less expressive.  
+%
+The absence of quantifiers means that general statements over a domain cannot be made.  
+%
+Similarly, the lack of terms prevents direct reference to entities in the domain.  
+%
+As a consequence, each relevant aspect of a scenario must be explicitly encoded as an individual proposition.
+
+This limitation in expressiveness has important computational implications.  
+%
+In particular, determining the satisfiability of a propositional formula is a decidable problem.  
+%
+This makes propositional logic attractive in scenarios where tractable reasoning is required.
+
+Despite its apparent simplicity, propositional logic can model a surprising range of situations.  
+%
+Expressions involving numerical constants, variables, and comparisons (e.g., $x > 5$ or $y = 3$) can be encoded propositionally by introducing a distinct Boolean variable for each comparison.  
+%
+This reduction allows the use of propositional logic in settings where the original problem does not explicitly involve logical variables or quantifiers, but can be decomposed into atomic truth conditions.
+
 
 \subsection{Limits of symbolic \Gls{AI}}\label{subsec:limits-of-symbolic-ai}
+%
 
 
 
