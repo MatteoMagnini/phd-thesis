@@ -6,6 +6,7 @@ phd-thesis.pdf
 example.pdf
 *~
 *SAVE-ERROR
+scripts/*.png
 
 .vscode/
 

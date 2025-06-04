@@ -88,6 +88,23 @@ In formal logic, intensional definitions are prized for their ability to model p
 
 \paragraph{Expressiveness vs. tractability}
 %
+\begin{SCfigure}
+    \centering
+    \includegraphics[width=0.58\textwidth]{figures/venn_diagram_logics}
+    \caption[Venn diagram of different logic families]{
+        %
+        Venn diagram of different logic families, illustrating the trade-off between expressiveness and tractability.
+        %
+        \Gls{FOL} is the most expressive logic -- not the most expressive logic in general -- encompassing all others.
+        %
+        On the other hand, propositional logic is the least expressive, as it can only represent atomic propositions and their combinations.
+        %
+        All the other logics fall somewhere in between, with varying degrees of expressiveness and tractability.
+    }
+    \label{fig:venn-diagram-logics}
+\end{SCfigure}
+
+%
 Tractability addresses the theoretical question of whether a logic reasoner can determine the truth of a given formula within feasible time and space bounds.
 %
 The answer is deeply tied to the specific reasoning algorithm and the logic's formal properties.
@@ -103,6 +120,8 @@ In practice, highly expressive logics make it easier for human users to model ri
 However, this comes at the cost of automated inference, which may become computationally intractable, undecidable, or non-terminating in the general case.
 %
 To mitigate this issue, various fragments and extensions of \gls{FOL} have been identified, each providing different tradeoffs between what can be expressed and what can be decided efficiently.
+%
+\Cref{fig:venn-diagram-logics} illustrates the relationships among different logic families, highlighting the trade-off between expressiveness and tractability.
 
 
 \subsection{\Glsentrylong{FOL}}\label{subsec:first-order-logic}
@@ -323,12 +342,20 @@ This reduction allows the use of propositional logic in settings where the origi
 
 
 \section{Sub-symbolic \Gls{AI}}\label{sec:sub-symbolic-ai}
+%
+Sub-symbolic \gls{AI} encompasses a wide range of techniques that rely on numerical representations.
+%
+Contributions come from varius fields, including \gls{ML}, statistical learning, and data mining.
+%
+The huge number of approaches is also motivated by the well known \gls{NFL} theorem~\cite{DBLP:journals/tec/DolpertM97} that states that no single learning algorithm can outperform all others across all possible tasks.
+%
+The most common predictor families are linear models, \glspl{DT}, \glspl{RF}, \glspl{SVM}, \glspl{NN} (including \glspl{LLM}), and many others.
 
-\subsection{Random forests}\label{subsec:random-forests}
+\paragraph{Predictive performance vs. interpretability}
+%
+\subsection{\Glsentrylongpl{DT}}\label{subsec:decision-trees}
 
-\subsection{Bayesian methods}\label{subsec:bayesian-methods}
-
-\subsection{Evolutionary algorithms}\label{subsec:evolutionary-algorithms}
+\subsection{\Glsentrylongpl{RF}}\label{subsec:random-forests}
 
 \subsection{\Glsentrylongpl{SVM}}\label{subsec:svm}
 
