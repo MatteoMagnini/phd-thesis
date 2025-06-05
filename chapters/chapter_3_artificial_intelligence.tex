@@ -385,6 +385,29 @@ Despite that, \Cref{fig:performance-vs-interpretability} illustrates in an infor
 
 
 \subsection{\Glsentrylongpl{DT}}\label{subsec:decision-trees}
+%
+\Glspl{DT} are a family of predictors that support both classification and regression tasks.
+%
+During the learning phase, the input space is recursively partitioned into multiple regions through a series of splits (i.e., decisions) based on the input data \(X\).
+%
+Each region is associated with a constant prediction, and the splits are designed to minimize the error with respect to the expected outputs \(Y\), while keeping the total number of regions low.
+%
+The learning process synthesizes a hierarchical structure of decision rules, which are followed to compute predictions for any \(x \in X\).
+%
+In the inference phase, these decision rules are evaluated sequentially, starting from the root of the tree and proceeding to a leaf node.
+%
+Each leaf corresponds to a specific region of the input space, resulting in a single prediction for each \(x\).
+
+Unlike other predictor families, \glspl{DT} produce a tree of decision rules as the outcome of the learning process.
+%
+This tree is straightforwardly interpretable by humans and can be graphically represented in two-dimensional charts.
+%
+This property is particularly valuable when the internal workings of an automatic predictor need to be understood by a human agent.
+%
+\Glspl{DT} are often used in applications where interpretability is crucial, as their structure provides clear insights into the decision-making process.
+%
+For further details on the advantages and limitations of \glspl{DT}, refer to \Cref{subsec:limits-of-sub-symbolic-ai}.
+
 
 \subsection{\Glsentrylongpl{RF}}\label{subsec:random-forests}
 
