@@ -351,8 +351,39 @@ The huge number of approaches is also motivated by the well known \gls{NFL} theo
 %
 The most common predictor families are linear models, \glspl{DT}, \glspl{RF}, \glspl{SVM}, \glspl{NN} (including \glspl{LLM}), and many others.
 
+
 \paragraph{Predictive performance vs. interpretability}
 %
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/interpretability-performance-tradeoff}
+    \caption[Performance vs. interpretability trade-off]{
+        %
+        Trade-off between predictive performance and interpretability in common sub-symbolic predictors.
+        %
+        The figure illustrates how different predictor families balance these two aspects, with simpler models being more interpretable but potentially less accurate.
+        %
+    }
+    \label{fig:performance-vs-interpretability}
+\end{figure}
+%
+The \emph{complexity} of a sub-symbolic predictor can vary significantly.
+%
+By complexity we mean the overall structure of the model, including the number of parameters, the operations that are performed, and possibly the way the model is trained.
+%
+\Glspl{DT}, for example, are relatively simple models that can be easily interpreted by humans.
+%
+The downside of \glspl{DT} is that they make predictions by linearly partitioning the input space, which can lead to poor generalisation on unseen data.
+%
+On the other hand, \glspl{NN} can be extremely complex, with millions of parameters and intricate architectures that are difficult to interpret.
+%
+However, \glspl{NN} can capture highly non-linear relationships in the data, often leading to superior predictive performance compared to simpler models.
+%
+The definition of interpretability is not univocal, and it lacks measures that are widely accepted~\cite{DBLP:journals/natmi/Rudin19}.
+%
+Despite that, \Cref{fig:performance-vs-interpretability} illustrates in an informal way the trade-off between predictive performance and interpretability in sub-symbolic predictors.
+
+
 \subsection{\Glsentrylongpl{DT}}\label{subsec:decision-trees}
 
 \subsection{\Glsentrylongpl{RF}}\label{subsec:random-forests}
