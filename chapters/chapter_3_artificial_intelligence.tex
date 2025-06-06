@@ -414,5 +414,62 @@ For further details on the advantages and limitations of \glspl{DT}, refer to \C
 \subsection{\Glsentrylongpl{SVM}}\label{subsec:svm}
 
 \subsection{\Glsentrylongpl{NN}}\label{subsec:neural-networks}
+%
+\Glspl{NN} are a family of predictors inspired by the structure and function of biological neural networks.
+%
+They consist of interconnected nodes (neurons) interconnected into a \gls{DAG} and organized into layers, where each neuron receives inputs, applies a non-linear activation function, and produces an output.
+%
+Despite being very popular nowadays, the first idea of a \gls{NN} has been proposed back in 1943~\cite{mcculloch1943logical}.
+%
+The so-called perceptron -- a single-layer \gls{NN} -- has been introduced in 1958~\cite{rosenblatt1958perceptron}.
+%
+Due to the limited expressiveness of single-layer \glspl{NN}, the perceptron could only learn linearly separable functions~\cite{DBLP:books/daglib/0066902}.
+
+To overcome these limitations, researchers proposed to stack multiple layers of neurons, leading to the concept of \glspl{MLP}.
+%
+Although the theoretical foundations of such models were clear early on, the lack of an effective training algorithm hindered their practical use.
+%
+This changed with the rediscovery and popularization of the \textit{backpropagation} algorithm in the 1980s~\cite{rumelhart1986learning}, which allowed efficient computation of gradients through multiple layers using the chain rule of calculus.
+%
+This innovation enabled \glspl{MLP} to learn complex non-linear functions and marked the beginning of modern \gls{NN} research.
+
+Many different architectures have been proposed since then, including fully connected \glspl{NN}, convolutional \glspl{CNN}, recurrent \glspl{RNN}, and more.
+%
+These architectures are designed specifically to handle different types of data and tasks, such as image classification, natural language processing, and time series analysis.
+
+\paragraph{Feedforward Neural Networks.}
+%
+The simplest class of \glspl{NN} is the family of feedforward networks, in which information flows unidirectional from the input layer through one or more hidden layers to the output layer, without forming cycles.
+%
+Among these, \glspl{MLP} are the canonical example, consisting of fully connected layers interleaved with non-linear activation functions.
+%
+Given sufficient capacity, \glspl{MLP} are universal function approximators~\cite{hornik1989multilayer}, capable of representing any Borel measurable function under mild assumptions.
+%
+Despite their theoretical expressiveness, \glspl{MLP} are inefficient when processing structured inputs such as images or sequences, as they fail to exploit the inherent inductive biases of the data.
+
+\paragraph{Convolutional Neural Networks.}
+%
+To overcome the limitations of \glspl{MLP} on grid-like data such as images, \glspl{CNN} were introduced.
+%
+Pioneering work on hierarchical feature extraction was done by Fukushima with the Neocognitron~\cite{fukushima1980neocognitron}, followed by the successful application of convolutional networks to handwritten digit classification in LeNet-5~\cite{lecun1998gradient}.
+%
+\glspl{CNN} apply learnable convolutional filters that exploit local spatial correlations, reducing the number of parameters and enabling translation equivariance.
+%
+Pooling layers further promote translation invariance by down sampling intermediate representations.
+%
+These properties make \glspl{CNN} particularly well-suited for tasks involving visual perception.
+
+\paragraph{Recurrent Neural Networks.}
+%
+In contrast, \glspl{RNN} are designed for processing sequential data by incorporating temporal recurrence.
+%
+Each unit in an \gls{RNN} receives input not only from the current time step but also from its own past activations, effectively providing a form of memory across time.
+%
+This architecture allows \glspl{RNN} to model temporal dependencies and variable-length input sequences.
+%
+However, standard \glspl{RNN} suffer from the vanishing and exploding gradient problems~\cite{bengio1994learning}, which hinder their ability to learn long-range dependencies.
+%
+To address these issues, more sophisticated variants were developed, notably \glspl{LSTM} (Long Short-Term Memory)~\cite{hochreiter1997long} and \glspl{GRU} (Gated Recurrent Units)~\cite{cho2014learning}, which introduce gating mechanisms to regulate information flow and preserve long-term context.
+
 
 \subsection{Limits of sub-symbolic \Gls{AI}}\label{subsec:limits-of-sub-symbolic-ai}
