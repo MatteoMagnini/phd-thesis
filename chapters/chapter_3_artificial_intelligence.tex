@@ -414,6 +414,7 @@ For further details on the advantages and limitations of \glspl{DT}, refer to \C
 \subsection{\Glsentrylongpl{SVM}}\label{subsec:svm}
 
 \subsection{\Glsentrylongpl{NN}}\label{subsec:neural-networks}
+\note{Todo: add figures representing the architectures and how it works.}
 %
 \Glspl{NN} are a family of predictors inspired by the structure and function of biological neural networks.
 %
@@ -473,3 +474,101 @@ To address these issues, more sophisticated variants were developed, notably \gl
 
 
 \subsection{Limits of sub-symbolic \Gls{AI}}\label{subsec:limits-of-sub-symbolic-ai}
+
+
+
+\section{\Glsentrylong{XAI}}\label{sec:xai}
+%
+Modern intelligent systems increasingly rely on sub-symbolic predictive models to support their intelligent behaviour.
+%
+These models are typically trained using a data-driven approach, leveraging the vast availability of data generated in recent years.
+%
+\Gls{ML} algorithms enable the semi-automatic detection of statistical patterns hidden within data.
+%
+Such patterns can then be used to support decision-making, planning, and forecasting across various domains where data is available.
+
+
+Despite their predictive capabilities, \gls{ML} models face significant challenges in critical applications.
+%
+One of the most notable issues is \emph{algorithmic opacity}, which refers to the difficulty humans face in understanding how these models operate or make decisions.
+%
+Opacity arises due to the complex interplay between high-dimensional datasets, the algorithms processing them, and the dynamic behaviour of these algorithms during training~\cite{DBLP:journals/bigdatasociety/Burrell16}.
+%
+This lack of transparency is particularly problematic in domains such as healthcare, finance, and law, where human accountability and explainability are essential.
+
+
+The term \emph{black box} is often used to describe \gls{ML} predictors, as their internal workings are not symbolically represented~\cite{DBLP:journals/cacm/Lipton18}.
+%
+Without symbolic representations, it becomes challenging for humans to comprehend the operation of these systems or the rationale behind their decisions.
+%
+This can lead to a lack of trust and acceptance of \gls{AI}-based solutions.
+
+
+Regulatory frameworks, such as the \gls{GDPR}, have started to recognise the \emph{right to explanation}~\cite{DBLP:journals/aim/GoodmanF17}.
+%
+This right mandates that intelligent systems must be understandable to ensure fairness, identify biases, and verify that they function as intended.
+%
+However, the concept of \emph{understandability} remains neither standardised nor systematically assessed~\cite{DBLP:journals/ai/Miller19}.
+%
+While some \gls{ML} models are more interpretable than others, there is no consensus on what constitutes an adequate explanation.
+
+
+Interpretability and explainability are desirable properties for intelligent systems.
+%
+\Gls{XAI} aims to make sub-symbolic \gls{AI} more interpretable for humans, often by automating the generation of explanations.
+%
+Interpretability refers to the cognitive effort required by humans to assign meaning to the behaviour or outcomes of intelligent systems.
+%
+It is often associated with properties such as algorithmic transparency, decomposability, and predictability.
+
+
+An \emph{explanation}, on the other hand, is a set of statements or accounts that clarify an object or justify an action.
+%
+Explanations can involve constructing more interpretable representations of a black-box model.
+%
+For instance, \emph{model simplification} techniques translate a complex model into a simpler one with high fidelity~\cite{DBLP:conf/kdd/TolomeiSHL17,DBLP:journals/csur/GuidottiMRTGP19}.
+%
+Alternatively, symbolic knowledge can be extracted from sub-symbolic predictors, producing interpretable objects from less interpretable ones.
+
+
+Another approach to improving interpretability involves injecting symbolic knowledge into sub-symbolic predictors.
+%
+This process does not produce explanations but increases the model's transparency by aligning its behaviour with more interpretable systems.
+
+Interpretability and explainability enhance trustworthiness in \gls{AI}-based solutions.
+%
+However, they also enable users to exercise finer control over these systems, deciding whether to trust them or not~\cite{10.1214/21-SS133}.
+%
+The surveyed \gls{SKE} and \gls{SKI} methods should be regarded as tools for increasing user control over \gls{AI} systems.
+
+
+\subsection{Sorts of Explanation}\label{subsec:sorts-of-explanation}
+%
+Two major approaches exist to bring explainability or interpretability to intelligent systems: \emph{by design} and \emph{post-hoc}~\cite{DBLP:conf/atal/CiattoSOC20,DBLP:journals/inffus/ArrietaRSBTBGGM20,DBLP:journals/csur/GuidottiMRTGP19}.
+
+
+\paragraph{\Gls{XAI} by Design}
+%
+This approach aims to make systems interpretable or explainable from the outset, treating these features as primary design goals.
+%
+Methods in this category can be further divided into:
+%
+\begin{itemize}
+    \item \emph{Symbols as constraints}, where predictive models are constrained by symbolic rules, often expressed in subsets of \gls{FOL}.
+    \item \emph{Transparent box design}, where models are inherently interpretable and require no further manipulation.
+\end{itemize}
+
+\paragraph{Post-hoc Explainability}
+%
+This approach involves manipulating pre-existing systems to make them interpretable or explainable.
+%
+Methods in this category include:
+%
+\begin{itemize}
+    \item \emph{Text explanation}, which generates textual descriptions of model behaviour.
+    \item \emph{Visual explanation}, which visualises model behaviour, often using dimensionality reduction techniques.
+    \item \emph{Local explanation}, which segments the solution space into simpler subspaces and explains them.
+    \item \emph{Explanation by example}, which extracts representative examples to illustrate internal relationships.
+    \item \emph{Model simplification}, which constructs a simplified system that optimises similarity to the original while reducing complexity.
+    \item \emph{Feature relevance}, which assigns relevance scores to features, revealing their importance in the model's output.
+\end{itemize}
