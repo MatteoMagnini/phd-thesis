@@ -49,8 +49,27 @@ In this way the model learns both from the data -- inductively -- and from the s
 
 Another common reason to use \gls{SKI} is to increase the \emph{interpretability} of the model, as stated in \Cref{itm:interpretability}.
 %
-In the context of \gls{XAI}, this is usually referred as \gls{XAI} \emph{by design},
+In the context of \gls{XAI}, this is usually referred as \gls{XAI} \emph{by design} (\Cref{par:xai-by-design}).
+%
+The intuition is simple: the model is made to be consistent -- up to a certain extent -- with the symbolic knowledge, which is usually more interpretable than the model itself.
+%
+This can be done in two ways: either by using \emph{symbols as constraints} or by \emph{transparent box design}.
+%
+More details about these two approaches are provided in \Cref{subsec:learning} and \Cref{subsec:structuring}, respectively.
 
+
+Predictive performances and \gls{XAI} are the main motivations for \gls{SKI}, but not the only ones.
+%
+The \emph{robustness} of a predictive model is another important challenge~\cite{DBLP:conf/eccv/LiuCZH18}, and it relates to predictors' ability to maintain performance despite the presence of input perturbations.
+%
+A metric of robustness in the context of \gls{SKI} is defined in the work ``An Empirical Study on the Robustness of Knowledge Injection Techniques Against Data Degradation''~\cite{DBLP:conf/woa/RafanelliMACO24}.
+%
+The content of the paper is presented in
+%
+\note{TODO: refactor a bit the structure of part II of the thesis for a better narrative flow.}
+
+
+~\cite{DBLP:journals/aamas/AgiolloRMCO23}
 
 \subsection{What to inject}\label{subsec:what-to-inject}
 
