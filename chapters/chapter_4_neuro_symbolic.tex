@@ -72,8 +72,69 @@ These \gls{QoS} metrics are presented in the work ``Symbolic Knowledge Injection
 
 
 \subsection{What to inject}\label{subsec:what-to-inject}
+%
+\begin{SCfigure}
+    \centering
+    \includegraphics[width=.4\linewidth]{figures/ski-logic}
+    \caption{
+        Venn diagram categorising SKI methods w.r.t.\ the \emph{input knowledge} type: knowledge graphs (KG), propositional logic (P), first-order logic (FOL), expert knowledge (E), Datalog (D), Horn logic (H), or modal logic (M).
+        %
+        The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 117 surveyed \gls{SKI} methods.
+    }
+    \label{fig:pie-ski-logic}
+\end{SCfigure}
+
+%
+A key distinction in \gls{SKI} methods lies in whether the chosen formalism is \emph{machine interpretable}, \emph{human interpretable}, or both.
+%
+\Gls{SKI} methods can be categorized into two primary groups based on the formalism used to represent input knowledge~\cite{DBLP:journals/csur/CiattoSAMO24}:
+%
+\begin{itemize}
+    \item \textbf{Logic formulas or \glspl{KB}:} These adhere to \gls{FOL} or its subsets, making them interpretable by both humans and machines.
+    %
+    The sub-categories, ordered by decreasing expressiveness, include:
+    %
+    \begin{itemize}
+        %
+        \item \emph{\gls{FOL} formulas:} These encompass recursive terms, variables, predicates of any arity, and various logic connectives, potentially expressing definitions.
+        %
+        \item \emph{Horn logic:} Often referred to as Prolog-like logic, this formalism consists of head–body rules involving predicates and terms of any kind.
+        %
+        \item \emph{Datalog:} A restricted subset of Horn logic that excludes recursive terms, allowing only constants or variables as terms.
+        %
+        \item \emph{Modal logics:} These extend the above logics with modal operators (e.g., \(\square\) and \(\lozenge\)), which express modalities such as necessity or possibility.
+        %
+        \item \emph{Knowledge graphs:} A practical application of description logics designed to represent entity–relation graphs.
+        %
+        \item \emph{Propositional logic:} This involves Boolean variables and logical connectives, offering a simpler yet effective formalism.
+    \end{itemize}
+    %
+    \item \textbf{Expert knowledge:} This category includes human-interpretable knowledge that is not inherently machine-readable.
+    %
+    Examples include physics equations, syntactical rules, or domain-specific expertise.
+    %
+    Since expert knowledge is not directly machine interpretable, it often requires transformation into tensorial form through data generation, a process that typically involves human engineers and can be labor-intensive.
+\end{itemize}
+%
+\Cref{fig:pie-ski-logic} illustrates the distribution of surveyed \gls{SKI} methods based on their formalism of choice.
+%
+\Glspl{KG} emerge as the most prevalent category, representing nearly half of the surveyed methods.
+%
+In contrast, modal logics constitute the smallest group.
+%
+Methods based on \gls{FOL} or its subsets (excluding \glspl{KG}) form another significant cluster, with propositional logic being particularly prominent due to its relative simplicity and widespread use.
+%
+The specific logic formalism employed in the surveyed papers is reported where available.
+%
+However, this information is rarely explicitly stated by the authors.
+%
+Instead, the logic is often inferred from the constraints and descriptions provided in the respective works.
+
 
 \subsection{How to inject}\label{subsec:how-to-inject}
+%
+
+
 
 \subsection{Structuring}\label{subsec:structuring}
 
