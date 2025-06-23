@@ -130,6 +130,26 @@ However, this information is rarely explicitly stated by the authors.
 %
 Instead, the logic is often inferred from the constraints and descriptions provided in the respective works.
 
+Practical examples of symbolic knowledge that can be injected into sub-symbolic predictors are the public health guidelines on type-2 diabetes of the National Institute of Diabetes and Digestive and Kidney Diseases\footnote{\url{https://www.niddk.nih.gov/health-information/diabetes/}}.
+%
+These guidelines have been encoded into logic formulas~\cite{DBLP:conf/pkdd/KunapuliBSMS10} and used in works related to \gls{SKI}~\cite{Magnini-telmed2025}.
+%
+The first guideline state that if a patient has a glucose value greater or equal to 125 mg/dL and a \gls{BMI} greater or equal to 30, then the patient is considered diabetic.
+%
+The second one says that if a patient has a glucose value lower or equal to 100 mg/dL and a \gls{BMI} lower or equal to 25, then the patient is considered non-diabetic.
+%
+In \gls{FOL}, the first statement can be encoded as:
+%
+\begin{equation}\label{eq:rule-diabetic}
+  \forall x . ( \text{glucose}(x) \geq 125 \land \text{bmi}(x) \geq 30 \rightarrow \text{Diabetic}(x))
+\end{equation}
+%
+whereas the second statement can be encoded as:
+%
+\begin{equation}\label{eq:rule-not-diabetic}
+  \forall x . ( \text{glucose}(x) \leq 100 \land \text{bmi}(x) \leq 25 \rightarrow \neg \text{Diabetic}(x))
+\end{equation}
+
 
 \subsection{How to inject}\label{subsec:how-to-inject}
 %
