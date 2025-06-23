@@ -218,7 +218,23 @@ A predictor is either created or extended to mimic the behavior of the symbolic 
 For instance, when the predictors are \glspl{NN}, their internal structure is crafted to represent logic predicates via neurons, and logic connectives via synapses.
 %
 \Cref{fig:workflow-structuring} illustrates the workflow of the structuring strategy.
-
+%
+Usually, in the structuring strategy, the symbolic knowledge is in the form of logic formulas ($\phi$) (e.g., subsets of \gls{FOL}).
+%
+The formulas are then parsed into a syntactic structure (e.g., \gls{AST}).
+%
+At this point, a \emph{fuzzification} ($\zeta$) step is performed to convert the \emph{boolean} -- because a logic predicate is either \emph{true} or \emph{false} -- symbolic knowledge into a \emph{fuzzy} interpretation of it, which is more suitable for sub-symbolic predictors.
+%
+This fuzzy interpretation is often \emph{continuous} and bounded to a predefined range, such as \([0, 1]\).
+%
+The property of continuity is a key requirement for training sub-symbolic structures via gradient descent (e.g., \glspl{NN} or part of them).
+%
+In practice, $\zeta$ is implemented as a mapping function that transforms logic operators into continuous functions (see \Cref{sec:from-symbolic-to-sub-symbolic}).
+%
+The result of the fuzzification process is an \emph{uneducated} predictor ($P$) that is then trained on the training set.
+%
+After the training, the predictor is now \emph{educated} ($P'$) and can be used to make predictions on the test set or in production.
+%
 
 \subsection{Learning}\label{subsec:learning}
 
