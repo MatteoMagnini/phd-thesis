@@ -170,7 +170,7 @@ whereas the second statement can be encoded as:
 %
 How can symbolic knowledge, such as the ones in \Cref{eq:rule-diabetic,eq:rule-not-diabetic}, be injected into sub-symbolic predictors?
 %
-To answer this question, scientists have designed several strategies, which can be broadly grouped into three main categories~\cite{DBLP:journals/csur/CiattoSAMO24}: structuring, learning, and embedding.
+To answer this question, scientists have designed several strategies, which can be broadly grouped into three main categories~\cite{DBLP:journals/csur/CiattoSAMO24}: structuring, guided learning, and embedding.
 %
 It may occur that a method uses more than one strategy at a time.
 %
@@ -201,7 +201,7 @@ The main entities involved in the \gls{SKI} process -- and that are common to vi
 \begin{figure}
     \centering
     \includegraphics[width=.9\linewidth]{figures/workflow-structuring}
-    \caption[Workflow of structuring strategy]{
+    \caption[SKI workflow of structuring strategy]{
         Workflow of the structuring strategy.
         %
         The symbolic knowledge is parsed and used to create a sub-symbolic predictor -- or part of it -- that mimics the symbolic knowledge.
@@ -223,7 +223,7 @@ Usually, in the structuring strategy, the symbolic knowledge is in the form of l
 %
 The formulas are then parsed into a syntactic structure (e.g., \gls{AST}).
 %
-At this point, a \emph{fuzzification} ($\zeta$) step is performed to convert the \emph{boolean} -- because a logic predicate is either \emph{true} or \emph{false} -- symbolic knowledge into a \emph{fuzzy} interpretation of it, which is more suitable for sub-symbolic predictors.
+At this point, a \emph{fuzzification} ($\zeta$) step is performed to convert the \emph{boolean} (also the term \emph{crisp} is used in the literature) -- because a logic predicate is either \emph{true} or \emph{false} -- symbolic knowledge into a \emph{fuzzy} interpretation of it, which is more suitable for sub-symbolic predictors.
 %
 This fuzzy interpretation is often \emph{continuous} and bounded to a predefined range, such as \([0, 1]\).
 %
@@ -236,7 +236,38 @@ The result of the fuzzification process is an \emph{uneducated} predictor ($P$) 
 After the training, the predictor is now \emph{educated} ($P'$) and can be used to make predictions on the test set or in production.
 %
 
-\subsection{Learning}\label{subsec:learning}
+\subsection{Guided learning}\label{subsec:guided-learning}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\linewidth]{figures/workflow-constraining}
+    \caption[SKI workflow of guided learning strategy]{
+        \gls{SKI} workflow of the guided learning strategy.
+        %
+        The symbolic knowledge is used to guide the training of a sub-symbolic predictor, which is then trained on data.
+    }
+    \label{fig:workflow-learning}
+\end{figure}
+
+By guided learning, we refer to all those methods that affect the sub-symbolic predictor's training process by using the symbolic knowledge as a \emph{constraint}/\emph{guidance}.
+%
+Usually, \gls{SKI} algorithms based on this strategy target sub-symbolic predictors that can be trained with gradient descent, such as \glspl{NN}.
+%
+\Cref{fig:workflow-learning} illustrates the workflow of the guided learning strategy.
+%
+Like in the case of structuring, the symbolic knowledge is parsed and fuzzified.
+%
+Differently from structuring, the result of the fuzzification process is not a subcomponent of the predictor's architecture (e.g., neurons, connections), but rather a set of continuous numeric functions.
+%
+Conceptually, these functions represent the degree of violation of the symbolic knowledge by the predictor's predictions.
+%
+The higher the degree of violation, the higher the value of the function.
+%
+The symbolic-derived functions are then included in the loss function of the predictor, which is then trained on the training set.
+%
+The combination between the ``classical'' loss function (e.g., cross-entropy, mean squared error, etc.) and the symbolic-derived functions can be done in many ways, but it is usually done via a weighted sum.
+
+
 
 \subsection{Embedding}\label{subsec:ski-embedding}
 
