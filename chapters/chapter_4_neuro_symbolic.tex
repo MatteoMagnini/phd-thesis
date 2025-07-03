@@ -237,7 +237,7 @@ After the training, the predictor is now \emph{educated} ($P'$) and can be used 
 %
 
 \subsection{Guided learning}\label{subsec:guided-learning}
-
+%
 \begin{figure}
     \centering
     \includegraphics[width=.9\linewidth]{figures/workflow-constraining}
@@ -248,7 +248,7 @@ After the training, the predictor is now \emph{educated} ($P'$) and can be used 
     }
     \label{fig:workflow-learning}
 \end{figure}
-
+%
 By guided learning, we refer to all those methods that affect the sub-symbolic predictor's training process by using the symbolic knowledge as a \emph{constraint}/\emph{guidance}.
 %
 Usually, \gls{SKI} algorithms based on this strategy target sub-symbolic predictors that can be trained with gradient descent, such as \glspl{NN}.
@@ -268,8 +268,29 @@ The symbolic-derived functions are then included in the loss function of the pre
 The combination between the ``classical'' loss function (e.g., cross-entropy, mean squared error, etc.) and the symbolic-derived functions can be done in many ways, but it is usually done via a weighted sum.
 
 
-
 \subsection{Embedding}\label{subsec:ski-embedding}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\linewidth]{figures/workflow-embedding}
+    \caption[SKI workflow of embedding strategy]{
+        \gls{SKI} workflow of the embedding strategy.
+        %
+        The symbolic knowledge is parsed and embedded into a sub-symbolic predictor, which is then trained on data.
+    }
+    \label{fig:workflow-embedding}
+\end{figure}
+%
+In the embedding strategy, the symbolic knowledge is converted -- i.e., \emph{embedded}-- into numeric-array representations.
+%
+\Cref{fig:workflow-embedding} illustrates the workflow of the embedding strategy.
+%
+The output of the fuzzification process is a set of numeric arrays (e.g., vectors, matrices, and tensors) that represent the symbolic knowledge.
+%
+These arrays are then provided as input to the sub-symbolic predictor.
+%
+This is the common strategy exploited by the \gls{KG}~\cite{DBLP:conf/ijcai/LambGGPAV20} embedding community as well as by \glspl{GNN}~\cite{DBLP:journals/tkde/WangMWG17}.
+
 
 \subsection[Limitations and challenges of SKI]{Limitations and challenges of \Gls{SKI}}\label{subsec:limitations-and-challenges-of-ski}
 
