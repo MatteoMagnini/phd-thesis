@@ -15,7 +15,7 @@ More precisely, we define \gls{SKI} as:
 %
 \begin{definition}[\gls{SKI}]
     \label{def:ski}
-    any algorithmic procedure affecting how sub-symbolic predictors draw their inferences in such a way that predictions are either \textbf{computed} as a function of, or \textbf{made consistent} with, some given symbolic knowledge~\cite{DBLP:journals/csur/CiattoSAMO24}.
+    any \textbf{algorithmic} procedure affecting how sub-symbolic predictors draw their inferences in such a way that predictions are either \textbf{computed} as a function of, or made \textbf{consistent} with, some given symbolic knowledge~\cite{DBLP:journals/csur/CiattoSAMO24}.
 \end{definition}
 %
 We adopt this broad definition because the amount of works in the literature is vast and varied, furthermore the contributions come from different communities (e.g., \gls{ML}, \gls{AI}, \gls{NLP}, \gls{XAI}, logics, etc.), and they often use different terminologies.
@@ -196,7 +196,7 @@ The main entities involved in the \gls{SKI} process -- and that are common to vi
 %
 
 
-\subsection{Structuring}\label{subsec:structuring}
+\paragraph{Structuring}\label{par:structuring}
 %
 \begin{figure}
     \centering
@@ -236,7 +236,7 @@ The result of the fuzzification process is an \emph{uneducated} predictor ($P$) 
 After the training, the predictor is now \emph{educated} ($P'$) and can be used to make predictions on the test set or in production.
 %
 
-\subsection{Guided learning}\label{subsec:guided-learning}
+\paragraph{Guided learning}\label{par:guided-learning}
 %
 \begin{figure}
     \centering
@@ -268,7 +268,7 @@ The symbolic-derived functions are then included in the loss function of the pre
 The combination between the ``classical'' loss function (e.g., cross-entropy, mean squared error, etc.) and the symbolic-derived functions can be done in many ways, but it is usually done via a weighted sum.
 
 
-\subsection{Embedding}\label{subsec:ski-embedding}
+\paragraph{Embedding}\label{par:ski-embedding}
 %
 \begin{figure}
     \centering
@@ -294,7 +294,19 @@ This is the common strategy exploited by the \gls{KG}~\cite{DBLP:conf/ijcai/Lamb
 
 \subsection[Limitations and challenges of SKI]{Limitations and challenges of \Gls{SKI}}\label{subsec:limitations-and-challenges-of-ski}
 
+
 \section[Symbolic knowledge extraction]{\Glsentrylong{SKE}}\label{sec:ske}
+%
+\gls{SKE} is the process of extracting symbolic knowledge from sub-symbolic predictors.
+%
+Here, we provide the broad definition of \gls{SKE} that we adopt in this thesis:
+%
+\begin{definition}[\gls{SKE}]
+    \label{def:ske}
+    any \textbf{algorithmic} procedure accepting \textbf{trained} sub-symbolic predictors as input and producing \textbf{symbolic} knowledge as output so that the extracted knowledge reflects the behavior of the predictor with high \textbf{fidelity}~\cite{DBLP:journals/csur/CiattoSAMO24}.
+\end{definition}
+%
+
 
 \subsection{Motivations and goals}\label{subsec:ske-motivations-and-goals}
 
