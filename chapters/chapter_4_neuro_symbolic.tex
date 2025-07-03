@@ -20,6 +20,38 @@ More precisely, we define \gls{SKI} as:
 %
 We adopt this broad definition because the amount of works in the literature is vast and varied, furthermore the contributions come from different communities (e.g., \gls{ML}, \gls{AI}, \gls{NLP}, \gls{XAI}, logics, etc.), and they often use different terminologies.
 %
+This definition highlights several key aspects of \gls{SKI} that merit further discussion.
+%
+\gls{SKI} is conceptualized as a class of algorithms, and it involves procedures that take symbolic knowledge as input and produce \gls{ML} predictors as output.
+
+Regarding the inputs of \gls{SKI} procedures, the primary requirement is that the knowledge must be symbolic and provided by the user, ensuring it is human interpretable.
+%
+Additionally, since the knowledge must be processed algorithmically, it is implicitly required to be machine interpretable.
+%
+This necessitates the use of formal languages, such as \gls{FOL} or decision trees, for knowledge representation, while avoiding free text or natural language.
+
+Another implicit requirement is that the input knowledge must align functionally with the task of the predictor undergoing injection.
+%
+For instance, if a predictor is designed to classify customer profiles as either creditworthy or un-creditworthy, the symbolic knowledge should encode decision rules that serve the same purpose and utilize the same input features.
+
+In terms of outcomes, \gls{SKI} procedures can be categorized into two non-exclusive scenarios.
+%
+First, they may enable sub-symbolic predictors to accept symbolic knowledge as input.
+%
+This is achieved through pre-processing algorithms that encode symbolic knowledge into sub-symbolic forms, allowing predictors to compute predictions based on this knowledge.
+%
+Second, \gls{SKI} procedures may modify sub-symbolic predictors to ensure their predictions are consistent with the symbolic knowledge.
+%
+This involves altering the structure or training process of the predictors so that they incorporate the symbolic knowledge into their inference process.
+%
+Regardless of the specific outcome, \gls{SKI} procedures are typically applied during the early stages of the \gls{ML} workflow, influencing both pre-processing and training phases.
+
+Consistency plays a central role in \gls{SKI}.
+%
+To measure this, a consistency score is used to evaluate how effectively the predictor utilizes the injected knowledge in relation to the domain and task it was trained for.
+%
+For example, if a knowledge base specifies that loans should be granted to individuals from a specific minority group if their annual income exceeds a certain threshold, the predictor should generate predictions that adhere to this rule or minimize violations of it.
+
 In the rest of this thesis, we will refer to \emph{uneducated predictor} to indicate a sub-symbolic predictor that does not use symbolic knowledge -- i.e., before the injection takes place --, and to \emph{educated predictor} to indicate a sub-symbolic predictor that uses symbolic knowledge---i.e., after the injection takes place.
 %
 Sometimes, in the literature the term \emph{enriched predictor} is also used instead of \emph{educated predictor}.
@@ -306,6 +338,33 @@ Here, we provide the broad definition of \gls{SKE} that we adopt in this thesis:
     any \textbf{algorithmic} procedure accepting \textbf{trained} sub-symbolic predictors as input and producing \textbf{symbolic} knowledge as output so that the extracted knowledge reflects the behavior of the predictor with high \textbf{fidelity}~\cite{DBLP:journals/csur/CiattoSAMO24}.
 \end{definition}
 %
+Once again, the definition is broad because the amount of contributions in the literature is vast and varied, they often use different terminologies and come from different communities.
+%
+\Gls{SKE} is conceptualized as a class of algorithms, which are finite-step procedures defined by their inputs and outputs.
+
+The input to \gls{SKE} procedures must be trained \glspl{ML} predictors.
+%
+There are no restrictions on the type of predictor, meaning that \gls{SKE} methods can, in principle, be applied to any predictor family.
+%
+However, this requirement implies that the predictor must have already undergone training and achieved satisfactory performance for its intended task.
+%
+Thus, within an \gls{ML} workflow, \gls{SKE} is performed after the training and validation phases are complete.
+
+The output of \gls{SKE} procedures is symbolic knowledge, which is broadly defined as human-intelligible information.
+%
+This can include logic formulas, decision trees, or even plain human-readable text.
+%
+For an algorithm to qualify as a valid \gls{SKE} procedure, the extracted knowledge must closely reflect the behavior of the original predictor within the domain it was trained for.
+%
+This fidelity is typically measured using a fidelity score, which evaluates how well the extracted knowledge replicates the predictor's behavior for the given task and domain.
+
+The extracted knowledge should ideally function as a predictor itself, allowing it to be queried in the same way as the original predictor.
+%
+For example, if the original predictor is an image classifier, the extracted knowledge should enable an intelligent agent to classify similar images and produce equivalent results.
+%
+This agent could be either computational (e.g., a software program) or human, depending on whether the extracted knowledge is machine- or human-interpretable.
+%
+The use of logic-based knowledge as the target of \gls{SKE} is particularly advantageous, as it supports both machine and human interpretability.
 
 
 \subsection{Motivations and goals}\label{subsec:ske-motivations-and-goals}
