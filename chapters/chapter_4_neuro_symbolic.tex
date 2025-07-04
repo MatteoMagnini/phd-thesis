@@ -187,6 +187,10 @@ whereas the second statement can be encoded as:
 \end{equation}
 
 
+\subsection{Where to inject}\label{subsec:where-to-inject}
+\note{TODO}
+
+
 \subsection{How to inject}\label{subsec:how-to-inject}
 %
 \begin{SCfigure}
@@ -362,18 +366,146 @@ The extracted knowledge should ideally function as a predictor itself, allowing 
 %
 For example, if the original predictor is an image classifier, the extracted knowledge should enable an intelligent agent to classify similar images and produce equivalent results.
 %
-This agent could be either computational (e.g., a software program) or human, depending on whether the extracted knowledge is machine- or human-interpretable.
+This agent could be either computational (e.g., a software program) or human, depending on whether the extracted knowledge is machine or human interpretable.
 %
 The use of logic-based knowledge as the target of \gls{SKE} is particularly advantageous, as it supports both machine and human interpretability.
 
 
 \subsection{Motivations and goals}\label{subsec:ske-motivations-and-goals}
+%
+\Gls{SKE} serves multiple purposes, including:
+%
+\begin{inlinelist}
+    %
+    \item \label{itm:inspection} the inspection of the internal operations of opaque predictors, which are otherwise treated as black boxes,
+    %
+    \item \label{itm:automation} the automation and acceleration of the process of acquiring symbolic knowledge, eliminating the need for manually crafting \glspl{KB},
+    %
+    \item \label{itm:xai} providing valuable capabilities within the scope of \gls{XAI} to analyze black-box predictors.
+\end{inlinelist}
+
+\Cref{itm:inspection} is particularly important for understanding the behavior of opaque predictors.
+%
+By inspecting their internal operations, \gls{SKE} allows researchers and practitioners to identify patterns in mispredicted inputs or even detect correctly predicted patterns that rely on unethical or biased decision processes.
+%
+This capability is crucial for ensuring the ethical and transparent use of \gls{ML} systems, especially in sensitive domains such as healthcare or finance.
+
+\Cref{itm:automation} highlights another key advantage of \gls{SKE}: the ability to automate the extraction of symbolic knowledge.
+%
+This eliminates the labor-intensive process of manually crafting \glspl{KB}, which often requires significant domain expertise and time.
+%
+By automating this process, \gls{SKE} not only accelerates knowledge acquisition but also enables the reuse of extracted knowledge across different tasks or systems, provided the knowledge is represented in a compatible format.
+
+Finally, \Cref{itm:xai} emphasizes the role of \gls{SKE} in \gls{XAI}.
+%
+The extracted knowledge can be used to construct explanations for the behavior of black-box predictors, making their decision-making processes more interpretable.
+%
+In some cases, this knowledge may even serve as an interpretable surrogate model, replacing the original predictor if it achieves a high fidelity score~\cite{DBLP:conf/atal/CiattoCSO20}.
+%
+Additionally, \gls{SKE} enables the comparison of multiple black-box predictors performing the same task, highlighting their differences and commonalities.
+%
+It also facilitates the merging of knowledge extracted from various predictors, even if they belong to different families, as long as the same representation format is used~\cite{DBLP:conf/aiia/CiattoCOC19}.
+
+
+\subsection{What to extract}\label{subsec:what-to-extract}
+%
+\begin{SCfigure}
+    \centering
+    \includegraphics[width=.4\linewidth]{figures/ske-rule-shape}
+    \caption[Venn diagram categorising SKE methods]{
+        %
+        Venn diagram categorising \gls{SKE} methods w.r.t.\ the \emph{shape} of the extracted symbolic knowledge: rule lists (L), decision trees (DT), decision tables (TA), or knowledge graphs (KG).
+        %
+        The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 132 surveyed \gls{SKE} methods.
+    }
+    \label{fig:pie-ski-shape}
+\end{SCfigure}
+%
+\begin{SCfigure}
+    \centering
+    \includegraphics[width=.4\linewidth]{figures/ske-rule-format}
+    \caption[Pie chart categorising SKE methods]{
+        %
+        Pie chart categorising \gls{SKE} methods w.r.t.\ the semantic \emph{expressiveness} of the extracted symbolic knowledge: propositional rules (P), fuzzy rules (F), oblique rules (O), m-of-n rules (MN), or triplets (T).
+        %
+        The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 132 surveyed \gls{SKE} methods.
+    }
+    \label{fig:pie-ski-expressiveness}
+\end{SCfigure}
+
+What kind of symbolic knowledge can be extracted?
+%
+Symbolic knowledge extracted from \glspl{ML} predictor should ideally mimic the behavior of the predictor itself.
+%
+For supervised \gls{ML}, this means that the extracted knowledge should represent a function mapping input features to output features, such as classes in classification tasks.
+%
+These functions can be expressed in symbolic formats, which vary in both syntax and semantics.
+
+From a syntactic perspective, the shape of the extracted symbolic knowledge is crucial for its interpretability.
+%
+The most common formats include decision rules and decision trees, as they are widely recognized for their human-comprehensibility.
+%
+Other formats, such as decision tables and knowledge graphs, are also used, though less frequently.
+%
+Regardless of the format, the extracted knowledge typically uses symbols to represent the same input and output features as the original \gls{ML} predictor.
+
+We identify four primary syntactic shapes for extracted symbolic knowledge:
+%
+\begin{itemize}
+    \item \textbf{Lists of rules:} Sequences of logic rules presented in a predefined order.
+    %
+    \item \textbf{Decision trees:} Hierarchical structures where each node represents a decision rule (see \Cref{subsec:decision-trees}).
+    %
+    \item \textbf{Decision tables:} Tabular representations specifying conclusions for different sets of conditions.
+    %
+    These can be exhaustive, listing all possible combinations, or incomplete, covering only a subset of cases.
+    %
+    Each row (or column) corresponds to a rule, with cells indicating variable values.
+    %
+    An example is provided in the supplementary material.
+    %
+    \item \textbf{Knowledge graphs:} Graph-based representations of entities and their relationships (see \Cref{subsec:ontologies-and-kg}).
+\end{itemize}
+
+\Cref{fig:pie-ski-logic} illustrates the distribution of these shapes across surveyed \gls{SKE} methods.
+%
+Rule lists are the most prevalent, likely due to their simplicity and algorithmic tractability.
+
+From a semantic perspective, the expressiveness of the extracted symbolic knowledge depends on the logical constructs it employs.
+%
+Statements may include predicates, relations, logic connectives, and arithmetic comparators, which determine what can be expressed.
+%
+We categorize the semantic formats of extracted symbolic knowledge as follows:
+%
+\begin{itemize}
+    \item \textbf{Propositional rules:} Statements involving Boolean input/output features connected by logic operators such as negation, conjunction, and disjunction.
+    %
+    Arithmetic comparisons between continuous features and constants are also included in this category.
+    %
+    \item \textbf{Fuzzy rules:} Extensions of propositional rules where truth values range continuously between 0 and 1.
+    %
+    \item \textbf{Oblique rules:} Rules with conditions expressed as inequalities involving linear combinations of input variables, allowing comparisons between features.
+    %
+    \item \textbf{m-of-n rules:} Rules that are true if at least \(m\) out of \(n\) conditions are satisfied.
+    %
+    These are a concise way of representing disjunctions of conjunctions.
+    %
+    \item \textbf{Triplets:} Representations commonly used in knowledge graphs, consisting of subject-predicate-object triples (see \Cref{subsec:ontologies-and-kg}).
+\end{itemize}
+
+\Cref{fig:pie-ski-expressiveness} summarizes the occurrence of these semantic formats in surveyed \gls{SKE} methods.
+%
+Propositional rules dominate due to their simplicity and tractability.
+%
+They allow a divide-and-conquer approach, focusing on one input feature at a time, which simplifies the extraction process.
+
+\subsection{Where to extract}\label{subsec:where-to-extract}
 
 \subsection{How to extract}\label{subsec:how-to-extract}
 
-\subsection[Decompositional SKE]{Decompositional \Gls{SKE}}\label{subsec:decompositional-ske}
+\paragraph[Decompositional SKE]{Decompositional \Gls{SKE}}\label{par:decompositional-ske}
 
-\subsection[Pedagocial SKE]{Pedagocial \Gls{SKE}}\label{subsec:pedagogical-ske}
+\paragraph[Pedagocial SKE]{Pedagocial \Gls{SKE}}\label{par:pedagogical-ske}
 
 \subsection{Local explanations}\label{subsec:local-explanations}
 
