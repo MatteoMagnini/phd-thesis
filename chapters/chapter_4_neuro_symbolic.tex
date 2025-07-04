@@ -503,16 +503,52 @@ Propositional rules dominate due to their simplicity and tractability.
 %
 They allow a divide-and-conquer approach, focusing on one input feature at a time, which simplifies the extraction process.
 
+
 \subsection{Where to extract}\label{subsec:where-to-extract}
+%
+\begin{SCfigure}
+    \centering
+    \includegraphics[width=.4\linewidth]{figures/ske-translucency}
+    \caption[Venn diagram categorising SKE methods]{
+        %
+        Venn diagram categorising \gls{SKE} methods w.r.t.\ the \emph{translucency} of the algorithm: decompositional (D) or pedagogical (P).
+        %
+        For decompositional methods, we report the target predictor type: ANN<n> = artificial \gls{NN} (possibly having exactly <n> layers), CNN = convolutional \gls{NN}, GNN = graph \gls{NN}, FNN = fuzzy \gls{NN}, SVM = support vector machines, DTE = decision tree ensembles, LC = linear classifiers.
+        %
+        The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 132 surveyed \gls{SKE} methods.
+    }
+    \label{fig:pie-ske-translucency}
+\end{SCfigure}
+%
+The sort of \gls{ML} predictors from which symbolic knowledge can be extracted is strongly related to the \emph{translucency} of the \gls{SKE} algorithms.
+%
+The translucency of a \gls{SKE} algorithm refers to its ability to access the internal structure of the predictor, such as its parameters, weights, and architecture.
+%
+So, in other words, the question of where to extract symbolic knowledge is related to the question of how \gls{SKE} algorithms work.
+%
+There are two ways for \gls{SKE} methods to deal with sub-symbolic predictors:
+%
+\begin{itemize}
+    \item \textbf{Decompositional} $\rightarrow$ if the method needs to inspect -- even partially -- the internal structure of the predictor, such as its parameters, weights, and architecture;
+    %
+    \item \textbf{Pedagogical} $\rightarrow$ if the method does not need to inspect the internal structure of the predictor, but rather it can treat it as a black box and it relies on the input/output behavior of the predictor.
+\end{itemize}
+
+The different nature of decompositional \gls{SKE} methods is detailed in \Cref{fig:pie-ske-translucency}.
+%
+We observe that for what concern decompositional methods, the vast majority of them are designed to work with \gls{NN} of various types and different number of hidden layers.
+%
+Also \glspl{SVM} and \glspl{DTE} are targeted by some decompositional methods.
+%
+Around 43\% of the surveyed methods are pedagogical, meaning that these methods can work with virtually any type of sub-symbolic predictor, as long as it can be queried for input/output pairs.
+%
+Therefore, in general \gls{SKE} methods can be applied to any type of predictor, but for the decompositional ones, \glspl{NN} are definitely the most targeted type.
+
 
 \subsection{How to extract}\label{subsec:how-to-extract}
 
-\paragraph[Decompositional SKE]{Decompositional \Gls{SKE}}\label{par:decompositional-ske}
+\paragraph{Local explanations}\label{par:local-explanations}
 
-\paragraph[Pedagocial SKE]{Pedagocial \Gls{SKE}}\label{par:pedagogical-ske}
-
-\subsection{Local explanations}\label{subsec:local-explanations}
-
-\subsection{Global explanations}\label{subsec:global-explanations}
+\paragraph{Global explanations}\label{par:global-explanations}
 
 \subsection[Limitations and challenges of SKE]{Limitations and challenges of \Gls{SKE}}\label{subsec:limitations-and-challenges-of-ske}
