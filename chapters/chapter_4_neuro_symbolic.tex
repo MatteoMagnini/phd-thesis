@@ -558,11 +558,11 @@ In most of these cases, the \gls{SKE} method exploits a \emph{surrogate} model, 
 This model can be used as the final output of the \gls{SKE} process if it is already in a symbolic or interpretable (e.g., a linear model) format, or it can be further processed to extract symbolic knowledge.
 %
 Decompositional methods, on the other hand, require access to the internal structure of the predictor and each method has its own way of extracting symbolic knowledge.
-
+%
 \note{TODO: does it make sense to talk about this here?}
 %
 Another important aspect of \gls{SKE} methods when it comes to how symbolic knowledge is extracted is the \emph{granularity} of the extraction.
-%
+
 \paragraph{Local explanations}\label{par:local-explanations}
 %
 \begin{figure}
@@ -591,12 +591,18 @@ A local explanation is symbolic knowledge that explains only the behavior of the
 %
 The knowledge is not necessary encoded into logic rules, it can be provided for instance through \emph{feature importance} scores, which indicate the relevance of each input feature for the prediction~\cite{DBLP:conf/kdd/Ribeiro0G16}.
 %
-\Cref{fig:local-explanations} illustrates a simple example of how a local explanation can be provided for a specific input.
-%
-
-
+\Cref{fig:local-explanations} illustrates a simple example of how a local explanation can be provided for a specific input using a pedagogical \gls{SKE} method.
 
 
 \paragraph{Global explanations}\label{par:global-explanations}
+%
+Conversely, when the interest is in understanding the overall behavior of the predictor, we say that the \gls{SKE} method produces \emph{global explanations}.
+%
+Global explanations aim to capture the general patterns and rules that govern the predictor's behavior across all inputs, rather than focusing on individual instances.
+%
+For example, this can be done by training a surrogate model -- if we want to use a pedagogical \gls{SKE} method -- using for instance the training set used to train the predictor.
+%
+However, instead of using the labels of the training set, the surrogate model is trained using the predictions of the original predictor.
+
 
 \subsection[Limitations and challenges of SKE]{Limitations and challenges of \Gls{SKE}}\label{subsec:limitations-and-challenges-of-ske}
