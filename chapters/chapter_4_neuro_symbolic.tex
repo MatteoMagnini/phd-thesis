@@ -409,9 +409,9 @@ It also facilitates the merging of knowledge extracted from various predictors, 
 
 \subsection{What to extract}\label{subsec:what-to-extract}
 %
-\begin{SCfigure}
+\begin{figure}
     \centering
-    \includegraphics[width=.4\linewidth]{figures/ske-rule-shape}
+    \includegraphics[width=.6\linewidth]{figures/ske-rule-shape}
     \caption[Venn diagram categorising SKE methods]{
         %
         Venn diagram categorising \gls{SKE} methods w.r.t.\ the \emph{shape} of the extracted symbolic knowledge: rule lists (L), decision trees (DT), decision tables (TA), or knowledge graphs (KG).
@@ -419,11 +419,11 @@ It also facilitates the merging of knowledge extracted from various predictors, 
         The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 132 surveyed \gls{SKE} methods.
     }
     \label{fig:pie-ski-shape}
-\end{SCfigure}
+\end{figure}
 %
-\begin{SCfigure}
+\begin{figure}
     \centering
-    \includegraphics[width=.4\linewidth]{figures/ske-rule-format}
+    \includegraphics[width=.6\linewidth]{figures/ske-rule-format}
     \caption[Pie chart categorising SKE methods]{
         %
         Pie chart categorising \gls{SKE} methods w.r.t.\ the semantic \emph{expressiveness} of the extracted symbolic knowledge: propositional rules (P), fuzzy rules (F), oblique rules (O), m-of-n rules (MN), or triplets (T).
@@ -431,7 +431,7 @@ It also facilitates the merging of knowledge extracted from various predictors, 
         The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 132 surveyed \gls{SKE} methods.
     }
     \label{fig:pie-ski-expressiveness}
-\end{SCfigure}
+\end{figure}
 
 What kind of symbolic knowledge can be extracted?
 %
@@ -506,19 +506,19 @@ They allow a divide-and-conquer approach, focusing on one input feature at a tim
 
 \subsection{Where to extract}\label{subsec:where-to-extract}
 %
-\begin{SCfigure}
+\begin{figure}
     \centering
-    \includegraphics[width=.4\linewidth]{figures/ske-translucency}
+    \includegraphics[width=.6\linewidth]{figures/ske-translucency}
     \caption[Venn diagram categorising SKE methods]{
         %
         Venn diagram categorising \gls{SKE} methods w.r.t.\ the \emph{translucency} of the algorithm: decompositional (D) or pedagogical (P).
         %
-        For decompositional methods, we report the target predictor type: ANN<n> = artificial \gls{NN} (possibly having exactly <n> layers), CNN = convolutional \gls{NN}, GNN = graph \gls{NN}, FNN = fuzzy \gls{NN}, SVM = support vector machines, DTE = decision tree ensembles, LC = linear classifiers.
+        For decompositional methods, we report the target predictor type: ANN\<n\> = artificial \gls{NN} (possibly having exactly \<n\> layers), CNN = convolutional \gls{NN}, GNN = graph \gls{NN}, FNN = fuzzy \gls{NN}, SVM = support vector machines, DTE = decision tree ensembles, LC = linear classifiers.
         %
         The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 132 surveyed \gls{SKE} methods.
     }
     \label{fig:pie-ske-translucency}
-\end{SCfigure}
+\end{figure}
 %
 The sort of \gls{ML} predictors from which symbolic knowledge can be extracted is strongly related to the \emph{translucency} of the \gls{SKE} algorithms.
 %
@@ -546,8 +546,56 @@ Therefore, in general \gls{SKE} methods can be applied to any type of predictor,
 
 
 \subsection{How to extract}\label{subsec:how-to-extract}
+%
+The way \gls{SKE} methods extract symbolic knowledge highly depends on the translucency of the method itself.
+%
+Pedagogical methods treat the underlying predictor as an oracle to be queries for predictions the symbolic knowledge should mimic.
+%
+\note{TODO: add citations}
+%
+In most of these cases, the \gls{SKE} method exploits a \emph{surrogate} model, which is a simpler, more interpretable model that approximates the behavior of the original predictor.
+%
+This model can be used as the final output of the \gls{SKE} process if it is already in a symbolic or interpretable (e.g., a linear model) format, or it can be further processed to extract symbolic knowledge.
+%
+Decompositional methods, on the other hand, require access to the internal structure of the predictor and each method has its own way of extracting symbolic knowledge.
 
+\note{TODO: does it make sense to talk about this here?}
+%
+Another important aspect of \gls{SKE} methods when it comes to how symbolic knowledge is extracted is the \emph{granularity} of the extraction.
+%
 \paragraph{Local explanations}\label{par:local-explanations}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=.6\linewidth]{figures/local-explanation}
+    \caption[Local explanations]{
+        %
+        Simple example to of how a local explanation can be provided for a specific input.
+        %
+        The sub-symbolic model's decision function $f$ is represented by the blue and pink background, which cannot be approximated well by a linear model.
+        %
+        The bold red cross is the instance being explained.
+        %
+        A \gls{SKE} method can sample inctances, get prediction using $f$, and weights them by the proximity to the instance being explained (the bigger the cross/circle, the closer to the instance).
+        %
+        The dashed line is the trained interpretable model that is locally faithful to the sub-symbolic model.
+        %
+        The image is taken from~\cite{DBLP:conf/kdd/Ribeiro0G16}.
+    }
+    \label{fig:local-explanations}
+\end{figure}
+%
+When the interest in the extracted symbolic knowledge is focused on a specific input, i.e., we want to know why a predictor produced a particular outcome, the \gls{SKE} method is said to produce \emph{local explanations}.
+%
+A local explanation is symbolic knowledge that explains only the behavior of the predictor for a specific input.
+%
+The knowledge is not necessary encoded into logic rules, it can be provided for instance through \emph{feature importance} scores, which indicate the relevance of each input feature for the prediction~\cite{DBLP:conf/kdd/Ribeiro0G16}.
+%
+\Cref{fig:local-explanations} illustrates a simple example of how a local explanation can be provided for a specific input.
+%
+
+
+
 
 \paragraph{Global explanations}\label{par:global-explanations}
 
