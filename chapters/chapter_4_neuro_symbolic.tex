@@ -7,6 +7,80 @@
 \minitoc
 %----------------------------------------------------------------------------------------
 
+The origins of \gls{NeSy} \gls{AI} can be traced back to the 1950s and 1960s, during the early days of \gls{AI} research~\cite{Youheng_2023}.
+%
+At that time, the focus was on developing systems based on symbolic reasoning and rule-based problem-solving.
+%
+However, by the 1980s, the limitations of purely symbolic approaches became evident.
+%
+For instance, symbolic \gls{AI} struggled with tasks such as \gls{NLP} and computer vision, where the complexity of real-world data posed significant challenges.
+%
+To address these shortcomings, researchers began incorporating principles inspired by neuroscience into \gls{AI} systems.
+%
+This shift marked the beginning of efforts to integrate sub-symbolic methods, such as neural networks, into the field.
+
+In the early 21st century, the idea of combining symbolic reasoning with neural networks gained traction.
+%
+This led to the emergence of \gls{NeSy} \gls{AI}, a hybrid approach that leverages the strengths of both symbolic and sub-symbolic paradigms.
+
+
+\Gls{NeSy} \gls{AI} has since been applied to a wide range of domains, including healthcare, robotics, and \gls{NLP}.
+%
+It represents one of the most promising directions in \gls{AI} research, aiming to create systems capable of both learning from data and reasoning logically, much like humans.
+%
+The ``neuro'' component of \gls{NeSy} \gls{AI} is inspired by the human brain's ability to process information and learn from experience.
+%
+This is achieved through the use of neural networks, which enable the system to adapt and generalize from data.
+%
+On the other hand, the ``symbolic'' component relies on logical reasoning and structured representations of knowledge.
+%
+This allows the system to perform tasks such as deductive reasoning and to represent knowledge in a human-interpretable form, using symbols and rules.
+%
+By combining these two components, \gls{NeSy} \gls{AI} aims to overcome the limitations of purely symbolic or sub-symbolic approaches.
+%
+It enables the development of intelligent systems that can reason, learn, and adapt in complex environments.
+
+
+According to a recent survey~\cite{DBLP:journals/nca/BhuyanRTS24} there exist at least six different types of integrating symbolic \gls{AI} and sub-symbolic \gls{ML} predictors.
+%
+Approaches to \gls{NeSy} can be categorised w.r.t. how the connectionist and symbolic components are integrated.
+%
+\begin{enumerate}
+    \item \emph{Symbolic neuro-symbolic} (Type 1): utilizes neural networks for representational learning, which subsequently feeds into symbolic logic and inference mechanisms.
+    %
+    This approach is particularly effective in tasks such as language translation and classification, where neural-based semantic representations enhance symbolic reasoning;
+    %
+    \item \emph{symbolic[neuro]} (Type 2): incorporates neural networks as subcomponents within predominantly symbolic frameworks.
+    %
+    This integration improves pattern recognition capabilities within symbolic reasoning systems;
+    %
+    \item \emph{neuro|symbolic} (Type 3): involves a collaborative interaction between neural and symbolic components, which remain distinct and separate.
+    %
+    This type of integration is commonly applied in reinforcement learning and probabilistic logic systems;
+    %
+    \item \emph{neuro-symbolic$\rightarrow$neuro} (Type 4): embeds symbolic knowledge directly into neural network architectures or training processes.
+    %
+    This influences the decision-making and learning pathways of the neural networks;
+    %
+    \item \emph{neuro-symbolic} (Type 5): encodes symbolic constraints within neural architectures, often using soft logic constraints to directly affect neural computations;
+    %
+    \item \emph{neuro[symbolic]} (Type 6): represents a deeply integrated approach where symbolic reasoning capabilities are embedded directly within neural architectures.
+    %
+    However, achieving robust combinatorial reasoning in this type remains a significant challenge.
+    %
+\end{enumerate}
+
+In the rest of this chapter, we focus on two sub-fields of \gls{NeSy} \gls{AI} -- namely \gls{SKI} and \gls{SKE} -- that cannot be mapped into a fixed one-to-one correspondence with the six types of integration above.
+%
+\Gls{SKI} and \gls{SKE} are two popular way to integrate symbolic \gls{AI} and sub-symbolic \gls{ML} predictors.
+%
+In the literature, there are hundreds of works that propose methods for these two tasks coming from different communities.
+%
+Here, we present both \gls{SKI} and \gls{SKE} in a unified way, providing a clear taxonomy of the methods, their properties, and their limitations.
+%
+What follows is a re-elaboration of the result of an \gls{SLR} that we conducted on the two topics: \emph{Symbolic Knowledge Extraction and Injection with Sub-symbolic Predictors: A Systematic Literature Review}~\cite{DBLP:journals/csur/CiattoSAMO24}.
+
+
 \section[Symbolic knowledge injection]{\Glsentrylong{SKI}}\label{sec:ski}
 %
 \Gls{SKI} is a wide sub-field of \gls{NeSy}, which encompasses all the methods that in some way \emph{inject} symbolic knowledge into sub-symbolic predictors.
@@ -109,17 +183,18 @@ These \gls{QoS} metrics are presented in the work ``Symbolic Knowledge Injection
 
 \subsection{What to inject}\label{subsec:what-to-inject}
 %
-\begin{SCfigure}
+\begin{figure}
     \centering
-    \includegraphics[width=.4\linewidth]{figures/ski-logic}
+    \includegraphics[width=.6\linewidth]{figures/ski-logic}
     \caption[Venn diagram categorising SKI methods]{
         Venn diagram categorising SKI methods w.r.t.\ the \emph{input knowledge} type: knowledge graphs (KG), propositional logic (P), first-order logic (FOL), expert knowledge (E), Datalog (D), Horn logic (H), or modal logic (M).
         %
         The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 117 surveyed \gls{SKI} methods.
     }
     \label{fig:pie-ski-logic}
-\end{SCfigure}
-
+\end{figure}
+%
+\note{ERROR: there is an inconsistency between this image and \Cref{fig:venn-diagram-logics}. P here is subset of D, there it is not.}
 %
 A key distinction in \gls{SKI} methods lies in whether the chosen formalism is \emph{machine interpretable}, \emph{human interpretable}, or both.
 %
