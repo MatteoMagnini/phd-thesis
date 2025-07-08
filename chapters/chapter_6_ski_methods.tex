@@ -18,6 +18,22 @@ Finally, we discuss the implications of these contributions and outline future d
 
 \section{Motivations}\label{sec:ski-motivations}
 %
+Aware by the limitations reported in \Cref{subsec:limitations-and-challenges-of-ski}, we wanted to develop novel \gls{SKI} methods that could be used in many different domains.
+%
+For this reason, these methods include all the elements described in \Cref{subsec:how-to-inject}.
+%
+In particular, a \emph{parser} is provided to convert symbolic knowledge into a format that can be injected into a neural network.
+%
+In this way, we are not bounded to a specific knowledge base nor to a specific domain.
+%
+The transformation of the parsed rules into a numeric interpretation is automatically performed by a \emph{fuzzification step}.
+%
+Finally, the sub-symbolic component is injected into a neural network, which is trained to learn the symbolic knowledge.
+
+Another limitation that we wanted to address is the expressiveness of the symbolic knowledge that can be injected.
+%
+What we target in these two works is knowledge expressed in \emph{stratified Datalog with negation}.
+%
 
 
 \section{Knowledge injection via lambda layer}\label{sec:ski-contribution-kill}
