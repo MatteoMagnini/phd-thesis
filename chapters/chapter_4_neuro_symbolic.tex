@@ -458,7 +458,34 @@ This is the common strategy exploited by the \gls{KG}~\cite{DBLP:conf/ijcai/Lamb
 
 
 \subsection[Limitations and challenges of SKI]{Limitations and challenges of \Gls{SKI}}\label{subsec:limitations-and-challenges-of-ski}
-
+%
+Despite the numerous advantages of \gls{SKI}, there are several limitations and challenges that need to be addressed.
+%
+Here, we elicit the most common and relevant limitations and challenges of \gls{SKI} that we encountered in the literature:
+%
+\begin{itemize}
+    %
+    \item \textbf{Lack of generality}, many \gls{SKI} methods are tailored to domain-specific tasks.
+    %
+    Often, even if they are presented as general-purpose, their implementation is not and it requires significant effort to adapt them to different tasks or domains;
+    %
+    \item \textbf{Lack of reproducibility}, the experiments presented -- if any -- in the papers are often not reproducible.
+    %
+    This happens because the authors do not provide enough details about the implementation of the method (e.g., they do not mention the value of some key hyperparameters), or they do not share the code and data used in the experiments;
+    %
+    \item \textbf{Lack of availability}, the vast majority of \gls{SKI} methods is not available as open-source software.
+    %
+    Authors usually do not mention any code base in their papers, and if they do, the code can lack the necessary dependencies, lack documentation, or it could have been removed from public repositories;
+    %
+    \item \textbf{Limits of the symbolic knowledge}, despite the variety of symbolic knowledge that can be injected (see \Cref{fig:pie-ski-logic}), there are still many limitations.
+    %
+    Indeed, the claimed expressiveness of the logic formalism supported by a method is often not fully exploited in practice.
+    %
+    In particular, \gls{FOL} allows for the representation of recursive terms, but most \gls{SKI} methods do not support them because of the target predictors.
+    %
+    Target predictors are almost always \glspl{NN}, which cannot support recursion in their architecture---modern \glspl{NN} are \glspl{DAG}.
+    %
+\end{itemize}
 
 \section[Symbolic knowledge extraction]{\Glsentrylong{SKE}}\label{sec:ske}
 %
