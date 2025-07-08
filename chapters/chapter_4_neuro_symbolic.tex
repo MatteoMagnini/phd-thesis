@@ -79,6 +79,8 @@ In the literature, there are hundreds of works that propose methods for these tw
 Here, we present both \gls{SKI} and \gls{SKE} in a unified way, providing a clear taxonomy of the methods, their properties, and their limitations.
 %
 What follows is a re-elaboration of the result of an \gls{SLR} that we conducted on the two topics: \emph{Symbolic Knowledge Extraction and Injection with Sub-symbolic Predictors: A Systematic Literature Review}~\cite{DBLP:journals/csur/CiattoSAMO24}.
+%
+\note{TODO: consider to add a brief explanation about in which type of integration \gls{SKI} and \gls{SKE} fit.}
 
 
 \section[Symbolic knowledge injection]{\Glsentrylong{SKI}}\label{sec:ski}
@@ -186,7 +188,7 @@ These \gls{QoS} metrics are presented in the work ``Symbolic Knowledge Injection
 \begin{figure}
     \centering
     \includegraphics[width=.6\linewidth]{figures/ski-logic}
-    \caption[Venn diagram categorising SKI methods]{
+    \caption[Venn diagram categorising SKI methods w.r.t. the input knowledge type]{
         Venn diagram categorising SKI methods w.r.t.\ the \emph{input knowledge} type: knowledge graphs (KG), propositional logic (P), first-order logic (FOL), expert knowledge (E), Datalog (D), Horn logic (H), or modal logic (M).
         %
         The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 117 surveyed \gls{SKI} methods.
@@ -263,7 +265,59 @@ whereas the second statement can be encoded as:
 
 
 \subsection{Where to inject}\label{subsec:where-to-inject}
-\note{TODO}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=.6\linewidth]{figures/ski-predictors}
+    \caption[Venn diagram categorising SKI methods w.r.t. the type of sub-symbolic predictor]{
+        Venn diagram categorising \gls{SKI} methods w.r.t.\ the type of sub-symbolic predictor: feed-forward (FF), convolutional (CNN), graph (GNN) or recurrent (RNN) neural networks, Boltzmann machines (BM), Markov chains (MC), transformers (TR), auto-encoders (AE), deep belief networks (DBN), denoising auto-encoders (DAE), kernel machines (KM).
+        %
+        The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 117 surveyed \gls{SKI} methods.
+    }
+    \label{fig:pie-ski-predictors}
+\end{figure}
+%
+\Gls{SKI} methods can target many different types of sub-symbolic predictors.
+%
+The vast majority of them are \glspl{NN}.
+%
+Among \glspl{NN}, there are different kinds of architectures that one can use to inject symbolic knowledge including.
+%
+In addition to \glspl{NN}, \gls{SKI} methods can also target other types of sub-symbolic predictors.
+%
+The predictors targeted by the surveyed \gls{SKI} methods are:
+%
+\begin{itemize}
+    \item \textbf{feed-forward NNs} multi-layered \glspl{NN} in which neurons from layer i are only connected with layer i + 1, and multiple ($\ge$ 2) layers may exist;
+    %
+    \item \textbf{convolutional NNs} (CNNs) particular case of FF, \glspl{NN} that use convolutional layers to extract features from the input data, typically used in computer vision tasks;
+    %
+    \item \textbf{graph NNs} (GNNs) particular case of \glspl{CNN}, \glspl{NN} that operate on graph-structured data, allowing for the injection of symbolic knowledge in the form of graph structures;
+    %
+    \item \textbf{recurrent NNs} (RNNs) \glspl{NN} that use recurrent connections to process sequential data, such as time series or natural language;
+    %
+    \item \textbf{transformers} (TR) a type of \glspl{NN} architecture that uses self-attention mechanisms to process sequences, widely used in natural language processing tasks;
+    %
+    \item \textbf{auto-encoders} (AE) a type of \glspl{NN} that learns to encode input data into a lower-dimensional representation and then decode it back to the original input, often used for dimensionality reduction or feature extraction;
+    %
+    \item \textbf{denoising auto-encoders} (DAE) a type of auto-encoder that learns to reconstruct the original input from a corrupted version, often used for noise reduction or data augmentation;
+    %
+    \item \textbf{Boltzmann machines} (BM) a type of stochastic \glspl{NN} that can learn complex distributions over their inputs, often used for generative tasks;
+    %
+    \item \textbf{Markov chains} (MC) probabilistic models that represent systems that transition between states based on certain probabilities, often used for sequence prediction;
+    %
+    \item \textbf{deep belief networks} (DBN) a type of generative model that consists of multiple layers of stochastic, latent variables, often used for unsupervised learning tasks;
+    %
+    \item \textbf{kernel machines} (KM) a type of sub-symbolic predictor that uses kernel functions to map input data into a higher-dimensional space, allowing for non-linear decision boundaries.
+\end{itemize}
+%
+\Cref{fig:pie-ski-predictors} illustrates the distribution of surveyed \gls{SKI} methods based on the type of sub-symbolic predictor they target.
+
+One reason why the vast majority of methods rely on \glspl{NN} is straightforward: methods tailored to \glspl{GNN} (resp., \glspl{CNN}) assume the networks to accept specific kinds of data as input, e.g., graphs (resp., images), while ordinary feed-forward \glspl{NN} accept raw vectors of real numbers.
+%
+Another reason is that \glspl{NN} are the most popular sub-symbolic predictors in the \gls{ML} community, and they are often used as a default choice for many tasks.
+%
+Finally, \glspl{NN} are highly flexible and easy to manipulate, making them ideal for \gls{SKI} methods.
 
 
 \subsection{How to inject}\label{subsec:how-to-inject}
