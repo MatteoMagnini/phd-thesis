@@ -29,15 +29,139 @@ In this way, we are not bounded to a specific knowledge base nor to a specific d
 The transformation of the parsed rules into a numeric interpretation is automatically performed by a \emph{fuzzification step}.
 %
 Finally, the sub-symbolic component is injected into a neural network, which is trained to learn the symbolic knowledge.
-
+%
 Another limitation that we wanted to address is the expressiveness of the symbolic knowledge that can be injected.
 %
 What we target in these two works is knowledge expressed in \emph{stratified Datalog with negation}.
+
+
+\subsection{Stratified Datalog with negation}\label{subsec:skistratified-datalog-with-negation}
 %
+This logic is a variant of Datalog~\cite{DBLP:books/mc/18/MaierTKW18} with no recursion -- neither direct nor indirect -- yet supporting negated atoms.
+%
+We choose Datalog because of its expressiveness (strictly higher than propositional logic) and its acceptable limitations.
+%
+The lack of recursion, in particular, prevents issues when it comes to convert formulas into neural structures (which are \glspl{DAG}).
+%
+Since we rely on Datalog with negation, we allow atoms in the bodies od clauses to be negated.
+%
+Using the same notation as in \Cref{subsec:datalog}, in case the $i^{th}$ atom in the body of some clause is negated, we write $\neg b_{i}$.
+%
+There, each atom $h$, $b_{1}$, $b_{2}$, \dots{} may be a predicate of arbitrary arity.
+
+An \(l\)-ary predicate \(p\) denotes a relation among \(l\) entities: \(p(t_1, \dots, t_l)\), where each \(t_i\) is a term, i.e., either a constant (denoted in \texttt{monospace}) representing a particular entity, or a logic variable (denoted by \textit{Capitalised Italic}) representing some unknown entity or value.
+%
+Well-known binary predicates – e.g., \(>\), \(<\), \(=\) – are admissible, too, and retain their usual semantics from arithmetic.
+%
+For the sake of readability, we may write these predicates in infix form—hence \(>(X, 1) \equiv X > 1\).
+
+To support injection into a particular \gls{NN}, we further assume the input knowledge base defines one (and only one) outer relation -- say \texttt{output} or \texttt{class} -- involving as many variables as the input and output features the \gls{NN} has been trained upon.
+%
+That relation must be defined via one clause per output neuron.
+%
+Yet, each clause may contain other predicates in their bodies, in turn defined by one or more clauses.
+%
+In that case, since we rely on stratified Datalog, we require the input knowledge to not include any (directly or indirectly) recursive clause definition.
+
+For example, for a 3-class classification task, any provided knowledge base should include a clause such as the following one:
+%
+\begin{align*}
+    \texttt{class}(\bar{X}, y_1) &\leftarrow \texttt{p}_1(\bar{X}) \land \texttt{p}_2(\bar{X}) \\
+    \texttt{p}_1(\bar{X}) &\leftarrow \dots \\
+    \texttt{p}_2(\bar{X}) &\leftarrow \dots \\
+    \texttt{class}(\bar{X}, y_2) &\leftarrow \texttt{p}'_1(\bar{X}) \land \texttt{p}'_2(\bar{X}) \\
+    \texttt{p}'_1(\bar{X}) &\leftarrow \dots \\
+    \texttt{p}'_2(\bar{X}) &\leftarrow \dots \\
+    \texttt{class}(\bar{X}, y_3) &\leftarrow \texttt{p}''_1(\bar{X}) \land \texttt{p}''_2(\bar{X}) \\
+    \texttt{p}''_1(\bar{X}) &\leftarrow \dots \\
+    \texttt{p}''_2(\bar{X}) &\leftarrow \dots
+\end{align*}
+%
+where \(\bar{X}\) is a tuple having as many variables as the neurons in the output layer, \(y_i\) is a constant denoting the \(i\)-th class, and \(\texttt{p}_1\), \(\texttt{p}_2\), \(\texttt{p}'_1\), \(\texttt{p}'_2\), \(\texttt{p}''_1\), \(\texttt{p}''_2\) are ancillary predicates defined via Horn clauses as well.
 
 
 \section{Knowledge injection via lambda layer}\label{sec:ski-contribution-kill}
 %
+In this section we present the paper ``A view to a KILL: Knowledge Injection via Lambda Layer''~\cite{DBLP:conf/woa/MagniniCO22}, presented at the 23rd Workshop ``From Objects to Agents'' (WOA 2022)~\footnote{\url{https://sites.google.com/view/woa2022/}}.
+%
+The paper introduces a novel \gls{SKI} method, called \gls{KILL}, which allow to inject symbolic knowledge in stratified Datalog with negation into \glspl{NN} of any shape.
+%
+\Gls{KILL} does not require the input formulas to be \emph{ground}, and it does not impose any constraint on the \gls{NN} undergoing injection.
+%
+The method acts directly at the backpropagation level, by increasing the penalty to be back-propagated whenever the \gls{NN} output is violating the knowledge to be injected.
+%
+For this reason, \gls{KILL} falls under the \emph{guided learning} strategy, as described in \Cref{subsec:how-to-inject}.
+
+
+\subsection{$\Lambda$-layer}\label{subsec:lambda-layer}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/lambda-layer}
+    \caption[General architecture of a NN with $\Lambda$-layer]{
+        General architecture of a \gls{NN} with $n$ hidden layers, $X$ and $Y$ are respectively the input and output layers.
+        %
+        Before training, \gls{KILL} is applied to the predictor so that a new model constrained by the knowledge base (KB) is obtained.
+        %
+        The $\Lambda$-layer is added to the output layer, and then removed for the inference phase.
+    }
+    \label{fig:lambda-layer}
+\end{figure}
+%
+The idea behind \gls{KILL} is to perform injection during training.
+%
+The injection is performed by appending one further layer -- the \emph{$\Lambda$-layer} -- at the output end of the \gls{NN}, and by training the overall network as usual (e.g., via gradient descent or similar).
+%
+The $\Lambda$-layer introduces an error whenever the prediction from the network's output layer violates the symbolic knowledge being injected.
+%
+This error influences the gradient descent or other optimization functions, discouraging violations of the symbolic knowledge.
+%
+In essence, the \gls{NN} learns inductively to avoid wrong predictions by penalizing violations during training.
+%
+To achieve this, the $\Lambda$-layer employs a custom activation function that modifies the output of the network's original output layer.
+%
+Additionally, the symbolic knowledge must be numerically interpreted, converting logical formulas into real-valued functions to compute error values.
+%
+Once the training phase is complete, the $\Lambda$-layer can be removed, leaving the original network architecture intact.
+
+
+To elaborate on the $\Lambda$-layer, we consider a symbolic knowledge base, denoted as \(\mathcal{K}\), to be injected into a feedforward \gls{NN} of arbitrary depth, denoted as \(\mathcal{N}\).
+%
+Let \(\mathcal{N}\) have an input layer \(\mathbf{X}\) and an output layer \(\mathbf{Y}\), where \(\mathbf{Y}\) is assumed to be of shape \(n \times 1\).
+%
+This discussion applies to layers of any shape, including multidimensional ones.
+%
+No assumptions are made about the activation function of \(\mathbf{Y}\), the topology or nature of the hidden layers, or the shape of \(\mathbf{X}\).
+%
+The output of \(\mathbf{Y}\) is denoted as \(\mathbf{y} = [y_1, \dots, y_n]\), representing the network's prediction for a given input \(\mathbf{x}\).
+%
+The knowledge base \(\mathcal{K}\) consists of \(n\) rules, \(\mathcal{K} = \{\varphi_1, \dots, \varphi_n\}\), where each rule \(\varphi_i\) constrains the relationship between \(\mathbf{x}\) and \(y_i\).
+
+
+To inject \(\mathcal{K}\), the $\Lambda$-layer is added to the network architecture, as illustrated in \Cref{fig:lambda-layer}.
+%
+This layer is densely connected to both \(\mathbf{X}\) and \(\mathbf{Y}\), and its activation function introduces a penalty on \(y_i\) whenever the corresponding rule \(\varphi_i\) is violated for an input-output pair \((\mathbf{x}, \mathbf{y})\).
+%
+The output of the $\Lambda$-layer, denoted as \(\boldsymbol{\lambda}\), is defined as:
+%
+\[
+\boldsymbol{\lambda} = \mathbf{y} \times (1 + \mathbf{C}(\mathbf{x}, \mathbf{y}))
+\]
+%
+where \(\mathbf{C}(\mathbf{x}, \mathbf{y})\) is a positive penalty vector representing the cost of modifying the network's output \(\mathbf{y}\).
+%
+The penalty vector \(\mathbf{C}(\mathbf{x}, \mathbf{y})\) is given by:
+%
+\[
+\mathbf{C}(\mathbf{x}, \mathbf{y}) = [c_1(\mathbf{x}, y_1), \dots, c_i(\mathbf{x}, y_i), \dots, c_n(\mathbf{x}, y_n)]
+\]
+%
+where \(c_i : \mathbf{X} \times \mathbf{Y} \to [0, 1]\) interprets the rule \(\varphi_i\) as a cost in the range \([0, 1]\) for the given values of \(\mathbf{x}\) and \(y_i\).
+%
+A penalty is applied to the \(i\)-th neuron of \(\mathbf{Y}\) whenever the corresponding rule \(\varphi_i\) is violated.
+%
+The penalty is higher when the violation is severe and approaches zero when the violation is minimal or absent.
+
 
 \section{Knowledge injection via network structuring}\label{sec:ski-contribution-kins}
 
