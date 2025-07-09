@@ -163,6 +163,69 @@ A penalty is applied to the \(i\)-th neuron of \(\mathbf{Y}\) whenever the corre
 The penalty is higher when the violation is severe and approaches zero when the violation is minimal or absent.
 
 
+\subsection{KILL fuzzifier}\label{subsec:kill-fuzzifier}
+%
+\input{tables/kill-fuzzifier}
+%
+\input{figures/ast}
+%
+Before injecting symbolic knowledge into a neural network, each formula associated with an output neuron must be converted into a real-valued function to compute the cost of violating that formula.
+
+This conversion relies on a multi-valued interpretation of logic inspired by \gls{LukasiewiczLogic}~\cite{placeholder_citation}.
+%
+Each formula is encoded using the \(\llbracket \cdot \rrbracket\) function, which maps logical formulas to real-valued functions.
+%
+These functions accept real vectors of size \(m + n\) as input and return scalars in \(\mathbb{R}\) as output.
+%
+The resulting scalars are clipped to the \([0, 1]\) range using the \(\eta : \mathbb{R} \to [0, 1]\) function, defined as:
+%
+\begin{align*}
+    \eta(x) =
+    \begin{cases}
+        0 & \text{if } x \leq 0, \\
+        x & \text{if } 0 < x < 1, \\
+        1 & \text{if } x \geq 1.
+    \end{cases}
+\end{align*}
+
+The values obtained from \(\eta(x)\) represent penalties, as discussed in \Cref{subsec:lambda-layer}.
+%
+The penalty for the \(i^{\text{th}}\) neuron violating rule \(\varphi_i\) is expressed as \(c_i(\mathbf{x}, y_i) = \eta(\llbracket \varphi_i \rrbracket(\mathbf{x}, y_i))\).
+
+The \(\llbracket \cdot \rrbracket\) encoding function is recursively defined in \Cref{tab:logic-formulae}.
+%
+To compute the penalty \(c_i(\mathbf{x}, y_i)\) for the \(i^{\text{th}}\) neuron, \gls{KILL} identifies the Datalog rule of the form:
+%
+\begin{align*}
+    \texttt{class}(\bar{X}, y_i) &\leftarrow \psi.
+\end{align*}
+%
+The method focuses on the body \(\psi\) of the rule, ignoring its head, as the head specifies the expected output for the rule.
+%
+If \(\psi\) contains predicates \(p_1, p_2\), defined by one or more clauses in the knowledge base, these predicates are replaced by the disjunction of the bodies of all clauses defining them.
+%
+This process is repeated until \(\psi\) contains only binary expressions involving input variables, constants, arithmetic operators, and logical connectives.
+%
+Finally, operators and connectives are replaced by continuous functions, as detailed in \Cref{tab:logic-formulae}.
+%
+The entire process produces a real-valued interpretation of the original formula, which \gls{KILL} uses to compute \(c_i(\mathbf{x}, y_i)\).
+
+\Cref{fig:ast} illustrates an example of the encoding process.
+%
+The example formula is:
+%
+\begin{align*}
+    \texttt{class}(X_1, X_2, z) &\leftarrow (X_1 \geq k) \land (X_2 \geq h),
+\end{align*}
+%
+where \(k\), \(h\), and \(z\) are numeric constants, \(X_1\) and \(X_2\) are input variables, and \(Y\) is an output variable.
+%
+\Cref{fig:ast-unencoded} shows the \gls{AST} of this formula.
+%
+\Cref{fig:ast-simplified} depicts the same \gls{AST} after replacing the \(\leq\) operator with a negated \(>\) operator.
+%
+Finally, \Cref{fig:ast-encoded} shows the \gls{AST} of the encoded function.
+
 \section{Knowledge injection via network structuring}\label{sec:ski-contribution-kins}
 
 \section{Discussion and future direction}\label{sec:ski-discussion-and-future-direction}
