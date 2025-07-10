@@ -1,0 +1,36 @@
+% !TeX spellcheck = en_GB
+% !TeX root = ../phd-thesis.tex
+
+\begin{table}
+    \centering
+     \begin{adjustbox}{width=\linewidth,center}
+         \begin{tabular}{l|rr||l|rr}
+             \textbf{Metric} & \textbf{Uneducated} & \textbf{Educated} & \textbf{Metric} & \textbf{Uneducated} & \textbf{Educated}
+             \\
+             \hline\hline
+             \textbf{Accuracy} & 0.962 & 0.978 & \textbf{Acc. Straight} & 0.415 & 0.509
+             \\
+             \textbf{Macro-F1} & 0.512 & 0.538 & \textbf{Acc. Flush} & 0.002 & 0.002
+             \\
+             \textbf{Weighted-F1} & 0.96 & 0.977 & \textbf{Acc. Full} & 0.628 & 0.69
+             \\
+             \textbf{Acc. High Card} & 0.977 & 0.989 & \textbf{Acc. Four} & 0.186 & 0.19
+             \\
+             \textbf{Acc. Pair} & 0.968 & 0.985 & \textbf{Acc. Straight F.} & 0.003 & 0
+             \\
+             \textbf{Acc. Two Pairs} & 0.867 & 0.914 & \textbf{Acc. Royal F.} & 0 & 0
+             \\
+             \textbf{Acc. Three} & 0.913 & 0.922 & & &
+        \end{tabular}
+     \end{adjustbox}
+    \caption{
+        Test set accuracy, macro-F1 and weighted-F1 on all classes and single mean class accuracies.
+        %
+        All measures represent the mean over the experiment population (30).
+        %
+        The Wilcoxon signed-rank test shows that for the accuracy, macro-F1 and weighted-F1 metrics the educated model is significantly better than the uneducated one ($p < 0.05$).
+        %
+        Also, the educated model is significantly better than the uneducated one for the single mean class accuracies, except for \emph{high card}, \emph{pair} and \emph{straight} classes.
+    }
+    \label{tab:phds-kill-results}
+\end{table}

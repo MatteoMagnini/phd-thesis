@@ -270,6 +270,102 @@ All other rules have the same structure as \Cref{eq:flush-class}: the left-hand 
 %
 \Cref{tab:phds-logic-rules} provides an overview of all the rules we rely upon in our experiments.
 
+
+\paragraph{Methodology}\label{par:phds-methodology}
+%
+We adopt the same data partitioning strategy proposed by the dataset authors~\cite{poker_hand_158}.
+%
+Specifically, the training set consists of $25,010$ samples, while the test set includes $1,000,000$ samples.
+%
+This unusual ratio between training and test set sizes makes the task more challenging but ensures more reliable results.
+
+For all experiments, we use a fully connected \gls{NN} with three layers.
+%
+The first two layers consist of $128$ neurons each, while the output layer has $10$ neurons, corresponding to the number of classes.
+%
+The activation function for the first two layers is \gls{ReLU}, whereas the output layer uses softmax.
+%
+The network is trained using categorical cross-entropy as the loss function.
+
+We set the batch size to $32$ and train the network for up to $100$ epochs.
+%
+To evaluate the network's performance, we rely on metrics such as accuracy, macro-F1, and weighted-F1 scores.
+%
+After training, the \(\Lambda\)-layer is removed, and the resulting \gls{NN} is used for inference.
+
+To prevent overfitting, we employ three stopping criteria during training.
+%
+First, for 99\% of the training examples, the activation of every output unit must be within 0.25 of the correct value.
+%
+Second, training stops after 100 epochs.
+%
+Third, the predictor must achieve at least 90\% accuracy on the training examples but show no improvement in classification performance for five consecutive epochs.
+%
+These criteria are inspired by previous work~\cite{Towell90}.
+%
+Finally, we conduct 30 runs for each configuration to obtain a statistically significant population for comparisons.
+
+
+\paragraph{Results and discussion}\label{par:phds-results}
+%
+\input{tables/phds-kill-results}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/phds-kill-results}
+    \caption[PHDS KILL results]{
+        Per class results of the experiments on the \gls{PHDS} dataset using \gls{KILL}.
+        %
+        The \gls{KILL} method outperforms the uneducated \gls{NN} in the prediction of almost all classes.
+        %
+        For all class prediction, the Wilcoxon signed-rank test has been applied to compare the two configurations.
+        %
+        With a p-value threshold of $0.05$, we reject the null hypothesis in the case of \emph{high card}, \emph{pair}, and \emph{straight} classes.
+    }
+    \label{fig:phds-kill-results}
+\end{figure}
+%
+We define two different configurations for experiments:
+%
+\begin{inlinelist}
+    %
+    \item ``uneducated'', where we use the \gls{NN} described in \Cref{par:phds-methodology},
+    %
+    \item ``educated'', where we apply \gls{KILL} on the same network architecture.
+    %
+\end{inlinelist}
+%
+For both configurations we use the same hyperparameters and perform $30$ runs.
+%
+Results are reported in \Cref{tab:phds-kill-results} and in \Cref{fig:phds-kill-results}.
+%
+In general, experiments show that both predictors are very good at classifying frequent classes such as \emph{high card} and \emph{pair}.
+%
+Also for less frequent classes , \emph{two pairs} and \emph{three of a kind}, accuracy is still high.
+%
+The remaining six classes represent the $0.8\%$ of the training set and therefore much more difficult to correctly predict.
+%
+For \emph{full house} and \emph{straight}, accuracy has middle values, while for the remaining classes accuracy is pretty close to $0$.
+%
+All of this is quite expected due to the strong unbalance in the distribution of classes.
+%
+The only remarkable fact is that accuracy is extremely low for class \emph{flush} even if less frequent classes such as \emph{full house} and \emph{four of a kind} have higher accuracy.
+%
+We hypothesise that this happens because the vast majority of data consists in classes which depend only on the values of rank and therefore the network tends to consider it much more.
+%
+Indeed, only \emph{flush}, \emph{straight flush} and \emph{royal flush} (about the $0.26\%$ of the training set) depend on the values of suit.
+%
+Concerning the comparison between the \emph{uneducated} predictor -- with no additional knowledge -- and the \emph{educated} predictor -- obtained by applying KILL algorithm -- results show that the latter has higher performances with statistic significance.
+%
+The Wilcoxon signed-rank test~\cite{wilcoxon1945} has been applied to compare the two configurations on all the metrics reported in \Cref{tab:phds-kill-results}.
+%
+In particular, because of the unbalanced nature of the dataset, the test on macro-F1 and weighted-F1 metrics is more reliable than the test on accuracy.
+%
+The test shows that the \emph{educated} predictor is significantly better than the \emph{uneducated} one for the overall accuracy, macro-F1 and weighted-F1 metrics (with $p < 0.05$).
+%
+Also, the \emph{educated} predictor is significantly better than the \emph{uneducated} one for the single mean class accuracies, except for \emph{high card}, \emph{pair} and \emph{straight} classes.
+
+
 \section{Knowledge injection via network structuring}\label{sec:ski-contribution-kins}
 
 \section{Discussion and future direction}\label{sec:ski-discussion-and-future-direction}
