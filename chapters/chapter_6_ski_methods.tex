@@ -225,6 +225,50 @@ where \(k\), \(h\), and \(z\) are numeric constants, \(X_1\) and \(X_2\) are inp
 \Cref{fig:ast-simplified} depicts the same \gls{AST} after replacing the \(\leq\) operator with a negated \(>\) operator.
 %
 Finally, \Cref{fig:ast-encoded} shows the \gls{AST} of the encoded function.
+%
+A public implementation of \gls{KILL} available on \gls{PSyKI}~\cite{DBLP:conf/atal/MagniniCO22}\footnote{\label{foot:psyki}\url{https://github.com/psykei/psyki-python}}.
+
+
+\subsection{Validation}\label{subsec:kill-validation}
+%
+\input{tables/phds-dataset}
+%
+The method has been validated on the \glsentrylong{PHDS} (\glsentryshort{PHDS})~\cite{poker_hand_158}, a dataset for poker hand classification.
+%
+The task consists in a multiclass classification problem on a finite -- yet very large -- discrete domain.
+%
+Classes are overlapped and heavily imbalanced, but exact classification rules can be written in logic formulas.
+%
+\Gls{PHDS} has $1,025,010$ records\footnote{the size of the input space is the amount 5-permutations of 52 cards, i.e., $\frac{52!}{(52 - 5)!}$}, each with $10$ features, and $1$ output class.
+%
+Each record represents a poker hand of $5$ cards, each card is identified by two features: a rank and a suit.
+%
+Suit is a categorical feature (e.g., \texttt{spades}, \texttt{hearts}, \texttt{diamonds}, \texttt{clubs}), while rank is a numeric feature (e.g., $1$ for Ace, $2$ for Two, \dots, $13$ for King).
+%
+Each hand can be classified as one of $10$ different classes denoting the poker hand type (e.g., \texttt{high card}, \texttt{pair}, \texttt{two pairs}, \texttt{three of a kind}, etc.).
+%
+\Cref{tab:phds-dataset} reports the statistics of the dataset per class for both training and test sets.
+
+
+\paragraph{\Gls{PHDS} logic rules}\label{par:phds-logic-rules}
+%
+\input{tables/phds-logic-rules}
+%
+We define a \emph{class} rule for each class, encoding the correct way of classifying a poker hand.
+%
+For instance, let $\{R_{1}, S_{1}, \dots, R_{5}, S_{5}\}$ be the logic variables representing a poker hand (i.e., $R$ for rank and $S$ for suit), then for class \texttt{flush} we have:
+%
+\begin{equation}\label{eq:flush-class}
+     \begin{array}{rcl}
+        \pred{class}(R_1, S_1, \ldots, R_5, S_5, \const{flush}) & \leftarrow & \pred{flush}(R_1, S_1, \ldots, R_5, S_5)
+        \\
+        \pred{flush}(R_1, S_1, \ldots, R_5, S_5) & \leftarrow & S_1 = S_2 \wedge S_1 = S_3 \wedge S_1 = S_4 \wedge S_1 = S_5
+    \end{array}
+\end{equation}
+%
+All other rules have the same structure as \Cref{eq:flush-class}: the left-hand side declares the expected class, while the right-hand side describes the necessary conditions for that class—possibly, via some ancillary predicates such as \emph{flush}.
+%
+\Cref{tab:phds-logic-rules} provides an overview of all the rules we rely upon in our experiments.
 
 \section{Knowledge injection via network structuring}\label{sec:ski-contribution-kins}
 

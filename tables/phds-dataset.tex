@@ -1,0 +1,39 @@
+\begin{table}[!t]
+    \centering
+    % \begin{adjustbox}{width=0.8\linewidth,center}
+    \begin{tabular}{l|r|r|r|r}
+        \textbf{Class} & \makecell{\textbf{Train.}\\\textbf{Instances}} & \makecell{\textbf{Train.}\\\textbf{Freq. (\%)}} & \makecell{\textbf{Test}\\\textbf{Instances}} & \makecell{\textbf{Test}\\\textbf{Freq. (\%)}}
+        \\\hline\hline
+        \text{high card} & 12,493 &  49.95 & 501,209 &  50.12
+        \\
+        \text{pair} & 10,599 & 42.38 & 422,498 & 42.25
+        \\
+        \text{two pairs} & 1,206 & 4.82 & 47,622 & 4.76
+        \\
+        \text{three of a kind} & 513 & 2.05 & 21,121 & 2.11
+        \\
+        \text{straight} & 93 & 0.37 & 3,885 & 0.39
+        \\
+        \text{flush} & 54 & 0.22 & 1,996 & 0.2
+        \\
+        \text{full house} & 36 & 0.14 & 1,424 & 0.14
+        \\
+        \text{four of a kind} & 6 & 0.024 & 230 & 0.023
+        \\
+        \text{straight flush} & 5 & 0.02 & 12 & 0.001
+        \\
+        \text{royal flush} & 5 &  0.02 & 3 & \scinum{1.2}{-5}
+        \\
+        \hline
+        \textbf{Total} & 25,010 & 100 & 1,000,000 & 100
+    \end{tabular}
+    % \end{adjustbox}
+    \caption[PHDS statistics per class]{
+        \Gls{PHDS} statistics per class.
+        %
+        The dataset is heavily imbalanced, with the \emph{high card} class being the most frequent.
+        %
+        Considering together the two most frequent classes, \emph{high card} and \emph{pair}, they account for over 92\% of the training instances.
+    }
+    \label{tab:phds-dataset}
+\end{table}
