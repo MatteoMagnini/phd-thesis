@@ -192,7 +192,7 @@ The values obtained from \(\eta(x)\) represent penalties, as discussed in \Cref{
 %
 The penalty for the \(i^{\text{th}}\) neuron violating rule \(\varphi_i\) is expressed as \(c_i(\mathbf{x}, y_i) = \eta(\llbracket \varphi_i \rrbracket(\mathbf{x}, y_i))\).
 
-The \(\llbracket \cdot \rrbracket\) encoding function is recursively defined in \Cref{tab:logic-formulae}.
+The \(\llbracket \cdot \rrbracket\) encoding function is recursively defined in \Cref{tab:kill-logic-formulae}.
 %
 To compute the penalty \(c_i(\mathbf{x}, y_i)\) for the \(i^{\text{th}}\) neuron, \gls{KILL} identifies the Datalog rule of the form:
 %
@@ -206,7 +206,7 @@ If \(\psi\) contains predicates \(p_1, p_2\), defined by one or more clauses in 
 %
 This process is repeated until \(\psi\) contains only binary expressions involving input variables, constants, arithmetic operators, and logical connectives.
 %
-Finally, operators and connectives are replaced by continuous functions, as detailed in \Cref{tab:logic-formulae}.
+Finally, operators and connectives are replaced by continuous functions, as detailed in \Cref{tab:kill-logic-formulae}.
 %
 The entire process produces a real-valued interpretation of the original formula, which \gls{KILL} uses to compute \(c_i(\mathbf{x}, y_i)\).
 
@@ -341,13 +341,13 @@ Results are reported in \Cref{tab:phds-kill-results} and in \Cref{fig:phds-kill-
 %
 In general, experiments show that both predictors are very good at classifying frequent classes such as \emph{high card} and \emph{pair}.
 %
-Also for less frequent classes , \emph{two pairs} and \emph{three of a kind}, accuracy is still high.
+Also for less frequent classes, \emph{two pairs} and \emph{three of a kind}, accuracy is still high.
 %
 The remaining six classes represent the $0.8\%$ of the training set and therefore much more difficult to correctly predict.
 %
 For \emph{full house} and \emph{straight}, accuracy has middle values, while for the remaining classes accuracy is pretty close to $0$.
 %
-All of this is quite expected due to the strong unbalance in the distribution of classes.
+All of this is quite expected due to the strong imbalance in the distribution of classes.
 %
 The only remarkable fact is that accuracy is extremely low for class \emph{flush} even if less frequent classes such as \emph{full house} and \emph{four of a kind} have higher accuracy.
 %
@@ -359,7 +359,7 @@ Concerning the comparison between the \emph{uneducated} predictor -- with no add
 %
 The Wilcoxon signed-rank test~\cite{wilcoxon1945} has been applied to compare the two configurations on all the metrics reported in \Cref{tab:phds-kill-results}.
 %
-In particular, because of the unbalanced nature of the dataset, the test on macro-F1 and weighted-F1 metrics is more reliable than the test on accuracy.
+In particular, because of the imbalanced nature of the dataset, the test on macro-F1 and weighted-F1 metrics is more reliable than the test on accuracy.
 %
 The test shows that the \emph{educated} predictor is significantly better than the \emph{uneducated} one for the overall accuracy, macro-F1 and weighted-F1 metrics (with $p < 0.05$).
 %
@@ -367,5 +367,100 @@ Also, the \emph{educated} predictor is significantly better than the \emph{unedu
 
 
 \section{Knowledge injection via network structuring}\label{sec:ski-contribution-kins}
+%
+In this section we present the paper ``KINS: Knowledge Injection via Network Structuring''~\cite{DBLP:conf/cilc/MagniniCO22}, presented at the 37th Italian Conference on Computational Logic (CILC 2022)~\footnote{\url{http://cilc2022.apice.unibo.it/}}.
+%
+The paper introduces a novel \gls{SKI} methods, named \gls{KINS}, which similarly to \gls{KILL} allows to inject symbolic knowledge in stratified Datalog with negation into \glspl{NN} of any shape.
+%
+Differently from \gls{KILL}, \gls{KINS} does not act at the backpropagation level, but it modifies the structure of the \gls{NN} to inject symbolic knowledge.
+%
+Hence, \gls{KINS} falls under the \emph{structuring} strategy, as described in \Cref{subsec:how-to-inject}.
+
+
+\subsection{KINS architecture}\label{subsec:kins-architecture}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/kins-network-architecture}
+    \caption[General architecture of a NN with KINS modules]{
+        %
+        General architecture of a \gls{NN} with $m$ modules injected, $X$ and $Y$ are respectively the input and output layers.
+        %
+        Each module is a subnetwork that evaluates a logic formula under a continuous interpretation.
+        %
+        The modules can be injected at any layer $H_i$ or at the output layer $Y$.
+    }
+    \label{fig:kins-network-architecture}
+\end{figure}
+%
+A \gls{NN} architecture can be extended with additional neural \emph{modules} designed to reflect and mimic symbolic knowledge provided by designers.
+%
+Each module is a subnetwork that shares the same input layer as the original network and outputs a value representing the evaluation of a logic formula under a continuous interpretation.
+%
+The primary purpose of these modules is twofold:
+\begin{inlinelist}
+    %
+    \item to evaluate a specific logic formula against the current input, and
+    %
+    \item to compute the degree of truth of that formula, expressed as a value in the range \([0, 1]\), which complements the network's output.
+    %
+\end{inlinelist}
+%
+During the feed-forward phase, variables in the formulas are dynamically grounded with respect to the current input.
+%
+This dynamic grounding allows non-ground formulas to be directly exploited for \gls{SKI}, eliminating the need for prior groundisation steps, which may be infeasible for complex domains.
+%
+It is important to note that the provided formulas are not required to cover all possible scenarios.
+%
+For instance, in classification problems, rules may only cover a subset of all possible classes.
+
+\Cref{fig:kins-network-architecture} illustrates the general architecture of a \gls{NN} after the injection of \(m\) modules, represented as blue rectangles.
+%
+Each module corresponds to one of the \(m\) rules to be injected.
+%
+Modules can be arbitrarily complex subnetworks that share the same input and final outputs with the original \gls{NN}.
+%
+White boxes represent arbitrary hidden layers \(H_1, \dots, H_n\) of the original \gls{NN}, while \(X\) and \(Y\) denote the input and output layers, respectively.
+%
+Knowledge injection can be performed at any hidden layer \(H_i\) or at the output layer \(Y\).
+%
+For example, in networks that first extract features from the input (e.g., convolutional \glspl{NN}) and then perform classification, knowledge can be injected between these two phases.
+%
+The injection procedure involves three main steps.
+%
+First, formulas are encoded into real-valued functions, as described in \Cref{subsec:kill-fuzzifier}.
+%
+Second, a neural module is constructed to approximate each real-valued function, following the strategy outlined in \Cref{subsec:kill-fuzzifier}.
+%
+Finally, the module is added to the original \gls{NN}, as depicted in \Cref{fig:kins-network-architecture}.
+%
+The inner synapses of the modules can be either immutable, meaning their weights and biases remain fixed during training, or mutable, meaning their weights are trainable.
+%
+All other synapses, including those within hidden layers \(H_1, \dots, H_i\), as well as the ingoing synapses of layer \(H_{i+1}\) and subsequent layers, remain trainable.
+%
+This design allows the \gls{NN} to leverage both prior knowledge and information gathered from data during training.
+%
+The synapses connecting each module and the final hidden layer to the output layer are also trainable.
+%
+This enables the \gls{NN} to adjust the relative importance of the injected knowledge during training.
+%
+The rationale is that logic rules may not hold universally across all patterns in a given domain but may generally be true with a certain degree of confidence.
+
+\gls{KINS} does not impose constraints on the network architecture, such as the number of layers, number of neurons, types of activation functions, or initialization status (e.g., random weights or partially trained).
+%
+It can be applied to both untrained and partially trained networks.
+%
+However, it requires the network to have an input and output layer and to be trainable via gradient descent or similar algorithms.
+%
+Additionally, symbolic knowledge must be expressed using one or more formulas in Datalog form, and logic statements about the network's input or output features must be encoded.
+%
+A public implementation of the \gls{KINS} algorithm is available as part of the \gls{PSyKI} framework~\cite{DBLP:conf/atal/MagniniCO22}$^\text{\ref{foot:psyki}}$.
+
+
+\subsection{KINS fuzzifier}\label{subsec:kins-fuzzifier}
+%
+\input{tables/kins-fuzzifier}
+%
+
 
 \section{Discussion and future direction}\label{sec:ski-discussion-and-future-direction}
