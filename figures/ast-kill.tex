@@ -1,3 +1,6 @@
+% !TeX spellcheck = en_GB
+% !TeX root = ../phd-thesis.tex
+
 \begin{figure*}[t]
     \centering
     \def\astscale{0.4}
@@ -7,7 +10,7 @@
             \centering
             \includegraphics[scale=\astscale]{figures/ast-unencoded}
             \subcaption{AST of a logic formula}
-            \label{fig:ast-unencoded}
+            \label{fig:ast-kill-unencoded}
         \end{subfigure}
         \vspace{1.5ex}
         \tikz{\draw[->, thick] (0,0) -- (0,-0.4);}
@@ -16,7 +19,7 @@
             \centering
             \includegraphics[scale=\astscale]{figures/ast-simplified}
             \subcaption{Simplified AST of a logic formula}
-            \label{fig:ast-simplified}
+            \label{fig:ast-kill-simplified}
         \end{subfigure}
     \end{minipage}
     \hspace{0.5cm}
@@ -28,7 +31,7 @@
             \centering
             \includegraphics[scale=\astscale]{figures/ast-encoded}
             \subcaption{AST of the same formula, encoded as real-valued function}
-            \label{fig:ast-encoded}
+            \label{fig:ast-kill-encoded}
         \end{subfigure}
     \end{minipage}
     \caption{
@@ -40,5 +43,5 @@
         %
         For instance, operator $<$ (red) is first converted into a negated $\geq$, and then into a combination of $max$ and subtractions.
     }
-    \label{fig:ast}
+    \label{fig:ast-kill}
 \end{figure*}

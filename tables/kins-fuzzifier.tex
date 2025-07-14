@@ -3,7 +3,7 @@
 
 \begin{table}
     \centering
-    \begin{tabularx}{\textwidth}{l|r||cl|r}
+    \begin{tabular}{\textwidth}{l|r||cl|r}
         \textbf{Formula} & \textbf{C. interpretation} & & \textbf{Formula} & \textbf{C. interpretation}
         \\
         \hline\hline
@@ -22,7 +22,7 @@
         $\llbracket\phi \ge \psi\rrbracket$  & $\eta(1 + \llbracket \phi \rrbracket - \llbracket \psi \rrbracket)$ & & $\llbracket \const{k} \rrbracket$ & $k$ % Greater Equal
         \\
         $\llbracket\phi < \psi\rrbracket$  &  $\eta(max(0, \frac{1}{2} + \llbracket\psi\rrbracket - \llbracket\phi\rrbracket))$ & & $\llbracket \pred{p}(\bar{X}) \rrbracket^{**}$ & $\llbracket \psi_1 \vee \ldots \vee \psi_k \rrbracket$ % Less 
-    \end{tabularx}
+    \end{tabular}
     \begin{center}\scriptsize
         $^{*}$ encodes the value for the $i^{th}$ output
         \\
@@ -32,13 +32,16 @@
         $\pred{p}(\bar{X}) \leftarrow \psi_1,\ \ldots,\ \pred{p}(\bar{X}) \leftarrow \psi_k$
     \end{center}
     \caption{
-        Logic formul\ae's encoding into real-valued functions.
+        Logic formulas' encoding into real-valued functions.
         %
         There, $X$ is a logic variable, while $x$ is the corresponding real-valued variable, whereas is $\bar{X}$ a tuple of logic variables.
         %
         Similarly, $\const{k}$ is a numeric constant, and $k$ is the corresponding real value, whereas $\const{k}_i$ is the constant denoting the $i^{th}$ class of a classification problem.
         %
         Finally, $\text{expr}(\bar{X})$ is an arithmetic expression involving the variables in $\bar{X}$.
+        %
+        The $\eta$ function is a scaling function described in \Cref{eq:eta-function}.
     }
     \label{tab:kins-logic-formulae}
 \end{table}
+

@@ -167,7 +167,7 @@ The penalty is higher when the violation is severe and approaches zero when the 
 %
 \input{tables/kill-fuzzifier}
 %
-\input{figures/ast}
+\input{figures/ast-kill}
 %
 Before injecting symbolic knowledge into a neural network, each formula associated with an output neuron must be converted into a real-valued function to compute the cost of violating that formula.
 
@@ -179,14 +179,15 @@ These functions accept real vectors of size \(m + n\) as input and return scalar
 %
 The resulting scalars are clipped to the \([0, 1]\) range using the \(\eta : \mathbb{R} \to [0, 1]\) function, defined as:
 %
-\begin{align*}
+\begin{equation}
+    \label{eq:eta-function}
     \eta(x) =
     \begin{cases}
         0 & \text{if } x \leq 0, \\
         x & \text{if } 0 < x < 1, \\
         1 & \text{if } x \geq 1.
     \end{cases}
-\end{align*}
+\end{equation}
 
 The values obtained from \(\eta(x)\) represent penalties, as discussed in \Cref{subsec:lambda-layer}.
 %
@@ -210,7 +211,7 @@ Finally, operators and connectives are replaced by continuous functions, as deta
 %
 The entire process produces a real-valued interpretation of the original formula, which \gls{KILL} uses to compute \(c_i(\mathbf{x}, y_i)\).
 
-\Cref{fig:ast} illustrates an example of the encoding process.
+\Cref{fig:ast-kill} illustrates an example of the encoding process.
 %
 The example formula is:
 %
@@ -220,11 +221,11 @@ The example formula is:
 %
 where \(k\), \(h\), and \(z\) are numeric constants, \(X_1\) and \(X_2\) are input variables, and \(Y\) is an output variable.
 %
-\Cref{fig:ast-unencoded} shows the \gls{AST} of this formula.
+\Cref{fig:ast-kill-unencoded} shows the \gls{AST} of this formula.
 %
-\Cref{fig:ast-simplified} depicts the same \gls{AST} after replacing the \(\leq\) operator with a negated \(>\) operator.
+\Cref{fig:ast-kill-simplified} depicts the same \gls{AST} after replacing the \(\leq\) operator with a negated \(>\) operator.
 %
-Finally, \Cref{fig:ast-encoded} shows the \gls{AST} of the encoded function.
+Finally, \Cref{fig:ast-kill-encoded} shows the \gls{AST} of the encoded function.
 %
 A public implementation of \gls{KILL} available on \gls{PSyKI}~\cite{DBLP:conf/atal/MagniniCO22}\footnote{\label{foot:psyki}\url{https://github.com/psykei/psyki-python}}.
 
@@ -461,6 +462,52 @@ A public implementation of the \gls{KINS} algorithm is available as part of the 
 %
 \input{tables/kins-fuzzifier}
 %
+To inject symbolic knowledge into a neural network, each formula associated with an output neuron must first be converted into a real-valued function to compute the degree of truth of that formula.
+%
+This conversion relies on a multivalued interpretation of logic -- inspired by \L{}ukasiewicz's logic~\cite{DBLP:journals/jsyml/Hay63} -- similarly to the one used for \gls{KILL}.
+%
+Differently from \gls{KILL}, the fuzzification function is not used to compute a penalty, but rather to compute the degree of truth of the formula.
+%
+For this reason, \mathtt{true} and \mathtt{false} are interpreted as $1$ and $0$, respectively, rather than as $0$ and $1$.
+%
+While \Cref{tab:kins-logic-formulae} describes the mapping between formulas and their fuzzy interpretation, we now discuss how such interpretation can be further encoded into neural modules to be added to the \gls{NN} undergoing injection.
+
+
+\input{figures/ast-kins}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/neurons}
+    \caption[KINS mapping of formulas into neurons]{
+        %
+        \gls{KINS} mapping of formulas into neurons.
+        %
+        White circles are input variables ($I$), green boxes represent the corresponding weights ($W$), purple circles are the sum of the weighted inputs ($W x I$).
+        %
+        Yellow rectangles are activation functions, net is the output of $W x I$, maz and min respectively the maximum and minimum of input values, $\eta$ is the function described in \Cref{eq:eta-function}.
+    }
+    \label{fig:kins-neurons-mapping}
+\end{figure}
+%
+By considering the same domain of the \gls{PHDS} used in \Cref{subsec:kill-validation}, we can take \Cref{eq:flush-class} as an example of a formula to be injected.
+%
+The procedure for encoding a logic formula into a dedicated neural module is illustrated in \Cref{fig:ast-kins}.
+%
+In this example, \Cref{eq:flush-class} is transformed into a neural module through three distinct phases.
+%
+First, the logic formula is parsed to construct its \gls{AST}, as shown in \Cref{fig:ast-kins-unencoded}.
+%
+Second, the \gls{AST} is simplified by merging commutative binary operators, as depicted in \Cref{fig:ast-kins-optimised}.
+%
+Third, the simplified \gls{AST} is encoded into a neural network, where each operator is mapped to a neuron that implements the corresponding operation, as specified in \Cref{tab:kins-logic-formulae}.
+%
+During the final step, the encoding rules defined in \Cref{fig:kins-neurons-mapping} are recursively applied to convert operators into neurons.
+%
+Input variables, such as \(S_i\), are represented as input neurons, while constants appearing in the formulas are mapped to neurons with fixed outputs.
+%
+Additionally, algebraic operations, including addition and multiplication, are implemented using single neurons that perform the respective operations.
+%
+This approach ensures that the symbolic knowledge is seamlessly integrated into the neural network structure.
 
 
 \section{Discussion and future direction}\label{sec:ski-discussion-and-future-direction}
