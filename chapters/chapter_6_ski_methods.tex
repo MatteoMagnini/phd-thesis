@@ -227,7 +227,7 @@ where \(k\), \(h\), and \(z\) are numeric constants, \(X_1\) and \(X_2\) are inp
 %
 Finally, \Cref{fig:ast-kill-encoded} shows the \gls{AST} of the encoded function.
 %
-A public implementation of \gls{KILL} available on \gls{PSyKI}~\cite{DBLP:conf/atal/MagniniCO22}\footnote{\label{foot:psyki}\url{https://github.com/psykei/psyki-python}}.
+A public implementation of \gls{KILL} is available as part of the \gls{PSyKI}~\cite{DBLP:conf/atal/MagniniCO22} library\footnote{\label{foot:psyki}\url{https://github.com/psykei/psyki-python}}.
 
 
 \subsection{Validation}\label{subsec:kill-validation}
@@ -235,6 +235,8 @@ A public implementation of \gls{KILL} available on \gls{PSyKI}~\cite{DBLP:conf/a
 \input{tables/phds-dataset}
 %
 The method has been validated on the \glsentrylong{PHDS} (\glsentryshort{PHDS})~\cite{poker_hand_158}, a dataset for poker hand classification.
+%
+To ensure reproducibility, the code used for our experiments is publicly available at \url{https://github.com/MatteoMagnini/kill-experiments-woa-2022}.
 %
 The task consists in a multiclass classification problem on a finite -- yet very large -- discrete domain.
 %
@@ -454,8 +456,6 @@ It can be applied to both untrained and partially trained networks.
 However, it requires the network to have an input and output layer and to be trainable via gradient descent or similar algorithms.
 %
 Additionally, symbolic knowledge must be expressed using one or more formulas in Datalog form, and logic statements about the network's input or output features must be encoded.
-%
-A public implementation of the \gls{KINS} algorithm is available as part of the \gls{PSyKI} framework~\cite{DBLP:conf/atal/MagniniCO22}$^\text{\ref{foot:psyki}}$.
 
 
 \subsection{KINS fuzzifier}\label{subsec:kins-fuzzifier}
@@ -508,6 +508,120 @@ Input variables, such as \(S_i\), are represented as input neurons, while consta
 Additionally, algebraic operations, including addition and multiplication, are implemented using single neurons that perform the respective operations.
 %
 This approach ensures that the symbolic knowledge is seamlessly integrated into the neural network structure.
+%
+A public implementation of the \gls{KINS} algorithm is available as part of the \gls{PSyKI}~\cite{DBLP:conf/atal/MagniniCO22} library$^\text{\ref{foot:psyki}}$.
+
+
+\subsection{Validation}\label{subsec:kins-validation}
+%
+\input{tables/dna-symbols}
+%
+In this section, we evaluate the performance of \gls{KINS} in improving the predictive capabilities of \glspl{NN} through \gls{SKI}.
+%
+To ensure reproducibility, the code used for our experiments is publicly available at \url{https://github.com/MatteoMagnini/kins-experiments-cilc-2022}.
+%
+The validation is conducted using the well-known \gls{PSJGS} dataset~\cite{splice-junction_gene_sequences_69}.
+%
+This dataset consists of 3190 records, each representing a sequence of 60 DNA nucleotides.
+%
+The nucleotides are adenine (\texttt{a}), cytosine (\texttt{c}), guanine (\texttt{g}), and thymine (\texttt{t}).
+%
+Auxiliary symbols are used to denote multiple possible nucleotides in a compact way, as shown in \Cref{tab:dna-symbols}.
+%
+Each sequence spans positions from -30 to +30, excluding position 0.
+%
+The classification task involves identifying whether a sequence corresponds to an \gls{IE} boundary, an \gls{EI} boundary, or neither (N).
+%
+The dataset is imbalanced, with class frequencies distributed as follows: 50\% for \gls{n}, and 25\% each for \gls{IE} and \gls{EI}.
+%
+This imbalance poses challenges for accurate classification, making it a suitable benchmark for testing \gls{KINS}.
+
+
+\paragraph{\gls{PSJGS} logic rules}\label{par:kins-psjgs-logic-rules}
+%
+\input{tables/dna-rules}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/psjgs-rules-confusion-matrix}
+    \caption[Confusion matrix of the knowledge for the PSJGS dataset]{
+        %
+        Confusion matrix of the knowledge for the \gls{PSJGS} dataset.
+        %
+        The matrix shows the classification results of the knowledge rules on the dataset if applied directly.
+    }
+    \label{fig:psjgs-rules-confusion-matrix}
+    %
+\end{figure}
+The \gls{PSJGS} dataset includes a set of textual logical rules designed by human experts to classify DNA sequences.
+%
+\Cref{tab:dna-rules} presents these rules converted into Datalog form, which is equivalent to the original custom formalism but machine-interpretable.
+%
+In Datalog, variables are indexed from $-30$ to $30$, excluding position $0$.
+%
+Each variable $X_{\pm i}$ represents the nucleotide at position $\pm i$, encoded using constants such as \texttt{a}, \texttt{c}, \texttt{g}, and \texttt{t}.
+%
+For simplicity, the notation $\bar{X}$ is used to represent the full sequence of variables $X_{-30}, \dots, X_{-1}, X_{+1}, \dots, X_{+30}$.
+
+The original rules also utilize additional symbols to compactly represent multiple possible nucleotides.
+%
+\Cref{tab:dna-symbols} provides the mapping of these symbols to their corresponding nucleotide combinations.
+
+When applying the rules in \Cref{tab:dna-rules} to classify sequences in the \gls{PSJGS} dataset, sequences of type \gls{IE} are correctly classified $295$ times as true positives (TP).
+%
+However, the same rule also incorrectly classifies $25$ \gls{EI} sequences and $3$ \gls{n} sequences as false positives (FP).
+%
+In contrast, \gls{EI} sequences are correctly classified $31$ times, with no false positives.
+
+To address the classification of sequences of type \gls{n}, a fictional rule is introduced, which negates both \gls{IE} and \gls{EI} rules:
+%
+\begin{align}
+    \pred{class}(\bar{X}, \const{n}) &\leftarrow \neg \pred{class}(\bar{X}, \const{ei}) \land \neg \pred{class}(\bar{X}, \const{ie}).
+\end{align}
+
+\Cref{fig:psjgs-rules-confusion-matrix} shows the confusion matrix of the knowledge rules applied to the dataset.
+%
+Although these rules do not perfectly describe the domain, they are sufficiently accurate to positively influence the training of the predictor.
+%
+Further refinements or additional rules may improve the classification performance.
+
+
+\paragraph{Methodology}\label{par:kins-psjgs-methodology}
+%
+To ensure comparability with existing literature benchmarks, we adopt the methodology proposed by Towell and Shavlik~\cite{DBLP:journals/ai/TowellS94}.
+%
+Specifically, we perform 10-fold cross-validation using a training set of 1000 randomly selected records from the 3190 available ones, which corresponds to 31.3\% of the dataset.
+%
+For each fold, we train one instance of \gls{KINS}.
+%
+The test accuracy is computed on the remaining 2190 records by averaging the predictions of the 10 trained \gls{KINS} instances.
+%
+Unlike the original method, we repeat the experiment 30 times instead of 10 to improve statistical significance.
+
+Each \gls{KINS} instance is trained using a fully connected \gls{NN} with three layers.
+%
+The input layer consists of 60 neurons, the hidden layer has a configurable number of neurons, and the output layer includes 3 neurons corresponding to the classification task.
+%
+To mitigate overfitting, we apply dropout~\cite{DBLP:journals/jmlr/SrivastavaHKSS14} with a rate of 0.2 to each layer during training.
+%
+The activation function for the hidden layers is \gls{ReLU}, while the output layer uses the softmax function.
+%
+The network is optimized using the Adam optimizer~\cite{citation-placeholder} and categorical cross-entropy as the loss function.
+
+We employ the stopping criteria described in~\cite{citation-placeholder}.
+%
+These criteria include ensuring that 99\% of the training examples have output activations within 0.25 of the correct value, limiting training to a maximum of 100 epochs, and stopping when the predictor achieves at least 90\% accuracy on the training examples but shows no improvement for five consecutive epochs.
+
+The rules \pred{ei\_stop}(\bar{\var{X}}) and \pred{ie\_stop}(\bar{\var{X}}) are immutable, meaning their weights remain fixed during training.
+%
+In contrast, the rules \pred{class}(\bar{\var{X}}, \const{ei}), \pred{class}(\bar{\var{X}}, \const{ie}), and \pred{pyramidine\_rich}(\bar{\var{X}}) are mutable, allowing their weights to be adjusted during training.
+%
+Immutable rules preserve their structure, while mutable rules adapt to the data to improve predictive performance.
+
+
+
+\paragraph{Results and discussion}\label{par:kins-psjgs-results}
+
 
 
 \section{Discussion and future direction}\label{sec:ski-discussion-and-future-direction}

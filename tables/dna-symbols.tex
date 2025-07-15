@@ -1,0 +1,27 @@
+\begin{table}
+    \centering
+    \begin{adjustbox}{width=\linewidth, center}
+        \begin{tabular}{c||c|c|c|c||l}
+            \textbf{Symbol} & \textbf{Adenine} & \textbf{Cytosine} & \textbf{Guanine} & \textbf{Thymine} & \textbf{Logic form}
+            \\
+            \hline\hline
+            $\const{d}$ & \yes & & \yes & \yes & $(\var{X}_i = \const{d}) \equiv (\var{X}_i = \const{a} \vee \var{X}_i = \const{g} \vee \var{X}_i = \const{t})$
+            \\\hline
+            $\const{m}$ & \yes & \yes & & & $(\var{X}_i = \const{m}) \equiv (\var{X}_i = \const{a} \vee \var{X}_i = \const{c})$
+            % \\\hline
+            % $\const{n}$ & \yes & \yes & \yes & \yes
+            \\\hline
+            $\const{r}$ & \yes & & \yes & & $(\var{X}_i = \const{r}) \equiv (\var{X}_i = \const{a} \vee \var{X}_i = \const{g})$
+            \\\hline
+            $\const{s}$ & & \yes & \yes & & $(\var{X}_i = \const{s}) \equiv (\var{X}_i = \const{c} \vee \var{X}_i = \const{g})$
+            \\\hline
+            $\const{y}$ & & \yes & & \yes & $(\var{X}_i = \const{y}) \equiv (\var{X}_i = \const{c} \vee \var{X}_i = \const{t})$
+        \end{tabular}
+    \end{adjustbox}
+    \caption{
+        Mapping of aggregative symbols and the four nucleotides.
+        %
+        Each symbol can be substituted with one base on the right that has a dot.
+    }
+    \label{tab:dna-symbols}
+\end{table}

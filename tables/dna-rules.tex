@@ -1,0 +1,69 @@
+\begin{table}
+    \centering
+    \begin{adjustbox}{width=\linewidth, center}
+        \begin{tabular}{c|p{\linewidth-4cm}}
+            \textbf{Class} & \textbf{Logic Formulation}
+            \\\hline\hline
+            \emph{EI} & $\begin{array}{l}
+                \begin{aligned}
+                    \\
+                    \pred{class}(\bar{\var{X}}, \const{ei}) \leftarrow& \var{X}_{-3} = \const{m} \wedge \var{X}_{-2} = \const{a} \wedge \var{X}_{-1} = \const{g} \wedge \var{X}_{+1} = \const{g}\ \wedge\\
+                    & \var{X}_{+2} = \const{t} \wedge \var{X}_{+3} = \const{a} = \const{r} \wedge \var{X}_{+4} = \const{a}\ \wedge \\
+                    & \var{X}_{+5} = \const{g} \wedge \var{X}_{+6} = \const{t} \wedge \neg(\pred{ei\_stop}(\bar{\var{X}}))
+                \end{aligned}
+                \\
+                \pred{ei\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{-3} = \const{t} \wedge \var{X}_{-2} = \const{a} \wedge \var{X}_{-1} = \const{a}
+                \\
+                \pred{ei\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{-3} = \const{t} \wedge \var{X}_{-2} = \const{a} \wedge \var{X}_{-1} = \const{g}
+                \\
+                \pred{ei\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{-3} = \const{t} \wedge \var{X}_{-2} = \const{g} \wedge \var{X}_{-1} = \const{a}
+                \\
+                \pred{ei\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{-4} = \const{t} \wedge \var{X}_{-3} = \const{a} \wedge \var{X}_{-2} = \const{a}
+                \\
+                \pred{ei\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{-4} = \const{t} \wedge \var{X}_{-3} = \const{a} \wedge \var{X}_{-2} = \const{g}
+                \\
+                \pred{ei\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{-4} = \const{t} \wedge \var{X}_{-3} = \const{g} \wedge \var{X}_{-2} = \const{a}
+                \\
+                \pred{ei\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{-5} = \const{t} \wedge \var{X}_{-4} = \const{a} \wedge \var{X}_{-3} = \const{a}
+                \\
+                \pred{ei\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{-5} = \const{t} \wedge \var{X}_{-4} = \const{a} \wedge \var{X}_{-3} = \const{g}
+                \\
+                \pred{ei\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{-5} = \const{t} \wedge \var{X}_{-4} = \const{g} \wedge \var{X}_{-3} = \const{a}
+                \\
+            \end{array}$
+            \\
+            \\
+            \hdashline
+            \\
+            \emph{IE} & $\begin{array}{l}
+                \begin{aligned}
+                  \pred{class}(\bar{\var{X}}, \const{ie}) \leftarrow &\pred{pyramidine\_rich}(\bar{\var{X}}) \wedge \neg(\pred{ie\_stop}(\bar{\var{X}}))\ \wedge\\
+                    & \var{X}_{-3} = \const{y} \wedge \var{X}_{-2} = \const{a} \wedge \var{X}_{-1} = \const{g} \wedge \var{X}_{+1} = \const{g}
+                \end{aligned}
+                \\
+                \pred{pyramidine\_rich}(\bar{\var{X}}) \leftarrow 6 \le (\var{X}_{-15} = \const{y} + \ldots + \var{X}_{-6} = \const{y})
+                \\
+                \pred{ie\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{+2} = \const{t} \wedge \var{X}_{+3} = \const{a} \wedge \var{X}_{+4} = \const{a}
+                \\
+                \pred{ie\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{+2} = \const{t} \wedge \var{X}_{+3} = \const{a} \wedge \var{X}_{+4} = \const{g}
+                \\
+                \pred{ie\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{+2} = \const{t} \wedge \var{X}_{+3} = \const{g} \wedge \var{X}_{+4} = \const{a}
+                \\
+                \pred{ie\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{+3} = \const{t} \wedge \var{X}_{+4} = \const{a} \wedge \var{X}_{+5} = \const{a}
+                \\
+                \pred{ie\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{+3} = \const{t} \wedge \var{X}_{+4} = \const{a} \wedge \var{X}_{+5} = \const{g}
+                \\
+                \pred{ie\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{+3} = \const{t} \wedge \var{X}_{+4} = \const{g} \wedge \var{X}_{+5} = \const{a}
+                \\
+                \pred{ie\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{+4} = \const{t} \wedge \var{X}_{+5} = \const{a} \wedge \var{X}_{+6} = \const{a}
+                \\
+                \pred{ie\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{+4} = \const{t} \wedge \var{X}_{+5} = \const{a} \wedge \var{X}_{+6} = \const{g}
+                \\
+                \pred{ie\_stop}(\bar{\var{X}}) \leftarrow \var{X}_{+4} = \const{t} \wedge \var{X}_{+5} = \const{g} \wedge \var{X}_{+6} = \const{a}
+                \\
+            \end{array}$
+        \end{tabular}
+    \end{adjustbox}
+    \caption{Datalog formul\ae{} describing DNA classification criteria generated from the original one.}
+    \label{tab:dna-rules}
+\end{table}
