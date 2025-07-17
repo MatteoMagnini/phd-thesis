@@ -7,15 +7,60 @@
 \minitoc
 %----------------------------------------------------------------------------------------
 
-\section{Motivations}\label{sec:psyki-motivations}
+In this chapter, we present the \Gls{PSyKI} platform, which is a framework for \gls{SKI} methods.
+%
+\Gls{PSyKI} provides a unified way to implement \gls{SKI} methods, aiming to facilitate the development and comparison of different approaches.
+%
+It also provides a set of tools to evaluate the performance of \gls{SKI} methods, including metrics for measuring the quality of the injected knowledge and the performance of the resulting models.
+%
+In \Cref{sec:psyki}, we present the work ``\emph{On the Design of PSyKI: A Platform for Symbolic Knowledge Injection into Sub-symbolic Predictors}''~\cite{DBLP:conf/atal/MagniniCO22}, which describes the design and implementation of \gls{PSyKI}.
+%
+Then, in \Cref{sec:qos}, we present respectively two works that study the quality of service of \gls{SKI} methods:
+%
+in \Cref{subsec:ski-meets-intelligent-agents} the paper ``\emph{Symbolic Knowledge Injection Meets Intelligent Agents}''~\cite{DBLP:journals/aamas/AgiolloRMCO23},
+%
+which introduces metrics for evaluating the performance of \gls{SKI} methods in the context of intelligent agents,
+%
+and in \Cref{subsec:empirical-study-on-the-robustness-of-ski-methods} the paper ``\emph{An Empirical Study on the Robustness of Symbolic Knowledge Injection Techniques Against Data Degradation}''~\cite{DBLP:conf/woa/RafanelliMACO24},
+%
+which studies the robustness of \gls{SKI} methods against data degradation.
 
-\section{Goal and challenges}\label{sec:psyki-goal-and-challenges}
 
-\section{Implementation}\label{sec:implementation}
+\section{PSyKI}\label{sec:psyki}
+%
+\Gls{PSyKI} is a (Python) platform for the development and evaluation of \gls{SKI} methods.
+%
+It is designed to provide a unified framework for implementing \gls{SKI} methods, allowing researchers and practitioners to easily develop, test, and compare different approaches.
+%
+In the following, we present a summary of the work ``\emph{On the Design of PSyKI: A Platform for Symbolic Knowledge Injection into Sub-symbolic Predictors}''~\cite{DBLP:conf/atal/MagniniCO22}, presented at the 4th International Workshop on EXplainable, Trustworthy, and Responsible AI and Multi-Agent Systems (EXTRAAMAS 2022)\footnote{\url{https://extraamas.ehealth.hevs.ch/archive.html}}.
+%
+The library is public available on GitLab and PyPi\footnote{\url{https://gitlab.com/psykei/psyki-python} and \url{https://pypi.org/project/psyki/}}.
 
-\subsection{Architecture}\label{subsec:architecture}
 
-\subsection{Details}\label{subsec:details}
+\subsection{Motivations}\label{subsec:psyki-motivations}
+%
+This work is motivated by the need to address the common challenges that affect \gls{SKI} methods (see \Cref{subsec:limitations-and-challenges-of-ski}).
+%
+In particular, we want to address the following points:
+%
+\begin{inlinelist}
+    \item \emph{lack of generality}, by providing the proper tools to automatically translate symbolic knowledge of arbitrary domains into a format suitable for injection into sub-symbolic predictors,
+    %
+    \item \emph{lack of reproducibility}, by providing a unified framework for implementing \gls{SKI} methods, allowing researchers to easily develop, test, and compare different approaches, and
+    %
+    \item \emph{lack of availability}, by encouraging the development of reusable software libraries for \gls{SKI} methods.
+    %
+\end{inlinelist}
+%
+Concerning the last point mentioned in \Cref{subsec:limitations-and-challenges-of-ski}, we identified in the logic language of stratified Datalog with negation a suitable candidate for the symbolic knowledge representation, as it is expressive enough to represent a wide range of symbolic knowledge, while being simple enough to be easily translated into a format suitable for injection into sub-symbolic predictors.
+
+\subsection{Implementation}\label{subsec:implementation}
+
+
+\paragraph{Architecture}\label{par:architecture}
+
+\paragraph{Details}\label{par:details}
+
 
 \section[Quality of service for SKI]{\Glsentrylong{QoS} for \Gls{SKI}}\label{sec:qos}
 
