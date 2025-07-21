@@ -52,9 +52,68 @@ In particular, we want to address the following points:
     %
 \end{inlinelist}
 %
-Concerning the last point mentioned in \Cref{subsec:limitations-and-challenges-of-ski}, we identified in the logic language of stratified Datalog with negation a suitable candidate for the symbolic knowledge representation, as it is expressive enough to represent a wide range of symbolic knowledge, while being simple enough to be easily translated into a format suitable for injection into sub-symbolic predictors.
+Concerning the last point mentioned in \Cref{subsec:limitations-and-challenges-of-ski}, we identified in the logic language of stratified Datalog with negation a suitable candidate for the symbolic knowledge representation.
+%
+It is expressive enough to represent a wide range of symbolic knowledge, while being simple enough to be easily translated into a format suitable for injection into sub-symbolic predictors.
 
-\subsection{Implementation}\label{subsec:implementation}
+
+\subsection{Design and implementation}\label{subsec:design-and-implementation}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/knowledge-workflow-psyki}
+    \caption[Symbolic knowledge transformation in PSyKI]{
+        General workflow of symbolic knowledge transformation in \Gls{PSyKI}.
+        The symbolic knowledge ($\phi$), typically expressed as logical formulas, is first parsed into a visitable form ($\phi'$), and then fuzzified into a machine-injectable representation ($\phi''$).
+    }
+    \label{fig:knowledge-workflow-psyki}
+\end{figure}
+%
+All symbolic knowledge injection (\gls{SKI}) methods implemented in \gls{PSyKI} share a common transformation pipeline, illustrated in \Cref{fig:knowledge-workflow-psyki}.
+%
+Symbolic knowledge \(\phi\) cannot usually be injected directly into a sub-symbolic predictor.
+%
+Instead, it undergoes a two-step transformation:
+%
+\begin{inlinelist}
+    %
+    \item \emph{Parsing} (\(\Pi\)): the knowledge is converted into a visitable data structure, such as an \gls{AST} in the case of logic formulas, resulting in \(\phi'\);
+    %
+    \item \emph{Fuzzification} (\(\zeta\)): the parsed representation is transformed into a sub-symbolic form \(\phi''\), suitable for injection.
+    %
+\end{inlinelist}
+%
+Fuzzification plays a key role in bridging the symbolic and sub-symbolic domains.
+%
+It translates crisp Boolean logic into a form compatible with sub-symbolic models, often by relaxing discrete truth values into continuous-valued functions or generating neural components such as layers or entire \glspl{NN}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/psyki-workflow}
+    \caption[General workflow of PSyKI]{
+        Complete workflow of structuring and guided learning \gls{SKI} methods in \Gls{PSyKI}.
+        The symbolic knowledge is transformed and injected into the sub-symbolic predictor, which is then trained on data.
+    }
+    \label{fig:psyki-workflow}
+\end{figure}
+%
+\Cref{fig:psyki-workflow} shows the overall injection process in \gls{PSyKI}, including both the transformation of the symbolic knowledge and its integration into the learning system.
+%
+After the transformation phase, the different \gls{SKI} methods diverge:
+%
+\begin{inlinelist}
+    %
+    \item \emph{Structuring} and \emph{guided learning} inject \(\phi''\) directly into the architecture or training process of the predictor;
+    %
+    \item \emph{Embedding}-based methods use symbolic knowledge to enrich or generate the input data, so they are not directly represented in \Cref{fig:psyki-workflow}.
+    %
+\end{inlinelist}
+
+\Gls{PSyKI} supports all three approaches, although it is primarily designed for \emph{structuring} and \emph{guided learning}, where the injection occurs directly into the predictor.
+%
+In general, \gls{SKI} algorithms operate on a predictor \(P\) and symbolic knowledge \(\phi\), producing a new predictor \(P'\) as output.
+%
+This modified predictor is then trained on data, resulting in a final model \(P''\), which can be reused in further iterations with different knowledge or injection strategies.
 
 
 \paragraph{Architecture}\label{par:architecture}
