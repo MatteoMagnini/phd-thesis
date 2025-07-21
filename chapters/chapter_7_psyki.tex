@@ -117,8 +117,91 @@ This modified predictor is then trained on data, resulting in a final model \(P'
 
 
 \paragraph{Architecture}\label{par:architecture}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/class-diagram}
+    \caption[Class diagram of PSyKI]{
+        Class diagram of \Gls{PSyKI}.
+        %
+        The main components are the \emph{Injector}, the \emph{Formula} and the \emph{Fuzzifier}.
+        %
+        The package \emph{logic.datalog} is an examplification showing two \emph{Injector} implementations and their relationships.
+    }
+    \label{fig:psyki-class-diagram}
+\end{figure}
+%
+Essentially, \gls{PSyKI} is designed around the notion of injector.
+%
+An injector is any algorithm accepting a \gls{ML} predictor and prior symbolic knowledge -- predominantly logic formulas -- as input that produces a new predictor as output.
+%
+In order to properly perform injection, injectors may require additional information such as algorithm specific hyperparameters.
+
+
+\gls{PSyKI} supports the processing of symbolic knowledge represented via logic formulas.
+%
+Based on the sort of logic, user can build an \gls{AST} for each formula.
+%
+The \gls{AST} can be inspected through a fuzzifier via pattern visitor to encode the symbolic knowledge to a sub-symbolic form (e.g. fuzzy logic functions, ad-hoc layers).
+%
+The resulting sub-symbolic object can finally be used by an injector to create a new predictor.
+%
+This process -- denoted with $\zeta$ \Cref{fig:psyki-workflow} -- is injector specific; instead, the same parser $\Pi$ can be used for logic formulas of the same sort independently of the injector.
+
+
+The software is organized into well-separated packages to ensure easy extensibility towards new sort of logic and fuzzifiers---see \Cref{fig:psyki-class-diagram}
+%
+An \gls{AST} is a \emph{formula} object, and it can have different language specific elements w.r.t. the logic form that is covered.
+%
+Each formula implementation is self-contained inside a standalone package so that if a user wants to add a new logic form it is sufficient to add its implementation in a new package.
+%
+Similarly, a fuzzifier object that targets a specific logic form can be added inside the same package of the logic, there can be any number of fuzzifiers for a given logic.
+
 
 \paragraph{Details}\label{par:details}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/grammar}
+    \caption[Class diagram for the representation of Datalog formulas]{
+        A supported grammar of \Gls{PSyKI} for logic formulas.
+        %
+        The grammar is designed to represent Datalog formulas.
+    }
+    \label{fig:grammar}
+\end{figure}
+%
+A crucial point in the \gls{SKI} workflow is the embedding of knowledge from symbolic into sub-symbolic form.
+%
+Ideally, there is no constraint on the formalism used to represent the prior knowledge (e.g., logic formulas, knowledge graph).
+%
+The most common knowledge representation form that \gls{SKI} algorithms claim to support is \gls{FOL} or one of its subsets.
+%
+However, there are characteristics of \gls{FOL} that are not ideal for some predictors.
+%
+Recursion and function symbols -- that allow recursive structures -- cannot be easily integrated into a predictor that is acyclic -- i.e., no recursive -- by construction such as conventional \gls{NN} (virtually all \gls{NN}, with few exceptions like fibred \gls{NN}~\cite{DBLP:conf/flairs/BaderGH05}).
+%
+Conversely, in this work we consider one of the most general and expressive logic formalism that does not support recursion and function symbols: stratified Datalog with negation.
+
+
+Stratified Datalog with negation has been already described in detail in \Cref{subsec:ski-stratified-datalog-with-negation}.
+%
+To support injection into a particular predictor, we further assume the input knowledge base defines at least one outer relation -- say output or class -- involving as many variables as the input and output features the predictor has been trained upon.
+%
+Such a relation may be defined via one or more clauses, and each clause may leverage on other predicates in their bodies.
+%
+In turn, each predicate may be defined through one or more clause.
+%
+In that case, since we rely on stratified Datalog, we require input knowledge to not include any (directly or indirectly) recursive clause definition.
+
+
+Once that the logic has been formalized, the implementation of a Formula -- visitable data structure like an \gls{AST} -- is quite straightforward.
+%
+\Cref{fig:grammar} depicts the general API for representing logic formulas, as currently supported by \gls{PSyKI}.
+%
+To make \gls{PSyKI} able to parse bare text into actual logic formulas compliant to that API, we rely on well-established parser-generation facilities such as ANTLR~\cite{DBLP:journals/spe/ParrQ95}.
+%
+As further discussed below, the knowledge contained into a Formula object, can then be embedded in sub-symbolic form, via a fuzzifier, to be later injected into a predictor.
 
 
 \section[Quality of service for SKI]{\Glsentrylong{QoS} for \Gls{SKI}}\label{sec:qos}
