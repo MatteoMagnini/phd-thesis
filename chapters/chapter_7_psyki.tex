@@ -57,7 +57,7 @@ Concerning the last point mentioned in \Cref{subsec:limitations-and-challenges-o
 It is expressive enough to represent a wide range of symbolic knowledge, while being simple enough to be easily translated into a format suitable for injection into sub-symbolic predictors.
 
 
-\subsection{Design and implementation}\label{subsec:design-and-implementation}
+\subsection{Design}\label{subsec:design-and-implementation}
 %
 \begin{figure}
     \centering
@@ -158,7 +158,9 @@ Each formula implementation is self-contained inside a standalone package so tha
 Similarly, a fuzzifier object that targets a specific logic form can be added inside the same package of the logic, there can be any number of fuzzifiers for a given logic.
 
 
-\paragraph{Details}\label{par:details}
+\subsection{Implementation}\label{subsec:psyki-implementation}
+%
+\paragraph{Knowledge representation}\label{par:knowledge-representation}
 %
 \begin{figure}
     \centering
@@ -195,13 +197,76 @@ In turn, each predicate may be defined through one or more clause.
 In that case, since we rely on stratified Datalog, we require input knowledge to not include any (directly or indirectly) recursive clause definition.
 
 
-Once that the logic has been formalized, the implementation of a Formula -- visitable data structure like an \gls{AST} -- is quite straightforward.
+Once that the logic has been formalized, the implementation of a \emph{Formula} -- visitable data structure like an \gls{AST} -- is quite straightforward.
 %
 \Cref{fig:grammar} depicts the general API for representing logic formulas, as currently supported by \gls{PSyKI}.
 %
 To make \gls{PSyKI} able to parse bare text into actual logic formulas compliant to that API, we rely on well-established parser-generation facilities such as ANTLR~\cite{DBLP:journals/spe/ParrQ95}.
 %
 As further discussed below, the knowledge contained into a Formula object, can then be embedded in sub-symbolic form, via a fuzzifier, to be later injected into a predictor.
+
+
+Later in the evolution of \gls{PSyKI} (i.e., from v. 0.2.1), we considered switching to a more established logic language for representing the symbolic knowledge: Prolog~\cite{DBLP:journals/tplp/KornerLBCDHMWDA22}.
+%
+In particular, we abandoned the manual parsing of logic formulas with ANTLR, and we rely on the tuProlog~\cite{DBLP:conf/padl/DentiOR01} framework.
+%
+We use the parser of tuProlog to parse the logic formulas, but \gls{PSyKI} does not support the full Prolog language because of the limitations of injecting into \gls{NN} mentioned in \Cref{subsec:limitations-and-challenges-of-ski}.
+
+
+\paragraph{Fuzzification}\label{par:fuzzification}
+%
+While logic formulas are commonly interpreted in a Boolean way -- i.e., they can be assigned with one truth value among true and false --, sub-symbolic predictors are more flexible-hence supporting formulas to hold up to some extent.
+%
+Switching from the former interpretation to the latter is, essentially, the purpose of fuzzifiers.
+%
+In practice, this implies converting a logic formula into a function of real numbers.
+%
+Along this line, fuzzification may be performed in (at least) two ways; real numbers may either represent
+%
+\begin{inlinelist}
+    %
+    \item a \emph{penalty} for the violation of a formula, or
+    %
+    \item the \emph{degree of truth} of that formula.
+    %
+\end{inlinelist}
+
+To serve this purpose, one may rely on a multivalued interpretation of logic inspired to $\L$ukasiewicz's logic, where the value true is represented by 0 (resp. 1), while higher (resp. lower) values represent ``falsity''.
+%
+In particular, this approach may be useful to constrain a predictor during its training.
+%
+Examples of this fuzzification approach are \gls{KILL} (\Cref{subsec:kill-fuzzifier}) and \gls{KINS} (\Cref{subsec:kins-fuzzifier}).
+%
+\Cref{tab:kill-logic-formulae,tab:kins-logic-formulae} show the logic formulas encoding into real-valued functions for \gls{KILL} and \gls{KINS}, implementing \emph{penalty} and \emph{degree of truth} respectively.
+
+
+\paragraph{Injection}\label{par:injection}
+%
+\lstinputlisting[
+    basicstyle=\fontsize{8}{9.5}\ttfamily\selectfont,
+    label=lst:psyki-injection,
+    float,
+    caption={General code snippet for the use of a \gls{SKI} method in the current version of \gls{PSyKI} (v. 0.4.3).},
+    captionpos=b,
+    language=Python,
+]{listings/psyki-injection.py}
+%
+Knowledge injection is the central step in \gls{SKI}.
+%
+It is carried out by \emph{injectors}, i.e., objects wrapping a particular injection strategy.
+%
+Each injector is expected to accept one sub-symbolic predictors as input, other the logic formulas that should be injected into that predictor.
+%
+As part of its operation, the injector is in charge of producing a new predictor as output, of the same type as the one provided as input.
+%
+The new predictor is altered in such a way that it is consistent w.r.t. the provided logic formulas.
+
+
+While the main architecture of \gls{PSyKI} has been maintained stable during the years, the implementation has been continuously improved.
+%
+The current version of \gls{PSyKI} (v. 0.4.3) is implemented in Python 3.9.13, with main dependencies being \texttt{tensorflow}, \texttt{2ppy}, \texttt{scikit-learn}, and \texttt{pandas}.
+%
+\Cref{lst:psyki-injection} shows a general code snippet for the use of a \gls{SKI} algorithm in \gls{PSyKI} (v. 0.4.3).
 
 
 \section[Quality of service for SKI]{\Glsentrylong{QoS} for \Gls{SKI}}\label{sec:qos}
