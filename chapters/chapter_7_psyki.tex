@@ -17,11 +17,11 @@ In \Cref{sec:psyki}, we present the work ``\emph{On the Design of PSyKI: A Platf
 %
 Then, in \Cref{sec:qos}, we present respectively two works that study the quality of service of \gls{SKI} methods:
 %
-in \Cref{subsec:ski-meets-intelligent-agents} the paper ``\emph{Symbolic Knowledge Injection Meets Intelligent Agents}''~\cite{DBLP:journals/aamas/AgiolloRMCO23},
+in \Cref{sec:ski-meets-intelligent-agents} the paper ``\emph{Symbolic Knowledge Injection Meets Intelligent Agents}''~\cite{DBLP:journals/aamas/AgiolloRMCO23},
 %
 which introduces metrics for evaluating the performance of \gls{SKI} methods in the context of intelligent agents,
 %
-and in \Cref{subsec:empirical-study-on-the-robustness-of-ski-methods} the paper ``\emph{An Empirical Study on the Robustness of Symbolic Knowledge Injection Techniques Against Data Degradation}''~\cite{DBLP:conf/woa/RafanelliMACO24},
+and in \Cref{sec:empirical-study-on-the-robustness-of-ski-methods} the paper ``\emph{An Empirical Study on the Robustness of Symbolic Knowledge Injection Techniques Against Data Degradation}''~\cite{DBLP:conf/woa/RafanelliMACO24},
 %
 which studies the robustness of \gls{SKI} methods against data degradation.
 
@@ -210,7 +210,7 @@ Later in the evolution of \gls{PSyKI} (i.e., from v. 0.2.1), we considered switc
 %
 In particular, we abandoned the manual parsing of logic formulas with ANTLR, and we rely on the tuProlog~\cite{DBLP:conf/padl/DentiOR01} framework.
 %
-We use the parser of tuProlog to parse the logic formulas, but \gls{PSyKI} does not support the full Prolog language because of the limitations of injecting into \gls{NN} mentioned in \Cref{subsec:limitations-and-challenges-of-ski}.
+We use the parser of tuProlog to parse the logic formulas, but \gls{PSyKI} does not support the full Prolog language because of the limitations of injecting into \gls{NN} mentioned in \Cref{subsec:limitations-and-challenges-of-ski} (i.e., we still support only stratified Datalog with negation).
 
 
 \paragraph{Fuzzification}\label{par:fuzzification}
@@ -269,12 +269,375 @@ The current version of \gls{PSyKI} (v. 0.4.3) is implemented in Python 3.9.13, w
 \Cref{lst:psyki-injection} shows a general code snippet for the use of a \gls{SKI} algorithm in \gls{PSyKI} (v. 0.4.3).
 
 
-\section[Quality of service for SKI]{\Glsentrylong{QoS} for \Gls{SKI}}\label{sec:qos}
-
-\subsection[SKI meets intelligent agents]{\Gls{SKI} meets intelligent agents}\label{subsec:ski-meets-intelligent-agents}
+\section[SKI meets intelligent agents]{\Gls{SKI} meets intelligent agents}\label{sec:ski-meets-intelligent-agents}
 %
-\note{TODO: present the paper Symbolic Knowledge Injection Meets Intelligent Agents~\cite{DBLP:journals/aamas/AgiolloRMCO23}}
+In this and in the next section, we present two works that study the \gls{QoS} of \gls{SKI} methods.
+%
+\Gls{QoS} is a crucial aspect of any non-trivial systems, and it is particularly important for \gls{SKI} because the vast majority of the works in this field do not provide any evaluation but the performance of the resulting model.
+%
+Moreover, \gls{SKI} methods and the resulting educated models have many other dimensions that can be evaluated a part from the straight prediction performance.
+%
+The metrics introduced in these works have been implemented and integrated into \gls{PSyKI} from version 0.2.14 and later.
 
-\subsection[Empirical study on the robustness of SKI methods]{Empirical study on the robustness of \Gls{SKI} methods}\label{subsec:empirical-study-on-the-robustness-of-ski-methods}
+
+The work ``\emph{Symbolic Knowledge Injection Meets Intelligent Agents}''~\cite{DBLP:journals/aamas/AgiolloRMCO23}, published in the \emph{Autonomous Agents and Multi-Agent Systems} journal, presents a set of metrics for evaluating the performance of \gls{SKI} methods in the context of intelligent agents.
+%
+Here we present a summary of the work, including the motivations, the proposed metrics, and the evaluation of \gls{SKI} methods in terms of \gls{QoS}.
+
+
+\subsection{Motivations}\label{subsec:ski-meets-intelligent-agents-motivations}
+%
+The current practice of assessing \gls{SKI} methods primarily focuses on measuring improvements in the predictive performance of an educated predictor \(\hat{N}\) over its uneducated counterpart \(N\).
+%
+However, predictive performance is not the only relevant benefit of \gls{SKI} that should be evaluated.
+
+There are multiple aspects of \glspl{ML} predictors that can be influenced by \gls{SKI}, and for which specific metrics should be defined.
+%
+For instance, \gls{SKI} may impact the \emph{memory footprint}, \emph{latency}, \emph{data efficiency}, and \emph{energy consumption} of the predictors it is applied to.
+%
+Collectively, these properties contribute to what we refer to as the \emph{efficiency} of a predictor.
+
+In this work, we consider the following efficiency properties:
+%
+\begin{itemize}
+    \item \textbf{Memory footprint}: the size of the predictor, typically measured in terms of the number of parameters or computational operations required.
+    %
+    \item \textbf{Latency}: the time required to perform a single inference.
+    %
+    \item \textbf{Data efficiency}: the amount of data required to train the predictor to achieve a certain level of performance.
+    %
+    \item \textbf{Energy consumption}: the energy required to train and/or run the predictor.
+    %
+    \item \textbf{Predictive performance}: standard metrics such as accuracy, F1-score, or mean squared error.
+\end{itemize}
+
+For brevity, we refer to any function that measures one of these properties as an \emph{efficiency metric}.
+%
+These metrics quantify the improvement in a given property \(P\) of the uneducated predictor \(N\) when transformed into its educated counterpart \(\hat{N}\) through a \gls{SKI} mechanism.
+
+The resulting efficiency scores can be influenced by several factors:
+%
+\begin{enumerate}
+    \item \textbf{Knowledge quality and coverage (A1)}:
+    %
+    The educated predictor \(\hat{N}\) is obtained by injecting symbolic knowledge \(K\).
+    %
+    Both \(N\) and \(\hat{N}\) are trained on the same dataset \(D\), which describes the learning task.
+    %
+    Key questions include:
+    %
+    \begin{inlinelist}
+        \item Are \(K\) and \(D\) coherent?
+        \item Does \(K\) cover situations exemplified in \(D\)?
+        \item Is \(K\) consistent, coherent, and correct?
+        \item Can the same be said for \(D\)?
+    \end{inlinelist}
+    %
+    The answers to these questions significantly affect the efficiency scores, as they depend on the interplay between \(K\) and \(D\).
+
+    \item \textbf{Baseline quality (A2)}:
+    %
+    Both \(N\) and \(\hat{N}\) target the same learning task.
+    %
+    Questions to consider include:
+    %
+    \begin{inlinelist}
+        \item Is \(N\) biased in a statistical sense?
+        \item If so, can \(\hat{N}\) improve any efficiency metric \(P\)?
+        \item Even if \(N\) is unbiased, is the selected injection mechanism \(I\) suitable for \(N\)?
+    \end{inlinelist}
+    %
+    These factors highlight the dependency of efficiency measures on the nature of \(N\) and the injection mechanism \(I\).
+
+    \item \textbf{Task at hand (A3)}:
+    %
+    The learning task determines the training dataset \(D\) and the test dataset \(T\).
+    %
+    The choice of \(T\) impacts the evaluation of both \(N\) and \(\hat{N}\), and consequently, the efficiency scores.
+\end{enumerate}
+
+In summary, efficiency metrics evaluate a \gls{SKI} method \(I\) in a specific context defined by:
+%
+\begin{inlinelist}
+    \item the symbolic knowledge \(K\),
+    \item the predictor \(N\),
+    \item the training dataset \(D\), and
+    \item the test dataset \(T\).
+\end{inlinelist}
+%
+Thus, any efficiency metric must be parametric with respect to \(K\), \(N\), \(D\), and \(T\).
+
+
+\subsection{Metrics}\label{subsec:ski-meets-intelligent-agents-metrics}
+%
+In this section, we propose the implementation and formalization of metrics to evaluate the efficiency of \gls{SKI} methods.
+%
+Specifically, we introduce \emph{memory footprint}, \emph{latency}, \emph{energy consumption}, and \emph{data efficiency} as key performance indicators for assessing \gls{SKI}.
+%
+These metrics aim to quantify the computational resource usage of \gls{SKI} methods and provide insights into their design and optimization.
+%
+Our focus is on understanding how these metrics can guide the development of \gls{SKI}-based systems, particularly within the context of \glspl{MAS}.
+%
+An in-depth analysis of the trade-offs between performance and efficiency is crucial for the effective implementation of AI predictors in \glspl{MAS}.
+%
+
+\subsubsection{Memory footprint}\label{subsubsec:ski-meets-intelligent-agents-memory-footprint}
+%
+In the context of \glspl{MAS}, the importance of sub-symbolic predictors is growing as the field moves towards more efficient and sustainable \gls{AI}.
+%
+The increasing demand for \gls{AI} systems that can operate on resource-constrained devices, such as IoT and edge devices, has driven research into solutions requiring less memory and computational resources~\cite{CITATION}.
+%
+Several metrics have been proposed to measure the memory footprint of \gls{AI} predictors, particularly sub-symbolic ones~\cite{CITATION}.
+%
+For instance, the memory footprint of \glspl{NN} can be quantified by counting their parameters, \glspl{FLOP}, or \glspl{MAC}, which represent the operations required for a single inference~\cite{CITATION}.
+%
+These metrics are effective for analyzing predictor complexity and computational efficiency.
+
+%
+\Gls{SKI} mechanisms can reduce the memory footprint of sub-symbolic predictors by injecting prior knowledge, thereby reducing the need for data-driven learning of complex concepts.
+%
+This reduction in learned concepts often translates to fewer parameters, \glspl{FLOP}, and \glspl{MAC}, resulting in a smaller memory footprint~\cite{CITATION}.
+%
+We define the memory footprint improvement score, \(\Psi_{K,N}(I)\), as the memory saved by the educated predictor \(\hat{N}\) compared to its uneducated counterpart \(N\):
+%
+\begin{equation}
+    \label{eq:memory-footprint-improvement-score}
+    \Psi_{K,N}(I) = \Psi(N) - \Psi(I(K, N)),
+\end{equation}
+%
+where \(I(K, N)\) represents the educated predictor obtained by injecting symbolic knowledge \(K\) into \(N\).
+
+%
+The improvement score depends on the quality and coverage of the input knowledge (\textbf{A1}) and the memory footprint of the input predictor (\textbf{A2}).
+%
+Higher-quality knowledge reduces the memory requirements of the educated predictor.
+%
+Similarly, predictors with lower initial memory footprints exhibit smaller improvements.
+%
+It is important to note that the memory footprint of a \gls{NN} is task-independent, as it is a structural property of the network.
+
+%
+Finally, a negative score indicates that the educated predictor is more memory-intensive than the uneducated one, suggesting that the \gls{SKI} approach is ineffective in reducing memory usage.
+
+
+\subsubsection{Energy consumption}\label{subsubsec:ski-meets-intelligent-agents-energy-consumption}
+%
+The relationship between \glspl{MAS} and energy consumption is multifaceted and critical.
+%
+To operate effectively in resource-constrained environments, \glspl{MAS} require \gls{AI} systems that minimize energy usage.
+%
+The distributed nature of \glspl{MAS}, combined with the increasing demand for scalable and power-efficient solutions, further emphasizes this need.
+%
+However, the dynamic and real-time requirements of many \glspl{MAS} applications often lead to high energy consumption due to computational and resource demands.
+%
+The complexity of \glspl{MAS}, with multiple agents and their interactions, adds another layer of difficulty, especially when processing large datasets or executing complex algorithms.
+%
+Thus, energy consumption becomes a crucial factor in the design and implementation of \gls{AI} systems within \glspl{MAS}~\cite{CITATION}.
+
+%
+Several strategies can address this challenge.
+%
+One approach involves using energy-efficient hardware, such as low-power processors, or adopting distributed and federated learning techniques to distribute computational loads across multiple devices~\cite{CITATION}.
+%
+Another approach focuses on optimizing algorithms and data structures to reduce the computational requirements of agents.
+%
+The integration of sub-symbolic predictors, which typically require fewer computational resources than symbolic \gls{AI} methods, can also significantly reduce energy consumption.
+%
+Additionally, techniques such as compression and optimization of sub-symbolic predictors can further enhance energy efficiency~\cite{CITATION}.
+
+%
+\gls{SKI} methods offer a promising opportunity to improve energy efficiency in \glspl{MAS}.
+%
+By introducing injection mechanisms into the data-driven pipeline of sub-symbolic training, \gls{SKI} reduces the computational complexity of training and running predictors.
+%
+This is achieved by leveraging prior knowledge, which complements the training data and simplifies the learning process.
+%
+As a result, it is essential to evaluate the extent to which \gls{SKI} mechanisms contribute to reducing the energy consumption of sub-symbolic predictors throughout their lifecycle.
+
+%
+To analyze energy consumption, we first define the lifecycle of \gls{AI} predictors, which includes the following stages:
+%
+\begin{enumerate}
+    \item \textbf{Model definition}: Data scientists analyze the task and select suitable sub-symbolic predictors and hyperparameters.
+    %
+    \item \textbf{Model training}: The predictor's parameters are tuned using training data, where the size and dimensionality of the dataset impact energy consumption.
+    %
+    \item \textbf{Model testing}: The predictor is evaluated on a limited test set to ensure satisfactory performance.
+    %
+    \item \textbf{Model deployment}: The predictor is used for inference, with energy consumption depending on usage frequency and application lifespan.
+\end{enumerate}
+
+%
+Among these stages, training and deployment are the most resource-intensive.
+%
+Training involves repeated executions and updates of the predictor, while deployment energy consumption depends on the frequency and duration of usage, which are often unpredictable.
+
+%
+We propose two metrics to measure energy consumption:
+%
+\begin{itemize}
+    \item \textbf{Inference energy consumption}:
+    %
+    The average energy consumed by a predictor \(N\) for a single inference is defined as:
+    %
+    \begin{equation}
+        \label{eq:inference-energy}
+        \Upsilon(N, T) = \frac{1}{|T|} \sum_{t \in T} \varepsilon(N, t),
+    \end{equation}
+    %
+    where \(\varepsilon(N, t)\) measures the energy consumed by \(N\) during inference on a sample \(t\) from the test set \(T\).
+    %
+    \item \textbf{Training energy consumption}:
+    %
+    The average energy consumed during training is defined as:
+    %
+    \begin{equation}
+        \label{eq:training-energy}
+        \Upsilon_{\text{train}}(e, N, T) = \frac{\varepsilon_{\text{train}}(e, N, T)}{e \cdot |T|} - \Upsilon(N, T),
+    \end{equation}
+    %
+    where \(e\) is the number of epochs, \(|T|\) is the size of the training set, and \(\varepsilon_{\text{train}}(e, N, T)\) estimates the total energy consumed during training, including inference costs.
+\end{itemize}
+
+%
+The energy consumption improvement of a \gls{SKI} mechanism \(I\) is defined as the energy saved by the educated predictor \(\hat{N} = I(K, N)\) compared to the uneducated predictor \(N\).
+%
+We distinguish between improvements during inference and training:
+%
+\begin{align}
+    \Delta_{\text{inference}}(I) &= \Upsilon(N, T) - \Upsilon(\hat{N}, T), \\
+    \Delta_{\text{training}}(I) &= \Upsilon_{\text{train}}(e, N, T) - \Upsilon_{\text{train}}(e, \hat{N}, T).
+\end{align}
+
+%
+These metrics depend on several factors:
+%
+\begin{itemize}
+    \item \textbf{Input knowledge (\gls{A1})}: Complex knowledge may increase training energy consumption but reduce inference energy.
+    %
+    \item \textbf{Baseline predictor (\gls{A2})}: Energy-hungry predictors are more likely to benefit from \gls{SKI}.
+    %
+    \item \textbf{Task at hand (\gls{A3})}: Task-specific datasets influence energy consumption improvements.
+\end{itemize}
+
+%
+In summary, \gls{SKI} mechanisms have the potential to significantly reduce energy consumption in \glspl{MAS}, particularly during inference, while potentially increasing training energy costs.
+%
+These trade-offs must be carefully evaluated to optimize the overall efficiency of \gls{AI} systems.
+
+
+\subsubsection{Latency}\label{subsubsec:ski-meets-intelligent-agents-latency}
+%
+Latency refers to the time required to generate a single prediction using a sub-symbolic predictor.
+%
+Low latency is crucial in real-world applications where timely responses are essential, such as in \gls{intelligent-transportation}~\cite{CITATION} and \gls{e-health}~\cite{CITATION}.
+%
+In \glspl{MAS}, latency plays a significant role as collaboration between agents requires minimal computational delays~\cite{CITATION}.
+%
+Additionally, tasks involving large datasets or complex algorithms, such as decision-making, can further increase latency, making it a critical efficiency measure.
+
+%
+\gls{SKI} methods can help reduce latency by incorporating symbolic representations, which simplify computations and reduce the complexity of the system.
+%
+This simplification can also aid in identifying the root causes of increased latency, making \gls{SKI} a valuable approach for improving computational efficiency.
+
+%
+Latency is typically measured as the average time required to generate predictions over a test dataset \(T\).
+%
+Formally, the latency of a predictor \(N\) is defined as:
+%
+\begin{equation}
+    \label{eq:latency}
+    \Theta(N, T) = \frac{1}{|T|} \sum_{t \in T} \theta(N, t),
+\end{equation}
+%
+where \(\theta(N, t)\) represents the time taken by \(N\) to generate a prediction for a sample \(t \in T\).
+
+%
+To evaluate the impact of \gls{SKI}, we define the latency gain \(\Delta_{\text{latency}}(I)\) as the difference in latency between the educated predictor \(\hat{N} = I(K, N)\) and the uneducated predictor \(N\):
+%
+\begin{equation}
+    \label{eq:latency-gain}
+    \Delta_{\text{latency}}(I) = \Theta(N, T) - \Theta(\hat{N}, T),
+\end{equation}
+%
+where \(I(K, N)\) represents the \gls{SKI} mechanism injecting symbolic knowledge \(K\) into \(N\).
+
+%
+The latency gain depends on several factors:
+%
+\begin{itemize}
+    \item \textbf{Input knowledge (\gls{A1})}: Large or complex knowledge bases may increase latency due to additional computations, but they can also reduce inference time by simplifying the predictor's operations.
+    %
+    \item \textbf{Baseline predictor (\gls{A2})}: Predictors with higher initial latency are more likely to benefit from \gls{SKI}.
+    %
+    \item \textbf{Task at hand (\gls{A3})}: Task-specific datasets influence latency measurements, as different tasks may require varying levels of computational effort.
+\end{itemize}
+
+%
+It is important to note that latency is not always directly proportional to the number of operations in the predictor.
+%
+Sparse or inefficient operations at the hardware level, as well as variations in input data complexity, can significantly affect latency~\cite{CITATION}.
+%
+Thus, evaluating latency gain provides valuable insights into the computational efficiency of \gls{SKI} methods.
+
+
+\subsubsection{Data efficiency}\label{subsubsec:ski-meets-intelligent-agents-data-efficiency}
+%
+\Gls{data-efficiency} is a critical aspect of \glspl{MAS}, as these systems often generate and process substantial amounts of data.
+%
+Inefficient data management can lead to increased latency, reduced accuracy, and higher energy consumption, all of which negatively impact system performance.
+
+%
+Sub-symbolic predictors, which rely on data-driven training algorithms, offer significant flexibility and performance.
+%
+However, they require large amounts of data for training, resulting in increased storage and processing demands.
+%
+Moreover, the quality of the data, particularly its representativeness of the task, is crucial for effective learning.
+%
+These requirements make data collection time-consuming and potentially prone to subjectivity or uncertainty, as seen in applications like emotion recognition~\cite{CITATION}.
+
+%
+Recent research has focused on developing data-frugal predictors~\cite{CITATION}.
+%
+Among these, \gls{SKI} mechanisms play a significant role by leveraging \emph{a priori} knowledge to reduce the computational burden of learning.
+%
+Instead of learning all concepts from data, \gls{SKI} allows injecting prior knowledge into the predictor, potentially reducing the amount of data required to achieve acceptable performance levels.
+%
+In this sense, \gls{SKI} can be considered a \gls{data-efficiency} mechanism.
+
+%
+To quantify the \gls{data-efficiency} gain of a given \gls{SKI} mechanism \(I\), we first define the \emph{data footprint} of a predictor \(N\).
+%
+The data footprint represents the amount of data required to train \(N\) to achieve a specific performance level.
+%
+Assuming \(N\) is trained on a dataset \(D\) with samples of varying dimensions, over \(e\) epochs, and achieves a performance score \(\pi(N, T)\) on a test set \(T\), the data footprint is defined as:
+%
+\begin{equation}
+    \label{eq:data-footprint}
+    \Delta(e, N, D, T) = \frac{e}{\pi(N, T)} \sum_{d \in D} \delta(d),
+\end{equation}
+%
+where \(\delta(d)\) is the memory size (in bytes) of a single training sample \(d\).
+
+%
+The \gls{data-efficiency} gain of a \gls{SKI} mechanism \(I\) is then defined as the difference between the data footprints of the uneducated predictor \(N\) and the educated predictor \(\hat{N} = I(K, N)\), trained on datasets \(D\) and \(D'\), respectively:
+%
+\begin{equation}
+    \label{eq:data-efficiency-gain}
+    \Gamma(e, K, N, D, D', T, I) = \Delta(e, N, D, T) - \Delta(e, \hat{N}, D', T).
+\end{equation}
+
+%
+To improve \gls{data-efficiency}, one can reduce the size of the training dataset \(D'\), either by decreasing the number of samples or by reducing their dimensionality through compression.
+%
+Additionally, engineering the \gls{SKI} mechanism and the educated predictor can further enhance \gls{data-efficiency}.
+%
+For instance, the input knowledge \(K\) can compensate for the reduced dataset size, as the gain depends on both the quality of \(K\) (\textbf{A1}) and the baseline predictor (\textbf{A2}).
+%
+Predictors that are more data-hungry tend to exhibit higher \gls{data-efficiency} gains.
+
+
+\section[Empirical study on the robustness of SKI methods]{Empirical study on the robustness of \Gls{SKI} methods}\label{sec:empirical-study-on-the-robustness-of-ski-methods}
 %
 \note{TODO: present the paper An Empirical Study on the Robustness of Symbolic Knowledge Injection Techniques Against Data Degradation~\cite{DBLP:conf/woa/RafanelliMACO24}}
