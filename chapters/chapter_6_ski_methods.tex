@@ -468,7 +468,7 @@ This conversion relies on a multivalued interpretation of logic -- inspired by \
 %
 Differently from \gls{KILL}, the fuzzification function is not used to compute a penalty, but rather to compute the degree of truth of the formula.
 %
-For this reason, \mathtt{true} and \mathtt{false} are interpreted as $1$ and $0$, respectively, rather than as $0$ and $1$.
+For this reason, $\mathtt{true}$ and $\mathtt{false}$ are interpreted as $1$ and $0$, respectively, rather than as $0$ and $1$.
 %
 While \Cref{tab:kins-logic-formulae} describes the mapping between formulas and their fuzzy interpretation, we now discuss how such interpretation can be further encoded into neural modules to be added to the \gls{NN} undergoing injection.
 
@@ -532,7 +532,7 @@ Each sequence spans positions from -30 to +30, excluding position 0.
 %
 The classification task involves identifying whether a sequence corresponds to an \gls{IE} boundary, an \gls{EI} boundary, or neither (N).
 %
-The dataset is imbalanced, with class frequencies distributed as follows: 50\% for \gls{n}, and 25\% each for \gls{IE} and \gls{EI}.
+The dataset is imbalanced, with class frequencies distributed as follows: 50\% for N, and 25\% each for \gls{IE} and \gls{EI}.
 %
 This imbalance poses challenges for accurate classification, making it a suitable benchmark for testing \gls{KINS}.
 
@@ -570,11 +570,11 @@ The original rules also utilize additional symbols to compactly represent multip
 
 When applying the rules in \Cref{tab:dna-rules} to classify sequences in the \gls{PSJGS} dataset, sequences of type \gls{IE} are correctly classified $295$ times as \gls{TP}.
 %
-However, the same rule also incorrectly classifies $25$ \gls{EI} sequences and $3$ \gls{n} sequences as \gls{FP}.
+However, the same rule also incorrectly classifies $25$ \gls{EI} sequences and $3$ N sequences as \gls{FP}.
 %
 In contrast, \gls{EI} sequences are correctly classified $31$ times, with no \gls{FP}.
 
-To address the classification of sequences of type \gls{n}, a fictional rule is introduced, which negates both \gls{IE} and \gls{EI} rules:
+To address the classification of sequences of type N, a fictional rule is introduced, which negates both \gls{IE} and \gls{EI} rules:
 %
 \begin{align}
     \pred{class}(\bar{X}, \const{n}) &\leftarrow \neg \pred{class}(\bar{X}, \const{ei}) \land \neg \pred{class}(\bar{X}, \const{ie}).

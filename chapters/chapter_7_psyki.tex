@@ -548,7 +548,7 @@ These trade-offs must be carefully evaluated to optimize the overall efficiency 
 %
 Latency refers to the time required to generate a single prediction using a sub-symbolic predictor.
 %
-Low latency is crucial in real-world applications where timely responses are essential, such as in \gls{intelligent-transportation}~\cite{CITATION} and \gls{e-health}~\cite{CITATION}.
+Low latency is crucial in real-world applications where timely responses are essential, such as in intelligent transportation~\cite{CITATION} and e-health~\cite{CITATION}.
 %
 In \glspl{MAS}, latency plays a significant role as collaboration between agents requires minimal computational delays~\cite{CITATION}.
 %
@@ -602,7 +602,7 @@ Thus, evaluating latency gain provides valuable insights into the computational 
 
 \subsubsection{Data efficiency}\label{subsubsec:ski-meets-intelligent-agents-data-efficiency}
 %
-\Gls{data-efficiency} is a critical aspect of \glspl{MAS}, as these systems often generate and process substantial amounts of data.
+Data-efficiency is a critical aspect of \glspl{MAS}, as these systems often generate and process substantial amounts of data.
 %
 Inefficient data management can lead to increased latency, reduced accuracy, and higher energy consumption, all of which negatively impact system performance.
 
@@ -622,10 +622,10 @@ Among these, \gls{SKI} mechanisms play a significant role by leveraging \emph{a 
 %
 Instead of learning all concepts from data, \gls{SKI} allows injecting prior knowledge into the predictor, potentially reducing the amount of data required to achieve acceptable performance levels.
 %
-In this sense, \gls{SKI} can be considered a \gls{data-efficiency} mechanism.
+In this sense, \gls{SKI} can be considered a data-efficiency mechanism.
 
 %
-To quantify the \gls{data-efficiency} gain of a given \gls{SKI} mechanism \(\mathcal{I}\), we first define the \emph{data footprint} of a predictor \(N\).
+To quantify the data-efficiency gain of a given \gls{SKI} mechanism \(\mathcal{I}\), we first define the \emph{data footprint} of a predictor \(N\).
 %
 The data footprint represents the amount of data required to train \(N\) to achieve a specific performance level.
 %
@@ -639,7 +639,7 @@ Assuming \(N\) is trained on a dataset \(D\) with samples of varying dimensions,
 where \(\beta(d)\) is the memory size (in bytes) of a single training sample \(d\).
 
 %
-The \gls{data-efficiency} gain of a \gls{SKI} mechanism \(\mathcal{I}\) is then defined as the difference between the data footprints of the uneducated predictor \(N\) and the educated predictor \(\hat{N} = \mathcal{I}(K, N)\), trained on datasets \(D\) and \(D'\), respectively:
+The data-efficiency gain of a \gls{SKI} mechanism \(\mathcal{I}\) is then defined as the difference between the data footprints of the uneducated predictor \(N\) and the educated predictor \(\hat{N} = \mathcal{I}(K, N)\), trained on datasets \(D\) and \(D'\), respectively:
 %
 \begin{equation}
     \label{eq:data-efficiency-gain}
@@ -647,13 +647,13 @@ The \gls{data-efficiency} gain of a \gls{SKI} mechanism \(\mathcal{I}\) is then 
 \end{equation}
 
 %
-To improve \gls{data-efficiency}, one can reduce the size of the training dataset \(D'\), either by decreasing the number of samples or by reducing their dimensionality through compression.
+To improve data-efficiency, one can reduce the size of the training dataset \(D'\), either by decreasing the number of samples or by reducing their dimensionality through compression.
 %
-Additionally, engineering the \gls{SKI} mechanism and the educated predictor can further enhance \gls{data-efficiency}.
+Additionally, engineering the \gls{SKI} mechanism and the educated predictor can further enhance data-efficiency.
 %
 For instance, the input knowledge \(K\) can compensate for the reduced dataset size, as the gain depends on both the quality of \(K\) (\Cref{itm:knowledge-quality-and-coverage}) and the baseline predictor (\Cref{itm:baseline-quality}).
 %
-Predictors that are more data-hungry tend to exhibit higher \gls{data-efficiency} gains.
+Predictors that are more data-hungry tend to exhibit higher data-efficiency gains.
 
 
 \section[Empirical study on the robustness of SKI methods]{Empirical study on the robustness of \Gls{SKI} methods}\label{sec:empirical-study-on-the-robustness-of-ski-methods}
