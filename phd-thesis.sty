@@ -51,6 +51,18 @@
 \crefname{requirementsi}{}{}
 \Crefname{requirementsi}{}{}
 
+\newlist{factors}{enumerate}{2}
+\setlist[factors,1]{label=\textbf{(F\arabic*)},ref=F\arabic*}
+\setlist[factors,2]{label=(\alph*),ref=\thefactorsi(\alph*)}
+\crefname{factorsi}{}{}
+\Crefname{factorsi}{}{}
+
+\newlist{properties}{enumerate}{2}
+\setlist[properties,1]{label=\textbf{(P\arabic*)},ref=P\arabic*}
+\setlist[properties,2]{label=(\alph*),ref=\thepropertiesi(\alph*)}
+\crefname{propertiesi}{}{}
+\Crefname{propertiesi}{}{}
+
 \setcounter{secnumdepth}{3}
 
 \fancypagestyle{plain}{

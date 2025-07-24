@@ -299,17 +299,27 @@ Collectively, these properties contribute to what we refer to as the \emph{effic
 
 In this work, we consider the following efficiency properties:
 %
-\begin{itemize}
+\begin{properties}
     \item \textbf{Memory footprint}: the size of the predictor, typically measured in terms of the number of parameters or computational operations required.
+    %
+    \label{itm:memory-footprint}
     %
     \item \textbf{Latency}: the time required to perform a single inference.
     %
+    \label{itm:latency}
+    %
     \item \textbf{Data efficiency}: the amount of data required to train the predictor to achieve a certain level of performance.
+    %
+    \label{itm:data-efficiency}
     %
     \item \textbf{Energy consumption}: the energy required to train and/or run the predictor.
     %
+    \label{itm:energy-consumption}
+    %
     \item \textbf{Predictive performance}: standard metrics such as accuracy, F1-score, or mean squared error.
-\end{itemize}
+    %
+    \label{itm:predictive-performance}
+\end{properties}
 
 For brevity, we refer to any function that measures one of these properties as an \emph{efficiency metric}.
 %
@@ -317,8 +327,9 @@ These metrics quantify the improvement in a given property \(P\) of the uneducat
 
 The resulting efficiency scores can be influenced by several factors:
 %
-\begin{enumerate}
-    \item \textbf{Knowledge quality and coverage (A1)}:
+\begin{factors}
+    %
+    \item \textbf{Knowledge quality and coverage}:
     %
     The educated predictor \(\hat{N}\) is obtained by injecting symbolic knowledge \(K\).
     %
@@ -334,8 +345,10 @@ The resulting efficiency scores can be influenced by several factors:
     \end{inlinelist}
     %
     The answers to these questions significantly affect the efficiency scores, as they depend on the interplay between \(K\) and \(D\).
+    %
+    \label{itm:knowledge-quality-and-coverage}
 
-    \item \textbf{Baseline quality (A2)}:
+    \item \textbf{Baseline quality}:
     %
     Both \(N\) and \(\hat{N}\) target the same learning task.
     %
@@ -344,19 +357,23 @@ The resulting efficiency scores can be influenced by several factors:
     \begin{inlinelist}
         \item Is \(N\) biased in a statistical sense?
         \item If so, can \(\hat{N}\) improve any efficiency metric \(P\)?
-        \item Even if \(N\) is unbiased, is the selected injection mechanism \(I\) suitable for \(N\)?
+        \item Even if \(N\) is unbiased, is the selected injection mechanism \(\mathcal{I}\) suitable for \(N\)?
     \end{inlinelist}
     %
-    These factors highlight the dependency of efficiency measures on the nature of \(N\) and the injection mechanism \(I\).
+    These factors highlight the dependency of efficiency measures on the nature of \(N\) and the injection mechanism \(\mathcal{I}\).
+    %
+    \label{itm:baseline-quality}
 
-    \item \textbf{Task at hand (A3)}:
+    \item \textbf{Task at hand}:
     %
     The learning task determines the training dataset \(D\) and the test dataset \(T\).
     %
     The choice of \(T\) impacts the evaluation of both \(N\) and \(\hat{N}\), and consequently, the efficiency scores.
-\end{enumerate}
+    %
+    \label{itm:task-at-hand}
+\end{factors}
 
-In summary, efficiency metrics evaluate a \gls{SKI} method \(I\) in a specific context defined by:
+In summary, efficiency metrics evaluate a \gls{SKI} method \(\mathcal{I}\) in a specific context defined by:
 %
 \begin{inlinelist}
     \item the symbolic knowledge \(K\),
@@ -398,17 +415,17 @@ These metrics are effective for analyzing predictor complexity and computational
 %
 This reduction in learned concepts often translates to fewer parameters, \glspl{FLOP}, and \glspl{MAC}, resulting in a smaller memory footprint~\cite{CITATION}.
 %
-We define the memory footprint improvement score, \(\Psi_{K,N}(I)\), as the memory saved by the educated predictor \(\hat{N}\) compared to its uneducated counterpart \(N\):
+We define the memory footprint improvement score as the memory saved by the educated predictor \(\hat{N}\) compared to its uneducated counterpart \(N\):
 %
 \begin{equation}
     \label{eq:memory-footprint-improvement-score}
-    \Psi_{K,N}(I) = \Psi(N) - \Psi(I(K, N)),
+    \mu_{\Psi, K, N}(\mathcal{I}) = \Psi(N) - \Psi(\mathcal{I}(K, N)),
 \end{equation}
 %
-where \(I(K, N)\) represents the educated predictor obtained by injecting symbolic knowledge \(K\) into \(N\).
+where \(\mathcal{I}(K, N)\) (a.k.a., $\hat{N}$) represents the educated predictor obtained by injecting symbolic knowledge \(K\) into \(N\).
 
 %
-The improvement score depends on the quality and coverage of the input knowledge (\textbf{A1}) and the memory footprint of the input predictor (\textbf{A2}).
+The improvement score depends on the quality and coverage of the input knowledge (\Cref{itm:knowledge-quality-and-coverage}) and the memory footprint of the input predictor (\Cref{itm:baseline-quality}).
 %
 Higher-quality knowledge reduces the memory requirements of the educated predictor.
 %
@@ -482,10 +499,10 @@ We propose two metrics to measure energy consumption:
     %
     \begin{equation}
         \label{eq:inference-energy}
-        \Upsilon(N, T) = \frac{1}{|T|} \sum_{t \in T} \varepsilon(N, t),
+        \Upsilon^\mathsf{i}_{\upsilon}(N, T) = \frac{1}{\vert T \vert} \sum_{t \in T} \upsilon(N, t),
     \end{equation}
     %
-    where \(\varepsilon(N, t)\) measures the energy consumed by \(N\) during inference on a sample \(t\) from the test set \(T\).
+    where \(\upsilon(N, t)\) measures the energy consumed by \(N\) during inference on a sample \(t\) from the test set \(T\).
     %
     \item \textbf{Training energy consumption}:
     %
@@ -493,31 +510,32 @@ We propose two metrics to measure energy consumption:
     %
     \begin{equation}
         \label{eq:training-energy}
-        \Upsilon_{\text{train}}(e, N, T) = \frac{\varepsilon_{\text{train}}(e, N, T)}{e \cdot |T|} - \Upsilon(N, T),
+        \Upsilon^\mathsf{t}_{\upsilon, \gamma}(e, N, T) = \frac{\gamma(e, N, T)}{e \cdot \vert T \vert} -  \Upsilon^\mathsf{i}_\upsilon(N, T),
     \end{equation}
     %
-    where \(e\) is the number of epochs, \(|T|\) is the size of the training set, and \(\varepsilon_{\text{train}}(e, N, T)\) estimates the total energy consumed during training, including inference costs.
+    where \(e\) is the number of epochs, \(|T|\) is the size of the training set, and \(\gamma(e, N, T)\) estimates the total energy consumed during training, including inference costs.
 \end{itemize}
 
 %
-The energy consumption improvement of a \gls{SKI} mechanism \(I\) is defined as the energy saved by the educated predictor \(\hat{N} = I(K, N)\) compared to the uneducated predictor \(N\).
+The energy consumption improvement of a \gls{SKI} mechanism \(\mathcal{I}\) is defined as the energy saved by the educated predictor \(\hat{N} = \mathcal{I}(K, N)\) compared to the uneducated predictor \(N\).
 %
 We distinguish between improvements during inference and training:
 %
 \begin{align}
-    \Delta_{\text{inference}}(I) &= \Upsilon(N, T) - \Upsilon(\hat{N}, T), \\
-    \Delta_{\text{training}}(I) &= \Upsilon_{\text{train}}(e, N, T) - \Upsilon_{\text{train}}(e, \hat{N}, T).
+    \varepsilon^\mathsf{i}_{\upsilon, K, N, T}(\mathcal{I}) &= \Upsilon^\mathsf{i}_{\upsilon}(N, T) - \Upsilon^\mathsf{i}_{\upsilon}(\mathcal{I}(K, N), T)
+    \\
+    \varepsilon^\mathsf{t}_{\upsilon, \gamma, e, K, N, T}(\mathcal{I}) &= \Upsilon^\mathsf{t}_{\upsilon, \gamma}(e, N, T) - \Upsilon^\mathsf{t}_{\upsilon, \gamma}(e, \mathcal{I}(K, N), T)
 \end{align}
 
 %
 These metrics depend on several factors:
 %
 \begin{itemize}
-    \item \textbf{Input knowledge (\gls{A1})}: Complex knowledge may increase training energy consumption but reduce inference energy.
+    \item \textbf{Input knowledge (\Cref{itm:knowledge-quality-and-coverage})}: Complex knowledge may increase training energy consumption but reduce inference energy.
     %
-    \item \textbf{Baseline predictor (\gls{A2})}: Energy-hungry predictors are more likely to benefit from \gls{SKI}.
+    \item \textbf{Baseline predictor (\Cref{itm:baseline-quality})}: Energy-hungry predictors are more likely to benefit from \gls{SKI}.
     %
-    \item \textbf{Task at hand (\gls{A3})}: Task-specific datasets influence energy consumption improvements.
+    \item \textbf{Task at hand (\Cref{itm:task-at-hand})}: Task-specific datasets influence energy consumption improvements.
 \end{itemize}
 
 %
@@ -548,30 +566,30 @@ Formally, the latency of a predictor \(N\) is defined as:
 %
 \begin{equation}
     \label{eq:latency}
-    \Theta(N, T) = \frac{1}{|T|} \sum_{t \in T} \theta(N, t),
+    \Lambda(N, T) = \frac{1}{\vert T \vert} \sum_{t \in T} \Theta(N, t),
 \end{equation}
 %
-where \(\theta(N, t)\) represents the time taken by \(N\) to generate a prediction for a sample \(t \in T\).
+where \(\Theta(N, t)\) represents the time taken by \(N\) to generate a prediction for a sample \(t \in T\).
 
 %
-To evaluate the impact of \gls{SKI}, we define the latency gain \(\Delta_{\text{latency}}(I)\) as the difference in latency between the educated predictor \(\hat{N} = I(K, N)\) and the uneducated predictor \(N\):
+To evaluate the impact of \gls{SKI}, we define the latency gain $\lambda_{K, N, T}(\mathcal{I})$ as the difference in latency between the educated predictor \(\hat{N} = \mathcal{I}(K, N)\) and the uneducated predictor \(N\):
 %
 \begin{equation}
     \label{eq:latency-gain}
-    \Delta_{\text{latency}}(I) = \Theta(N, T) - \Theta(\hat{N}, T),
+    \lambda_{K, N, T}(\mathcal{I}) = \frac{1}{\vert T \vert} \sum_{t \in T} \left( \Theta(N, t) - \Theta(\hat{N}, t) \right) = \Lambda(N, T) - \Lambda(\hat{N}, T),
 \end{equation}
 %
-where \(I(K, N)\) represents the \gls{SKI} mechanism injecting symbolic knowledge \(K\) into \(N\).
+where \(\mathcal{I}(K, N)\) represents the \gls{SKI} mechanism injecting symbolic knowledge \(K\) into \(N\).
 
 %
 The latency gain depends on several factors:
 %
 \begin{itemize}
-    \item \textbf{Input knowledge (\gls{A1})}: Large or complex knowledge bases may increase latency due to additional computations, but they can also reduce inference time by simplifying the predictor's operations.
+    \item \textbf{Input knowledge (\Cref{itm:knowledge-quality-and-coverage})}: Large or complex knowledge bases may increase latency due to additional computations, but they can also reduce inference time by simplifying the predictor's operations.
     %
-    \item \textbf{Baseline predictor (\gls{A2})}: Predictors with higher initial latency are more likely to benefit from \gls{SKI}.
+    \item \textbf{Baseline predictor (\Cref{itm:baseline-quality})}: Predictors with higher initial latency are more likely to benefit from \gls{SKI}.
     %
-    \item \textbf{Task at hand (\gls{A3})}: Task-specific datasets influence latency measurements, as different tasks may require varying levels of computational effort.
+    \item \textbf{Task at hand (\Cref{itm:task-at-hand})}: Task-specific datasets influence latency measurements, as different tasks may require varying levels of computational effort.
 \end{itemize}
 
 %
@@ -607,7 +625,7 @@ Instead of learning all concepts from data, \gls{SKI} allows injecting prior kno
 In this sense, \gls{SKI} can be considered a \gls{data-efficiency} mechanism.
 
 %
-To quantify the \gls{data-efficiency} gain of a given \gls{SKI} mechanism \(I\), we first define the \emph{data footprint} of a predictor \(N\).
+To quantify the \gls{data-efficiency} gain of a given \gls{SKI} mechanism \(\mathcal{I}\), we first define the \emph{data footprint} of a predictor \(N\).
 %
 The data footprint represents the amount of data required to train \(N\) to achieve a specific performance level.
 %
@@ -615,17 +633,17 @@ Assuming \(N\) is trained on a dataset \(D\) with samples of varying dimensions,
 %
 \begin{equation}
     \label{eq:data-footprint}
-    \Delta(e, N, D, T) = \frac{e}{\pi(N, T)} \sum_{d \in D} \delta(d),
+    \Delta_\pi(e, N, D, T) = \frac{e}{\pi(N, T)} \sum_{d \in D} \beta(d),
 \end{equation}
 %
-where \(\delta(d)\) is the memory size (in bytes) of a single training sample \(d\).
+where \(\beta(d)\) is the memory size (in bytes) of a single training sample \(d\).
 
 %
-The \gls{data-efficiency} gain of a \gls{SKI} mechanism \(I\) is then defined as the difference between the data footprints of the uneducated predictor \(N\) and the educated predictor \(\hat{N} = I(K, N)\), trained on datasets \(D\) and \(D'\), respectively:
+The \gls{data-efficiency} gain of a \gls{SKI} mechanism \(\mathcal{I}\) is then defined as the difference between the data footprints of the uneducated predictor \(N\) and the educated predictor \(\hat{N} = \mathcal{I}(K, N)\), trained on datasets \(D\) and \(D'\), respectively:
 %
 \begin{equation}
     \label{eq:data-efficiency-gain}
-    \Gamma(e, K, N, D, D', T, I) = \Delta(e, N, D, T) - \Delta(e, \hat{N}, D', T).
+    \delta_{e, K, N, D, D', T}(\mathcal{I}) = \Delta_\pi(e, N, D, T) - \Delta_\pi(e, \mathcal{I}(K, N), D', T)
 \end{equation}
 
 %
@@ -633,7 +651,7 @@ To improve \gls{data-efficiency}, one can reduce the size of the training datase
 %
 Additionally, engineering the \gls{SKI} mechanism and the educated predictor can further enhance \gls{data-efficiency}.
 %
-For instance, the input knowledge \(K\) can compensate for the reduced dataset size, as the gain depends on both the quality of \(K\) (\textbf{A1}) and the baseline predictor (\textbf{A2}).
+For instance, the input knowledge \(K\) can compensate for the reduced dataset size, as the gain depends on both the quality of \(K\) (\Cref{itm:knowledge-quality-and-coverage}) and the baseline predictor (\Cref{itm:baseline-quality}).
 %
 Predictors that are more data-hungry tend to exhibit higher \gls{data-efficiency} gains.
 
