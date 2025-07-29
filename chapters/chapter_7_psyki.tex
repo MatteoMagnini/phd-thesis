@@ -402,18 +402,18 @@ An in-depth analysis of the trade-offs between performance and efficiency is cru
 %
 In the context of \glspl{MAS}, the importance of sub-symbolic predictors is growing as the field moves towards more efficient and sustainable \gls{AI}.
 %
-The increasing demand for \gls{AI} systems that can operate on resource-constrained devices, such as IoT and edge devices, has driven research into solutions requiring less memory and computational resources~\cite{CITATION}.
+The increasing demand for \gls{AI} systems that can operate on resource-constrained devices, such as IoT and edge devices, has driven research into solutions requiring less memory and computational resources~\cite{DBLP:journals/tplp/KornerLBCDHMWDA22,shallow2deep-extraamas2021,nnconstrained-applsci11}.
 %
-Several metrics have been proposed to measure the memory footprint of \gls{AI} predictors, particularly sub-symbolic ones~\cite{CITATION}.
+Several metrics have been proposed to measure the memory footprint of \gls{AI} predictors, particularly sub-symbolic ones~\cite{Kang2018,wu2018shift,LiberisEurosys2021}.
 %
-For instance, the memory footprint of \glspl{NN} can be quantified by counting their parameters, \glspl{FLOP}, or \glspl{MAC}, which represent the operations required for a single inference~\cite{CITATION}.
+For instance, the memory footprint of \glspl{NN} can be quantified by counting their parameters, \glspl{FLOP}, or \glspl{MAC}, which represent the operations required for a single inference~\cite{skiqs-woa2022,huang_condensenet_2018,cheng_msnet_2019}.
 %
 These metrics are effective for analyzing predictor complexity and computational efficiency.
 
 %
 \Gls{SKI} mechanisms can reduce the memory footprint of sub-symbolic predictors by injecting prior knowledge, thereby reducing the need for data-driven learning of complex concepts.
 %
-This reduction in learned concepts often translates to fewer parameters, \glspl{FLOP}, and \glspl{MAC}, resulting in a smaller memory footprint~\cite{CITATION}.
+This reduction in learned concepts often translates to fewer parameters, \glspl{FLOP}, and \glspl{MAC}, resulting in a smaller memory footprint.
 %
 We define the memory footprint improvement score as the memory saved by the educated predictor \(\hat{N}\) compared to its uneducated counterpart \(N\):
 %
@@ -449,18 +449,18 @@ However, the dynamic and real-time requirements of many \glspl{MAS} applications
 %
 The complexity of \glspl{MAS}, with multiple agents and their interactions, adds another layer of difficulty, especially when processing large datasets or executing complex algorithms.
 %
-Thus, energy consumption becomes a crucial factor in the design and implementation of \gls{AI} systems within \glspl{MAS}~\cite{CITATION}.
+Thus, energy consumption becomes a crucial factor in the design and implementation of \gls{AI} systems within \glspl{MAS}.
 
 %
 Several strategies can address this challenge.
 %
-One approach involves using energy-efficient hardware, such as low-power processors, or adopting distributed and federated learning techniques to distribute computational loads across multiple devices~\cite{CITATION}.
+One approach involves using energy-efficient hardware, such as low-power processors, or adopting distributed and federated learning techniques to distribute computational loads across multiple devices~\cite{savazzi2021opportunities}.
 %
 Another approach focuses on optimizing algorithms and data structures to reduce the computational requirements of agents.
 %
 The integration of sub-symbolic predictors, which typically require fewer computational resources than symbolic \gls{AI} methods, can also significantly reduce energy consumption.
 %
-Additionally, techniques such as compression and optimization of sub-symbolic predictors can further enhance energy efficiency~\cite{CITATION}.
+Additionally, techniques such as compression and optimization of sub-symbolic predictors can further enhance energy efficiency.
 
 %
 \gls{SKI} methods offer a promising opportunity to improve energy efficiency in \glspl{MAS}.
@@ -548,9 +548,9 @@ These trade-offs must be carefully evaluated to optimize the overall efficiency 
 %
 Latency refers to the time required to generate a single prediction using a sub-symbolic predictor.
 %
-Low latency is crucial in real-world applications where timely responses are essential, such as in intelligent transportation~\cite{CITATION} and e-health~\cite{CITATION}.
+Low latency is crucial in real-world applications where timely responses are essential, such as in intelligent transportation~\cite{grigorescu_survey_2020} and e-health~\cite{esteva_deep_2021}.
 %
-In \glspl{MAS}, latency plays a significant role as collaboration between agents requires minimal computational delays~\cite{CITATION}.
+In \glspl{MAS}, latency plays a significant role as collaboration between agents requires minimal computational delays~\cite{hou_consensus_2017}.
 %
 Additionally, tasks involving large datasets or complex algorithms, such as decision-making, can further increase latency, making it a critical efficiency measure.
 
@@ -595,7 +595,7 @@ The latency gain depends on several factors:
 %
 It is important to note that latency is not always directly proportional to the number of operations in the predictor.
 %
-Sparse or inefficient operations at the hardware level, as well as variations in input data complexity, can significantly affect latency~\cite{CITATION}.
+Sparse or inefficient operations at the hardware level, as well as variations in input data complexity, can significantly affect latency~\cite{shumailov_sponge_2021}.
 %
 Thus, evaluating latency gain provides valuable insights into the computational efficiency of \gls{SKI} methods.
 
@@ -613,10 +613,10 @@ However, they require large amounts of data for training, resulting in increased
 %
 Moreover, the quality of the data, particularly its representativeness of the task, is crucial for effective learning.
 %
-These requirements make data collection time-consuming and potentially prone to subjectivity or uncertainty, as seen in applications like emotion recognition~\cite{CITATION}.
+These requirements make data collection time-consuming and potentially prone to subjectivity or uncertainty, as seen in applications like emotion recognition~\cite{deng_survey_2021}.
 
 %
-Recent research has focused on developing data-frugal predictors~\cite{CITATION}.
+Recent research has focused on developing data-frugal predictors~\cite{sanchez_tinyml_2020}.
 %
 Among these, \gls{SKI} mechanisms play a significant role by leveraging \emph{a priori} knowledge to reduce the computational burden of learning.
 %
