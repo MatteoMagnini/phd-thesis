@@ -656,6 +656,220 @@ For instance, the input knowledge \(K\) can compensate for the reduced dataset s
 Predictors that are more data-hungry tend to exhibit higher data-efficiency gains.
 
 
+\subsection{Validation}\label{subsec:ski-meets-intelligent-agents-validation}
+%
+The \gls{QoS} metrics are implemented as a set of classes that extend the \texttt{Metric} abstract class.
+%
+Each class corresponds to a specific metric and is responsible for computing its respective score.
+%
+The \texttt{Metric} class provides a unified interface for all metrics, ensuring consistency and ease of use.
+%
+Two main methods are available for computing metric values:
+%
+\begin{inlinelist}
+    \item \texttt{compute\_during\_training}, which evaluates the metric during the training phase, and
+    %
+    \item \texttt{compute\_during\_inference}, which evaluates the metric after the predictors are trained.
+\end{inlinelist}
+%
+Both methods accept predictors as input parameters and allow additional customization, such as specifying the training set or batch size.
+
+%
+The implemented metrics include:
+%
+\begin{enumerate}
+    \item \textbf{Memory}: evaluates memory consumption efficiency, as defined in Equation~\eqref{eq:memory-footprint-improvement-score}.
+    %
+    \item \textbf{Energy}: measures energy consumption efficiency, as defined in Equation~\eqref{eq:training-energy}.
+    %
+    \item \textbf{Latency}: assesses latency efficiency, as defined in Equation~\eqref{eq:latency-gain}.
+    %
+    \item \textbf{Data Efficiency}: evaluates data efficiency, as defined in Equation~\eqref{eq:data-efficiency-gain}.
+\end{enumerate}
+%
+These metrics are included in the \texttt{psyki.qos} package.
+%
+Notably, the metrics can be computed for any pair of predictors, whether they are educated or uneducated, enabling flexible comparisons.
+
+%
+To validate the proposed \gls{QoS} metrics, we conducted several experiments.
+%
+The experimental design is as follows:
+%
+\begin{enumerate}
+    \item We selected three classification tasks from the literature, each associated with datasets of increasing cardinality.
+    %
+    \item For each task, we trained an uneducated neural predictor \(N\) on the dataset \(D\), using a train/test split.
+    %
+    Additionally, we selected a symbolic knowledge base \(K\) to inject into \(N\).
+    %
+    \item We applied \gls{SKI} using multiple injection techniques supported by \gls{PSyKI}, namely \gls{KBANN}, \gls{KINS}, and \gls{KILL}, resulting in educated predictors \(\hat{N}\).
+    %
+    \item Finally, we computed the \gls{QoS} metrics for each educated predictor \(\hat{N}\) and compared them with the uneducated predictor \(N\) in terms of data efficiency, energy consumption, memory footprint, latency, and accuracy variation.
+\end{enumerate}
+%
+The goal of these experiments is to demonstrate the effectiveness of the \gls{QoS} metrics in evaluating the efficiency of different \gls{SKI} techniques.
+
+%
+It is important to note that these experiments are not intended as a comprehensive evaluation of \gls{SKI} techniques.
+%
+Instead, they aim to validate the proposed \gls{QoS} metrics by highlighting their ability to reveal variations in efficiency metrics introduced by \gls{SKI}.
+%
+Negative values in the results may reflect limitations in the injection algorithms or their implementation in \gls{PSyKI}.
+%
+The primary objective of \gls{PSyKI} is to provide correct, albeit not fully optimized, \gls{SKI} techniques.
+
+
+\paragraph{Datasets}
+%
+We selected three datasets from the UCI\footnote{\url{https://archive.ics.uci.edu/}} repository: \gls{BCW}, \gls{PSJGS}, and \gls{CI}.
+%
+These datasets were chosen due to their varying cardinalities, ranging from \(10^2\) to \(10^4\), allowing us to evaluate the scalability and robustness of our predictors and metrics.
+
+%
+The \textbf{\gls{BCW}} dataset~\cite{breast_cancer_wisconsin_original_15} contains 699 instances of breast cancer biopsy results.
+%
+Each instance includes 9 features summarizing biological characteristics and one class label.
+%
+Feature values are integers in the range \([1, 10]\), and the \texttt{BareNuclei} feature has 16 missing values, which we replaced with 0.
+%
+The target variable is binary, indicating whether a biopsy is benign or malignant, with class distributions of 458 and 241, respectively.
+%
+The dataset is used to develop predictors for accurate breast cancer diagnosis based on biopsy features.
+
+%
+The \textbf{\gls{PSJGS}} dataset~\cite{splice-junction_gene_sequences_69} consists of 3,190 instances, each representing a sequence of 60 DNA nucleotides.
+%
+This dataset has been already introduced in this work in \Cref{subsec:kins-validation}.
+
+%
+The \textbf{\gls{CI}} dataset~\cite{census_income_20} contains 48,842 instances, each representing an individual from the 1994 United States Census.
+%
+Features include demographic and occupational information, and the target variable is binary, indicating whether an individual's annual income exceeds \(\$50,000\).
+%
+Class distributions are 37,155 for incomes less or equal to \(\$50,000\) and 11,687 for incomes greater than \(\$50,000\).
+%
+We converted the target variable to binary and removed irrelevant or biased features, such as \texttt{Fnlwgt} (similarity metric computed over the other features), \texttt{Education} (duplicated because of \texttt{EducationNumeric}), and \texttt{Race} (bias).
+%
+Remaining features were discretised, with \texttt{CapitalGain} and \texttt{CapitalLoss} binarised, and nominal categorical features one-hot encoded.
+
+%
+For all datasets, we divided the data into training and testing sets with a 2:3 ratio.
+%
+The knowledge bases for injection were obtained in a task-specific manner.
+%
+For the \gls{PSJGS} dataset, we used a knowledge base described in~\cite{DBLP:conf/aaai/TowellSN90}, converted into Prolog form.
+%
+For the \gls{BCW} and \gls{CI} datasets, we generated knowledge bases using a \gls{SKE} method~\cite{psyke-ia16}\footnote{more details about the knowledge extraction process is explained in the appendix of the original paper~\cite{DBLP:journals/aamas/AgiolloRMCO23}}.
+
+
+
+\paragraph{Methodology}
+%
+For each dataset, we define and train several \glspl{NN}, including one uneducated network and multiple educated counterparts.
+%
+The educated networks are obtained by applying \gls{SKI} using the \gls{KINS}, \gls{KILL}, and \gls{KBANN} algorithms, each employing a distinct approach to knowledge injection.
+%
+This setup allows us to compare and evaluate the performance and efficiency metrics of the predictors.
+
+%
+For the uneducated predictors, we tune the structural hyperparameters, such as the number of layers and neurons per layer, using grid search with cross-validation.
+%
+The same process is applied to the educated predictors, except for those generated by \gls{KBANN}, where the architecture is determined by the input knowledge.
+%
+Specifically, we vary the number of layers (1 to 3) and the number of neurons per layer (10, 50, and 100) to ensure optimal hyperparameter selection while maintaining reasonable computation time.
+
+%
+To ensure statistical significance, we repeat the training process 30 times for each predictor, using different initial conditions and random seeds.
+%
+This approach reduces variability and provides a more accurate estimate of the predictors' average accuracy.
+%
+After computing the average accuracy, we evaluate the efficiency metrics for each predictor, including data-efficiency, energy consumption, memory footprint, and latency.
+%
+The results of this procedure are presented in ??.
+%
+\note{TODO: add table}
+
+
+\subsection{Results and Discussion}\label{subsec:ski-meets-intelligent-agents-results-and-discussion}
+%
+Each column of ?? is examined to provide insights into the performance of the predictors.
+%
+The \emph{data-efficiency} scores vary significantly across predictors and datasets.
+%
+A positive score indicates that the educated predictor is more efficient than its uneducated counterpart, while a negative score suggests the opposite.
+%
+This variation highlights the importance of selecting the most suitable predictor for a given task.
+%
+For instance, the \gls{KINS}-based solution shows lower data-efficiency scores on the \gls{BCW} dataset compared to other predictors, suggesting it may not be the best choice for this task.
+%
+Conversely, all three predictors exhibit positive data-efficiency scores on the \gls{CI} dataset, indicating improvements across all \gls{SKI} algorithms.
+
+
+The \emph{energy consumption} metrics, shown in the second column, are mostly negative for both training and testing phases.
+%
+This indicates that educated predictors often consume more energy than uneducated ones.
+%
+For example, the \gls{KBANN}-based solution generally requires more energy, while the \gls{KILL}-based solution is more energy-efficient.
+%
+The complexity of the input knowledge can significantly impact energy consumption, particularly during training.
+%
+Complex knowledge may improve data efficiency but at the cost of higher energy requirements.
+
+%
+The \emph{memory footprint} results, presented in the third column, reveal mixed outcomes.
+%
+A positive value indicates reduced memory usage by the educated predictor, while a negative value suggests increased memory consumption.
+%
+For instance, the \gls{KBANN}-based solution reduces memory usage on the \gls{BCW} dataset but increases it on the \gls{PSJGS} dataset.
+%
+The \gls{KILL}-based solution often shows no difference in memory usage, with a metric value of zero.
+
+%
+The \emph{latency} results, shown in the fourth column, compare the time required for inference between educated and uneducated predictors.
+%
+The \gls{KILL}-based solution exhibits similar latency to its uneducated counterpart, with metrics close to zero.
+%
+However, the \gls{KBANN} and \gls{KINS}-based solutions show slightly higher latency across all datasets.
+%
+This increase is likely due to the complexity of the injected knowledge.
+
+%
+Finally, the \emph{accuracy} scores, presented in the last column, indicate that both educated and uneducated predictors perform similarly across all datasets.
+%
+This suggests that the predictors are capable of achieving consistent and accurate results regardless of the injection mechanism.
+
+%
+In summary, educated predictors generally require fewer data to achieve similar accuracy, making them advantageous in resource-constrained settings.
+%
+However, they may incur higher energy and latency costs, depending on the complexity of the injected knowledge.
+%
+The memory usage varies, with some predictors showing improvements and others not.
+%
+These findings emphasize the importance of using specific metrics beyond accuracy to evaluate \gls{SKI} methods.
+
+%
+In this work, we propose a set of \gls{QoS} metrics to evaluate \gls{SKI} mechanisms, focusing on efficiency gains.
+%
+The metrics include \emph{memory footprint efficiency}, \emph{energy efficiency}, \emph{latency efficiency}, and \emph{data efficiency}.
+%
+To support their practical application, we extend the \gls{PSyKI} library with a general-purpose implementation of these metrics.
+
+%
+Our experiments demonstrate that these metrics provide valuable insights into the efficiency of \gls{SKI} mechanisms.
+%
+For instance, they reveal whether a given mechanism improves a predictor's efficiency according to specific criteria.
+%
+Additionally, the results highlight areas for improvement in the current \gls{PSyKI} injection mechanisms.
+
+%
+In the context of \glspl{MAS}, these metrics address challenges such as energy consumption, latency, memory, and data efficiency.
+%
+By reducing computational requirements and improving data quality, \gls{SKI} approaches can enhance the performance and efficiency of intelligent systems.
+%
+Measuring efficiency gains enables the automation of decision-making processes, allowing agents to dynamically optimize their sub-symbolic components to achieve their goals.
+
+
 \section[Empirical study on the robustness of SKI methods]{Empirical study on the robustness of \Gls{SKI} methods}\label{sec:empirical-study-on-the-robustness-of-ski-methods}
 %
 \note{TODO: present the paper An Empirical Study on the Robustness of Symbolic Knowledge Injection Techniques Against Data Degradation~\cite{DBLP:conf/woa/RafanelliMACO24}}
