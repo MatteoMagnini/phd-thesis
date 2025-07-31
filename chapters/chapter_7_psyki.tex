@@ -727,7 +727,7 @@ We selected three datasets from the UCI\footnote{\url{https://archive.ics.uci.ed
 These datasets were chosen due to their varying cardinalities, ranging from \(10^2\) to \(10^4\), allowing us to evaluate the scalability and robustness of our predictors and metrics.
 
 %
-The \textbf{\gls{BCW}} dataset~\cite{breast_cancer_wisconsin_original_15} contains 699 instances of breast cancer biopsy results.
+The \textbf{\glsfull{BCW}} dataset~\cite{breast_cancer_wisconsin_original_15} contains 699 instances of breast cancer biopsy results.
 %
 Each instance includes 9 features summarizing biological characteristics and one class label.
 %
@@ -738,12 +738,12 @@ The target variable is binary, indicating whether a biopsy is benign or malignan
 The dataset is used to develop predictors for accurate breast cancer diagnosis based on biopsy features.
 
 %
-The \textbf{\gls{PSJGS}} dataset~\cite{splice-junction_gene_sequences_69} consists of 3,190 instances, each representing a sequence of 60 DNA nucleotides.
+The \textbf{\glsfull{PSJGS}} dataset~\cite{splice-junction_gene_sequences_69} consists of 3,190 instances, each representing a sequence of 60 DNA nucleotides.
 %
 This dataset has been already introduced in this work in \Cref{subsec:kins-validation}.
 
 %
-The \textbf{\gls{CI}} dataset~\cite{census_income_20} contains 48,842 instances, each representing an individual from the 1994 United States Census.
+The \textbf{\glsfull{CI}} dataset~\cite{census_income_20} contains 48,842 instances, each representing an individual from the 1994 United States Census.
 %
 Features include demographic and occupational information, and the target variable is binary, indicating whether an individual's annual income exceeds \(\$50,000\).
 %
@@ -786,14 +786,14 @@ This approach reduces variability and provides a more accurate estimate of the p
 %
 After computing the average accuracy, we evaluate the efficiency metrics for each predictor, including data-efficiency, energy consumption, memory footprint, and latency.
 %
-The results of this procedure are presented in ??.
-%
-\note{TODO: add table}
+The results of this procedure are presented in \Cref{tab:qos-results}.
 
 
 \subsection{Results and Discussion}\label{subsec:ski-meets-intelligent-agents-results-and-discussion}
 %
-Each column of ?? is examined to provide insights into the performance of the predictors.
+\input{tables/qos-results}
+%
+Each column of \Cref{tab:qos-results} is examined to provide insights into the performance of the predictors.
 %
 The \emph{data-efficiency} scores vary significantly across predictors and datasets.
 %
