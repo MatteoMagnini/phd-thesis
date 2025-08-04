@@ -1,20 +1,25 @@
 % !TeX root = ../phd-thesis.tex
 \begin{table}
     \centering
-    \caption{Robustness relative scores. Bold numbers are the ones greater than 1 (i.e., the educated model is more robust than the uneducated one).}
-    \label{tab:robustness}
      \resizebox{\columnwidth}{!}{
-        \begin{tabular}{l||rrr|rrr|rrr}
-            \toprule
-            \multirow{2}{*}{Dataset} &  \multicolumn{3}{c|}{$R_{N, D}(\mathcal{I})$ drop} &  \multicolumn{3}{c|}{$R_{N, D}(\mathcal{I})$ noise} &  \multicolumn{3}{c}{$R_{N, D}(\mathcal{I})$ flip}\\
-            \cmidrule{2-10}
+         \begin{tabular}{l||rrr|rrr|rrr}
+             \toprule
+             \multirow{2}{*}{Dataset} &  \multicolumn{3}{c|}{$R_{N, D}(\mathcal{I})$ drop} &  \multicolumn{3}{c|}{$R_{N, D}(\mathcal{I})$ noise} &  \multicolumn{3}{c}{$R_{N, D}(\mathcal{I})$ flip}\\
+             \cmidrule{2-10}
              & KINS &  KILL &  KBANN & KINS &  KILL &  KBANN & KINS &  KILL &  KBANN\\
-            \midrule
-            BCW    & \textbf{1.0493} & \textbf{1.0318} & \textbf{1.0382}  & 0.9960 & 0.9985 & \textbf{1.0109} & 0.9994 & \textbf{1.0184} & 0.9520\\
-            PSJGS & \textbf{1.0045} & 0.9968 & 0.8425 & 0.9950 & 0.9984 & \textbf{1.0145} & 0.9962 &  \textbf{1.0026} & \textbf{1.6749} \\
-            CI   &  0.9998 & \textbf{1.0039} & \textbf{1.0043} & 0.9992 & \textbf{1.0012} &  0.9965 & 0.9897 & \textbf{1.1703} & 0.9815 \\
-            \bottomrule
-        \end{tabular}
+             \midrule
+             BCW    & \textbf{1.0493} & \textbf{1.0318} & \textbf{1.0382}  & 0.9960 & 0.9985 & \textbf{1.0109} & 0.9994 & \textbf{1.0184} & 0.9520\\
+             PSJGS & \textbf{1.0045} & 0.9968 & 0.8425 & 0.9950 & 0.9984 & \textbf{1.0145} & 0.9962 &  \textbf{1.0026} & \textbf{1.6749} \\
+             CI   &  0.9998 & \textbf{1.0039} & \textbf{1.0043} & 0.9992 & \textbf{1.0012} &  0.9965 & 0.9897 & \textbf{1.1703} & 0.9815 \\
+             \bottomrule
+         \end{tabular}
      }
+    \caption[Robustness relative scores for drop, noise and label flip perturbations]{
+        %
+        Robustness relative scores $R_{N, D}(\mathcal{I})$ for the three perturbation strategies: drop, noise and label flip.
+        %
+        Bold numbers are the ones greater than 1 (i.e., the educated model is more robust than the uneducated one).
+    }
+    \label{tab:robustness}
 \end{table}
 
