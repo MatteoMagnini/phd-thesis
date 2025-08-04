@@ -872,4 +872,361 @@ Measuring efficiency gains enables the automation of decision-making processes, 
 
 \section[Empirical study on the robustness of SKI methods]{Empirical study on the robustness of \Gls{SKI} methods}\label{sec:empirical-study-on-the-robustness-of-ski-methods}
 %
-\note{TODO: present the paper An Empirical Study on the Robustness of Symbolic Knowledge Injection Techniques Against Data Degradation~\cite{DBLP:conf/woa/RafanelliMACO24}}
+Here we present the work \emph{``An Empirical Study on the Robustness of Knowledge Injection Techniques Against Data Degradation''}~\cite{DBLP:conf/woa/RafanelliMACO24}, presented at the 25th Workshop ``From Objects to Agents'' (WOA 2024)\footnote{\url{https://www.univda.it/woa2024/}}.
+%
+With this work, we extend the \gls{QoS} metrics introduced in \Cref{sec:ski-meets-intelligent-agents} to evaluate the robustness of \gls{SKI} methods.
+
+
+\subsection{Motivations}\label{subsec:empirical-study-on-the-robustness-of-ski-methods-motivations}
+%
+Robustness is a critical challenge for \glspl{NN}~\cite{placeholder}, referring to their ability to maintain performance despite input perturbations.
+%
+In general, a more robust neural network produces more reliable and accurate predictions.
+
+%
+Several techniques have been proposed to enhance the robustness of \glspl{NN}, including regularization~\cite{placeholder}, data augmentation~\cite{placeholder}, and adversarial training~\cite{placeholder}.
+%
+The interest in robustness stems from two main factors:
+%
+\begin{enumerate}
+    \item The need to address limitations of \glspl{NN}, such as their sensitivity to random perturbations~\cite{placeholder}.
+    %
+    \item The growing focus on \emph{trustworthy AI} (\gls{TAI}), which emphasizes transparency, responsibility, ethics, and safety in \gls{AI} systems~\cite{placeholder}.
+\end{enumerate}
+
+%
+\Gls{TAI} has gained significant attention due to the increasing adoption of \gls{AI} and the interest of policymakers, as reflected in guidelines such as those from the European Union~\cite{placeholder}.
+%
+Robustness is a key component of \gls{TAI}, ensuring that \gls{AI} systems function consistently and accurately across diverse scenarios.
+%
+In this context, research on \gls{NN} trustworthiness has advanced significantly, with neuro-symbolic methods emerging as a promising approach.
+
+%
+Neuro-symbolic methods~\cite{placeholder} aim to combine the strengths of \glspl{NN} and symbolic \gls{AI}, addressing their respective weaknesses, such as the opacity of \glspl{NN} and the limited scalability of symbolic systems.
+%
+These methods can enhance \gls{NN} robustness by incorporating symbolic knowledge, which is typically represented as facts and rules in logic form.
+%
+Symbolic knowledge provides a structured and often intensional representation, which is particularly useful in scenarios where training data is noisy or incomplete.
+%
+By leveraging concise yet general logic rules, symbolic knowledge can compensate for missing or low-quality data, improving the performance of \glspl{NN} even under challenging conditions.
+
+%
+This work focuses on \emph{symbolic knowledge injection} (\gls{SKI}) as a neuro-symbolic integration approach.
+%
+\Gls{SKI} involves algorithmic procedures that modify sub-symbolic predictors to ensure their predictions are consistent with given symbolic knowledge.
+%
+The injected knowledge can take various forms, such as logical rules, knowledge graphs, or expert knowledge~\cite{placeholder}.
+%
+Common \gls{SKI} methods include constraining-based and structuring-based approaches, while embedding symbolic knowledge directly into \glspl{NN} is beyond the scope of this study.
+
+%
+Formally, we denote an injection procedure as:
+%
+\begin{equation}
+    \hat{N} = \mathcal{I}(N, K, D),
+\end{equation}
+%
+where \(N\) is the uneducated predictor, \(K\) is the symbolic knowledge, \(D\) is the training dataset, \(\mathcal{I}\) is the injection mechanism, and \(\hat{N}\) is the educated predictor.
+%
+For simplicity, we refer to \(\hat{N}\) as the educated predictor and \(N\) as the uneducated one.
+
+%
+The effectiveness of \gls{SKI} is typically measured by the performance gain of the educated predictor \(\hat{N}\) compared to its uneducated counterpart \(N\), using metrics such as accuracy, F1-score, or mean squared error.
+%
+However, these metrics primarily assess predictive performance and do not capture the robustness of the injection mechanism.
+%
+To address this gap, this work introduces a metric to evaluate the robustness of \gls{SKI} mechanisms relative to their uneducated counterparts.
+
+
+\subsection{Robustness of \gls{SKI} Methods}\label{subsec:empirical-study-on-the-robustness-of-ski-methods-robustness-of-ski-methods}
+%
+In counterfactual analysis~\cite{placeholder}, controlled perturbations of training data are commonly used to evaluate the robustness of predictors.
+%
+Inspired by this approach, we define the \emph{statistical robustness} of a \gls{SKI} procedure.
+%
+An injection mechanism is considered robust if the predictive performance of the educated predictor is minimally affected by small perturbations in the training data.
+%
+This section provides an overview of robustness, detailing the types of perturbations applicable to training data and how their magnitude can be quantified.
+%
+We define a data perturbation as a modification of a training dataset \(D\) by adding, removing, or editing its entries.
+%
+The perturbed dataset is denoted as \(D' = D \circ \Delta D\), where \(\circ\) represents the perturbation operator.
+%
+The magnitude of the perturbation, \(\|\Delta D\|\), is a non-negative scalar quantifying the extent of changes introduced.
+%
+Let \(\mathcal{D} = \{\Delta D_1, \ldots, \Delta D_n\}\) be a set of perturbations applied to \(D\).
+%
+Let \(N\) be a predictor trained on \(D\), and \(N_{\Delta D}\) be the predictor trained on the perturbed dataset \(D \circ \Delta D\), with the same hyperparameters as \(N\).
+%
+The robustness score of \(N\) with respect to \(\mathcal{D}\) is defined as:
+%
+\begin{equation}
+    \label{eq:memory-footprint-improvement-score}
+    \rho_{N, D}(\mathcal{D}) = \frac{1}{n} \sum_{\Delta D \in \mathcal{D}} \|\Delta D\| \cdot \frac{\pi(N_{\Delta D}, D \circ \Delta D)}{\pi(N, D)},
+\end{equation}
+%
+where \(\pi\) is a performance metric, such as accuracy, computed on the respective dataset.
+%
+Robustness is proportional to the magnitude of perturbations and the ratio of the performance of the perturbed predictor to the unperturbed one.
+%
+Although all components in Equation~\eqref{eq:memory-footprint-improvement-score} are positive, not all perturbations improve performance.
+%
+The performance ratio can exceed 1 when the perturbed model performs better, indicating a positive perturbation.
+%
+Conversely, it falls below 1 when the perturbed model performs worse, indicating a negative perturbation.
+%
+A robust predictor exhibits minimal performance degradation under significant perturbations, implying that its robustness increases as the impact of perturbations decreases.
+%
+The robustness of an injection mechanism can be evaluated by applying Equation~\eqref{eq:memory-footprint-improvement-score} to an educated predictor \(\hat{N} = \mathcal{I}(N, K, D)\), where \(\mathcal{I}\) is the injection mechanism and \(K\) is the symbolic knowledge.
+%
+The robustness gain score is defined as:
+%
+\begin{equation}
+    \label{eq:robustness-gain}
+    R_{N, D}(\mathcal{I}) = \frac{\rho_{\hat{N}, D}(\mathcal{D})}{\rho_{N, D}(\mathcal{D})}.
+\end{equation}
+%
+A robustness gain \(R_{N, D}(\mathcal{I}) > 1\) indicates that the injection mechanism improves robustness compared to the uneducated predictor.
+%
+Conversely, \(R_{N, D}(\mathcal{I}) < 1\) suggests that the educated predictor is less robust under data perturbations.
+%
+This metric provides an intuitive measure for analyzing the robustness of \gls{SKI} mechanisms.
+
+
+\subsubsection{Perturbation Strategies}\label{subsubsec:perturbation-strategies}
+%
+This section discusses three primary strategies for perturbing datasets: \emph{sample drop}, \emph{noise addition}, and \emph{label flipping}.
+%
+These strategies simulate common issues that degrade dataset quality, such as missing data, sensor noise, and mislabeling.
+
+%
+\paragraph{Sample Drop}
+%
+The \emph{sample drop} strategy models scenarios where an intelligent agent has limited access to training data.
+%
+This approach is often used to evaluate the effectiveness of neuro-symbolic methods in handling data scarcity~\cite{placeholder}.
+%
+The process involves randomly removing samples from a dataset \(D\) to produce a perturbed dataset \(D'\).
+%
+The removal is controlled by a \emph{dropping probability} \(p \in (0, 1)\), which is shared across all data entries in \(D\).
+%
+Formally, \(p = \mathbb{E}[X_d]\), where \(X_d \sim \mathcal{B}(p)\) is a Bernoulli random variable indicating whether a data entry \(d \in D\) is included (\(X_d = 1\)) or excluded (\(X_d = 0\)) in \(D'\).
+%
+Under these assumptions, the perturbed dataset is defined as:
+%
+\[
+D' = \{d \mid d \in D \text{ and } X_d = 1\}.
+\]
+%
+To construct a set of perturbations \(\mathcal{D} = \{\Delta D_1, \ldots, \Delta D_n\}\), the sample drop process is applied \(n\) times with increasing dropping probabilities \(0 < p_1 < \ldots < p_n < 1\).
+
+%
+\paragraph{Noise Addition}
+%
+The \emph{noise addition} strategy simulates errors in the data acquisition process, such as sensor noise, to evaluate the robustness of neuro-symbolic methods against unreliable data~\cite{placeholder}.
+%
+This involves adding random noise to the entries of \(D\) to produce a perturbed dataset \(D'\).
+%
+The process is controlled by a \emph{noise intensity} \(v \geq 0\), which determines the covariance matrix of the noise.
+%
+Specifically, the noise is modeled as a zero-mean, multivariate normal random variable \(V_d \sim \mathcal{N}(0, v \cdot I)\), where \(I\) is the identity matrix.
+%
+The perturbed dataset is then defined as:
+%
+\[
+D' = \{d + V_d \mid d \in D\}.
+\]
+%
+The number of samples remains unchanged, i.e., \(|D| = |D'|\).
+%
+To construct a set of perturbations \(\mathcal{D} = \{\Delta D_1, \ldots, \Delta D_n\}\), the noise addition process is applied \(n\) times with increasing noise intensities \(0 < v_1 < \ldots < v_n\).
+
+%
+\paragraph{Handling Discrete Features}
+%
+For datasets with ordinal or categorical features, the noise addition process must account for discontinuities.
+%
+In such cases, the normal noise distribution \(\mathcal{N}(0, v \cdot I)\) is replaced with its discrete counterpart~\cite{placeholder}.
+%
+For ordinal features, the noise is more likely to select values close to the original.
+%
+For categorical features, the noise selects values uniformly, similar to the label flipping strategy described below.
+
+%
+\paragraph{Label Flipping}
+%
+The \emph{label flipping} strategy models errors in the labeling process, such as human mislabeling, and is primarily applicable to classification tasks~\cite{placeholder}.
+%
+This involves randomly altering the output labels of data entries in \(D\) to produce a perturbed dataset \(D'\).
+%
+Assume the dataset has a single output feature with \(K\) possible classes.
+%
+For a data entry \(d = (x_{d,1}, \ldots, x_{d,m-1}, y_d) \in D\), where \(x_{d,j}\) are input features and \(y_d \in \{1, \ldots, K\}\) is the output label, the flipping process is controlled by a \emph{flipping probability} \(f \in (0, 1)\).
+%
+The new label \(Y_d\) is defined as:
+%
+\[
+P(Y_d = k) =
+\begin{cases}
+f / (K - 1), & \text{if } k \neq y_d, \\
+1 - f, & \text{if } k = y_d.
+\end{cases}
+\]
+%
+Thus, the perturbed dataset is:
+%
+\[
+D' = \{(x_{d,1}, \ldots, x_{d,m-1}, y'_d) \mid d \in D \text{ and } Y_d = y'_d\}.
+\]
+%
+To construct a set of perturbations \(\mathcal{D} = \{\Delta D_1, \ldots, \Delta D_n\}\), the label flipping process is applied \(n\) times with increasing flipping probabilities \(0 < f_1 < \ldots < f_n < 1\).
+
+%
+\paragraph{Applicability to Regression Problems}
+%
+Label flipping is not directly applicable to regression tasks, as the output features are continuous.
+%
+In such cases, label flipping can be modeled as a specific form of noise addition applied only to the output features.
+%
+However, this extension is beyond the scope of this work.
+
+
+\subsection{Validation}\label{subsec:empirical-study-on-the-robustness-of-ski-methods-validation}
+%
+In this section, we describe the experimental setup and results used to evaluate the proposed robustness metric.
+%
+For reproducibility, the source code of the experiments is publicly available.\footnote{Add link or reference here.}
+%
+We use the same three datasets as in \Cref{subsec:ski-meets-intelligent-agents-validation}:
+%
+These datasets were selected for their varying characteristics, allowing a comprehensive evaluation of the robustness metric.
+
+%
+\paragraph{Injected Knowledge}
+%
+For each dataset, we use symbolic knowledge in Prolog syntax to define classification rules.
+%
+The \gls{PSJGS} dataset uses a knowledge base from the literature~\cite{placeholder}, with an additional rule to classify the \texttt{none} class:
+%
+\[
+\texttt{class}(\bar{X}, \texttt{n}) \leftarrow \neg \texttt{class}(\bar{X}, \texttt{ei}) \land \neg \texttt{class}(\bar{X}, \texttt{ie}),
+\]
+%
+where \(\bar{X}\) represents the sequence of variables corresponding to the DNA sequence.
+%
+For the \gls{BCW} and \gls{CI} datasets, we define custom logic rules due to the lack of predefined knowledge bases.
+
+%
+\paragraph{Injectors}
+%
+We use the \gls{PSyKI} framework to apply three \gls{SKI} algorithms:
+%
+\begin{itemize}
+    \item \textbf{\gls{KINS}}: A structuring-based mechanism that extends a neural network with additional modules to mimic symbolic knowledge~\cite{placeholder}.
+    %
+    \item \textbf{\gls{KILL}}: A guided-learning approach that adds a penalty term to the loss function during training to enforce compliance with symbolic knowledge~\cite{placeholder}.
+    %
+    \item \textbf{\gls{KBANN}}: A structuring-based method that constructs a neural network entirely from propositional rules~\cite{placeholder}.
+\end{itemize}
+
+%
+\paragraph{Experimental Setup}
+%
+For each dataset, we train an uneducated model and apply the three injectors using the corresponding knowledge base.
+%
+The uneducated model consists of two hidden layers, one input layer, and one output layer, with \texttt{ReLU} activation functions and a \texttt{softmax} output layer.
+%
+The number of neurons per hidden layer is dataset-specific: [16, 8] for \gls{BCW}, [32, 16] for \gls{CI}, and [64, 32] for \gls{PSJGS}.
+%
+Training uses the categorical cross-entropy loss function, a batch size of 32, and a maximum of 100 epochs.
+
+%
+\paragraph{Data Perturbation}
+%
+We apply three perturbation strategies: \emph{sample drop}, \emph{noise addition}, and \emph{label flipping}.
+%
+The \emph{drop probability} \(d\) varies from 0.0 to 0.95 in steps of 0.05.
+%
+The \emph{flipping probability} \(f\) varies from 0.0 to 0.90 in steps of 0.08.
+%
+The \emph{noise intensity} \(v\) varies from 0.0 to 1.0 in steps of 0.1.
+%
+Each experiment is repeated 30 times to ensure statistical significance.
+
+%
+\paragraph{Robustness Metric}
+%
+Our analysis focuses exclusively on \gls{SKI} approaches, as no existing metrics directly evaluate training robustness.
+%
+The only related metric~\cite{placeholder} measures generalization capability.
+%
+Thus, we aim to validate the proposed robustness metric by assessing its ability to identify robust \gls{SKI} mechanisms.
+
+
+\subsection{Results and Discussion}\label{subsec:empirical-study-on-the-robustness-of-ski-methods-results-and-discussion}
+%
+\input{figures/robustness-results}
+%
+\note{TODO: generate again the figures because there is an issue with the x ticks labels}
+%
+\input{tables/robustness-results}
+%
+This section presents the results of our experiments, focusing on the robustness of educated and uneducated predictors under different perturbation strategies.
+%
+To compare their performance, we use the Mann-Whitney U Test~\cite{placeholder}, a non-parametric statistical test.
+%
+A p-value \(\geq 0.05\) indicates no significant difference between the average accuracy distributions, while a p-value \(< 0.05\) suggests otherwise.
+%
+\paragraph{Data Drop}
+%
+In the \emph{data drop} experiments (Figure~1a-c), \gls{KBANN} is the only predictor showing significant improvements compared to the uneducated model.
+%
+It performs better on the \gls{BCW} (Figure~1a) and \gls{CI} (Figure~1c) datasets but exhibits a sharp decline on the \gls{PSJGS} dataset (Figure~1b) when 60\% of the data is removed (\(d = 0.6\)).
+%
+\gls{KINS} shows slightly better performance than the uneducated model, with a p-value of 0.01 on the \gls{BCW} dataset, indicating significant differences.
+%
+Overall, educated predictors improve robustness in 6 out of 9 experiments, as shown in Table~1.
+%
+\paragraph{Noise Addition}
+%
+The \emph{noise addition} experiments (Figure~1d-f) reveal that \gls{SKI} mechanisms are more sensitive to noise than to missing data.
+%
+Predictors trained on noisy data show a rapid decline in accuracy, starting early in the perturbation process.
+%
+\gls{KBANN} outperforms other methods and the uneducated model on the \gls{BCW} dataset (Figure~1d) but performs poorly on the \gls{CI} (Figure~1f) and \gls{PSJGS} (Figure~1e) datasets.
+%
+Interestingly, \gls{KINS} performs worse than \gls{KBANN}, likely due to its trainable modules being more prone to overfitting noisy data.
+%
+\gls{KILL} shows similar or worse performance compared to the uneducated model, suggesting that its penalty-based approach does not effectively handle noise perturbations.
+%
+\paragraph{Label Flipping}
+%
+In the \emph{label flipping} experiments (Figure~1g-i), predictors exhibit similar behavior on the \gls{BCW} (Figure~1g) and \gls{CI} (Figure~1i) datasets, with no significant differences (p-values close to 1).
+%
+Performance degrades rapidly when more than 54\% of labels are flipped (\(f = 0.54\)).
+%
+On the \gls{PSJGS} dataset (Figure~1h), \gls{KBANN} retains nearly 70\% accuracy even at the highest flipping probability (\(f = 0.9\)), outperforming other models, which drop to 20\%.
+%
+This highlights \gls{KBANN}'s strong adherence to injected knowledge, which mitigates the impact of flipped labels.
+%
+\gls{KILL} demonstrates good robustness across all datasets, likely due to its loss manipulation strategy, which de-emphasizes corrupted labels during training.
+%
+\paragraph{Discussion and Take-Home Message}
+%
+The experiments show that \gls{SKI} methods are most effective in handling missing data, leveraging integrated knowledge to compensate for data scarcity.
+%
+However, their robustness to noise perturbations is limited, with no significant improvements observed.
+%
+For label flipping, \gls{KILL} performs well due to its penalty-based approach, while \gls{KBANN} excels on the \gls{PSJGS} dataset due to its strong reliance on injected knowledge.
+%
+In summary:
+%
+\begin{enumerate}
+    \item \gls{SKI} methods enhance robustness under data scarcity by utilizing integrated knowledge.
+    %
+    \item Loss-manipulating techniques like \gls{KILL} better tolerate label corruption by reducing the impact of flawed labels.
+    %
+    \item Structuring-based methods like \gls{KBANN} are more robust than trainable approaches like \gls{KINS}, as they preserve the integrity of injected knowledge.
+\end{enumerate}
+%
+These findings emphasize the importance of selecting appropriate \gls{SKI} methods based on the type of perturbation and dataset characteristics.

@@ -1,66 +1,42 @@
+% !TeX root = ../phd-thesis.tex
 \begin{table}
     \centering
     \begin{adjustbox}{width=\linewidth,center}
-        \begin{tabular}{l|c|c|c|c|c|c|c}
+        \begin{tabular}{l|c|c|c|c|c|c}
             \toprule
-            \textbf{Dataset} & \textbf{Model} & \textbf{Set} & \textbf{Data efficiency (KB)} & \textbf{Energy (mWh)} & \textbf{Memory (FLOPs)} & \textbf{Latency (ms)} & \textbf{Accuracy (\%
-            )}\\
+            \textbf{Dataset} & \textbf{Model} & \textbf{Data efficiency (KB)} & \textbf{Energy (mWh)} & \textbf{Memory (FLOPs)} & \textbf{Latency (ms)} & \textbf{Accuracy (\%)}\\
+
             \midrule
-            % The table is devided into 3 macro rows, each devided into 4 macro rows, each devided into 2 rows (train and test):
-            % 1. Breast Cancer
-            % 1.1. uneducated
-            % 1.2. KBANN
-            % 1.3. KILL
-            % 1.4. KINS
-            % 2. Splice Junction
-            % 2.1. uneducated
-            % 2.2. KBANN
-            % 2.3. KILL
-            % 2.4. KINS
-            % 3. Census Income
-            % 3.1. uneducated
-            % 3.2. KBANN
-            % 3.3. KILL
-            % 3.4. KINS
-            \multirow{7}{*}{\textbf{BCW}} & \textbf{uneducated} & & -- & -- & -- & -- & 94.53\\
+            \multirow{4}{*}{\textbf{BCW}} & \textbf{uneducated} & -- & -- & -- & -- & 94.53\\
             \cmidrule{2-8}
-
-            & \multirow{2}{*}{\textbf{KBANN}} & \textbf{train} & \multirow{2}{*}{35.89} & -1.47 & \multirow{2}{*}{3933} & \multirow{2}{*}{-1.70} & \multirow{2}{*}{95.45}\\
-            & & \textbf{test} & & -0.10 & &  & \\
+            & {\textbf{KBANN}} & {35.89} & -1.47 / -0.10 & {3933} & {-1.70} & {95.45}\\
             \cline{2-8}
-
-            & \multirow{2}{*}{\textbf{KILL}} & \textbf{train} & \multirow{2}{*}{4.09} & -0.99 & \multirow{2}{*}{0} & \multirow{2}{*}{0.35} & \multirow{2}{*}{94.63}\\
-            & & \textbf{test} & & 0 & & &\\
+            & {\textbf{KILL}} &  {4.09} & -0.99 / 0 & {0} & {0.35} & {94.63}\\
             \cline{2-8}
-
-            & \multirow{2}{*}{\textbf{KINS}} & \textbf{train} & \multirow{2}{*}{-9.97} & -1.22 & \multirow{2}{*}{-559} & \multirow{2}{*}{-1.41} & \multirow{2}{*}{94.29}\\
-            & & \textbf{test} & & -0.09 & &  & \\
+            & {\textbf{KINS}} &  {-9.97} & -1.22 / -0.09 & {-559} & {-1.41} & {94.29}\\
             \midrule
 
-
-            \multirow{7}{*}{\textbf{PSJGS}} & \textbf{uneducated} & & -- & -- & -- & -- & 93.91\\
+            \multirow{4}{*}{\textbf{PSJGS}} & \textbf{uneducated} & -- & -- & -- & -- & 93.91\\
             \cline{2-8}
-            & \multirow{2}{*}{\textbf{KBANN}} & \textbf{train} & \multirow{2}{*}{-4946.81} & -4.67 & \multirow{2}{*}{-66944} & \multirow{2}{*}{-2.56} & \multirow{2}{*}{92.84}\\
-            & & \textbf{test} & & -0.22 & &  & \\
+            & {\textbf{KBANN}} & {-4946.81} & -4.67 / -0.22 & {-66944} & {-2.56} & {92.84}\\
             \cline{2-8}
-            & \multirow{2}{*}{\textbf{KILL}} & \textbf{train} & \multirow{2}{*}{553.89} & -3 & \multirow{2}{*}{0} & \multirow{2}{*}{0.04} & \multirow{2}{*}{94.02}\\
-            & & \textbf{test} & & 0 & &  & \\
+            & {\textbf{KILL}} &  {553.89} & -3 & {0} & {0.04} & {94.02}\\
+            & & & 0 & & & \\
             \cline{2-8}
-            & \multirow{2}{*}{\textbf{KINS}} & \textbf{train} & \multirow{2}{*}{-954.80} & -6.53 & \multirow{2}{*}{-161779} & \multirow{2}{*}{-4.75} & \multirow{2}{*}{93.70}\\
-            & & \textbf{test} & & -0.51 & & & \\
+            & {\textbf{KINS}} &  {-954.80} & -6.53 & {-161779} & {-4.75} & {93.70}\\
+            & & & -0.51 & & & \\
             \midrule
 
-
-            \multirow{7}{*}{\textbf{CI}} & \textbf{uneducated} & & -- & -- & -- & -- & 84.63\\
+            \multirow{4}{*}{\textbf{CI}} & \textbf{uneducated} & -- & -- & -- & -- & 84.63\\
             \cline{2-8}
-            & \multirow{2}{*}{\textbf{KBANN}} & \textbf{train} & \multirow{2}{*}{1653.79} & -1.41 & \multirow{2}{*}{-2468} & \multirow{2}{*}{-0.43} & \multirow{2}{*}{84.78}\\
-            & & \textbf{test} & & -0.02 & & & \\
+            & {\textbf{KBANN}} & {1653.79} & -1.41 & {-2468} & {-0.43} & {84.78}\\
+            & & & -0.02 & & & \\
             \cline{2-8}
-            & \multirow{2}{*}{\textbf{KILL}} & \textbf{train} & \multirow{2}{*}{4016.90} & -0.70 & \multirow{2}{*}{4200} & \multirow{2}{*}{0} & \multirow{2}{*}{84.81}\\
-            & & \textbf{test} & & 0 & &  & \\
+            & {\textbf{KILL}} & {4016.90} & -0.70 & {4200} & {0} & {84.81}\\
+            & & & 0 & & & \\
             \cline{2-8}
-            & \multirow{2}{*}{\textbf{KINS}} & \textbf{train} & \multirow{2}{*}{4263.50} & -1.41 & \multirow{2}{*}{-6220} & \multirow{2}{*}{-0.44} & \multirow{2}{*}{84.77}\\
-            & & \textbf{test} & & -0.02 & & & \\
+            & {\textbf{KINS}} & {4263.50} & -1.41 & {-6220} & {-0.44} & {84.77}\\
+            & & & -0.02 & & & \\
             \bottomrule
         \end{tabular}
     \end{adjustbox}

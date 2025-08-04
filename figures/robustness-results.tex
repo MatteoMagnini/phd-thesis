@@ -1,0 +1,56 @@
+% !TeX root = ../phd-thesis.tex
+
+\newcommand{\cellsize}{0.3\linewidth}
+
+\begin{figure*}%[!h]
+	\centering
+	\begin{subfigure}{\cellsize}
+		\caption{}
+		\label{fig:bcw-drop}
+		\includegraphics[width=\linewidth]{figures/drop/breast-cancer/uneducated-kins-kill-kbann-accuracy-average-curves}
+	\end{subfigure}\hfil
+	\begin{subfigure}{\cellsize}
+		\caption{}
+		\label{fig:psjgs-drop}
+		\includegraphics[width=\linewidth]{figures/drop/splice-junction/uneducated-kins-kill-kbann-accuracy-average-curves}
+	\end{subfigure}\hfil
+	\begin{subfigure}{\cellsize}
+		\caption{}
+		\label{fig:ci-drop}
+		\includegraphics[width=\linewidth]{figures/drop/census-income/uneducated-kins-kill-kbann-accuracy-average-curves}
+	\end{subfigure}
+
+	\begin{subfigure}{\cellsize}
+		\caption{}
+		\label{fig:bcw-noise}
+		\includegraphics[width=\linewidth]{figures/noise/breast-cancer/uneducated-kins-kill-kbann-accuracy-average-curves}
+	\end{subfigure}\hfil
+	\begin{subfigure}{\cellsize}
+		\caption{}
+		\label{fig:psjgs-noise}
+		\includegraphics[width=\linewidth]{figures/noise/splice-junction/uneducated-kins-kill-kbann-accuracy-average-curves}
+	\end{subfigure}\hfil
+	\begin{subfigure}{\cellsize}
+		\caption{}
+		\label{fig:ci-noise}
+		\includegraphics[width=\linewidth]{figures/noise/census-income/uneducated-kins-kill-kbann-accuracy-average-curves}
+	\end{subfigure}
+
+	\begin{subfigure}{\cellsize}
+		\caption{}
+		\label{fig:bcw-label}
+		\includegraphics[width=\linewidth]{figures/label_flip/breast-cancer/uneducated-kins-kill-kbann-accuracy-average-curves}
+	\end{subfigure}\hfil
+	\begin{subfigure}{\cellsize}
+		\caption{}
+		\label{fig:psjgs-label}
+		\includegraphics[width=\linewidth]{figures/label_flip/splice-junction/uneducated-kins-kill-kbann-accuracy-average-curves}
+	\end{subfigure}\hfil
+	\begin{subfigure}{\cellsize}
+		\caption{}
+		\label{fig:ci-label}
+		\includegraphics[width=\linewidth]{figures/label_flip/census-income/uneducated-kins-kill-kbann-accuracy-average-curves}
+	\end{subfigure}
+	\caption{Average accuracy over different datasets with different perturbation strategies}
+	\label{fig:accuracy-results}
+\end{figure*}
