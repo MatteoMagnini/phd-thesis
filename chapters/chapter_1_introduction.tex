@@ -52,8 +52,6 @@ Conversely to symbolic \gls{AI}, sub-symbolic \gls{AI} does not rely on symbols 
 %
 Programs that uses sub-symbolic \gls{AI} to solve a certain task are said to perform \gls{ML}, because a model needs to first learn from examples before being able to generalize to unseen data.
 %
-\sidenote{consider to add a sentence or two about other different kinds of algorithms based on different learning principles like RL}
-%
 Sub-symbolic models like \glsplural{NN} can reach \emph{super-human performance} in pre-defined tasks like image recognition, natural language processing, etc., but they require a huge amount of data and hardware resources to be trained.
 
 
@@ -80,59 +78,61 @@ Ultimately, the rapid progress in \gls{NeSy} \gls{AI} and the dazzling evolution
 \section{Overview and contributions}
 \label{sec:overview-and-contributions}
 %
-Engineering \gls{AI} systems with characteristics of (super-)human level of intelligence is a challenging task that requires to solve many sub-problems.
+Engineering \gls{AI} systems with characteristics approaching (super-)human intelligence remains an open and multifaceted challenge.
 %
-Human beings are able to perform \emph{deductive} and \emph{inductive reasoning}, \emph{plan}, \emph{adapt} to changes, \emph{collaborate} between each others, \emph{self organise}, \emph{learn new concepts} and much more.
+Humans exhibit a wide range of cognitive capabilities: they can perform \emph{deductive} and \emph{inductive reasoning}, \emph{plan}, \emph{adapt} to changing conditions, \emph{collaborate} with others, \emph{self-organize}, and \emph{acquire new knowledge} autonomously.
 %
-Each of these skills contributes to defining the overall intelligence of a human being.
+Each of these skills contributes to what we broadly refer to as intelligence.
 %
-So, it follows that some of these skills -- if not all -- should be present in an \gls{AI} system in order to be considered intelligent at a human-like level.
-%
-In particular, the activity of (autonomously) \emph{learning} is crucial in order to reach what in research is called \gls{AGI}.
+Hence, a truly intelligent \gls{AI} system -- particularly one aiming toward \gls{AGI} -- must exhibit at least a subset of these abilities, with the capacity to learn autonomously being among the most fundamental.
 
 
-The journey to \gls{AGI} -- i.e., the development of an \gls{AI} system that is able to perform (possibly) any task -- is still far to be completed.
+To advance toward this long-term goal, we adopt a strategy based on the progressive decomposition of the overarching challenge into concrete, tractable sub-problems.
 %
-The roadmap that we propose follows a bottom-up approach.
+These include acquiring and applying domain knowledge, reasoning under uncertainty, adapting to new tasks, and ensuring interpretability and trustworthiness, among others.
 %
-\sidenote{ponder to add an image of the roadmap. In that case all the items in the nodes should be introduced also in the section}
-%
-First, \gls{AGI} is decomposed into a dependency graph of sub-problems and the elementary building blocks are identified (a.k.a., nodes with no dependencies).
-%
-Then, starting from those nodes, an \gls{SLR} is performed to identify the state of the art and common practices in solving those problems.
-%
-At the same time, the design and implementation of technological solutions are carried out.
-%
-Incrementally, once a sub-problem has been sufficiently explored, the next one is tackled.
+Rather than attempting to solve \gls{AGI} in a monolithic way, we aim to address specific foundational problems that are critical building blocks for more general intelligence.
 
 
-\Gls{ML} models, such as \glsplural{NN}, are able to learn from data and generalize to unseen data.
+A key insight guiding this thesis is that many aspects of intelligent behavior rely on the interplay between two complementary paradigms: symbolic and sub-symbolic \gls{AI}.
 %
-So, in other words, they are able to perform \emph{inductive reasoning}.
+Sub-symbolic models -- such as those developed through \gls{ML}, including \glsplural{NN} -- excel at learning from raw data and generalizing inductively.
 %
-On the other hand, symbolic \gls{AI} draws on logic rules to perform \emph{deductive reasoning}.
+Symbolic approaches, in contrast, are grounded in explicit, human-readable structures such as logic rules or ontologies, and support deductive reasoning.
 %
-Humans are able to perform both kinds of reasoning, switching and possibly combining between them.
-%
-To let symbolic and sub-symbolic \gls{AI} systems ``talk'' to each other -- and therefore work together -- it is possible to use \emph{symbolic knowledge}.
-%
-Symbolic knowledge is a general term to refer to any kind of knowledge provided in a \emph{symbolic} form, e.g., logic rules, ontologies, free text, etc.
+Humans seamlessly integrate both: they learn from examples and experience, but also reason with abstract, structured knowledge.
 
 
-\Gls{SKI} is the process of \emph{injecting} prior symbolic knowledge into sub-symbolic models.
+Bridging these two paradigms is the central objective of \gls{NeSy} \gls{AI}.
 %
-In this way, the sub-symbolic model is able to leverage the prior domain expertise to improve its performance.
+In this context, two processes are particularly crucial: \gls{SKI} and \gls{SKE}.
 %
-Conversely, \gls{SKE} is the dual process of \emph{extracting} symbolic knowledge from sub-symbolic models.
+\Gls{SKI} refers to the \emph{injection} of symbolic knowledge into sub-symbolic models, enabling them to benefit from prior domain expertise, improve generalization, enforce constraints, and operate more reliably under limited data regimes.
 %
-By doing so, the knowledge learned by the model from the data is made available to both humans and other symbolic systems.
+Conversely, \gls{SKE} is the process of \emph{extracting} symbolic knowledge from trained sub-symbolic models, thus making their learned internal representations accessible, inspectable, and reusable in downstream reasoning tasks.
 %
-\Gls{SKI} and \gls{SKE} are the pillars upon which advanced \gls{NeSy} \gls{AI} systems can be built.
+Together, \gls{SKI} and \gls{SKE} form the foundational pillars of advanced \gls{NeSy} systems, enabling a virtuous cycle in which knowledge can flow in both directions -- into and out of learning systems -- fostering transparency, adaptability, and autonomy.
+
+
+This thesis investigates both theoretical and practical aspects of \gls{SKI} and \gls{SKE}, proposing new methodologies, tools, and experimental frameworks to extend their applicability.
+%
+By exploring how these techniques can be embedded in real-world \gls{AI} systems, including in high-stakes domains such as healthcare, we aim to contribute toward the broader objective of constructing intelligent systems that learn and reason in a human-like, autonomous, and interpretable manner.
+
 
 
 \subsection*{Research questions}
 %
 \begin{questions}
+    \item \emph{Are \gls{SKI} and \gls{SKE} relevant in the context of modern \gls{AI}?}
+
+    The increasing complexity and opacity of sub-symbolic models raise urgent needs for systems that are not only accurate, but also interpretable, robust, and adaptable.
+    %
+    \Gls{SKI} and \gls{SKE} address these needs by enabling, respectively, the integration of prior knowledge into learning systems and the extraction of insights from them.
+    %
+    This research investigates the relevance and impact of these techniques in real-world scenarios, and evaluates how they contribute to broader \gls{AI} goals such as trustworthiness, efficiency, and autonomy.
+    %
+    \label{itm:rq0}
+
     \item \emph{What are the characteristics of \gls{SKI} and \gls{SKE} techniques?}
 
     There are different ways to perform \gls{SKI} and \gls{SKE}, depending on multiple dimensions.
@@ -151,21 +151,21 @@ By doing so, the knowledge learned by the model from the data is made available 
     %
     For instance,
     %
-    how much robust is the model with injected knowledge to data degradation,
+    how robust is the model with injected knowledge to data degradation,
     %
-    how much the extracted knowledge is aligned with the actual behavior of the model,
+    how well the extracted knowledge aligns with the actual behavior of the model,
     %
-    is it possible to reduce the size of the model by injecting knowledge without losing performance, and so on.
+    whether it is possible to reduce the size of the model by injecting knowledge without losing performance, and so on.
     %
     \label{itm:rq2}
 
     \item \emph{When and where should \gls{SKI} and \gls{SKE} be used?}
 
-    Traditionally, \gls{SKE} is born in the context of \gls{XAI}, where the objective is to provide a human-understandable explanation of the model's behavior.
+    Traditionally, \gls{SKE} originates from the context of \gls{XAI}, where the objective is to provide a human-understandable explanation of the model's behavior.
     %
-    \Gls{SKI}, on the other hand, is born to improve the performance of the model.
+    \Gls{SKI}, on the other hand, was introduced primarily to improve model performance.
     %
-    However, for both of them there are many other possible applications.
+    However, both techniques have many other possible applications that deserve systematic investigation.
     %
     \label{itm:rq3}
 
@@ -177,6 +177,7 @@ By doing so, the knowledge learned by the model from the data is made available 
     %
     \label{itm:rq4}
 \end{questions}
+
 
 
 \subsection*{Contributions}
@@ -196,7 +197,7 @@ In this thesis, we present the following contributions:
 
     \begin{enumerate}[label=\emph{(\arabic*)},resume]
         %
-        \item we systematically collect and organise into a taxonomy \gls{SKI} and \gls{SKE} methods and technologies (\Cref{itm:rq1});
+        \item we systematically collect and organise into a taxonomy \gls{SKI} and \gls{SKE} methods and technologies (\Cref{itm:rq0,itm:rq1});
         %
         \item we design, implement and validate new \gls{SKI} and \gls{SKE} methods (\Cref{itm:rq1,itm:rq3});
         %
@@ -210,7 +211,7 @@ In this thesis, we present the following contributions:
         %
         \item we design and develop software libraries to support the development and integration of \gls{SKI} and \gls{SKE} methods in \gls{AI} systems (\Cref{itm:rq4});
         %
-        \item we design and develop \gls{NeSy} \gls{AI} systems that leverage \gls{SKI} and \gls{SKE} techniques in real-world scenarios (\Cref{itm:rq3,itm:rq4});
+        \item we design and develop \gls{NeSy} \gls{AI} systems that leverage \gls{SKI} and \gls{SKE} techniques in real-world scenarios (\Cref{itm:rq0,itm:rq3,itm:rq4});
         %
     \end{enumerate}
     %
@@ -218,7 +219,7 @@ In this thesis, we present the following contributions:
 
     \begin{enumerate}[label=\emph{(\arabic*)},resume]
         %
-        \item we investigate how \gls{SKI} techniques can be used to mitigate the risk of bias in \gls{AI} systems (\Cref{itm:rq3,itm:rq4});
+        \item we investigate how \gls{SKI} techniques can be used to mitigate the risk of bias in \gls{AI} systems (\Cref{itm:rq0,itm:rq3,itm:rq4});
         %
     \end{enumerate}
     %
