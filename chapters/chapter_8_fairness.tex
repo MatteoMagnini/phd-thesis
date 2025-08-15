@@ -7,8 +7,221 @@
 \minitoc
 %----------------------------------------------------------------------------------------
 
-\section{Motivations}\label{sec:fairness-motivations}
+\Gls{AI} has transformed various aspects of modern society.
+%
+With recent groundbreaking advancements, its applications are expected to grow exponentially.
+%
+However, the issue of fairness has become a significant concern.
+%
+When \gls{AI} systems are deployed without adequate safeguards, they risk perpetuating or amplifying existing social biases.
+%
+For example, a recruitment system trained on historical data dominated by male hires may discriminate against female applicants, reinforcing gender bias~\cite{kochling2020genderbias}.
+%
+To address such challenges, numerous techniques have been developed to mitigate bias in \gls{AI}.
+%
+Among these, regularization-based fairness techniques have gained prominence for balancing fairness and predictive performance.
+%
+Regularization, initially introduced to prevent overfitting, involves adding a penalty term to the loss function during training.
+%
+Recently, it has been extended to promote fairness by incorporating penalties derived from fairness constraints~\cite{kamishima2011fairness}.
+%
+These methods aim to reduce the dependence of predictions on sensitive attributes, such as gender, making them effective for bias mitigation during optimization steps like \gls{SGD} in \gls{ML} algorithms.
+%
 
-\section{Goals and challenges}\label{sec:fairness-goals-and-challenges}
+\section{Background}\label{sec:fairness-background}
+%
+We provide a brief but comprehensive overview of fairness in \gls{ML} to understand our contributions without delving into the extensive literature on the topic.
+%
+The section is organised as follows.
+%
+In \Cref{subsec:fairness-motivations}, we discuss the motivations for fairness in \gls{ML} and how it is related to \gls{SKI}.
+%
+In \Cref{subsec:fairness-goals-and-challenges}, we outline the goals and challenges of fairness in \gls{ML}.
+%
+Finally, in \Cref{subsec:fairness-metrics}, we introduce the fairness metrics used in our works.
 
-\section[SKI methods for fairness]{\Gls{SKI} methods for fairness}\label{sec:ski-for-fairness}
+
+\subsection{Motivations}\label{subsec:fairness-motivations}
+%
+\Gls{ML} models can inherit and amplify biases present in the dataset \(D\).
+%
+For instance, if \(D\) contains features related to gender or race, and the data is not equally distributed across these groups, biases may arise.
+%
+This often occurs in datasets about hiring decisions, where historical data may reflect fewer non-male or non-white candidates.
+%
+A supervised model \(H\), trained on such a dataset to predict a target feature \(Y\), might incorrectly learn that gender or race influences the prediction.
+%
+If the predictions of \(H\) are used for decision-making, such as hiring or loan approvals, the model may discriminate against certain groups.
+%
+In this case, the model is said to be biased, as it replicates patterns of past discrimination.
+
+%
+Fairness interventions can mitigate these biases and are applied at different stages of the \gls{ML} workflow.
+%
+In the literature, these methods are categorized as:
+%
+\begin{itemize}
+    \item \textit{Pre-processing methods}, which modify the dataset \(D\) to reduce bias before training;
+    %
+    \item \textit{In-processing methods}, which adjust the learning algorithm \(A\) to enforce fairness during training;
+    %
+    \item \textit{Post-processing methods}, which modify the predictions of the model \(H\) to achieve fairness after training.
+\end{itemize}
+
+%
+A critical prerequisite for fairness interventions is the ability to measure fairness.
+%
+Fairness metrics quantify the extent of bias in a dataset or model and evaluate the effectiveness of mitigation techniques.
+%
+Formally, a fairness metric is a function that takes data as input and returns a numerical score.
+%
+The input data can be a dataset \(D = (X, Y)\) or the predictions \(h(X)\) of a model on \(D\).
+%
+A lower score typically indicates higher bias, while a higher score reflects greater fairness.
+
+%
+Numerous fairness metrics have been proposed, differing in the type of data they accept and their interpretation of fairness or bias.
+%
+These metrics are often categorized based on the fairness notion they adhere to~\cite{mehrabi2022fairness}.
+%
+The two most common notions are \textit{group fairness} and \textit{individual fairness}.
+
+
+\paragraph{Group fairness}\label{par:group-fairness}
+%
+Group fairness ensures that distinct groups of individuals, defined by sensitive attributes, are treated equally.
+%
+Sensitive attributes, denoted as \( S \subset X \), are features such as \emph{gender}, \emph{race}, \emph{age}, or social status, which partition the dataset \( D \) into protected groups.
+%
+These groups can be defined by a single sensitive attribute, e.g., the group of women identified by a specific value of the \textit{gender} feature, or by a combination of attributes, e.g., the group of Black women identified by both \textit{gender} and \textit{race}.
+%
+The principle of group fairness is commonly evaluated by measuring the correlation between sensitive attributes \( S \) and the target variable \( Y \).
+%
+For instance, if \( Y \) represents loan approval outcomes and \( S \) represents the applicant's race, group fairness metrics assess whether the approval rates are consistent across racial groups~\cite{placeholder}.
+%
+Such metrics are crucial for identifying and addressing biases in decision-making processes.
+
+
+\paragraph{Individual fairness}\label{par:individual-fairness}
+%
+Individual fairness ensures that similar individuals receive similar treatment.
+%
+The simplest approach to individual fairness is \emph{fairness through awareness}.
+%
+This method relies on a distance metric \(\delta : X \times X \to \mathbb{R}\) in the input space (e.g., Euclidean distance).
+%
+It requires that if two individuals \(x_1\) and \(x_2\) are similar up to a threshold \(\epsilon\), i.e., \(\delta(x_1, x_2) < \epsilon\), then their corresponding target values \(y_1\) and \(y_2\) should also be similar.
+%
+In practice, model predictions \(h(x_1)\) and \(h(x_2)\) are compared instead of true labels, and fairness scores are computed by averaging the differences in predictions for similar instances.
+%
+Another approach is \emph{fairness through unawareness}, which requires that sensitive attributes are not used by the model during training or prediction.
+%
+This can be achieved by removing sensitive features from the dataset or ensuring the model does not rely on them.
+%
+Fairness scores in this case measure the extent to which the model depends on sensitive attributes and penalize such reliance.
+%
+A more advanced formulation is \emph{counterfactual fairness}.
+%
+This requires that a model's prediction for an individual \(x\) remains the same, regardless of whether \(x\) belongs to a group \(s\) in the actual dataset or to a counterfactual group \(s' \neq s\).
+%
+Counterfactual fairness ensures that predictions are invariant to changes in sensitive attributes across hypothetical scenarios.
+%
+As individual fairness is not the primary focus of this work, we do not delve into the specific metrics used to evaluate it.
+%
+For a detailed discussion, the reader is referred to~\cite{mehrabi2022fairness}.
+
+
+\paragraph{Fairness and SKI}\label{par:fairness-ski}
+%
+How promoting fairness in \gls{ML} models can be achieved through \gls{SKI} methods?
+%
+It is definitively possible if we keep our attention on \emph{in-processing} methods, which enforce fairness during model training, and on \emph{group fairness} metrics, which measure the extent to which a model is biased against certain groups.
+%
+Indeed, the process of including fairness constraints in the training loss can be seen as a form of regularization, similar to how \gls{SKI} methods incorporate constraints into the optimization process.
+%
+The knowledge that usually \gls{SKI} methods leverage is about the \gls{ML} task at hand (e.g., classification, regression) and the relationships between features and target variables, most commonly in order to improve generalization and interpretability.
+%
+In the context of fairness, this knowledge includes fairness-related constraints -- still consisting in relationships between features and target variables -- that are used to ensure that the model does not discriminate against certain groups based on \emph{sensitive attributes}.
+%
+Instead of using logical operators between expressions involving features and constants (see for example \Cref{subsec:kill-validation}), fairness metrics are directly involved.
+%
+Still, a knowledge of this kind can be expressed with a symbolic formalism, and therefore the whole process can be seen as a form of \gls{SKI} according \Cref{def:ski}.
+
+
+\subsection{Fairness metrics}\label{subsec:fairness-metrics}
+%
+We introduce three of the most popular \emph{group fairness} metrics used in \gls{ML} to evaluate the fairness of models.
+%
+Despite being used in many works, these metrics suffer certain limitations, such as being applicable only to binary classification tasks or requiring specific types of sensitive attributes.
+%
+In particular, all three metrics -- as defined below in their first formulation -- can support only binary or categorical sensitive attributes, i.e., \( A \in \{0, 1\} \) or \( A \in \{a_1, a_2, \ldots, a_n\} \) for some \( n \in \mathbb{N} \).
+%
+This is one of the key limitation that will lead to the development of novel fairness metrics in \Cref{sec:fauci}.
+
+
+\Glsfull{DP} is a fairness metric, also referred to as \emph{statistical parity}, that evaluates whether the predictions of a \gls{ML} model are independent of a given protected attribute.
+%
+This implies that the values of the sensitive feature do not influence the model's output~\cite{placeholder}.
+%
+\Gls{DP} compares the distribution of the model's predictions with the distribution of predictions conditioned on the values of the sensitive attribute.
+%
+For a binary classifier \( h \) and a discrete sensitive attribute \( A \), \gls{DP} is mathematically defined as:
+%
+\begin{equation}
+    \label{eq:dp}
+    \text{DP}_{h,A}(X) = \sum_{a \in A} \left| \mathbb{E}[h(X) \mid A = a] - \mathbb{E}[h(X)] \right|,
+\end{equation}
+%
+where \( X \) represents the test data, \( A \) denotes the sensitive attribute, \( a \) is a specific value of \( A \), \( \mathbb{E} \) is the expectation operator, and \( \left| \cdot \right| \) is the absolute value.
+%
+A model \( h \) satisfies DP if the computed value is below a predefined bias threshold \( \epsilon \), commonly set to \( 0.01 \).
+%
+\Gls{DP} is particularly useful in applications such as loan approvals, where it ensures that approval rates are consistent across demographic groups, thereby mitigating discrimination.
+
+
+\Glsfull{DI} quantifies the disproportionate effect of a classifier on individuals based on a sensitive attribute~\cite{placeholder}.
+%
+For binary classification tasks and binary sensitive attributes, \gls{DI} is initially defined as the ratio:
+%
+\begin{equation}
+\text{di}_{h,A}(X) = \frac{\mathbb{E}[h(X) \mid A = 1]}{\mathbb{E}[h(X) \mid A = 0]}.
+\end{equation}
+%
+To ensure bounded values within \([0, 1]\), DI is commonly standardized using the function \( \eta(x) = \min\{x, x^{-1}\} \), resulting in:
+%
+\begin{equation}
+\text{DI}_{h,A}(X) = \eta(\text{di}_{h,A}(X)).
+\end{equation}
+%
+Values of \gls{DI} above \( 0.8 \) are generally considered acceptable, with lower values indicating higher fairness violations.
+%
+In scenarios requiring positive scores, \( 1 - \text{DI} \) may be reported, such as during the training of neural networks.
+%
+\Gls{DI} is applicable in contexts like loan approvals, where it helps identify disproportionate denial rates affecting specific demographic groups.
+
+
+\Glsfull{EO} measures the extent to which a classifier predicts a given class equally across all values of a sensitive attribute~\cite{placeholder}.
+%
+For binary classification (\( Y \in \{0, 1\} \)) and a categorical sensitive attribute \( A \), \gls{EO} is defined as:
+%
+\begin{equation}
+\text{EO}_{h,A}(X) = \sum_{(a, y) \in A \times Y} \text{eo}_{h,A}(X, a, y),
+\end{equation}
+%
+where \( Y \) represents the ground truth, and \( \text{eo}_{h,A}(X, a, y) \) is given by:
+%
+\begin{equation}
+\text{eo}_{h,A}(X, a, y) = \left| \mathbb{E}[h(X) \mid A = a, Y = y] - \mathbb{E}[h(X) \mid Y = y] \right|.
+\end{equation}
+%
+Similar to \gls{DP}, a classifier is considered fair if its \gls{EO} value is below a predefined bias threshold \( \epsilon \).
+%
+\Gls{EO} is valuable in applications like loan approvals, where it identifies disparities in approval rates that may favor specific demographic groups.
+
+
+
+\section[Fairness under constraints injection]{\glsfull{FaUCI}}\label{sec:fauci}
+
+
+
+
