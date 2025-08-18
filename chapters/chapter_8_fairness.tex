@@ -327,3 +327,186 @@ where \( \text{eo}_{h,A}(X, a, y) \) is defined in \Cref{eq:eo}.
 \end{equation}
 %
 These weighted and generalized metrics provide a more flexible framework for evaluating fairness in diverse datasets~\cite{placeholder}.
+
+
+
+\subsection{Novel SKI fairness method}\label{subsec:novel-fairness-method}
+%
+The proposed method, \gls{FaUCI}, is designed for \gls{ML} models trained using \gls{SGD}, particularly \glspl{NN}.
+%
+It introduces a fairness-specific cost factor into the loss function, which depends on the fairness metric to be minimized.
+%
+The metrics considered include \gls{WDP}, \gls{GDP}, \gls{WDI}, \gls{GDI}, \gls{WEO}, and \gls{GEO}, as defined in \Cref{subsec:novel-fairness-metrics}.
+%
+Unlike other methods, \gls{FaUCI} ensures that the fairness metric is bounded within \([0, 1]\), supports binary, categorical, and continuous sensitive attributes, and can address intersectional fairness.
+
+%
+The loss function is originally formulated as:
+%
+\begin{equation}
+    \label{eq:fauci_loss}
+    \mathcal{L}_{h,A}(X, Y) = E(h(X), Y) + \lambda F_{h,A}(X, Y),
+\end{equation}
+%
+where \(E\) represents the error function, \(F_{h,A}\) is the fairness regularization term, and \(\lambda \in \mathbb{R}_{>0}\) is a hyperparameter controlling the weight of the fairness term.
+%
+The choice of \(E\) depends on the task, such as accuracy or cross-entropy for classification, while \(F\) is selected from the fairness metrics introduced earlier.
+%
+In a later work -- currently under peer review -- \Cref{eq:fauci_loss} has been modified as follows:
+%
+\begin{equation}
+    \label{eq:fauci_loss_new}
+    \mathcal{L}_{h,A}(X, Y) = (1 - \lambda) E(h(X), Y) + \lambda F_{h,A}(X, Y),
+\end{equation}
+%
+with $0 \le \lambda \le 1$.
+%
+In this way the comparison between \gls{FaUCI} and other fairness methods is simplified since the range of the hyperparameter \(\lambda\) is well-defined.
+
+%
+The fairness metric \(F_{h,A}\) is computed on the input data \(X\), which is divided into batches during training.
+%
+The batch size, a hyperparameter of \gls{SGD}, affects the accuracy of fairness estimation.
+%
+Larger batch sizes improve fairness estimation but slow down the training process, creating a trade-off.
+
+%
+\gls{FaUCI} offers several advantages over existing methods.
+%
+First, it supports sensitive attributes of any type and is agnostic to the choice of fairness metric, making it applicable to diverse scenarios.
+%
+Second, it avoids the need for additional hyperparameter tuning, such as those required by \gls{KDE}-based methods~\cite{placeholder}.
+%
+Third, the weighted fairness metrics introduced in \Cref{subsec:novel-fairness-metrics} mitigate biases in unbalanced datasets, ensuring fairness across underrepresented groups.
+%
+Finally, \gls{FaUCI} is extensible to other fairness metrics and can be adapted for intersectional fairness, as discussed in \Cref{subsubsec:intersectional-fairness}.
+
+
+
+\subsubsection{Theoretical Analysis}
+\label{subsubsec:theoretical}
+%
+During the training of a \gls{NN}, the training set is divided into batches.
+%
+For each epoch, all batches are processed once for inference (forward propagation) and gradient descent (backpropagation).
+%
+Between these steps, the loss function is computed to update the model parameters.
+%
+This section outlines algorithms for computing the fairness cost factor for \gls{WDP}, \gls{WDI}, and \gls{WEO} metrics.
+%
+Continuous variants are omitted as their computation follows identical steps.
+%
+For simplicity, the weights are chosen based on the frequencies of the sensitive attribute values, which does not affect the computational complexity.
+
+\begin{algorithm}
+    \caption{Weighted Demographic Parity (returns $wdp$)}
+    \label{alg:wdp}
+    \begin{algorithmic}[1]
+        \REQUIRE $h$ \hfill predictive model
+        \REQUIRE $A$ \hfill sensitive attribute
+        \REQUIRE $batch$ \hfill dataset batch
+        \STATE $wdp \leftarrow 0$
+        \STATE $estimated \leftarrow \mathbb{E}[h(batch)]$
+        \FORALL{$a$ in $A$}
+            \STATE $estimated\_a \leftarrow \mathbb{E}[h(batch) \mid A = a]$
+            \STATE $p\_a \leftarrow \mathbb{P}[A = a]$
+            \STATE $wdp \leftarrow wdp + \left( \| estimated - estimated\_a \| \cdot p\_a \right)$
+        \ENDFOR
+    \end{algorithmic}
+\end{algorithm}
+
+%
+\Cref{alg:wdp} computes the \gls{WDP} metric for a single batch.
+%
+The cost of estimating probabilities in line 2 is \(O(B)\), where \(B\) is the batch size.
+%
+Lines 4 and 5 also have a cost of \(O(B)\), while line 6 has a constant cost.
+%
+These steps are repeated for each value of \(A\), resulting in a total computational cost of \(O(B) + 2O(BN) + O(N) = O(BN)\), where \(N\) is the number of distinct values of \(A\).
+
+\begin{algorithm}
+    \caption{Weighted Disparate Impact (returns $wdi$)}
+    \label{alg:wdi}
+    \begin{algorithmic}[1]
+        \REQUIRE $h$, $A$, $batch$ \hfill as in \Cref{alg:wdp}
+        \STATE $wdi \leftarrow 0$
+        \FORALL{$a$ in $A$}
+            \STATE $est\_a \leftarrow \mathbb{E}[h(batch) \mid A = a]$
+            \STATE $est\_not\_a \leftarrow \mathbb{E}[h(batch) \mid A \neq a]$
+            \STATE $p\_a \leftarrow \mathbb{P}[A = a]$
+            \STATE $wdi \leftarrow wdi + \left( \min\left\{ \frac{est\_a}{est\_not\_a}, \frac{est\_not\_a}{est\_a} \right\} \cdot p\_a \right)$
+        \ENDFOR
+    \end{algorithmic}
+\end{algorithm}
+
+%
+\Cref{alg:wdi} computes the \gls{WDI} metric.
+%
+Lines 3, 4, and 5 have a cost of \(O(B)\), while line 6 has a constant cost.
+%
+These steps are repeated \(N\) times, resulting in a total computational cost of \(3O(BN) + O(N) = O(BN)\).
+
+\begin{algorithm}
+    \caption{Weighted Equalized Odds (returns $weo$)}
+    \label{alg:weo}
+    \begin{algorithmic}[1]
+        \REQUIRE $h$, $A$, $batch$ \hfill as in \Cref{alg:wdp}, \hfill $Y$: ground truth
+        \STATE $weo \leftarrow 0$
+        \STATE $est\_y\_i \leftarrow \mathbb{E}[h(batch) \mid Y = i]$ \hfill \(\forall i \in \{0, 1\}\)
+        \FORALL{$a$ in $A$}
+            \STATE $est\_a\_y\_i \leftarrow \mathbb{E}[h(batch) \mid A = a, Y = i]$ \hfill \(\forall i \in \{0, 1\}\)
+            \STATE $p\_a \leftarrow \mathbb{P}[A = a]$
+            \STATE $weo\_i \leftarrow \| est\_a\_y\_i - est\_y\_i \|$ \hfill \(\forall i \in \{0, 1\}\)
+            \STATE $weo \leftarrow weo + \left( (weo\_0 + weo\_1) \cdot p\_a \right)$
+        \ENDFOR
+    \end{algorithmic}
+\end{algorithm}
+
+%
+\Cref{alg:weo} computes the \gls{WEO} metric for binary classification tasks.
+%
+Lines 2 and 3 have a cost of \(O(B)\), while lines 5-7 inside the loop also cost \(O(B)\).
+%
+Lines 8-10 have a constant cost.
+%
+The total computational cost is \(2O(B) + 3O(BN) + 3O(N) = O(BN)\).
+
+%
+All three algorithms have a computational cost linear in both the batch size (\(B\)) and the number of values of \(A\) (\(N\)).
+%
+For continuous sensitive attributes, the computation involves integrals instead of discrete values.
+%
+The implementation used in experiments relies on histogram-based methods, dividing the range of \(A\) into non-overlapping intervals of equal width.
+%
+In this case, the computational cost depends on the number of intervals rather than the number of distinct values of \(A\).
+
+
+
+\subsubsection{Intersectional fairness extension}\label{subsubsec:intersectional-fairness}
+%
+\Gls{FaUCI} is extended to optimize fairness in intersectional settings, where subgroups formed by the intersections of protected attributes are considered.
+%
+This extension supports fairness metrics involving multiple sensitive attributes through two approaches.
+%
+The first approach creates a dummy protected attribute by combining the original attributes, enabling \gls{FaUCI} to optimize fairness for the intersection of these attributes.
+%
+However, this method may become computationally intractable due to the increased complexity of the fairness metric~\cite{placeholder}.
+%
+To address this, an alternative approach is proposed.
+%
+The second approach combines multiple loss factors, each penalizing fairness violations for a single protected attribute.
+%
+The modified loss function is defined as:
+%
+\begin{equation}
+    \label{eq:intersectional_loss}
+    \mathcal{L}_{h,\bar{A}}(X, Y) = E(h(X), Y) + \lambda_1 F_{h,A_1}(X) + \cdots + \lambda_n F_{h,A_n}(X),
+\end{equation}
+%
+where \(\bar{A}\) represents a set of protected attributes \(\{A_1, \ldots, A_n\}\), \(E\) is the error function, and \(F_{h,A_i}\) is the fairness regularization term for attribute \(A_i\).
+%
+This formulation ensures that the computational cost of the fairness metric remains linear in the number of attributes, rather than exponential.
+%
+It provides a trade-off between computational efficiency and the complexity of the fairness metric.
+%
+Further details and empirical results on \gls{FaUCI} in intersectional fairness contexts will be presented in future work~\cite{placeholder}.
