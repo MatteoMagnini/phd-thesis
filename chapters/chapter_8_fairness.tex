@@ -36,9 +36,9 @@ The section is organised as follows.
 %
 In \Cref{subsec:fairness-motivations}, we discuss the motivations for fairness in \gls{ML} and how it is related to \gls{SKI}.
 %
-In \Cref{subsec:fairness-goals-and-challenges}, we outline the goals and challenges of fairness in \gls{ML}.
+In \Cref{subsec:fairness-metrics}, we introduce common group fairness metrics used in the literature, along with some of their limitations that motivate the development novel metrics.
 %
-Finally, in \Cref{subsec:fairness-metrics}, we introduce the fairness metrics used in our works.
+Finally, in \Cref{sec:fauci}, we present our contributions to fairness in \gls{ML}.
 
 
 \subsection{Motivations}\label{subsec:fairness-motivations}
@@ -156,7 +156,11 @@ Despite being used in many works, these metrics suffer certain limitations, such
 %
 In particular, all three metrics -- as defined below in their first formulation -- can support only binary or categorical sensitive attributes, i.e., \( A \in \{0, 1\} \) or \( A \in \{a_1, a_2, \ldots, a_n\} \) for some \( n \in \mathbb{N} \).
 %
-This is one of the key limitation that will lead to the development of novel fairness metrics in \Cref{sec:fauci}.
+Moreover, the metrics do not take into account the option to weight groups differently.
+%
+This possibility could be useful in scenarios of highly unbalanced groups.
+%
+These limitations are the driver that will lead to the development of novel fairness metrics in \Cref{sec:fauci}.
 
 
 \Glsfull{DP} is a fairness metric, also referred to as \emph{statistical parity}, that evaluates whether the predictions of a \gls{ML} model are independent of a given protected attribute.
@@ -184,13 +188,15 @@ A model \( h \) satisfies DP if the computed value is below a predefined bias th
 For binary classification tasks and binary sensitive attributes, \gls{DI} is initially defined as the ratio:
 %
 \begin{equation}
-\text{di}_{h,A}(X) = \frac{\mathbb{E}[h(X) \mid A = 1]}{\mathbb{E}[h(X) \mid A = 0]}.
+    \label{eq:di_unbounded}
+    \text{di}_{h,A}(X) = \frac{\mathbb{E}[h(X) \mid A = 1]}{\mathbb{E}[h(X) \mid A = 0]}.
 \end{equation}
 %
 To ensure bounded values within \([0, 1]\), DI is commonly standardized using the function \( \eta(x) = \min\{x, x^{-1}\} \), resulting in:
 %
 \begin{equation}
-\text{DI}_{h,A}(X) = \eta(\text{di}_{h,A}(X)).
+    \label{eq:di}
+    \text{DI}_{h,A}(X) = \eta(\text{di}_{h,A}(X)).
 \end{equation}
 %
 Values of \gls{DI} above \( 0.8 \) are generally considered acceptable, with lower values indicating higher fairness violations.
@@ -205,13 +211,15 @@ In scenarios requiring positive scores, \( 1 - \text{DI} \) may be reported, suc
 For binary classification (\( Y \in \{0, 1\} \)) and a categorical sensitive attribute \( A \), \gls{EO} is defined as:
 %
 \begin{equation}
-\text{EO}_{h,A}(X) = \sum_{(a, y) \in A \times Y} \text{eo}_{h,A}(X, a, y),
+    \label{eq:eo}
+    \text{EO}_{h,A}(X) = \sum_{(a, y) \in A \times Y} \text{eo}_{h,A}(X, a, y),
 \end{equation}
 %
 where \( Y \) represents the ground truth, and \( \text{eo}_{h,A}(X, a, y) \) is given by:
 %
 \begin{equation}
-\text{eo}_{h,A}(X, a, y) = \left| \mathbb{E}[h(X) \mid A = a, Y = y] - \mathbb{E}[h(X) \mid Y = y] \right|.
+    \label{eq:eo_partial}
+    \text{eo}_{h,A}(X, a, y) = \left| \mathbb{E}[h(X) \mid A = a, Y = y] - \mathbb{E}[h(X) \mid Y = y] \right|.
 \end{equation}
 %
 Similar to \gls{DP}, a classifier is considered fair if its \gls{EO} value is below a predefined bias threshold \( \epsilon \).
@@ -220,8 +228,102 @@ Similar to \gls{DP}, a classifier is considered fair if its \gls{EO} value is be
 
 
 
-\section[Fairness under constraints injection]{\glsfull{FaUCI}}\label{sec:fauci}
+
+\section[Fairness under constraints injection]{\Glsentrylong{FaUCI}}\label{sec:fauci}
+%
+In this section, we present the contribution of the work ``Enforcing Fairness via Constraint Injection with FaUCI''~\cite{DBLP:conf/aequitas/MagniniCCO24}, presented at the 2nd AEQUITAS workshop on fairness and bias in \gls{AI} 2024.
+%
+The work introduces two distinct contributions: the introduction of novel fairness metrics -- more precisely the extensions of \gls{DP}, \gls{DI}, and \gls{EO} to categorical and continuous sensitive attributes -- and the development of a novel fairness regularization method, called \gls{FaUCI}, which injects fairness constraints into the training loss of a model.
+
+
+\subsection{Novel fairness metrics}\label{subsec:novel-fairness-metrics}
+%
+This section introduces weighted and generalized variants of fairness metrics to support both categorical and continuous sensitive attributes.
+%
+These extensions aim to generalize fairness metrics beyond binary data, enabling their application to real-world datasets.
+%
+For instance, they allow prioritizing fairness for underrepresented groups, such as specific ethnicities, when more than two groups exist~\cite{placeholder}.
+%
+We focus on three metrics: \gls{DP}, \gls{DI}, and \gls{EO}, and propose their weighted and generalized formulations.
+
+
+\paragraph{Weighted and Generalized Demographic Parity}
+%
+\Gls{DP} evaluates whether the predictions of a model are independent of a sensitive attribute.
+%
+For binary classification, the values \( \mathbb{E}[h(X) \mid A = a] \) and \( \mathbb{E}[h(X)] \) from \Cref{eq:dp} are bounded within \([0, 1]\).
+%
+The maximum theoretical value of \gls{DP} depends on the number of possible values of the sensitive attribute \( A \), i.e., \( 0 \leq \text{DP} \leq |A| \).
+%
+This variability makes comparisons across datasets challenging.
+%
+To address this, we propose two variants: \glsfull{WDP} and \glsfull{GDP}.
+
+
+\Gls{WDP} is defined as:
+%
+\begin{equation}
+    \label{eq:wdp}
+    \text{WDP}_{h,A}(X) = \sum_{a \in A} \left| \mathbb{E}[h(X) \mid A = a] - \mathbb{E}[h(X)] \right| \cdot w_a,
+\end{equation}
+%
+where \( w_a \) represents the weight of the \( a \)-th value of \( A \), and \( \sum_{a \in A} w_a = 1 \).
+%
+Weights can be chosen based on the distribution of \( A \) or set equally to avoid bias towards frequent values.
+
+
+\Gls{GDP} extends \gls{DP} to continuous sensitive attributes:
+%
+\begin{equation}
+    \label{eq:gdp}
+    \text{GDP}_{h,A}(X) = \int_{l}^{u} \left| \mathbb{E}[h(X) \mid A = a] - \mathbb{E}[h(X)] \right| \cdot w_a \, da,
+\end{equation}
+%
+where \( l \) and \( u \) are the minimum and maximum values of \( A \), and \( w_a \) is a user-defined weight function satisfying \( \int_{l}^{u} w_a \, da = 1 \).
 
 
 
+\paragraph{Weighted and Generalized Disparate Impact}
+%
+\Gls{DI} quantifies the disproportionate effect of a classifier on groups defined by a sensitive attribute.
+%
+For categorical attributes, we define \glsfull{WDI} as:
+%
+\begin{equation}
+    \label{eq:wdi}
+    \text{WDI}_{h,A}(X) = \sum_{a \in A} \eta \left( \frac{\mathbb{E}[h(X) \mid A = a]}{\mathbb{E}[h(X) \mid A \neq a]} \right) \cdot w_a,
+\end{equation}
+%
+where \( \eta(x) = \min\{x, x^{-1}\} \) ensures bounded values within \([0, 1]\).
 
+
+For continuous attributes, \glsfull{GDI} is defined as:
+%
+\begin{equation}
+    \label{eq:gdi}
+    \text{GDI}_{h,A}(X) = \int_{l}^{u} \eta \left( \frac{\mathbb{E}[h(X) \mid A = a]}{\mathbb{E}[h(X) \mid A \neq a]} \right) \cdot w_a \, da.
+\end{equation}
+
+
+\paragraph{Weighted and Generalized Equalized Odds}
+%
+\Gls{EO} measures whether a classifier predicts equally across sensitive attribute values and ground truth classes.
+%
+To address the lack of bounded values, we define \glsfull{WEO} as:
+%
+\begin{equation}
+    \label{eq:weo}
+    \text{WEO}_{h,A}(X) = \sum_{(a, y) \in A \times Y} \text{eo}_{h,A}(X, a, y) \cdot w_a,
+\end{equation}
+%
+where \( \text{eo}_{h,A}(X, a, y) \) is defined in \Cref{eq:eo}.
+
+
+\Glsfull{GEO} extends \gls{EO} to continuous attributes:
+%
+\begin{equation}
+    \label{eq:geo}
+    \text{GEO}_{h,A}(X) = \int_{l}^{u} \left( \text{eo}_{h,A}(X, a, 0) + \text{eo}_{h,A}(X, a, 1) \right) \cdot w_a \, da.
+\end{equation}
+%
+These weighted and generalized metrics provide a more flexible framework for evaluating fairness in diverse datasets~\cite{placeholder}.
