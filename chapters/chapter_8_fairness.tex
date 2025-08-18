@@ -97,7 +97,7 @@ These groups can be defined by a single sensitive attribute, e.g., the group of 
 %
 The principle of group fairness is commonly evaluated by measuring the correlation between sensitive attributes \( S \) and the target variable \( Y \).
 %
-For instance, if \( Y \) represents loan approval outcomes and \( S \) represents the applicant's race, group fairness metrics assess whether the approval rates are consistent across racial groups~\cite{placeholder}.
+For instance, if \( Y \) represents loan approval outcomes and \( S \) represents the applicant's race, group fairness metrics assess whether the approval rates are consistent across racial groups.
 %
 Such metrics are crucial for identifying and addressing biases in decision-making processes.
 
@@ -165,7 +165,7 @@ These limitations are the driver that will lead to the development of novel fair
 
 \Glsfull{DP} is a fairness metric, also referred to as \emph{statistical parity}, that evaluates whether the predictions of a \gls{ML} model are independent of a given protected attribute.
 %
-This implies that the values of the sensitive feature do not influence the model's output~\cite{placeholder}.
+This implies that the values of the sensitive feature do not influence the model's output~\cite{DBLP:conf/innovations/DworkHPRZ12}.
 %
 \Gls{DP} compares the distribution of the model's predictions with the distribution of predictions conditioned on the values of the sensitive attribute.
 %
@@ -183,7 +183,7 @@ A model \( h \) satisfies DP if the computed value is below a predefined bias th
 \Gls{DP} is particularly useful in applications such as loan approvals, where it ensures that approval rates are consistent across demographic groups, thereby mitigating discrimination.
 
 
-\Glsfull{DI} quantifies the disproportionate effect of a classifier on individuals based on a sensitive attribute~\cite{placeholder}.
+\Glsfull{DI} quantifies the disproportionate effect of a classifier on individuals based on a sensitive attribute~\cite{DBLP:conf/kdd/FeldmanFMSV15}.
 %
 For binary classification tasks and binary sensitive attributes, \gls{DI} is initially defined as the ratio:
 %
@@ -206,7 +206,7 @@ In scenarios requiring positive scores, \( 1 - \text{DI} \) may be reported, suc
 \Gls{DI} is applicable in contexts like loan approvals, where it helps identify disproportionate denial rates affecting specific demographic groups.
 
 
-\Glsfull{EO} measures the extent to which a classifier predicts a given class equally across all values of a sensitive attribute~\cite{placeholder}.
+\Glsfull{EO} measures the extent to which a classifier predicts a given class equally across all values of a sensitive attribute~\cite{DBLP:conf/nips/HardtPNS16}.
 %
 For binary classification (\( Y \in \{0, 1\} \)) and a categorical sensitive attribute \( A \), \gls{EO} is defined as:
 %
@@ -242,7 +242,7 @@ This section introduces weighted and generalized variants of fairness metrics to
 %
 These extensions aim to generalize fairness metrics beyond binary data, enabling their application to real-world datasets.
 %
-For instance, they allow prioritizing fairness for underrepresented groups, such as specific ethnicities, when more than two groups exist~\cite{placeholder}.
+For instance, they allow prioritizing fairness for underrepresented groups, such as specific ethnicities, when more than two groups exist.
 %
 We focus on three metrics: \gls{DP}, \gls{DI}, and \gls{EO}, and propose their weighted and generalized formulations.
 
@@ -280,7 +280,10 @@ Weights can be chosen based on the distribution of \( A \) or set equally to avo
 \end{equation}
 %
 where \( l \) and \( u \) are the minimum and maximum values of \( A \), and \( w_a \) is a user-defined weight function satisfying \( \int_{l}^{u} w_a \, da = 1 \).
-
+%
+The definition of the \gls{GDP} has been already introduced in a recent work~\cite{DBLP:conf/iclr/JiangHFYMH22}.
+%
+It is the only metric among the ones presented in this section that was already existing in the literature.
 
 
 \paragraph{Weighted and Generalized Disparate Impact}
@@ -325,8 +328,6 @@ where \( \text{eo}_{h,A}(X, a, y) \) is defined in \Cref{eq:eo}.
     \label{eq:geo}
     \text{GEO}_{h,A}(X) = \int_{l}^{u} \left( \text{eo}_{h,A}(X, a, 0) + \text{eo}_{h,A}(X, a, 1) \right) \cdot w_a \, da.
 \end{equation}
-%
-These weighted and generalized metrics provide a more flexible framework for evaluating fairness in diverse datasets~\cite{placeholder}.
 
 
 
@@ -375,7 +376,7 @@ Larger batch sizes improve fairness estimation but slow down the training proces
 %
 First, it supports sensitive attributes of any type and is agnostic to the choice of fairness metric, making it applicable to diverse scenarios.
 %
-Second, it avoids the need for additional hyperparameter tuning, such as those required by \gls{KDE}-based methods~\cite{placeholder}.
+Second, it avoids the need for additional hyperparameter tuning, such as those required by \gls{KDE}-based methods~\cite{DBLP:conf/nips/ChoHS20}.
 %
 Third, the weighted fairness metrics introduced in \Cref{subsec:novel-fairness-metrics} mitigate biases in unbalanced datasets, ensuring fairness across underrepresented groups.
 %
@@ -490,7 +491,7 @@ This extension supports fairness metrics involving multiple sensitive attributes
 %
 The first approach creates a dummy protected attribute by combining the original attributes, enabling \gls{FaUCI} to optimize fairness for the intersection of these attributes.
 %
-However, this method may become computationally intractable due to the increased complexity of the fairness metric~\cite{placeholder}.
+However, this method may become computationally intractable due to the increased complexity of the fairness metric.
 %
 To address this, an alternative approach is proposed.
 %
@@ -509,4 +510,3 @@ This formulation ensures that the computational cost of the fairness metric rema
 %
 It provides a trade-off between computational efficiency and the complexity of the fairness metric.
 %
-Further details and empirical results on \gls{FaUCI} in intersectional fairness contexts will be presented in future work~\cite{placeholder}.
