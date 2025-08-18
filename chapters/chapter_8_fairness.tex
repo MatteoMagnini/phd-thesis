@@ -131,23 +131,6 @@ As individual fairness is not the primary focus of this work, we do not delve in
 For a detailed discussion, the reader is referred to~\cite{mehrabi2022fairness}.
 
 
-\paragraph{Fairness and SKI}\label{par:fairness-ski}
-%
-How promoting fairness in \gls{ML} models can be achieved through \gls{SKI} methods?
-%
-It is definitively possible if we keep our attention on \emph{in-processing} methods, which enforce fairness during model training, and on \emph{group fairness} metrics, which measure the extent to which a model is biased against certain groups.
-%
-Indeed, the process of including fairness constraints in the training loss can be seen as a form of regularization, similar to how \gls{SKI} methods incorporate constraints into the optimization process.
-%
-The knowledge that usually \gls{SKI} methods leverage is about the \gls{ML} task at hand (e.g., classification, regression) and the relationships between features and target variables, most commonly in order to improve generalization and interpretability.
-%
-In the context of fairness, this knowledge includes fairness-related constraints -- still consisting in relationships between features and target variables -- that are used to ensure that the model does not discriminate against certain groups based on \emph{sensitive attributes}.
-%
-Instead of using logical operators between expressions involving features and constants (see for example \Cref{subsec:kill-validation}), fairness metrics are directly involved.
-%
-Still, a knowledge of this kind can be expressed with a symbolic formalism, and therefore the whole process can be seen as a form of \gls{SKI} according \Cref{def:ski}.
-
-
 \subsection{Fairness metrics}\label{subsec:fairness-metrics}
 %
 We introduce three of the most popular \emph{group fairness} metrics used in \gls{ML} to evaluate the fairness of models.
@@ -226,6 +209,27 @@ Similar to \gls{DP}, a classifier is considered fair if its \gls{EO} value is be
 %
 \Gls{EO} is valuable in applications like loan approvals, where it identifies disparities in approval rates that may favor specific demographic groups.
 
+
+
+\subsection{Fairness and SKI}\label{subsec:fairness-ski}
+%
+How promoting fairness in \gls{ML} models can be achieved through \gls{SKI} methods?
+%
+It is definitively possible if we keep our attention on \emph{in-processing} methods, which enforce fairness during model training, and on \emph{group fairness} metrics, which measure the extent to which a model is biased against certain groups.
+%
+Indeed, the process of including fairness constraints in the training loss can be seen as a form of regularization, similar to how \gls{SKI} methods incorporate constraints into the optimization process.
+%
+The knowledge that usually \gls{SKI} methods leverage is about the \gls{ML} task at hand (e.g., classification, regression) and the relationships between features and target variables, most commonly in order to improve generalization and interpretability.
+%
+In the context of fairness, this knowledge includes fairness-related constraints -- still consisting in relationships between features and target variables -- that are used to ensure that the model does not discriminate against certain groups based on \emph{sensitive attributes}.
+%
+Instead of using logical operators between expressions involving features and constants (see for example \Cref{subsec:kill-validation}), fairness metrics are directly involved.
+%
+Still, a knowledge of this kind can be expressed with a symbolic formalism, and therefore the whole process can be seen as a form of \gls{SKI} according \Cref{def:ski}.
+
+
+\subsubsection{Related works}
+\note{introduce and add references to the related works}
 
 
 
@@ -510,3 +514,99 @@ This formulation ensures that the computational cost of the fairness metric rema
 %
 It provides a trade-off between computational efficiency and the complexity of the fairness metric.
 %
+
+
+\subsection{Validation}\label{subsec:validation-fauci}
+%
+We validate \gls{FaUCI} using the UCI Adult dataset, a widely-used benchmark for fairness algorithms~\cite{census_income_20}.
+%
+The dataset has been already described in \Cref{subsec:ski-meets-intelligent-agents-validation} under the name \emph{census income}.
+%
+Despite its limitations~\cite{retiring-adult-2021}, the dataset is a standard in the fairness community due to its inherent biases, making it suitable for our experiments.
+
+%
+\paragraph{Experimental setup}
+\label{par:experimental-setup}
+%
+To ensure consistency with prior works~\cite{DBLP:conf/ijcai/ManishaG20,DBLP:conf/aaaiss/WagnerG21}, we employ 5-fold cross-validation for all experiments.
+%
+The original dataset is combined into a single set of 48,842 records, standardized, and split into training (80\%) and test (20\%) sets.
+%
+The training set is further divided into 5 folds for validation.
+%
+We train a feed-forward \gls{NN} with two hidden layers containing 100 and 50 neurons, respectively.
+%
+Training is conducted for up to 5,000 epochs with a batch size of 500.
+%
+Two early stopping conditions are applied: one when both accuracy and fairness metrics reach predefined thresholds, and another when no improvement is observed for 100 epochs.
+%
+The target accuracy is set to \(0.9\), and fairness thresholds are \(0.01\), \(0.99\), and \(0.01\) for \gls{DP}, \gls{DI}, and \gls{EO}, respectively.
+%
+For \gls{DI}, the final metric value is expressed as \(1 - \text{DI}\) to align with the literature.
+%
+The baseline model, referred to as the ``\emph{uneducated}'', is trained without fairness constraints.
+
+%
+Experiments are conducted using \gls{WDP}, \gls{GDP}, \gls{WDI}, \gls{GDI}, \gls{WEO}, and \gls{GEO} metrics across three sensitive attributes: \emph{sex} (binary), \emph{ethnicity} (categorical), and \emph{age} (continuous).
+%
+For \gls{WDP}, \gls{WDI}, and \gls{WEO}, equal weights are assigned to each value of the sensitive attribute, i.e., \(w_a = \frac{1}{N}\), where \(N\) is the number of unique values of \(A\).
+%
+For \gls{GDP}, \gls{GDI}, and \gls{GEO}, weights are based on the density of the continuous attribute to account for its balanced distribution.
+%
+Users can define custom weights, provided they satisfy the properties outlined in \Cref{subsec:novel-fairness-metrics}.
+%
+We successfully reproduced the code for two state-of-the-art methods~\cite{DBLP:conf/nips/ChoHS20,DBLP:conf/iclr/JiangHFYMH22}, but results for other approaches~\cite{DBLP:conf/ijcai/ManishaG20,DBLP:conf/aaaiss/WagnerG21} are reported as provided by the original authors due to replication challenges
+%
+\footnote{
+    for~\cite{DBLP:conf/aaaiss/WagnerG21} we contacted the authors asking explanations about the missing source code that was mentioned in the paper.
+    %
+    We received a reply from the authors stating that the code was not public anymore, and it was never shared with us.
+    %
+    In the case of~\cite{DBLP:conf/ijcai/ManishaG20}, the source code was not even mentioned in the paper, and we were not able to find it online.
+}.
+
+\subsection{Results and Discussion}\label{subsec:results-fauci}
+%
+\input{figures/fauci/figure}
+%
+\note{Update and improve the figures}
+%
+\paragraph{Demographic Parity Results}
+%
+\Cref{fig:dp} illustrates the trade-off between accuracy and \gls{DP} for \gls{FaUCI}, \gls{KDE}, \gls{GDP}, \gls{FNNC}, and \gls{LTN} methods.
+%
+For \emph{sex} as a binary sensitive attribute, \gls{FaUCI} achieves an accuracy of \(85.27\%\) with \(\text{DP} \leq 0.01\), outperforming \gls{KDE} and matching \gls{GDP}'s performance.
+%
+\gls{FNNC} and \gls{LTN} results are represented by single points, with accuracies of \(84\%\) and \(87.7\%\), respectively.
+%
+For \emph{ethnicity}, a categorical sensitive attribute, \gls{FaUCI} outperforms all methods, particularly when \(\text{DP} \leq 0.04\).
+%
+For \emph{age}, a continuous sensitive attribute, \gls{FaUCI} and \gls{GDP} perform similarly, but \gls{FaUCI} generally achieves better results.
+%
+Overall, \gls{FaUCI} demonstrates superior performance across all sensitive attributes.
+
+%
+\paragraph{Disparate Impact Results}
+%
+\Cref{fig:di} shows the trade-off between accuracy and \gls{DI}.
+%
+For \emph{sex}, \gls{FaUCI} achieves \(\text{DI} \geq 0.8\) with an accuracy of \(85.6\%\), surpassing \gls{FNNC} (\(82.2\%\)) and matching \gls{LTN} (\(87.7\%\)).
+%
+For \emph{ethnicity}, \gls{FaUCI} maintains the accuracy of the uneducated model (\(86.8\%\)) while achieving \(\text{DI} \geq 0.8\).
+%
+For \emph{age}, \gls{FaUCI} improves \(\text{DI}\) to \(0.58\) with an accuracy of \(85.5\%\), though it does not reach the desired threshold of \(0.8\).
+%
+These results highlight \gls{FaUCI}'s ability to enhance \gls{DI} while preserving high accuracy.
+
+%
+\paragraph{Equalized Odds Results}
+%
+\Cref{fig:eo} presents the trade-off between accuracy and \gls{EO}.
+%
+For \emph{sex}, \gls{FaUCI} achieves \(\text{EO} \leq 0.02\) with an accuracy of \(\geq 85.9\%\), outperforming \gls{KDE} and \gls{FNNC} (\(83.9\%\)).
+%
+For \emph{ethnicity}, \gls{FaUCI} maintains high accuracy while reducing \gls{EO}, whereas Cho's accuracy drops significantly.
+%
+For \emph{age}, \gls{FaUCI} outperforms \gls{KDE} in both accuracy and \gls{EO}.
+%
+Overall, \gls{FaUCI} demonstrates consistent improvements in \gls{EO} while preserving a favorable accuracy-fairness trade-off.
