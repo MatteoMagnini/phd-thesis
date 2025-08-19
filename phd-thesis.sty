@@ -67,6 +67,12 @@
 \crefname{propertiesi}{}{}
 \Crefname{propertiesi}{}{}
 
+\newlist{prescriptions}{enumerate}{2}
+\setlist[prescriptions,1]{label=\textbf{(p. \arabic*)},ref=p. \arabic*}
+\setlist[prescriptions,2]{label=(\alph*),ref=\thepropertiesi(\alph*)}
+\crefname{prescriptionsi}{}{}
+\Crefname{prescriptionsi}{}{}
+
 \setcounter{secnumdepth}{3}
 
 \fancypagestyle{plain}{
