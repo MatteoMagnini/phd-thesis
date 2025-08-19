@@ -15,7 +15,7 @@ However, the issue of fairness has become a significant concern.
 %
 When \gls{AI} systems are deployed without adequate safeguards, they risk perpetuating or amplifying existing social biases.
 %
-For example, a recruitment system trained on historical data dominated by male hires may discriminate against female applicants, reinforcing gender bias~\cite{kochling2020genderbias}.
+For example, a recruitment system trained on historical data dominated by male hires may discriminate against female applicants, reinforcing gender bias~\cite{kochling2020discriminated}.
 %
 To address such challenges, numerous techniques have been developed to mitigate bias in \gls{AI}.
 %
@@ -23,7 +23,7 @@ Among these, regularization-based fairness techniques have gained prominence for
 %
 Regularization, initially introduced to prevent overfitting, involves adding a penalty term to the loss function during training.
 %
-Recently, it has been extended to promote fairness by incorporating penalties derived from fairness constraints~\cite{kamishima2011fairness}.
+Recently, it has been extended to promote fairness by incorporating penalties derived from fairness constraints~\cite{DBLP:conf/icdm/KamishimaAS11}.
 %
 These methods aim to reduce the dependence of predictions on sensitive attributes, such as gender, making them effective for bias mitigation during optimization steps like \gls{SGD} in \gls{ML} algorithms.
 %
@@ -37,6 +37,8 @@ The section is organised as follows.
 In \Cref{subsec:fairness-motivations}, we discuss the motivations for fairness in \gls{ML} and how it is related to \gls{SKI}.
 %
 In \Cref{subsec:fairness-metrics}, we introduce common group fairness metrics used in the literature, along with some of their limitations that motivate the development novel metrics.
+%
+We conclude the background section with a presentation of related works in \Cref{subsec:fairness-ski}.
 %
 Finally, in \Cref{sec:fauci}, we present our contributions to fairness in \gls{ML}.
 
@@ -82,7 +84,7 @@ A lower score typically indicates higher bias, while a higher score reflects gre
 %
 Numerous fairness metrics have been proposed, differing in the type of data they accept and their interpretation of fairness or bias.
 %
-These metrics are often categorized based on the fairness notion they adhere to~\cite{mehrabi2022fairness}.
+These metrics are often categorized based on the fairness notion they adhere to~\cite{DBLP:journals/csur/MehrabiMSLG21}.
 %
 The two most common notions are \textit{group fairness} and \textit{individual fairness}.
 
@@ -128,7 +130,7 @@ Counterfactual fairness ensures that predictions are invariant to changes in sen
 %
 As individual fairness is not the primary focus of this work, we do not delve into the specific metrics used to evaluate it.
 %
-For a detailed discussion, the reader is referred to~\cite{mehrabi2022fairness}.
+For a detailed discussion, the reader is referred to~\cite{DBLP:journals/csur/MehrabiMSLG21}.
 
 
 \subsection{Fairness metrics}\label{subsec:fairness-metrics}
@@ -228,9 +230,122 @@ Instead of using logical operators between expressions involving features and co
 Still, a knowledge of this kind can be expressed with a symbolic formalism, and therefore the whole process can be seen as a form of \gls{SKI} according \Cref{def:ski}.
 
 
-\subsubsection{Related works}
-\note{introduce and add references to the related works}
+\subsubsection{Related Works}
+%
+This section highlights key contributions in the literature on \emph{in-processing} fairness methods applied to \emph{group fairness} metrics.
+%
+Among these, regularization-based approaches are widely used to mitigate bias in \gls{AI} systems.
+%
+These methods incorporate fairness constraints directly into the training process by modifying the loss function.
+%
+The regularization term penalizes unfair predictions, with variations in its definition leading to differences in effectiveness, efficiency, and scalability.
+%
 
+\paragraph{\Glsfull{KDE}}
+\label{par:kde-fairness}
+%
+\Gls{KDE}~\cite{DBLP:conf/nips/ChoHS20} introduces a non-parametric fairness regularization approach using kernel density estimation.
+%
+The method estimates probabilities such as \( \mathbb{P}[h(X) = y^+ \mid S = s] \) and \( \mathbb{P}[h(X) = y^+ \mid S = s, Y = y] \) as differentiable functions with respect to model parameters.
+%
+This enables direct optimization through gradient-based methods for fairness metrics like \gls{DP} and \gls{EO}.
+%
+Instead of using the final model output \( h(X) \), the method relies on an internal value \( \tilde{Y} \in [0, 1] \), representing the probability of an instance belonging to the positive class.
+%
+The final output \( h(X) \) is assigned to the positive class if \( \tilde{y}_i \geq \tau \), where \( \tau \) is a predefined threshold.
+%
+For \gls{DP}, the probability density function is estimated using a Gaussian kernel:
+%
+\begin{equation}
+    \label{eq:kde-fairness}
+    f_k(\tilde{y}) = \frac{1}{\sqrt{2\pi}} \exp\left(-\frac{\tilde{y}^2}{2}\right).
+\end{equation}
+%
+The probability estimate is obtained by integrating over the region \( \tilde{y} \geq \tau \):
+%
+\begin{equation}
+    \label{eq:kde-fairness-probability}
+    \mathbb{P}[h(X) = y^+ \mid S = s] = \int_{\tau}^{\infty} \frac{1}{|I_s|b} \sum_{i \in I_s} f_k\left(\frac{\tilde{y} - \tilde{y}_i}{b}\right) \, d\tilde{y},
+\end{equation}
+%
+where \( I_s \) is the set of instances with sensitive attribute \( S = s \), \( \tilde{y}_i \) is the internal model value for instance \( i \), and \( b \) is the bandwidth parameter.
+%
+To achieve \gls{DP}, the difference in probabilities across sensitive groups is minimized:
+%
+\begin{equation}
+    \label{eq:kde-fairness-regularizer}
+    R_{\text{KDE}}(h, D_{\text{train}}, b) \approx \sum_{s \in S} H_\delta\left(\mathbb{P}[h(X) = y^+ \mid S = s] - \mathbb{P}[h(X) = y^+]\right),
+\end{equation}
+%
+where \( H_\delta(\cdot) \) is the Huber function, a smooth approximation of the absolute value operator~\cite{10.1214/aoms/1177703732}.
+%
+
+\paragraph{\Glsfull{GDP}}
+\label{par:gdp-fairness}
+%
+\Gls{GDP}~\cite{DBLP:conf/iclr/JiangHFYMH22} extends \gls{DP} to continuous sensitive attributes while ensuring differentiability.
+%
+It measures the deviation between the conditional probability \( \mathbb{P}[h(X) = y^+ \mid S = s] \) and the marginal probability \( \mathbb{P}[h(X) = y^+] \), weighted by the probability density function of \( S \).
+%
+Two estimation methods are proposed: histogram-based and kernel-based.
+%
+The histogram-based method partitions the range of \( S \) into non-overlapping bins \( B = \{B_1, \ldots, B_{|B|}\} \) of equal width \( b \).
+%
+Within each bin \( B_i \), the local and global prediction averages are computed as:
+%
+\begin{equation}
+    \label{eq:gdp-averages}
+    \text{avg}_{\text{local}}(B_i, h) = \sum_{j \in I_{B_i}} \tilde{y}_j, \quad \text{avg}_{\text{global}}(h, D_{\text{train}}) = \frac{1}{|D_{\text{train}}|} \sum_{n=1}^{|D_{\text{train}}|} \tilde{y}_n,
+\end{equation}
+%
+where \( I_{B_i} \) contains the indices of instances in bin \( B_i \).
+%
+The fairness regulariser is defined as:
+%
+\begin{equation}
+    \label{eq:gdp-regulariser}
+    R_{\text{hist-GDP}}(h, D_{\text{train}}, b) = \sum_{i=1}^{b} \left(\text{avg}_{\text{local}}(B_i, h) - \text{avg}_{\text{global}}(h, D_{\text{train}})\right) \cdot \mathbb{P}[S \in B_i].
+\end{equation}
+%
+Kernel-based estimation provides smoother results by assigning soft group memberships using a kernel function \( K(\cdot) \), avoiding discontinuities at bin boundaries.
+%
+
+\paragraph{\Glsfull{FNNC}}
+\label{par:fnnc-fairness}
+%
+\Gls{FNNC}~\cite{DBLP:conf/ijcai/ManishaG20} formulates fairness as a constrained optimization problem.
+%
+The goal is to minimize predictive performance loss subject to a fairness constraint.
+%
+For \gls{DP}, the problem is defined as:
+%
+\begin{equation}
+    \label{eq:fnnc-fairness}
+    h^\ast = \arg\min_{h \in H} L(h, D_{\text{train}}) \quad \text{s.t.} \quad \mathbb{P}[h(X) = y^+ \mid S = s] - \mathbb{P}[h(X) = y^+ \mid S \neq s] \leq \epsilon,
+\end{equation}
+%
+where \( \epsilon \) is a predefined fairness threshold.
+%
+The fairness constraint is integrated into the loss function using the Lagrangian multiplier method:
+%
+\begin{equation}
+    \label{eq:fnnc-fairness-regularizer}
+    R_{\text{FNNC}}(h, D_{\text{train}}) = \mathbb{P}[h(X) = y^+ \mid S = s] - \mathbb{P}[h(X) = y^+ \mid S \neq s] - \epsilon.
+\end{equation}
+%
+Optimization is performed using a two-step \gls{SGD} procedure, alternating between minimizing model parameters and maximizing Lagrangian multipliers.
+%
+
+\paragraph{\Glsfull{NSIF}}
+\label{par:ltn-fairness}
+%
+\Gls{NSIF}~\cite{DBLP:conf/aaaiss/WagnerG21} leverages the \gls{LTN} framework to enforce fairness constraints.
+%
+Fairness constraints are expressed as formal logic rules, which influence the training of \glspl{NN}.
+%
+The method validates its effectiveness using \gls{DP} and \gls{DI} metrics for categorical sensitive attributes.
+%
+Although not regularization-based, \gls{NSIF} provides a unique approach to fairness through symbolic reasoning.
 
 
 \section[Fairness under constraints injection]{\Glsentrylong{FaUCI}}\label{sec:fauci}
@@ -573,11 +688,11 @@ We successfully reproduced the code for two state-of-the-art methods~\cite{DBLP:
 %
 \paragraph{Demographic Parity Results}
 %
-\Cref{fig:dp} illustrates the trade-off between accuracy and \gls{DP} for \gls{FaUCI}, \gls{KDE}, \gls{GDP}, \gls{FNNC}, and \gls{LTN} methods.
+\Cref{fig:dp} illustrates the trade-off between accuracy and \gls{DP} for \gls{FaUCI}, \gls{KDE}, \gls{GDP}, \gls{FNNC}, and \gls{NSIF} methods.
 %
 For \emph{sex} as a binary sensitive attribute, \gls{FaUCI} achieves an accuracy of \(85.27\%\) with \(\text{DP} \leq 0.01\), outperforming \gls{KDE} and matching \gls{GDP}'s performance.
 %
-\gls{FNNC} and \gls{LTN} results are represented by single points, with accuracies of \(84\%\) and \(87.7\%\), respectively.
+\gls{FNNC} and \gls{NSIF} results are represented by single points, with accuracies of \(84\%\) and \(87.7\%\), respectively.
 %
 For \emph{ethnicity}, a categorical sensitive attribute, \gls{FaUCI} outperforms all methods, particularly when \(\text{DP} \leq 0.04\).
 %
@@ -590,7 +705,7 @@ Overall, \gls{FaUCI} demonstrates superior performance across all sensitive attr
 %
 \Cref{fig:di} shows the trade-off between accuracy and \gls{DI}.
 %
-For \emph{sex}, \gls{FaUCI} achieves \(\text{DI} \geq 0.8\) with an accuracy of \(85.6\%\), surpassing \gls{FNNC} (\(82.2\%\)) and matching \gls{LTN} (\(87.7\%\)).
+For \emph{sex}, \gls{FaUCI} achieves \(\text{DI} \geq 0.8\) with an accuracy of \(85.6\%\), surpassing \gls{FNNC} (\(82.2\%\)) and matching \gls{NSIF} (\(87.7\%\)).
 %
 For \emph{ethnicity}, \gls{FaUCI} maintains the accuracy of the uneducated model (\(86.8\%\)) while achieving \(\text{DI} \geq 0.8\).
 %
