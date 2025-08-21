@@ -566,6 +566,374 @@ The symbolic approach adds value by providing explainability, allowing motivatio
 
 
 \subsection{A general-purpose protocol for multi-agent based explanations}\label{subsec:a-general-purpose-protocol-for-multi-agent-based-explanations}
+%
+In section we present the work ``A General-Purpose Protocol for Multi-agent Based Explanations''~\cite{DBLP:conf/extraamas/CiattoMBAO23}, presented at the \gls{EXTRAAMAS} international workshop, 5th edition, 2023.
+%
+This contribution is quite different from the previous one, and in general from the other contributions in this thesis.
+%
+While the majority of the works presented in this thesis vertically focus on \gls{SKI} or \gls{SKE} methods, or on the design of systems that leverage such methods, this work is more horizontal, in the sense that it proposes a general-purpose protocol for multi-agent based explanations.
+%
+Nonetheless, this work still falls within the scope of this chapter because its contribution is relevant to the design of explainable \glspl{MAS} that can potentially leverage \gls{SKE} methods.
+
+
+\subsubsection{Motivation}\label{subsubsec:introduction-general-purpose-protocol-for-multi-agent-based-explanations}
+%
+The current focus of \gls{XAI} research is on developing techniques to ``open up'' black-box models and provide insights into how an intelligent system reaches specific decisions or predictions~\cite{citation_needed}.
+%
+These techniques include methods for visualizing the internal workings of the system, such as feature importance scores, attention maps, and decision trees.
+%
+The primary goal of these methods is to assist \gls{AI} experts in understanding the system's behavior, rather than addressing the needs of non-expert users who seek to understand \emph{why} the system behaves in a particular way.
+
+However, the expectations of the \gls{XAI} community extend beyond merely interpreting black-box models.
+%
+Ideally, \gls{XAI} systems should autonomously provide explanations that go beyond describing how the system works~\cite{citation_needed}.
+%
+These explanations should offer insights into \emph{why} the system behaves—or fails to behave—in a specific manner, potentially through autonomous interaction with the explainee.
+
+To achieve this, recent research emphasizes the automation and interactivity of the explanation process~\cite{citation_needed}.
+%
+This involves designing \gls{AI} systems capable of generating explanations dynamically and tailoring them to the explainee's knowledge level and needs.
+%
+In this context, \glspl{MAS} emerge as a suitable paradigm for building intelligent explainable systems, as they inherently support interaction and autonomy.
+%
+Explanations can thus be modeled as multi-agent interactions, where the explainee and the explainer agent (either human or software) collaborate to achieve the shared goal of providing clear and effective explanations.
+
+This work addresses the general problem of enabling interaction between explainee and explainer agents.
+%
+To this end, it proposes a general-purpose protocol for multi-agent-based recommendations and explanations.
+%
+The protocol defines the roles and responsibilities of the explainee and explainer agents, as well as the types of information exchanged to ensure clarity and effectiveness.
+%
+Notably, the protocol builds upon prior efforts to model explanations as multi-agent interactions~\cite{citation_needed}.
+%
+Its key features include:
+%
+\begin{inlinelist}
+    \item the separation of recommendations from explanations, and
+    \item support for contrastive explanations.
+\end{inlinelist}
+
+As a secondary contribution, the paper introduces a \texttt{Spade}-based Python library, \texttt{PyXMas}, which implements the proposed protocol.
+%
+This library allows the integration of various explanation strategies and representations.
+%
+It serves as a foundation for developing intelligent explainable systems where recommendation and explanation behaviors are delegated to individual agents.
+%
+Overall, this contribution represents a significant step toward building \gls{XAI} systems capable of providing automatic and interactive explanations.
+
+
+\subsubsection{Background}\label{subsubsec:background-general-purpose-protocol-for-multi-agent-based-explanations}
+%
+\paragraph{Interactive recommendation systems}
+%
+Interactive \glspl{RS} have gained significant attention due to their ability to dynamically provide personalised recommendations based on user feedback and interactions~\cite{citation_needed}.
+%
+The key aspect of interactivity lies in collecting user feedback during the recommendation session to refine subsequent recommendations.
+%
+For instance, some systems employ a one-shot recommendation approach, where questions learned offline from past interactions are posed to users before generating recommendations~\cite{citation_needed}.
+%
+The answers to these questions enable the system to personalise and improve future suggestions.
+
+\Gls{XAI} has been increasingly integrated into \glspl{RS} to enhance transparency~\cite{citation_needed}.
+%
+This is achieved through iterative recommendation sessions, where the system not only provides recommendations but also explanations, leveraging the positive impact of transparency on user trust~\cite{citation_needed}.
+%
+For example, visual explanations, such as grouped bar charts, have been used to compare user preferences with recommendation attributes~\cite{citation_needed}.
+%
+Similarly, conversational explanations have been employed to mimic human salesmanship, persuading users to consider alternative options~\cite{citation_needed}.
+
+
+\paragraph{Prior work on explanation protocols}
+%
+This work builds upon the protocol introduced in~\cite{citation_needed}, which focuses on food recommendations and explanations.
+%
+In this protocol, users specify constraints, such as allergies, preferred or disliked ingredients, and desired cuisine types.
+%
+The system responds with a recipe suggestion and an explanation.
+%
+Users can accept, reject, or provide feedback on the recommendation or explanation, initiating a turn-based interaction until the session concludes.
+%
+This framework promotes transparency by combining recommendations and explanations, which can increase user acceptance.
+%
+However, unrequested explanations may impose cognitive load, highlighting the importance of parsimony~\cite{citation_needed}.
+%
+Parsimonious explanations are defined as the simplest descriptions that adequately convey the situation.
+
+To address this, the revised protocol proposed in this work allows users to request explanations dynamically.
+%
+It also supports ``zooming'' explanations, where additional details are provided only upon user request.
+%
+This approach enables users to control the level of detail, ensuring explanations are tailored to their needs.
+
+
+\paragraph{\textsc{Spade}: multi-agent programming in python}
+%
+\textsc{Spade} is an open-source \gls{MAS} platform implemented in Python~\cite{citation_needed}.
+%
+It provides a modular and extensible library for developing intelligent agents capable of interacting with each other and their environment.
+%
+\textsc{Spade} systems are distributed, with agents operating on the same or different network nodes.
+%
+Agent activities are governed by concurrent behaviours, implemented as Python classes that developers can extend.
+
+Unlike \textsc{Jade}, which is Java-based, \textsc{Spade} leverages Python's ecosystem, facilitating integration with \gls{ML} and \gls{AI} frameworks.
+%
+Agent communication in \textsc{Spade} is mediated by the \gls{XMPP} protocol, ensuring robust, interoperable, and scalable interactions.
+%
+This design supports blended applications where agents interact with both humans and software agents.
+
+\textsc{Spade} includes features such as communication protocols, message passing, and event handling.
+%
+It also supports the implementation of interaction protocols using finite-state machine behaviours.
+%
+These capabilities make \textsc{Spade} a powerful tool for developing intelligent agents, widely adopted in \gls{MAS} research and development.
+
+
+\subsubsection{Explanation-based recommendation protocol}
+%
+The term ``explanation'' originates from the Latin word \emph{explicare}, meaning ``to unfold.''
+%
+In this context, an explanation is understood as the process of clarifying the meaning of a concept.
+%
+This process is inherently interactive, involving an explainee and an explainer.
+%
+Explanations are thus considered a social protocol.
+
+In human interactions, explanation protocols are typically informal and unstructured.
+%
+They involve an explainee seeking clarification from an explainer, who is assumed to possess greater knowledge.
+%
+Explainers adapt their strategies and level of detail to the explainee's needs and knowledge as the interaction progresses.
+%
+Explanations are generally provided upon request and may respond to prior information shared by either party.
+
+Modern intelligent systems, such as \gls{XAI} systems, aim to support decision-making by providing recommendations.
+%
+In these systems, the user typically acts as the explainee, while the software system assumes the roles of both the recommender and the explainer.
+%
+By adopting a \gls{MAS} perspective, recommendation and explanation can be modeled as a single interaction protocol between two agents.
+%
+One agent, often the explainee, is a human user, while the other, the explainer, is a software agent.
+
+The proposed protocol assumes that the user initiates the interaction by submitting a query.
+%
+Upon receiving the query, the agent generates a recommendation.
+%
+This recommendation is computed using available information, such as the user’s profile, interaction history, and possibly aggregated data from other users.
+%
+The agent may utilize both symbolic reasoning and \gls{ML} predictors to generate the recommendation.
+
+%
+After receiving the recommendation, the user may either accept or reject it, or request an explanation.
+%
+The explanation phase may involve multiple rounds of interaction, where the user can ask for additional details or comparisons.
+%
+The agent provides the requested information, aiming to clarify the recommendation.
+%
+Ultimately, the user decides to accept or reject the recommendation based on the explanation provided.
+
+Feedback from the user, including the acceptance or rejection of recommendations and the amount of explanatory information required, is used to improve future interactions.
+%
+In cases of rejection, the agent may also seek the reason for the rejection to refine its recommendation and explanation strategies.
+
+
+Explanations in this protocol are always:
+%
+\begin{inlinelist}
+    \item provided upon request,
+    \item related to the recommendation, and
+    \item tailored to the user.
+\end{inlinelist}
+%
+They can be categorized into two types:
+%
+\begin{itemize}
+    \item \textbf{Ordinary explanations:} These address the question, ``Why did you recommend this?''
+    %
+    \item \textbf{Contrastive explanations:} These address the question, ``Why did you not recommend that instead?''
+\end{itemize}
+%
+The protocol supports both types of explanations, allowing the user to choose the type they prefer.
+%
+The content and structure of the exchanged messages depend on the type of explanation requested.
+
+
+\subsubsection{Abstract Formulation of the Protocol}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/user-agent-protocol}
+    \caption{
+      Message communication diagram between an explainer agent (blue boxes) and an explainee (green boxes).
+      %
+      Each box represents a message.
+      %
+      Arrows indicate the possible replies to each message.
+    }
+    \label{fig:protocol-messages}
+\end{figure}
+%
+\Cref{fig:protocol-messages} presents an abstract formulation of the proposed protocol, which is independent of the specific representation or computation of recommendations and explanations.
+%
+The focus is on the exchange of messages between the explainer and the explainee, the information these messages carry, and the sequence in which they are exchanged.
+%
+The protocol defines two roles:
+%
+\begin{itemize}
+    \item The explainee, who initiates the interaction.
+    %
+    \item The explainer, who responds to the explainee's queries.
+\end{itemize}
+%
+Five data types are identified as the potential payloads exchanged during the protocol:
+%
+\begin{itemize}
+    \item \textbf{Queries} (\(Q\)): Requests for recommendations submitted by the explainee.
+    %
+    \item \textbf{Recommendations} (\(R, R'\)): Responses to queries, provided by the explainer.
+    %
+    \item \textbf{Explanations} (\(E, E'\)): Information provided by the explainer to clarify recommendations.
+    %
+    \item \textbf{Features} (\(F\)): User-specific aspects that justify the rejection of a recommendation, which the explainer should consider in future interactions.
+    %
+    \item \textbf{Motivations} (\(M\)): Reasons for rejecting a recommendation, which may influence the explainer's behavior.
+\end{itemize}
+%
+Thirteen message types are defined, each represented as a named record of the form \texttt{Name(Payload)}, where \texttt{Payload} consists of instances of the aforementioned data types.
+%
+Optional fields in the payload are denoted with a question mark.
+%
+The message types are summarized as follows:
+%
+\begin{enumerate}
+    \item \texttt{Query(\(Q\))}: Sent by the explainee to initiate the protocol, carrying a recommendation request.
+    %
+    \item \texttt{Recommendation(\(Q, R\))}: Sent by the explainer in response to a query, carrying the query and the computed recommendation.
+    %
+    \item \texttt{Why(\(Q, R\))}: Sent by the explainee to request an explanation for a recommendation.
+    %
+    \item \texttt{WhyNot(\(Q, R, R'\))}: Sent by the explainee to request a contrastive explanation, comparing the recommendation with an alternative.
+    %
+    \item \texttt{Accept(\(Q, R, E?\))}: Sent by the explainee to accept a recommendation, optionally including the explanation.
+    %
+    \item \texttt{Collision(\(Q, R, F, E?\))}: Sent by the explainee to notify the explainer of a conflict between the recommendation and a personal feature.
+    %
+    \item \texttt{Disapprove(\(Q, R, M, E?\))}: Sent by the explainee to reject a recommendation, providing a reason and optionally the explanation.
+    %
+    \item \texttt{Details(\(Q, R, E\))}: Sent by the explainer to provide additional details about a recommendation.
+    %
+    \item \texttt{Comparison(\(Q, R, R', E\))}: Sent by the explainer to provide a contrastive explanation when the alternative recommendation is also valid.
+    %
+    \item \texttt{Invalid(\(Q, R', E\))}: Sent by the explainer to indicate that the alternative recommendation is invalid, with an explanation.
+    %
+    \item \texttt{Unclear(\(Q, R, E\))}: Sent by the explainee to indicate that the provided explanation is unclear.
+    %
+    \item \texttt{Prefer(\(Q, R, R'\))}: Sent by the explainee to express a preference for an alternative recommendation.
+    %
+    \item \texttt{Override(\(Q, R, R'\))}: Sent by the explainee to enforce an alternative recommendation, even if deemed invalid by the explainer.
+\end{enumerate}
+%
+This abstract formulation ensures flexibility, allowing implementers to tailor the protocol to specific application domains.
+
+Notably, messages are designed by keeping the \gls{ReST} [9] architectural style into account.
+%
+Hence, each message type is designed to carry all the information necessary for any involved party to decide which action to take next.
+%
+This is the reason why all/most messages carry the original query $Q$ and the recommendation $R$ (or $R'$) which they are referring to.
+%
+The message communication diagram from \Cref{fig:protocol-messages} depicts not only the messages exchanged by the explainee and explainer, but also the admissbile request–response patterns which the protocol allows.
+%
+There, a more detailed view of the message flow is provided, which we briefly summarise in the following.
+
+
+\subsubsection{Relevant Scenarios and Protocol Analysis}\label{subsubsec:relevant-scenarios}
+%
+\input{figures/protocol-sequence-diagrams}
+%
+The proposed protocol is versatile and accommodates various user needs and desires.
+%
+These include:
+%
+\begin{inlinelist}
+    \item requesting a recommendation,
+    \item seeking an explanation for the recommendation,
+    \item asking for additional details about the explanation,
+    \item simulating alternative recommendations, and
+    \item providing feedback on recommendations or explanations.
+\end{inlinelist}
+%
+\Cref{fig:protocol-sequence-diagrams} illustrates these scenarios, which are detailed below.
+
+%
+\paragraph{Quick Accept}
+%
+In this scenario, depicted in \Cref{fig:quick-accept}, the user accepts the recommendation without requiring an explanation.
+%
+For example, a user requests a restaurant recommendation, and the agent suggests a restaurant that the user finds satisfactory.
+
+%
+\paragraph{Quick Retry}
+%
+In \Cref{fig:quick-retry} the user rejects the recommendation without asking for an explanation.
+%
+The rejection may occur because the recommendation conflicts with the user's preferences or is unsuitable for the current context.
+%
+For instance, if the agent recommends a steakhouse to a vegetarian user, the user may signal a conflict with their preferences.
+%
+Alternatively, the user may simply disapprove of the recommendation without providing specific feedback.
+%
+In both cases, the agent generates a new recommendation.
+%
+The agent is expected to learn from conflicts but not from generic disapprovals.
+
+%
+\paragraph{Ordinary Explanation Loop}
+%
+In the case shown in \Cref{fig:explanation-loop}, the user requests an explanation for the recommendation.
+%
+If the explanation is unsatisfactory, the user may ask for further details, initiating an iterative process.
+%
+This loop continues until the user either accepts the recommendation or requests a new one.
+%
+The protocol supports ``zooming'' explanations, where the agent adjusts the granularity of the explanation.
+%
+For example, the agent may first provide local explanations, describing how the specific recommendation was generated.
+%
+Subsequently, it may offer global explanations, detailing the general logic behind its recommendations.
+%
+The agent can also switch between textual and visual explanations to enhance clarity.
+%
+Consider a user who requests a restaurant recommendation.
+%
+The agent suggests an Asian restaurant with a high rating and proximity to the user.
+%
+If the user asks for an explanation, the agent may state that the restaurant matches the user's taste for sushi and is within 1 km.
+%
+If further details are requested, the agent may explain its general recommendation strategy, such as prioritizing highly rated restaurants within a certain distance.
+
+%
+\paragraph{Contrastive Explanation Loop}
+%
+Lastly, in \Cref{fig:contrastive-explanation-loop}, the user requests a contrastive explanation, comparing the given recommendation \(R\) with an alternative \(R'\).
+%
+If \(R'\) is valid, the agent provides a comparison, highlighting why one recommendation is preferable.
+%
+If \(R'\) is invalid, the agent explains why it cannot be recommended.
+%
+The user may then accept the original recommendation, prefer the alternative, or override the agent's decision.
+%
+For example, if the agent recommends an Asian restaurant, but the user prefers a steakhouse, the agent may compare the two options.
+%
+If the steakhouse aligns with the user's dietary goals, the agent may note that the Asian restaurant is closer.
+%
+If the steakhouse violates dietary goals, the agent explains this conflict.
+%
+In either case, the user decides whether to accept the original recommendation or override it.
+%
+The agent learns from overrides to refine future recommendations.
+
+
+
 
 \subsection{\Glsentrylong{NeSy} \Gls{AI} for supporting chronic disease diagnosis and monitoring}\label{subsec:nesy-ai-for-supporting-chronic-disease-diagnosis-and-monitoring}
 
