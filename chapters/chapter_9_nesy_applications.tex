@@ -578,7 +578,7 @@ Nonetheless, this work still falls within the scope of this chapter because its 
 
 \subsection{Motivation}\label{subsec:introduction-general-purpose-protocol-for-multi-agent-based-explanations}
 %
-The current focus of \gls{XAI} research is on developing techniques to ``open up'' black-box models and provide insights into how an intelligent system reaches specific decisions or predictions~\cite{citation_needed}.
+The current focus of \gls{XAI} research is on developing techniques to ``open up'' black-box models and provide insights into how an intelligent system reaches specific decisions or predictions~\cite{DBLP:journals/csur/GuidottiMRTGP19}.
 %
 These techniques include methods for visualizing the internal workings of the system, such as feature importance scores, attention maps, and decision trees.
 %
@@ -586,11 +586,11 @@ The primary goal of these methods is to assist \gls{AI} experts in understanding
 
 However, the expectations of the \gls{XAI} community extend beyond merely interpreting black-box models.
 %
-Ideally, \gls{XAI} systems should autonomously provide explanations that go beyond describing how the system works~\cite{citation_needed}.
+Ideally, \gls{XAI} systems should autonomously provide explanations that go beyond describing how the system works~\cite{DBLP:conf/aiia/CiattoCOC19}.
 %
 These explanations should offer insights into \emph{why} the system behaves—or fails to behave—in a specific manner, potentially through autonomous interaction with the explainee.
 
-To achieve this, recent research emphasizes the automation and interactivity of the explanation process~\cite{citation_needed}.
+To achieve this, recent research emphasizes the automation and interactivity of the explanation process~\cite{DBLP:conf/atal/CiattoSOC20}.
 %
 This involves designing \gls{AI} systems capable of generating explanations dynamically and tailoring them to the explainee's knowledge level and needs.
 %
@@ -604,7 +604,7 @@ To this end, it proposes a general-purpose protocol for multi-agent-based recomm
 %
 The protocol defines the roles and responsibilities of the explainee and explainer agents, as well as the types of information exchanged to ensure clarity and effectiveness.
 %
-Notably, the protocol builds upon prior efforts to model explanations as multi-agent interactions~\cite{citation_needed}.
+Notably, the protocol builds upon prior efforts to model explanations as multi-agent interactions~\cite{buzcu-prima-2022}.
 %
 Its key features include:
 %
@@ -626,26 +626,26 @@ Overall, this contribution represents a significant step toward building \gls{XA
 %
 \paragraph{Interactive recommendation systems}
 %
-Interactive \glspl{RS} have gained significant attention due to their ability to dynamically provide personalised recommendations based on user feedback and interactions~\cite{citation_needed}.
+Interactive \glspl{RS} have gained significant attention due to their ability to dynamically provide personalised recommendations based on user feedback and interactions~\cite{knijnenburg-2010}.
 %
 The key aspect of interactivity lies in collecting user feedback during the recommendation session to refine subsequent recommendations.
 %
-For instance, some systems employ a one-shot recommendation approach, where questions learned offline from past interactions are posed to users before generating recommendations~\cite{citation_needed}.
+For instance, some systems employ a one-shot recommendation approach, where questions learned offline from past interactions are posed to users before generating recommendations~\cite{christakopoulou-2016}.
 %
 The answers to these questions enable the system to personalise and improve future suggestions.
 
-\Gls{XAI} has been increasingly integrated into \glspl{RS} to enhance transparency~\cite{citation_needed}.
+\Gls{XAI} has been increasingly integrated into \glspl{RS} to enhance transparency~\cite{buzcu-prima-2022,zhang-2020}.
 %
-This is achieved through iterative recommendation sessions, where the system not only provides recommendations but also explanations, leveraging the positive impact of transparency on user trust~\cite{citation_needed}.
+This is achieved through iterative recommendation sessions, where the system not only provides recommendations but also explanations, leveraging the positive impact of transparency on user trust~\cite{odonovan-2008}.
 %
-For example, visual explanations, such as grouped bar charts, have been used to compare user preferences with recommendation attributes~\cite{citation_needed}.
+For example, visual explanations, such as grouped bar charts, have been used to compare user preferences with recommendation attributes~\cite{millecamp-2019}.
 %
-Similarly, conversational explanations have been employed to mimic human salesmanship, persuading users to consider alternative options~\cite{citation_needed}.
+Similarly, conversational explanations have been employed to mimic human salesmanship, persuading users to consider alternative options~\cite{shimazu-2002}.
 
 
 \paragraph{Prior work on explanation protocols}
 %
-This work builds upon the protocol introduced in~\cite{citation_needed}, which focuses on food recommendations and explanations.
+This work builds upon the protocol introduced in~\cite{buzcu-prima-2022}, which focuses on food recommendations and explanations.
 %
 In this protocol, users specify constraints, such as allergies, preferred or disliked ingredients, and desired cuisine types.
 %
@@ -655,7 +655,7 @@ Users can accept, reject, or provide feedback on the recommendation or explanati
 %
 This framework promotes transparency by combining recommendations and explanations, which can increase user acceptance.
 %
-However, unrequested explanations may impose cognitive load, highlighting the importance of parsimony~\cite{citation_needed}.
+However, unrequested explanations may impose cognitive load, highlighting the importance of parsimony~\cite{MuallaTKNCAGN22}.
 %
 Parsimonious explanations are defined as the simplest descriptions that adequately convey the situation.
 
@@ -668,7 +668,7 @@ This approach enables users to control the level of detail, ensuring explanation
 
 \paragraph{\textsc{Spade}: multi-agent programming in python}
 %
-\textsc{Spade} is an open-source \gls{MAS} platform implemented in Python~\cite{citation_needed}.
+\textsc{Spade} is an open-source \gls{MAS} platform implemented in Python\footnote{\url{https://spade-mas.readthedocs.io}}.
 %
 It provides a modular and extensible library for developing intelligent agents capable of interacting with each other and their environment.
 %
@@ -676,7 +676,7 @@ It provides a modular and extensible library for developing intelligent agents c
 %
 Agent activities are governed by concurrent behaviours, implemented as Python classes that developers can extend.
 
-Unlike \textsc{Jade}, which is Java-based, \textsc{Spade} leverages Python's ecosystem, facilitating integration with \gls{ML} and \gls{AI} frameworks.
+Unlike \textsc{Jade}~\cite{jadebook-2007}, which is Java-based, \textsc{Spade} leverages Python's ecosystem, facilitating integration with \gls{ML} and \gls{AI} frameworks.
 %
 Agent communication in \textsc{Spade} is mediated by the \gls{XMPP} protocol, ensuring robust, interoperable, and scalable interactions.
 %
@@ -958,7 +958,7 @@ From this perspective, the explainer agent acts as a proxy for the \gls{ML} pred
 
 Explanations, however, are not necessarily derived from \gls{ML} predictors.
 %
-The \gls{XAI} literature offers a wide range of approaches for generating explanations, including visual, textual, and numerical methods~\cite{citation_needed}.
+The \gls{XAI} literature offers a wide range of approaches for generating explanations, including visual, textual, and numerical methods~\cite{BarredoArrieta2020,DBLP:journals/csur/GuidottiMRTGP19,DBLP:journals/csur/CiattoSAMO24}.
 %
 The explainer agent must not only wrap the \gls{ML} predictor(s) but also encapsulate the logic for computing and representing explanations.
 
