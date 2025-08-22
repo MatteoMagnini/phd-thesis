@@ -10,7 +10,7 @@
 
 \section{Goals and challenges}\label{sec:nesy-ai-goals-and-challenges}
 
-\section{Applications}\label{sec:nesy-ai-applications}
+% \section{Applications}\label{sec:nesy-ai-applications}
 %
 We now present a selection of contributions about \gls{NeSy} application in real-world scenarios.
 %
@@ -18,12 +18,12 @@ These works involve the use of both \gls{SKE} and \gls{SKI} methods, as well as 
 
 
 
-\subsection{\Gls{SKE} for explainable nutritional recommenders}\label{subsec:ske-for-explainable-nutritional-recommenders}
+\section{\Gls{SKE} for explainable nutritional recommenders}\label{sec:ske-for-explainable-nutritional-recommenders}
 %
 ``Symbolic knowledge extraction for explainable nutritional recommenders''~\cite{DBLP:journals/cmpb/MagniniCCAO23}, published on the Journal of Computer Methods and Programs in Biomedicine, presents a novel nutritional recommender system that leverages \gls{SKE}.
 
 
-\subsubsection{Nutritional recommender systems}\label{subsubsec:nutritional-recommender-systems}
+\subsection{Nutritional recommender systems}\label{subsec:nutritional-recommender-systems}
 
 Eating habits significantly impact the well-being of individuals across all age groups, highlighting the importance of developing nutritional \glspl{RS}~\cite{EspinHN2016,Cioara2018,Shandilya2022}.
 %
@@ -47,7 +47,7 @@ Providing explanations for recommendations improves user trust and acceptance, a
 %
 Explainable approaches, such as explanation ontologies and multi-agent architectures, have been proposed to enhance both personalisation and explainability in nutritional \glspl{RS}~\cite{DBLP:conf/icde/PadhiarSCGM21,Yera2022,expectation-extraamas2021}.
 
-\subsubsection{Methodology}\label{subsubsec:methodology}
+\subsection{Methodology}\label{subsec:methodology}
 %
 \begin{figure}
   \centering
@@ -293,7 +293,7 @@ However, the extraction process must produce Horn clauses to ensure compatibilit
 This approach combines the adaptability of sub-symbolic models with the interpretability and computational efficiency of symbolic reasoning.
 
 
-\subsubsection{Validation}\label{subsubsec:validation-ske-nutrition}
+\subsection{Validation}\label{subsec:validation-ske-nutrition}
 %
 To validate the proposed architecture, we conducted a series of experiments to assess its effectiveness in nutritional \glspl{RS}.
 %
@@ -344,7 +344,7 @@ Second, recipe likability labels (like/dislike) were generated based on the like
 The synthesis process ensures no real personal data is used, avoiding ethical or privacy concerns.
 
 
-\paragraph{Learning User Preferences via Sub-Symbolic Predictors}\label{par:learning-user-preferences}
+\subsubsection{Learning User Preferences via Sub-Symbolic Predictors}\label{subsubsec:learning-user-preferences}
 %
 User preferences were modeled using fully-connected neural networks.
 %
@@ -364,7 +364,7 @@ The average accuracy achieved on the test set was 85.6\%, with precision compute
 %
 Precision is critical for systems where identifying true positives (liked recipes) is more important than minimizing false positives.
 
-\paragraph{Extracting User Preferences via \Gls{SKE}}\label{par:extracting-user-preferences}
+\subsubsection{Extracting User Preferences via \Gls{SKE}}\label{subsubsec:extracting-user-preferences}
 %
 \input{tables/net-rules-accuracy}
 %
@@ -410,7 +410,7 @@ Fidelity is computed similarly to accuracy but compares the predictions of the e
 In other words, fidelity measures how closely the extracted rules replicate the behavior of the neural networks.
 
 
-\paragraph{Proposed Recipes}\label{par:proposed-recipes}
+\subsubsection{Proposed Recipes}\label{subsubsec:proposed-recipes}
 %
 \input{tables/proposed-recipes-accuracy}
 %
@@ -505,7 +505,7 @@ Precision is calculated as the ratio of recipes liked by users to the total numb
 Corner cases, where no recipes are recommended due to conflicting preferences and prescriptions, are resolved by adjusting prescriptions to better align with user preferences.
 
 
-\subsubsection{Results and Discussion}\label{subsubsec:results-and-discussion}
+\subsection{Results and Discussion}\label{subsec:results-and-discussion}
 %
 To ensure realistic experiments, we adopted criteria to generate synthetic datasets representing user preferences.
 %
@@ -565,7 +565,7 @@ The symbolic approach adds value by providing explainability, allowing motivatio
 
 
 
-\subsection{A general-purpose protocol for multi-agent based explanations}\label{subsec:a-general-purpose-protocol-for-multi-agent-based-explanations}
+\section{A general-purpose protocol for multi-agent based explanations}\label{sec:a-general-purpose-protocol-for-multi-agent-based-explanations}
 %
 In section we present the work ``A General-Purpose Protocol for Multi-agent Based Explanations''~\cite{DBLP:conf/extraamas/CiattoMBAO23}, presented at the \gls{EXTRAAMAS} international workshop, 5th edition, 2023.
 %
@@ -576,7 +576,7 @@ While the majority of the works presented in this thesis vertically focus on \gl
 Nonetheless, this work still falls within the scope of this chapter because its contribution is relevant to the design of explainable \glspl{MAS} that can potentially leverage \gls{SKE} methods.
 
 
-\subsubsection{Motivation}\label{subsubsec:introduction-general-purpose-protocol-for-multi-agent-based-explanations}
+\subsection{Motivation}\label{subsec:introduction-general-purpose-protocol-for-multi-agent-based-explanations}
 %
 The current focus of \gls{XAI} research is on developing techniques to ``open up'' black-box models and provide insights into how an intelligent system reaches specific decisions or predictions~\cite{citation_needed}.
 %
@@ -622,7 +622,7 @@ It serves as a foundation for developing intelligent explainable systems where r
 Overall, this contribution represents a significant step toward building \gls{XAI} systems capable of providing automatic and interactive explanations.
 
 
-\subsubsection{Background}\label{subsubsec:background-general-purpose-protocol-for-multi-agent-based-explanations}
+\subsection{Background}\label{subsec:background-general-purpose-protocol-for-multi-agent-based-explanations}
 %
 \paragraph{Interactive recommendation systems}
 %
@@ -689,7 +689,8 @@ It also supports the implementation of interaction protocols using finite-state 
 These capabilities make \textsc{Spade} a powerful tool for developing intelligent agents, widely adopted in \gls{MAS} research and development.
 
 
-\subsubsection{Explanation-based recommendation protocol}
+\subsection{Explanation-based recommendation protocol}
+\label{subsec:explanation-based-recommendation-protocol}
 %
 The term ``explanation'' originates from the Latin word \emph{explicare}, meaning ``to unfold.''
 %
@@ -758,11 +759,12 @@ The protocol supports both types of explanations, allowing the user to choose th
 The content and structure of the exchanged messages depend on the type of explanation requested.
 
 
-\subsubsection{Abstract Formulation of the Protocol}
+\subsection{Abstract Formulation of the Protocol}
+\label{subsec:abstract-formulation-of-the-protocol}
 %
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{figures/user-agent-protocol}
+    \includegraphics[width=\linewidth]{figures/pyxmas/user-agent-protocol}
     \caption{
       Message communication diagram between an explainer agent (blue boxes) and an explainee (green boxes).
       %
@@ -933,12 +935,271 @@ In either case, the user decides whether to accept the original recommendation o
 The agent learns from overrides to refine future recommendations.
 
 
+\subsubsection{Which Sorts of Explanations and Recommendations?}
+\label{subsubsec:which-sorts-of-explanations-and-recommendations}
+
+The proposed explanation protocol is agnostic regarding the specific representation of explanations and recommendations.
+%
+It is the responsibility of the implementer to define how explanations and recommendations are represented and computed.
+%
+The protocol only specifies \emph{when} these elements should be computed.
+
+\Glspl{RS} typically rely on one or more \gls{ML} predictors trained on user data.
+%
+Whether the training of these predictors is performed by the recommender agent or if the agent is equipped with pre-trained predictors at deployment is an implementation detail.
+%
+In either case, the recommender agent must have access to user profile information.
+%
+This information can be obtained during an initial configuration phase or inferred from user interactions, such as accepted or rejected recommendations.
+%
+To support dynamic learning, the agent should include a learning algorithm capable of updating the predictors when new user data becomes available.
+%
+From this perspective, the explainer agent acts as a proxy for the \gls{ML} predictor(s).
+
+Explanations, however, are not necessarily derived from \gls{ML} predictors.
+%
+The \gls{XAI} literature offers a wide range of approaches for generating explanations, including visual, textual, and numerical methods~\cite{citation_needed}.
+%
+The explainer agent must not only wrap the \gls{ML} predictor(s) but also encapsulate the logic for computing and representing explanations.
+
+A critical challenge arises when recommendations and explanations use different representation formats, such as textual and visual.
+%
+In such cases, the explainer agent must bridge the gap by providing a unified representation of both the recommendation and its explanation.
+%
+To address this, designers may consider adopting computational logic as a unifying framework for recommendations and explanations.
+%
+In computational logic, both knowledge bases and queries are represented as logic formulas.
+%
+These formulas can be used to represent recommendation requests, solutions, and explanations.
+
+For example, a recommendation query can be expressed as the logic goal:
+%
+\[
+\texttt{should\_eat(Food, lunch)},
+\]
+%
+where \texttt{Food} is a logic variable representing an unknown value.
+%
+Recommendations, such as \( R, R', R'' \), correspond to logic solutions, e.g., \(\texttt{Food} = \texttt{paella}\).
+%
+Explanations \( E, E', E'' \) can take various forms:
+%
+\begin{itemize}
+    \item \textbf{Local explanations:} The path in the proof tree computed by the explainer agent to derive the recommendation.
+    %
+    \item \textbf{Global explanations:} The logic program used by the explainer agent to generate the recommendation.
+    %
+    \item \textbf{Contrastive explanations:} Metrics comparing multiple recommendations or identifying constraints that make certain recommendations invalid.
+    %
+    \item \textbf{Combinations:} Any combination of the above types.
+\end{itemize}
+
+User features, such as \( F, F', F'' \), may include raw facts describing the user, e.g., \texttt{age(31)}, \texttt{goal(lose\_weight)}, or \texttt{category(vegetarian)}.
+%
+Motivations for disapproval can include predefined facts, such as:
+%
+\begin{itemize}
+    \item \texttt{dislike:} The user dislikes the recommendation, prompting the agent to learn from this feedback.
+    %
+    \item \texttt{not\_now:} The user does not want the recommendation at the moment, but may accept it in the future. In this case, the agent should not memorize the rejection.
+\end{itemize}
 
 
-\subsection{\Glsentrylong{NeSy} \Gls{AI} for supporting chronic disease diagnosis and monitoring}\label{subsec:nesy-ai-for-supporting-chronic-disease-diagnosis-and-monitoring}
+\subsection{From Theory to Practice with \textsc{PyXMas}}
+\label{subsec:from-theory-to-practice-with-pyxmas}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/pyxmas/architecture}
+    \caption{
+        Modular architecture of \textsc{PyXMas}.
+        %
+        The library provides parametric behaviours that can be customized by implementing specific components.
+        %
+        If the explainee agent is human, a UX component may be required to facilitate interaction via a device.
+    }
+    \label{fig:architecture}
+\end{figure}
+%
+This section describes how the proposed protocol can be implemented as agent-oriented software.
+%
+We introduce \textsc{PyXMas}\footnote{\url{https://github.com/pikalab-unibo/pyxmas}}, a Python library for explainable multi-agent systems (\glspl{MAS}).
+%
+The library is built on \textsc{Spade} and provides reusable implementations of the protocol described in \Cref{subsec:abstract-formulation-of-the-protocol}.
+%
+This allows researchers and developers to focus on designing recommender and explainer agents, as well as defining the representation of recommendations and explanations, without re-implementing the protocol.
+
+
+\subsubsection{\textsc{PyXMas} Architecture}
+\label{subsubsec:pyxmas-architecture}
+%
+\Cref{fig:architecture} illustrates the modular architecture of \textsc{PyXMas}.
+%
+The library defines two main behaviours:
+%
+\begin{inlinelist}
+    \item the \emph{initiator}, responsible for sending recommendation queries and processing responses, and
+    %
+    \item the \emph{responder}, responsible for computing and returning recommendations and explanations.
+\end{inlinelist}
+%
+The initiator behaviour is designed for the explainee agent, while the responder behaviour is intended for the explainer agent.
+%
+Both behaviours are parametric, allowing users to customize their functionality by implementing specific components.
+
+\paragraph{Explainer Agent}
+%
+The explainer agent requires the following components:
+%
+\begin{itemize}
+    \item \textbf{Recommendation Strategy:} Computes recommendations based on user queries, preferences, and goals (e.g., ``vegetarian'' or ``weight loss'').
+    %
+    The strategy can adapt over time by learning from user feedback.
+    %
+    \item \textbf{Explanation Strategy:} Generates explanations for recommendations, leveraging user profiles and domain knowledge (e.g., ``ingredient X is plant-based'').
+    %
+    \item \textbf{User Profiler:} Learns user preferences from feedback using heuristic or \gls{ML}-based methods.
+    %
+    This enables the agent to refine recommendations and explanations dynamically.
+    %
+    \item \textbf{Interaction Strategy:} Manages how recommendations and explanations are presented to the explainee.
+    %
+    For example, a humanoid robot may use gestures or facial expressions to enhance interaction.
+\end{itemize}
+%
+The explainer agent stores two types of data:
+%
+\begin{inlinelist}
+    \item user profile data, and
+    %
+    \item domain knowledge.
+\end{inlinelist}
+%
+These are maintained in dedicated data stores and updated as needed.
+
+\paragraph{Explainee Agent}
+%
+The explainee agent requires the following components:
+%
+\begin{itemize}
+    \item \textbf{Query Provider:} Generates queries based on the explainee's goals.
+    %
+    \item \textbf{Recommendation Evaluator:} Assesses recommendations and decides whether to accept or reject them.
+    %
+    \item \textbf{Explanation Evaluator:} Evaluates explanations and influences the recommendation evaluator accordingly.
+\end{itemize}
+%
+If the explainee is a human user, the agent acts as a proxy, mediating interactions via a \gls{UI} on a device (e.g., a smartphone).
+%
+In this case, a \textbf{\gls{UX}} component is required to manage the \gls{UI}, process user inputs, and present recommendations and explanations.
+
+
+\subsubsection{PyXMas Design}\label{subsubsec:pyxmas-design}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/pyxmas/types}
+    \caption{
+        Abstract classes for message payloads in \textsc{PyXMas}.
+    }
+    \label{fig:types}
+\end{figure}
+%
+\textsc{PyXMas} is a Python library designed for developing explainable \glspl{MAS}.
+%
+It provides:
+%
+\begin{itemize}
+    \item Abstract classes for the (de)serialization of message payloads exchanged between the explainer and explainee agents (see \Cref{fig:types}).
+    %
+    \item Abstract classes defining the initiator and responder behaviors.
+\end{itemize}
+%
+These abstract classes allow developers to extend and customize their functionality by overriding specific methods.
+%
+This flexibility enables the creation of tailored explainable \glspl{MAS}.
+%
+\paragraph{Data Types for Message Payloads}
+%
+As illustrated in \Cref{fig:types}, \textsc{PyXMas} provides five abstract classes corresponding to the data types defined in \Cref{subsec:abstract-formulation-of-the-protocol}.
+%
+These classes enforce serialization, ensuring that data can be converted to and from strings.
+%
+This is essential for enabling communication between the explainer and explainee agents over the network.
+%
+Developers can define custom representations for queries, recommendations, explanations, and other data types by extending these abstract classes.
+%
+The only requirement is that the serialized data must be both machine- and human-readable.
+%
+\paragraph{Predefined Behaviors}
+%
+\begin{figure}
+    \centering
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/pyxmas/user-state-diagram}
+        \caption{
+            Initiator-side state diagram.
+        }
+        \label{fig:user-state-diagram}
+    \end{subfigure}
+    %
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/pyxmas/agent-state-diagram}
+        \caption{
+            Responder-side state diagram.
+        }
+        \label{fig:agent-state-diagram}
+    \end{subfigure}
+    \caption{
+        State diagrams describing the initiator and responder behaviors in \textsc{PyXMas}.
+    }
+    \label{fig:state-diagrams}
+\end{figure}
+%
+\textsc{PyXMas} provides two abstract classes for the protocol roles:
+%
+\begin{itemize}
+    \item The \emph{initiator}, which represents the explainee agent.
+    %
+    \item The \emph{responder}, which represents the explainer agent.
+\end{itemize}
+%
+These behaviors are implemented as finite-state machines (FSMs) using \textsc{Spade}.
+%
+Each state corresponds to a specific action, such as waiting for a message or processing a response.
+%
+\Cref{fig:state-diagrams} illustrates the state diagrams for the initiator and responder behaviors.
+%
+On the initiator side, developers can override callbacks to control:
+%
+\begin{itemize}
+    \item Query generation.
+    %
+    \item Evaluation of recommendations and decisions to accept or reject them.
+    %
+    \item Evaluation of explanations and their influence on recommendation acceptance.
+\end{itemize}
+%
+On the responder side, developers can override callbacks to control:
+%
+\begin{itemize}
+    \item Recommendation generation.
+    %
+    \item Explanation generation.
+    %
+    \item Handling of accepted or rejected recommendations.
+\end{itemize}
+%
+This design ensures that \textsc{PyXMas} can be adapted to various application domains while maintaining a clear and modular structure.
+
+
+
+\section{NeSy \Gls{AI} for supporting chronic disease diagnosis and monitoring}\label{sec:nesy-ai-for-supporting-chronic-disease-diagnosis-and-monitoring}
 
 %\subsection{\Gls{LLM}-based solutions for healthcare chatbots: a comparative analysis}\label{subsec:llm-based-solutions-for-healthcare-chatbots-a-comparative-analysis}
 
 %\subsection{Open-source small language models for personal medical assistant chatbots}\label{subsec:open-source-small-language-models-for-personal-medical-assistant-chatbots}
 
-\subsection{Applying \Gls{RAG} on open \Glspl{LLM} for a medical chatbot supporting hypertensive patients}\label{subsec:applying-rag-on-open-llm-for-a-medical-chatbot-supporting-hypertensive-patients}
+\section{Applying \Gls{RAG} on open \Glspl{LLM} for a medical chatbot supporting hypertensive patients}\label{sec:applying-rag-on-open-llm-for-a-medical-chatbot-supporting-hypertensive-patients}
