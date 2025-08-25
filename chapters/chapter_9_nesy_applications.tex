@@ -843,12 +843,12 @@ Hence, each message type is designed to carry all the information necessary for 
 %
 This is the reason why all/most messages carry the original query $Q$ and the recommendation $R$ (or $R'$) which they are referring to.
 %
-The message communication diagram from \Cref{fig:protocol-messages} depicts not only the messages exchanged by the explainee and explainer, but also the admissbile request–response patterns which the protocol allows.
+The message communication diagram from \Cref{fig:protocol-messages} depicts not only the messages exchanged by the explainee and explainer, but also the admissbile request-response patterns which the protocol allows.
 %
 There, a more detailed view of the message flow is provided, which we briefly summarise in the following.
 
 
-\subsubsection{Relevant Scenarios and Protocol Analysis}\label{subsubsec:relevant-scenarios}
+\subsubsection{Relevant scenarios and protocol analysis}\label{subsubsec:relevant-scenarios}
 %
 \input{figures/protocol-sequence-diagrams}
 %
@@ -1198,10 +1198,10 @@ On the responder side, developers can override callbacks to control:
 This design ensures that \textsc{PyXMas} can be adapted to various application domains while maintaining a clear and modular structure.
 
 
-\section[\Gls{NeSy} \Gls{AI} for disease diagnosis and mnitoring]{\Gls{NeSy} \gls{AI} for supporting Chronic disease diagnosis and monitoring}
+\section[\Gls{NeSy} \Gls{AI} for disease diagnosis and monitoring]{\Gls{NeSy} \gls{AI} for supporting Chronic disease diagnosis and monitoring}
 \label{sec:nesy-ai-for-supporting-chronic-disease-diagnosis-and-monitoring}
 %
-\subsection{Motivations and Background}
+\subsection{Motivations and background}
 \label{subsec:motivations-and-background}
 %
 Telemedicine platforms are increasingly used for personal assistance, enabling patients to share their symptoms, medical history, and diagnostic data, such as medical images, lab results, or vital signs.
@@ -1270,7 +1270,7 @@ These paradigms have proven effective in other domains and hold potential for he
 Preliminary experiments~\cite{placeholder12} suggest that further evaluation of \gls{SKI} methods, such as \gls{LTN}, is warranted.
 
 
-\subsection{Materials and Methods}
+\subsection{Materials and methods}
 \label{subsec:materials-and-methods}
 %
 In this study, we utilize the \gls{PID} dataset~\cite{placeholder1}, a widely recognized benchmark in medical-related \gls{ML} research~\cite{placeholder2, placeholder3}.
@@ -1280,7 +1280,7 @@ We focus on the \gls{LTN} approach~\cite{placeholder4}, a \gls{SKI} method that 
 This section details the dataset, the \gls{LTN} methodology, and the metrics used to evaluate the impact of \gls{SKI} on predictive performance and \gls{QoS} aspects.
 
 %
-\subsubsection{Dataset and Knowledge}
+\subsubsection{Dataset and knowledge}
 \label{subsubsec:dataset-and-knowledge}
 %
 The \gls{PID} dataset consists of 768 medical profiles of women aged 21 and above who underwent an oral glucose tolerance test.
@@ -1403,9 +1403,9 @@ The best hyperparameters for the baseline models are as follows:
 The uneducated \gls{MLP} and the educated \gls{LTN} models share the same feedforward \gls{NN} architecture:
 %
 \begin{itemize}
-    \item An input layer with 8 neurons, one for each feature in the dataset, using the Leaky Rectified Linear Unit (LeakyReLU) activation function and batch normalization.
+    \item An input layer with 8 neurons, one for each feature in the dataset, using the \gls{LeakyReLU}~\cite{maas2013rectifier} activation function and batch normalization.
     %
-    \item Three hidden layers with 256, 128, and 64 neurons, respectively, each using LeakyReLU and batch normalization.
+    \item Three hidden layers with 256, 128, and 64 neurons, respectively, each using \gls{LeakyReLU} and batch normalization.
     %
     \item An output layer with a single neuron and a sigmoid activation function.
 \end{itemize}
