@@ -588,7 +588,7 @@ However, the expectations of the \gls{XAI} community extend beyond merely interp
 %
 Ideally, \gls{XAI} systems should autonomously provide explanations that go beyond describing how the system works~\cite{DBLP:conf/aiia/CiattoCOC19}.
 %
-These explanations should offer insights into \emph{why} the system behaves—or fails to behave—in a specific manner, potentially through autonomous interaction with the explainee.
+These explanations should offer insights into \emph{why} the system behaves -- or fails to behave -- in a specific manner, potentially through autonomous interaction with the explainee.
 
 To achieve this, recent research emphasizes the automation and interactivity of the explanation process~\cite{DBLP:conf/atal/CiattoSOC20}.
 %
@@ -720,7 +720,7 @@ The proposed protocol assumes that the user initiates the interaction by submitt
 %
 Upon receiving the query, the agent generates a recommendation.
 %
-This recommendation is computed using available information, such as the user’s profile, interaction history, and possibly aggregated data from other users.
+This recommendation is computed using available information, such as the user's profile, interaction history, and possibly aggregated data from other users.
 %
 The agent may utilize both symbolic reasoning and \gls{ML} predictors to generate the recommendation.
 
@@ -1206,17 +1206,17 @@ This design ensures that \textsc{PyXMas} can be adapted to various application d
 %
 Telemedicine platforms are increasingly used for personal assistance, enabling patients to share their symptoms, medical history, and diagnostic data, such as medical images, lab results, or vital signs.
 %
-These platforms often leverage \gls{AI} data-driven models~\cite{placeholder1, placeholder2}.
+These platforms often leverage \gls{AI} data-driven models~\cite{HunterNEJMra2212850,topol2022}.
 %
 While promising, accurate disease monitoring and diagnosis require more than identifying patterns in data.
 %
 The integration of \gls{AI} into clinical practice remains limited due to several challenges.
 %
-First, the performance of \gls{AI} models is often suboptimal, primarily due to insufficient dataset sizes for effectively training \gls{ML} algorithms~\cite{placeholder3}.
+First, the performance of \gls{AI} models is often suboptimal, primarily due to insufficient dataset sizes for effectively training \gls{ML} algorithms~\cite{benjamens2020state}.
 %
 Second, even high-performing \gls{AI} models frequently operate as black boxes, making their outputs difficult to interpret.
 %
-This lack of transparency hinders adoption in clinical settings, where healthcare professionals require interpretable outputs to make informed decisions~\cite{placeholder4}.
+This lack of transparency hinders adoption in clinical settings, where healthcare professionals require interpretable outputs to make informed decisions~\cite{ALI2023107555}.
 %
 Traditional clinical protocols, while validated and robust, also exhibit limitations.
 %
@@ -1224,13 +1224,13 @@ They often fail to classify all clinical cases, leaving certain scenarios unreso
 %
 Additionally, these protocols do not leverage data analytics, which could uncover hidden patterns and provide valuable insights for decision-making.
 
-Combining data-driven and knowledge-based models has been identified as a promising solution to enhance \gls{ML} performance and improve explainability~\cite{placeholder5}.
+Combining data-driven and knowledge-based models has been identified as a promising solution to enhance \gls{ML} performance and improve explainability~\cite{von2021informed}.
 %
-This work focuses on neuro-symbolic \gls{AI}, specifically \gls{SKI}, which injects symbolic knowledge into sub-symbolic \gls{ML} models~\cite{placeholder7}.
+This work focuses on \gls{NeSy} \gls{AI}, specifically \gls{SKI}~\cite{DBLP:journals/csur/CiattoSAMO24}.
 %
-Among the various \gls{SKI} methods, we evaluate the \gls{LTN} approach~\cite{placeholder8}.
+Among the various \gls{SKI} methods, we evaluate the \gls{LTN} approach~\cite{BadreddineGSS22}.
 %
-The potential of this approach is demonstrated using the \gls{PID} dataset for diabetes prediction~\cite{placeholder9}.
+The potential of this approach is demonstrated using the \gls{PID} dataset for diabetes prediction~\cite{smith1988using}.
 %
 We compare its performance against classical \gls{ML} models, including \gls{KNN}, \gls{LR}, \gls{DT}, \gls{RF}, and an uneducated \gls{MLP}.
 %
@@ -1247,7 +1247,7 @@ It also demonstrates high robustness against data manipulation, including noise 
 \subsection{Knowledge integration in medicine}
 \label{subsec:knowledge-integration-in-medicine}
 
-The integration of medical knowledge into \gls{ML} pipelines can occur at various stages~\cite{placeholder5, placeholder11}.
+The integration of medical knowledge into \gls{ML} pipelines can occur at various stages~\cite{von2021informed,kierner2023taxonomy}.
 %
 \begin{itemize}
     \item \textbf{Data pre-processing:} Errors in datasets can be mitigated by removing anomalous samples based on clinical norms.
@@ -1263,19 +1263,19 @@ The integration of medical knowledge into \gls{ML} pipelines can occur at variou
     \item \textbf{Output evaluation:} \gls{ML} outputs can be integrated with clinical guidelines to filter predictions or verify consistency with domain knowledge.
 \end{itemize}
 %
-While these strategies are promising, they often do not reference the \gls{SKI} framework or its complementary \gls{SKE} paradigm~\cite{placeholder7}.
+While these strategies are promising, they often do not reference the \gls{SKI} framework or its complementary \gls{SKE} paradigm~\cite{DBLP:journals/csur/CiattoSAMO24}.
 %
 These paradigms have proven effective in other domains and hold potential for healthcare applications.
 %
-Preliminary experiments~\cite{placeholder12} suggest that further evaluation of \gls{SKI} methods, such as \gls{LTN}, is warranted.
+Preliminary experiments~\cite{sirocchiRuleML2024} suggest that further evaluation of \gls{SKI} methods, such as \gls{LTN}, is warranted.
 
 
 \subsection{Materials and methods}
 \label{subsec:materials-and-methods}
 %
-In this study, we utilize the \gls{PID} dataset~\cite{placeholder1}, a widely recognized benchmark in medical-related \gls{ML} research~\cite{placeholder2, placeholder3}.
+In this study, we utilize the \gls{PID} dataset~\footnote{\url{https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database}}, a widely recognized benchmark in medical-related \gls{ML} research~\cite{karegowda2011application,DBLP:journals/nca/ChangBXS23}.
 %
-We focus on the \gls{LTN} approach~\cite{placeholder4}, a \gls{SKI} method that combines structuring and constraining injection strategies.
+We focus on the \gls{LTN} approach~\cite{BadreddineGSS22}, a \gls{SKI} method that combines structuring and constraining injection strategies.
 %
 This section details the dataset, the \gls{LTN} methodology, and the metrics used to evaluate the impact of \gls{SKI} on predictive performance and \gls{QoS} aspects.
 
@@ -1312,7 +1312,7 @@ These guidelines are encoded into logic formulas as follows:
 \subsubsection{Logic Tensor Network for \gls{SKI}}
 \label{subsubsec:ltn-for-ski}
 %
-The \gls{LTN} framework~\cite{placeholder4} extends \gls{FOL} with fuzzy semantics, where formulas are interpreted as continuous truth values in the interval \([0, 1]\).
+The \gls{LTN} framework~\cite{BadreddineGSS22} extends \gls{FOL} with fuzzy semantics, where formulas are interpreted as continuous truth values in the interval \([0, 1]\).
 %
 This allows the definition of logic rules that are not strictly true or false but partially true, with predicates computed by neural networks.
 
@@ -1349,7 +1349,7 @@ Predictive performance is evaluated using standard metrics for binary classifica
 %
 \paragraph{Logic Adherence}
 %
-Inspired by fidelity metrics in the \gls{SKE} framework~\cite{placeholder5}, we propose a metric to assess adherence to clinical rules.
+Inspired by fidelity metrics in the \gls{SKE} framework~\cite{DBLP:journals/csur/CiattoSAMO24}, we propose a metric to assess adherence to clinical rules.
 %
 For each rule, we create a test set of instances satisfying the rule, assign labels based on the rule, and compute the model's accuracy on this subset.
 
@@ -1360,7 +1360,7 @@ For each rule, we create a test set of instances satisfying the rule, assign lab
 %
 This study focuses on robustness to data degradation, which occurs when input data is noisy, incomplete, or biased.
 %
-Robustness is quantified using a reproducible procedure where training data is perturbed, and the model's performance is evaluated on the perturbed data~\cite{placeholder6}.
+Robustness is quantified using a reproducible procedure where training data is perturbed, and the model's performance is evaluated on the perturbed data~\cite{DBLP:journals/aamas/AgiolloRMCO23}.
 %
 The robustness score \(\rho_{N, D}(D)\) of a predictor \(N\) trained on \(D\) is defined in \Cref{eq:robustness-score}.
 %
@@ -1424,7 +1424,7 @@ Statistical significance is assessed using the Wilcoxon signed-rank test with a 
 %
 To evaluate robustness, the experiments include multiple runs with different types and magnitudes of data perturbations.
 %
-The perturbations include noise addition, sample drop, and label flipping, following the methodology in~\cite{placeholder}.
+The perturbations include noise addition, sample drop, and label flipping, following the methodology in~\cite{DBLP:journals/aamas/AgiolloRMCO23}.
 %
 The noise magnitude \(\mu\) ranges from 0.1 to 1.0 in steps of 0.1, while the percentages of sample drop and label flipping vary from 0 to 0.9 in steps of 0.1.
 
@@ -1490,7 +1490,7 @@ The \gls{MLP} achieves \(82\%\) adherence to the first rule, outperforming class
 %
 The \gls{LTN} further improves adherence, achieving \(87\%\).
 %
-These results confirm that injecting domain knowledge through the \gls{LTN} modifies the model’s structure, aligning it more closely with medical knowledge and clinical protocols.
+These results confirm that injecting domain knowledge through the \gls{LTN} modifies the model's structure, aligning it more closely with medical knowledge and clinical protocols.
 
 %
 \subsubsection{Robustness Analysis}
@@ -1501,6 +1501,7 @@ Robustness refers to the model's ability to maintain performance under data pert
 This evaluation is critical in clinical settings, where data collection is often noisy or incomplete.
 %
 The robustness results are illustrated in \Cref{fig:robustness-analysis}.
+\note{TODO: generate again the figure because it is not vectorial and it has an error}
 %
 Under noise injection, the \gls{LTN} demonstrates the most stable performance across \gls{MCC}, balanced accuracy, F1-score, and recall.
 %
