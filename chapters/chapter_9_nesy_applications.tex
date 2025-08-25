@@ -1001,7 +1001,10 @@ Motivations for disapproval can include predefined facts, such as:
 \begin{itemize}
     \item \texttt{dislike:} The user dislikes the recommendation, prompting the agent to learn from this feedback.
     %
-    \item \texttt{not\_now:} The user does not want the recommendation at the moment, but may accept it in the future. In this case, the agent should not memorize the rejection.
+    \item \texttt{not\_now:} The user does not want the recommendation at the moment, but may accept it in the future.
+    %
+    In this case, the agent should not memorize the rejection.
+    %
 \end{itemize}
 
 
@@ -1195,8 +1198,324 @@ On the responder side, developers can override callbacks to control:
 This design ensures that \textsc{PyXMas} can be adapted to various application domains while maintaining a clear and modular structure.
 
 
+\section[\Gls{NeSy} \Gls{AI} for disease diagnosis and mnitoring]{\Gls{NeSy} \gls{AI} for supporting Chronic disease diagnosis and monitoring}
+\label{sec:nesy-ai-for-supporting-chronic-disease-diagnosis-and-monitoring}
+%
+\subsection{Motivations and Background}
+\label{subsec:motivations-and-background}
+%
+Telemedicine platforms are increasingly used for personal assistance, enabling patients to share their symptoms, medical history, and diagnostic data, such as medical images, lab results, or vital signs.
+%
+These platforms often leverage \gls{AI} data-driven models~\cite{placeholder1, placeholder2}.
+%
+While promising, accurate disease monitoring and diagnosis require more than identifying patterns in data.
+%
+The integration of \gls{AI} into clinical practice remains limited due to several challenges.
+%
+First, the performance of \gls{AI} models is often suboptimal, primarily due to insufficient dataset sizes for effectively training \gls{ML} algorithms~\cite{placeholder3}.
+%
+Second, even high-performing \gls{AI} models frequently operate as black boxes, making their outputs difficult to interpret.
+%
+This lack of transparency hinders adoption in clinical settings, where healthcare professionals require interpretable outputs to make informed decisions~\cite{placeholder4}.
+%
+Traditional clinical protocols, while validated and robust, also exhibit limitations.
+%
+They often fail to classify all clinical cases, leaving certain scenarios unresolved.
+%
+Additionally, these protocols do not leverage data analytics, which could uncover hidden patterns and provide valuable insights for decision-making.
 
-\section{NeSy \Gls{AI} for supporting chronic disease diagnosis and monitoring}\label{sec:nesy-ai-for-supporting-chronic-disease-diagnosis-and-monitoring}
+Combining data-driven and knowledge-based models has been identified as a promising solution to enhance \gls{ML} performance and improve explainability~\cite{placeholder5}.
+%
+This work focuses on neuro-symbolic \gls{AI}, specifically \gls{SKI}, which injects symbolic knowledge into sub-symbolic \gls{ML} models~\cite{placeholder7}.
+%
+Among the various \gls{SKI} methods, we evaluate the \gls{LTN} approach~\cite{placeholder8}.
+%
+The potential of this approach is demonstrated using the \gls{PID} dataset for diabetes prediction~\cite{placeholder9}.
+%
+We compare its performance against classical \gls{ML} models, including \gls{KNN}, \gls{LR}, \gls{DT}, \gls{RF}, and an uneducated \gls{MLP}.
+%
+Performance is evaluated based on criteria such as classification accuracy and robustness.
+
+Results indicate that classical \gls{ML} models struggle to achieve consistent performance.
+%
+In contrast, injecting domain knowledge into neural networks via the \gls{LTN} method significantly improves clinically relevant metrics, such as recall, balanced accuracy, F1 score, and Matthews Correlation Coefficient~\cite{MATTHEWS1975442}.
+%
+Moreover, \gls{LTN} enhances adherence to clinical knowledge, a critical requirement in the medical domain.
+%
+It also demonstrates high robustness against data manipulation, including noise injection, data dropping, and label flipping.
+
+\subsection{Knowledge integration in medicine}
+\label{subsec:knowledge-integration-in-medicine}
+
+The integration of medical knowledge into \gls{ML} pipelines can occur at various stages~\cite{placeholder5, placeholder11}.
+%
+\begin{itemize}
+    \item \textbf{Data pre-processing:} Errors in datasets can be mitigated by removing anomalous samples based on clinical norms.
+    %
+    Virtual samples adhering to medical knowledge can be generated to address insufficient or missing data.
+    %
+    \item \textbf{Feature engineering:} Novel features can be derived using mathematical or logical models informed by medical knowledge.
+    %
+    Feature selection can also be guided by prior knowledge.
+    %
+    \item \textbf{Model learning:} Rules can be incorporated into the model's loss function or architecture.
+    %
+    \item \textbf{Output evaluation:} \gls{ML} outputs can be integrated with clinical guidelines to filter predictions or verify consistency with domain knowledge.
+\end{itemize}
+%
+While these strategies are promising, they often do not reference the \gls{SKI} framework or its complementary \gls{SKE} paradigm~\cite{placeholder7}.
+%
+These paradigms have proven effective in other domains and hold potential for healthcare applications.
+%
+Preliminary experiments~\cite{placeholder12} suggest that further evaluation of \gls{SKI} methods, such as \gls{LTN}, is warranted.
+
+
+\subsection{Materials and Methods}
+\label{subsec:materials-and-methods}
+%
+In this study, we utilize the \gls{PID} dataset~\cite{placeholder1}, a widely recognized benchmark in medical-related \gls{ML} research~\cite{placeholder2, placeholder3}.
+%
+We focus on the \gls{LTN} approach~\cite{placeholder4}, a \gls{SKI} method that combines structuring and constraining injection strategies.
+%
+This section details the dataset, the \gls{LTN} methodology, and the metrics used to evaluate the impact of \gls{SKI} on predictive performance and \gls{QoS} aspects.
+
+%
+\subsubsection{Dataset and Knowledge}
+\label{subsubsec:dataset-and-knowledge}
+%
+The \gls{PID} dataset consists of 768 medical profiles of women aged 21 and above who underwent an oral glucose tolerance test.
+%
+The dataset includes features such as glucose and insulin concentrations, blood pressure (BP), skin thickness (ST), body mass index (BMI), diabetes pedigree function, number of pregnancies, and age.
+%
+The target variable is binary, indicating whether diabetes was diagnosed within five years.
+
+%
+Missing values are present in several attributes, including insulin (48.70\%), ST (29.56\%), BP (4.55\%), BMI (1.43\%), and glucose (0.65\%).
+%
+These missing values were imputed using the median value of the respective attribute.
+%
+The dataset is imbalanced, with 65.1\% of instances labeled as negative and 34.9\% as positive.
+
+%
+Public health guidelines on type-2 diabetes risks indicate that individuals with a high BMI (\(\geq 30\)) and high blood glucose levels (\(\geq 126\)) are at severe risk for diabetes.
+%
+Conversely, individuals with a normal BMI (\(\leq 25\)) and low blood glucose levels (\(\leq 100\)) are less likely to develop diabetes.
+%
+These guidelines are encoded into logic formulas as follows:
+%
+\begin{align}
+    \forall x.\, (\text{glucose}(x) \geq 125 \land \text{bmi}(x) \geq 30 \rightarrow \text{Diabetic}(x)), \label{eq:diabetes_rule1} \\
+    \forall x.\, (\text{glucose}(x) \leq 100 \land \text{bmi}(x) \leq 25 \rightarrow \neg \text{Diabetic}(x)). \label{eq:diabetes_rule2}
+\end{align}
+
+%
+\subsubsection{Logic Tensor Network for \gls{SKI}}
+\label{subsubsec:ltn-for-ski}
+%
+The \gls{LTN} framework~\cite{placeholder4} extends \gls{FOL} with fuzzy semantics, where formulas are interpreted as continuous truth values in the interval \([0, 1]\).
+%
+This allows the definition of logic rules that are not strictly true or false but partially true, with predicates computed by neural networks.
+
+%
+In this study, we use \gls{LTN} to inject the knowledge encoded in Equations~\eqref{eq:diabetes_rule1} and~\eqref{eq:diabetes_rule2}.
+%
+The predicate \(\text{Diabetic}(x)\) is modeled as a neural predicate backed by a feed-forward \gls{NN} with three hidden layers.
+%
+The NN outputs a real number in \([0, 1]\), representing the truth value of \(\text{Diabetic}(x)\) for an input \(x \in \mathbb{R}^8\).
+
+%
+The training process maximizes the truth value of the logic formulas while considering the available data.
+%
+This is achieved by minimizing a loss function that penalizes violations of the injected knowledge.
+%
+The predicates \(\text{glucose}(x)\) and \(\text{bmi}(x)\) are grounded to the actual values in the dataset, while the following dummy formulas are added to supervise the training:
+%
+\begin{align}
+    \forall x.\, (\text{outcome}(x) = \text{diabetes} \rightarrow \text{Diabetic}(x)), \\
+    \forall x.\, (\text{outcome}(x) = \text{healthy} \rightarrow \neg \text{Diabetic}(x)).
+\end{align}
+
+%
+\subsubsection{Evaluation Metrics}
+\label{subsubsec:evaluation-metrics}
+%
+To assess the impact of \gls{SKI}, we evaluate both predictive performance and \gls{QoS} metrics.
+
+%
+\paragraph{Performance Metrics}
+%
+Predictive performance is evaluated using standard metrics for binary classification, including accuracy, precision, recall, F1-score, balanced accuracy (BA), and the \gls{MCC}.
+
+%
+\paragraph{Logic Adherence}
+%
+Inspired by fidelity metrics in the \gls{SKE} framework~\cite{placeholder5}, we propose a metric to assess adherence to clinical rules.
+%
+For each rule, we create a test set of instances satisfying the rule, assign labels based on the rule, and compute the model's accuracy on this subset.
+
+%
+\paragraph{Quality of Service}
+%
+\gls{QoS} metrics evaluate non-functional aspects such as robustness and complexity.
+%
+This study focuses on robustness to data degradation, which occurs when input data is noisy, incomplete, or biased.
+%
+Robustness is quantified using a reproducible procedure where training data is perturbed, and the model's performance is evaluated on the perturbed data~\cite{placeholder6}.
+%
+The robustness score \(\rho_{N, D}(D)\) of a predictor \(N\) trained on \(D\) is defined in \Cref{eq:robustness-score}.
+%
+The robustness gain \(R_{N, D}(I)\) of an injection mechanism \(I\) is computed as shown in \Cref{eq:robustness-gain}.
+%
+A value \(R_{N, D}(I) > 1\) indicates improved robustness, while \(R_{N, D}(I) < 1\) indicates reduced robustness.
+
+
+\subsubsection{Experimental Design}
+\label{subsubsec:experimental-design}
+%
+The experiments are designed to evaluate the impact of the \gls{LTN} approach on the performance of \gls{ML} models in a clinical context.
+%
+The implementation of \gls{LTN} used in this study is publicly available\footnote{\url{https://github.com/pikalab-unibo/experiments-ltn-2024}}, along with the code for replicating the experiments.
+%
+The evaluation focuses on three main aspects:
+%
+\begin{enumerate}
+    \item The predictive performance of \gls{ML} models, with particular attention to recall and F1-score, given the medical domain's sensitivity to false negatives.
+    %
+    \item The adherence of \gls{ML} models to established medical protocols, assessing whether the educated model aligns more closely with the injected knowledge compared to the uneducated one.
+    %
+    \item The robustness of \gls{ML} models to data degradation, analyzing whether the performance of the educated model degrades less than that of the uneducated model under perturbed data.
+\end{enumerate}
+%
+To ensure a fair comparison, a grid search is performed to optimize the hyperparameters of all models.
+%
+The best hyperparameters for the baseline models are as follows:
+%
+\begin{itemize}
+    \item \gls{KNN}: \(k = 7\), L1 distance.
+    %
+    \item \gls{DT}: Entropy as the split criterion, maximum depth of 10.
+    %
+    \item \gls{RF}: 50 trees, maximum depth of 20, entropy as the criterion, and a minimum of 5 samples per leaf.
+    %
+    \item \gls{LR}: Regularization parameter of 10, maximum iterations of 1,000, and \texttt{liblinear} as the solver.
+\end{itemize}
+%
+The uneducated \gls{MLP} and the educated \gls{LTN} models share the same feedforward \gls{NN} architecture:
+%
+\begin{itemize}
+    \item An input layer with 8 neurons, one for each feature in the dataset, using the Leaky Rectified Linear Unit (LeakyReLU) activation function and batch normalization.
+    %
+    \item Three hidden layers with 256, 128, and 64 neurons, respectively, each using LeakyReLU and batch normalization.
+    %
+    \item An output layer with a single neuron and a sigmoid activation function.
+\end{itemize}
+%
+The training of the \gls{LTN} model consists of two phases.
+%
+First, the uneducated model is trained for 50 epochs using the Adam optimizer with a learning rate of \(10^{-4}\), weight decay of \(10^{-4}\), a batch size of 32, and a binary cross-entropy loss function.
+%
+An early stopping criterion is applied, with a patience of 5 epochs.
+%
+Second, the knowledge is injected, and the model is fine-tuned for 200 epochs using the same early stopping criterion but with a reduced learning rate of \(10^{-6}\).
+%
+All models are evaluated using multiple runs of a 50--50 train-test split, with performance metrics averaged over 50 runs.
+%
+Statistical significance is assessed using the Wilcoxon signed-rank test with a significance level of 0.05.
+%
+To evaluate robustness, the experiments include multiple runs with different types and magnitudes of data perturbations.
+%
+The perturbations include noise addition, sample drop, and label flipping, following the methodology in~\cite{placeholder}.
+%
+The noise magnitude \(\mu\) ranges from 0.1 to 1.0 in steps of 0.1, while the percentages of sample drop and label flipping vary from 0 to 0.9 in steps of 0.1.
+
+
+\subsection{Results and Discussion}
+\label{subsec:results-discussion}
+%
+We now present and discuss the results obtained for predictive performance metrics, logical adherence, and robustness.
+
+%
+\subsubsection{Performance Metrics}
+\label{subsubsec:performance-metrics}
+%
+\input{tables/ski-diabetes-performance-metrics}
+%
+The performance metrics are summarized in \Cref{tab:ski-diabetes-performance-metrics}.
+%
+While \gls{LR} achieves the highest accuracy, this metric is less reliable for imbalanced datasets.
+%
+In this study, the minority class, representing diabetic instances, is the primary focus.
+%
+The \gls{LTN} model achieves the highest scores in balanced accuracy, F1-score, and \gls{MCC}.
+%
+These metrics are more suitable for evaluating clinical models as they account for class imbalance.
+%
+The \gls{LTN} also achieves the highest recall value of \(0.725\), which is critical in clinical settings.
+%
+Recall measures the proportion of diabetic patients correctly identified, minimizing false negatives.
+%
+False negatives can lead to missed diagnoses and untreated conditions, which are particularly problematic in healthcare.
+%
+In contrast, \gls{KNN} and \gls{DT} achieve recall values of \(0.583\) and \(0.580\), respectively, indicating their limited ability to detect positive cases.
+%
+\gls{LR} achieves a recall of \(0.560\), while \gls{RF} slightly improves with a recall of \(0.592\).
+%
+Although the \gls{MLP} shows some improvement with a recall of \(0.66\), the injection of domain knowledge via the \gls{LTN} yields a significant performance boost.
+%
+Precision, while highest for \gls{LR}, is less emphasized in clinical contexts, as false positives typically lead to follow-up testing with minimal consequences.
+%
+These results highlight the limitations of classical \gls{ML} models in achieving sufficient recall for clinical deployment.
+%
+The superior recall of the \gls{LTN} can be attributed to its incorporation of logic formulas, which effectively utilize background knowledge.
+%
+By grounding predictions in logical structures, the \gls{LTN} identifies patterns that simpler models may overlook.
+
+%
+\subsubsection{Logical Adherence}
+\label{subsubsec:logical-adherence}
+%
+\input{tables/ski-diabetes-logic-adherence}
+%
+In clinical applications, models must not only make accurate predictions but also align with established medical protocols.
+%
+Adherence to clinical guidelines enhances trust and reliability, increasing the likelihood of adoption in practice.
+%
+The logical adherence results are presented in \Cref{tab:logic-adherence}.
+%
+All models, except for \gls{DT}, fully comply with the second rule, which classifies healthy patients.
+%
+However, the primary focus is on adherence to the first rule, which identifies diabetic patients.
+%
+The \gls{MLP} achieves \(82\%\) adherence to the first rule, outperforming classical \gls{ML} models such as \gls{RF}, which achieves \(76\%\).
+%
+The \gls{LTN} further improves adherence, achieving \(87\%\).
+%
+These results confirm that injecting domain knowledge through the \gls{LTN} modifies the model’s structure, aligning it more closely with medical knowledge and clinical protocols.
+
+%
+\subsubsection{Robustness Analysis}
+\label{subsubsec:robustness-analysis}
+%
+Robustness refers to the model's ability to maintain performance under data perturbations, such as noise, missing data, or label flipping.
+%
+This evaluation is critical in clinical settings, where data collection is often noisy or incomplete.
+%
+The robustness results are illustrated in \Cref{fig:robustness-analysis}.
+%
+Under noise injection, the \gls{LTN} demonstrates the most stable performance across \gls{MCC}, balanced accuracy, F1-score, and recall.
+%
+Performance declines significantly only at noise levels above \(0.5\), which are uncommon in clinical environments.
+%
+For label flipping, the \gls{LTN} shows resilience up to a flipping rate of \(0.6\), with recall remaining virtually unchanged.
+%
+A notable drop is observed only at a flipping rate of \(0.7\), which is rare in practice.
+%
+In the case of data dropping, all models maintain stable performance up to a drop rate of \(0.8\).
+%
+However, the \gls{LTN} uniquely preserves recall, highlighting its ability to recover positive cases even with missing data.
+%
+These findings underscore the advantages of knowledge injection via the \gls{LTN}, which enhances robustness in complex clinical data scenarios.
+
 
 %\subsection{\Gls{LLM}-based solutions for healthcare chatbots: a comparative analysis}\label{subsec:llm-based-solutions-for-healthcare-chatbots-a-comparative-analysis}
 

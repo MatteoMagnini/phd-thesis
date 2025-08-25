@@ -1,0 +1,32 @@
+\begin{table*}[]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+        \begin{tabular}{|l|c|c|c|c|c|c|}
+            \hline
+            \textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1 Score} & \textbf{Balanced Accuracy} & \textbf{MCC} \\
+            \hline
+            \gls{KNN}  & 0.738 $\pm$  0.02 & 0.636 $\pm$  0.03 & 0.583 $\pm$  0.05 & 0.607 $\pm$  0.03 & 0.702 $\pm$  0.02 & 0.413 $\pm$  0.05 \\
+            \hline
+            \gls{DT}   & 0.697 $\pm$  0.02 & 0.565 $\pm$  0.03 & 0.580 $\pm$  0.05 & 0.571 $\pm$  0.03 & 0.670 $\pm$  0.02 & 0.339 $\pm$  0.05 \\
+            \hline
+            \gls{RF}   & 0.758 $\pm$  0.02 & 0.677 $\pm$  0.03 & 0.592 $\pm$  0.05 & 0.630 $\pm$  0.03 & 0.720 $\pm$  0.02 & 0.456 $\pm$  0.04 \\
+            \hline
+            \gls{LR}   & \textbf{0.763 $\pm$  0.02 }& \textbf{0.702 $\pm$  0.04} & 0.560 $\pm$  0.04 & 0.622 $\pm$  0.03 & 0.716 $\pm$  0.02 & 0.460 $\pm$  0.04 \\
+            \hline
+            \gls{MLP}  & 0.754 $\pm$  0.02 & 0.644 $\pm$  0.03 & 0.665 $\pm$  0.05 & 0.653 $\pm$  0.03 & 0.733 $\pm$  0.02 & 0.464 $\pm$  0.04 \\
+            \hline
+            \gls{LTN}  & 0.747 $\pm$  0.02 & 0.620 $\pm$  0.03 & \textbf{0.725 $\pm$  0.05} & \textbf{0.666 $\pm$  0.02} & \textbf{0.742 $\pm$  0.02} & \textbf{0.471 $\pm$  0.03} \\
+            \hline
+        \end{tabular}
+    \end{adjustbox}
+%    \vspace{0.5em}
+    \caption[Performance metrics for \gls{ML} models on the \gls{PID} Dataset]{
+      Performance metrics (mean $\pm$ std) for \gls{ML} models.
+      %
+      The best scores are highlighted in bold.
+      %
+      According to the Wilcoxon signed-rank test with p-value=0.05, the \gls{LTN} model outperforms all other models in terms of Recall, F1 Score, and Balanced Accuracy.
+    }
+    \label{tab:ski-diabetes-performance-metrics}
+%    \vspace{-3em}
+\end{table*}
