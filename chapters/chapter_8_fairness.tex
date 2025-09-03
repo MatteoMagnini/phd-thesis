@@ -518,22 +518,7 @@ Continuous variants are omitted as their computation follows identical steps.
 %
 For simplicity, the weights are chosen based on the frequencies of the sensitive attribute values, which does not affect the computational complexity.
 
-\begin{algorithm}
-    \caption{Weighted Demographic Parity (returns $wdp$)}
-    \label{alg:wdp}
-    \begin{algorithmic}[1]
-        \REQUIRE $h$ \hfill predictive model
-        \REQUIRE $A$ \hfill sensitive attribute
-        \REQUIRE $batch$ \hfill dataset batch
-        \STATE $wdp \leftarrow 0$
-        \STATE $estimated \leftarrow \mathbb{E}[h(batch)]$
-        \FORALL{$a$ in $A$}
-            \STATE $estimated\_a \leftarrow \mathbb{E}[h(batch) \mid A = a]$
-            \STATE $p\_a \leftarrow \mathbb{P}[A = a]$
-            \STATE $wdp \leftarrow wdp + \left( \| estimated - estimated\_a \| \cdot p\_a \right)$
-        \ENDFOR
-    \end{algorithmic}
-\end{algorithm}
+\input{algorithms/wdp}
 
 %
 \Cref{alg:wdp} computes the \gls{WDP} metric for a single batch.
@@ -544,20 +529,7 @@ Lines 4 and 5 also have a cost of \(O(B)\), while line 6 has a constant cost.
 %
 These steps are repeated for each value of \(A\), resulting in a total computational cost of \(O(B) + 2O(BN) + O(N) = O(BN)\), where \(N\) is the number of distinct values of \(A\).
 
-\begin{algorithm}
-    \caption{Weighted Disparate Impact (returns $wdi$)}
-    \label{alg:wdi}
-    \begin{algorithmic}[1]
-        \REQUIRE $h$, $A$, $batch$ \hfill as in \Cref{alg:wdp}
-        \STATE $wdi \leftarrow 0$
-        \FORALL{$a$ in $A$}
-            \STATE $est\_a \leftarrow \mathbb{E}[h(batch) \mid A = a]$
-            \STATE $est\_not\_a \leftarrow \mathbb{E}[h(batch) \mid A \neq a]$
-            \STATE $p\_a \leftarrow \mathbb{P}[A = a]$
-            \STATE $wdi \leftarrow wdi + \left( \min\left\{ \frac{est\_a}{est\_not\_a}, \frac{est\_not\_a}{est\_a} \right\} \cdot p\_a \right)$
-        \ENDFOR
-    \end{algorithmic}
-\end{algorithm}
+\input{algorithms/wdi}
 
 %
 \Cref{alg:wdi} computes the \gls{WDI} metric.
@@ -566,21 +538,7 @@ Lines 3, 4, and 5 have a cost of \(O(B)\), while line 6 has a constant cost.
 %
 These steps are repeated \(N\) times, resulting in a total computational cost of \(3O(BN) + O(N) = O(BN)\).
 
-\begin{algorithm}
-    \caption{Weighted Equalized Odds (returns $weo$)}
-    \label{alg:weo}
-    \begin{algorithmic}[1]
-        \REQUIRE $h$, $A$, $batch$ \hfill as in \Cref{alg:wdp}, \hfill $Y$: ground truth
-        \STATE $weo \leftarrow 0$
-        \STATE $est\_y\_i \leftarrow \mathbb{E}[h(batch) \mid Y = i]$ \hfill \(\forall i \in \{0, 1\}\)
-        \FORALL{$a$ in $A$}
-            \STATE $est\_a\_y\_i \leftarrow \mathbb{E}[h(batch) \mid A = a, Y = i]$ \hfill \(\forall i \in \{0, 1\}\)
-            \STATE $p\_a \leftarrow \mathbb{P}[A = a]$
-            \STATE $weo\_i \leftarrow \| est\_a\_y\_i - est\_y\_i \|$ \hfill \(\forall i \in \{0, 1\}\)
-            \STATE $weo \leftarrow weo + \left( (weo\_0 + weo\_1) \cdot p\_a \right)$
-        \ENDFOR
-    \end{algorithmic}
-\end{algorithm}
+\input{algorithms/weo}
 
 %
 \Cref{alg:weo} computes the \gls{WEO} metric for binary classification tasks.

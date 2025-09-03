@@ -1,0 +1,36 @@
+\begin{algorithm}
+    \captionsetup{font=\algCaptionSize}
+    \caption{Merges syntactically and semantically similar individuals from the given ontology's classes}
+    \label{alg:merge}
+    \begin{algorithmic}[1]\algCodeSize
+        \Require $\relset{O} = \relset{C} \cup \relset{P} \cup \relset{X}$: partially populated ontology
+        \Require $\relset{T}_{M}$: indivuals merging query templates
+        \Require $\relset{L}$: LLM oracle
+        \Require $\concept{R} \in \relset{C}$: root concept within which merge should occur
+        \Ensure $\relset{X}'$ contains no duplicated individuals
+        \medskip
+        \Function{\merge}{$\relset{O}, \relset{T}_{M}, \relset{L}, \concept{R}$}
+            \State $\relset{X}' \gets \relset{X}$
+            \ForAll{$\concept{C} \in \relset{C} \suchThat \concept{C} \sqsubset \concept{R}$}
+                \State $\mathcal{D} \gets \emptyset$
+                \ForAll{$\instance{i}, \instance{j} : \concept{C} \suchThat ( \instance{i}, \instance{j} ) \in \relset{X}' \times \relset{X}'$}
+                    \If{$\Call{\synSimilar}{\instance{i}, \instance{j}}$}
+                        \State $\mathcal{D} \gets \mathcal{D} \cup \{\{\instance{i}, \instance{j}\}\}$
+                    \EndIf
+                \EndFor
+                \ForAll{$\{ \instance{i}, \instance{j} \} \in \mathcal{D}$}
+                    \ForAll{$\mathit{t} \in \relset{T}_{M}$}
+                    \label{line:next-couple}
+                        \State $\mathit{q} \gets \mathit{t}/\{ \var{ind_1}\!\mapsto\!\instance{i}, \var{ind_2}\!\mapsto\!\instance{j},
+                            \var{class}\!\mapsto\!\concept{C} \}$
+                        \State $\mathit{text} \gets \Call{\askOracle}{\relset{L}, \mathit{q}}$
+                        \If{$\Call{\extractBinary}{text}$}
+                            \State $\relset{X}' \gets \Call{\mergeInst}{i, j}$
+                            \State \Break{going to line \ref{line:next-couple}}
+                        \EndIf
+                    \EndFor
+                \EndFor
+            \EndFor
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}

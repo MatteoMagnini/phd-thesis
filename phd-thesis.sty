@@ -29,7 +29,7 @@
 \RequirePackage{booktabs}
 \RequirePackage[font={small},labelfont=bf]{caption}
 \RequirePackage{algorithm}
-\RequirePackage[noend]{algorithmic}
+\RequirePackage{algpseudocode}
 
 \lstset{breaklines=true}
 
@@ -38,6 +38,35 @@
 \newcommand{\pred}[1]{\mathit{#1}}
 \newcommand{\var}[1]{\mathit{#1}}
 \newcommand{\scinum}[2]{$#1 \cdot 10^{#2}$}
+
+\newcommand{\llmfkg}{\textsc{KGFiller}}
+
+\newcommand{\concept}[1]{\ensuremath{\mathit{\expandafter\MakeUppercase#1}}}
+\newcommand{\instance}[1]{\ensuremath{\mathtt{\MakeLowercase#1}}}
+\newcommand{\relation}[1]{\ensuremath{\mathsf{\MakeLowercase#1}}}
+\newcommand{\relset}[1]{\ensuremath{\mathcal{\expandafter\MakeUppercase#1}}}
+\newcommand{\relobj}[1]{\ensuremath{\mathbb{\expandafter\MakeUppercase#1}}}
+\newcommand{\str}[1]{\texttt{"#1"}}
+\newcommand{\suchThat}{\ensuremath{~ \text{s.t.} ~}}
+\newcommand{\Break}[1][{}]{\textbf{break} #1}
+\newcommand{\addToClass}{\textsc{AddToClass}}
+\newcommand{\askOracle}{\textsc{AskOracle}}
+\newcommand{\extractNames}{\textsc{ExtractNames}}
+\newcommand{\extractBinary}{\textsc{ExtractBinary}}
+\newcommand{\getDomain}{\textsc{GetDomain}}
+\newcommand{\getRange}{\textsc{GetRange}}
+\newcommand{\populate}{\textsc{Populate}}
+\newcommand{\relate}{\textsc{Relate}}
+\renewcommand{\merge}{\textsc{Merge}}
+\newcommand{\redistribute}{\textsc{Redistribute}}
+\newcommand{\synSimilar}{\textsc{Syn\-tac\-ti\-cal\-lySi\-mi\-lar}}
+\newcommand{\semSimilar}{\textsc{SemSimilar}}
+\newcommand{\mergeInst}{\textsc{MergeIndividuals}}
+
+\newcommand{\algCaptionSize}{small}
+\newcommand{\algCodeSize}{\scriptsize}
+\setlist{noitemsep} % or \setlist{noitemsep} to leave space around whole list
+
 
 \newtheorem{definition}{Definition}[chapter]
 \crefname{definition}{definition}{definitions}

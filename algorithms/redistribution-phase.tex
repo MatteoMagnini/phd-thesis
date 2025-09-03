@@ -1,0 +1,35 @@
+\begin{algorithm}
+    \captionsetup{font=\algCaptionSize}
+    \caption{Redistributes individuals from the given ontology's classes, in such a way that each individual is assigned to the most specific class available}
+    \label{alg:redistribute}
+    \begin{algorithmic}[1]\algCodeSize
+        \Require $\relset{O} = \relset{C} \cup \relset{P} \cup \relset{X}$: partially populated ontology
+        \Require $\relset{T}_{B}$: relation seeking query templates
+        \Require $\relset{L}$: LLM oracle
+        \Require $\concept{R} \in \relset{C}$: root concept within which redistribution should occur
+        \Ensure $\relset{X}'$ contains the different assignments of individuals to classes
+        \medskip
+        \Function{\redistribute}{$\relset{O}, \relset{T}_B, \relset{L}, \concept{R}$}
+            \State $\relset{X}' \gets \relset{X}$
+            \State $\relset{S} \gets \{ \concept{S} \in \relset{C} \mid \concept{S} \sqsubset \concept{R} \}$
+            \ForAll{$(\instance{i} : \concept{R}) \in \relset{X}'$}
+                \State $\concept{B} \gets \concept{R}$
+                \ForAll{$\mathit{t} \in \relset{T}_{B}$}
+                    \State $\mathit{q} \gets \mathit{t}/\{ \var{individual} \mapsto \instance{i}, \var{classes} \mapsto \relset{S} \}$
+                    \State $\mathit{text} \gets \Call{\askOracle}{\relset{L}, \mathit{q}}$
+                    \ForAll{$\concept{C} \in \Call{\extractNames}{\mathit{text}}$}
+                        \State $\concept{B} \gets \concept{C}$
+                        \State \Break{going to line \ref{line:first-result}}
+                    \EndFor
+                \EndFor
+                \State $\relset{O}' \gets \relset{C} \cup \relset{P} \cup \relset{X}'$ \label{line:first-result}
+                \State $\relset{X}' \gets \Call{\addToClass}{\relset{O}', \instance{i}, \concept{B}}$
+            \EndFor
+            \ForAll{$\concept{C} \in \relset{C} \suchThat \concept{C} \sqsubset \concept{R} \wedge \concept{C} \neq \bot$}
+                \State $\relset{O}' \gets \relset{C} \cup \relset{P} \cup \relset{X}'$
+                \State $\relset{X}' \gets \Call{\redistribute}{\relset{O}', \relset{T}_{B}, \relset{L}, \concept{C}}$
+            \EndFor
+            \State \Return $\relset{X}'$
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}

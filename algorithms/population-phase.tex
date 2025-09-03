@@ -1,0 +1,29 @@
+\begin{algorithm}
+    \captionsetup{font=\algCaptionSize}
+    \caption{Populates the given ontology with novel individuals queried from an LLM oracle}
+    \label{alg:populate}
+    \begin{algorithmic}[1]\algCodeSize
+        \Require $\relset{O} = \relset{C} \cup \relset{P} \cup \relset{X}$: partially populated ontology
+        \Require $\relset{T}_{I}$: individual seeking query templates
+        \Require $\relset{L}$: LLM oracle
+        \Require $\concept{R} \in \relset{C}$: root concept to be populated
+        \Ensure $\relset{X}'$ contains novel individuals, assigned to the classes in $\relset{C}$
+        \medskip
+        \Function{\populate}{$\relset{O}, \relset{T}_I, \relset{L}, \concept{R}$}
+            \State $\relset{X}' \gets \relset{X}$
+            \ForAll{$\concept{C} \in \relset{C} \suchThat \concept{C} \sqsubset \concept{R} \wedge \concept{C} \neq \bot$}
+                \State $\relset{O}' \gets \relset{C} \cup \relset{P} \cup \relset{X}'$
+                \State $\relset{X}' \gets \Call{\populate}{\relset{O}', \relset{T}_{I}, \relset{L}, \concept{C}}$
+            \EndFor
+            \ForAll{$\mathit{t} \in \relset{T}_{I}$}
+                \State $\mathit{q} \gets \mathit{t}/\{ \var{class} \mapsto \concept{R} \}$
+                \State $\mathit{text} \gets \Call{\askOracle}{\relset{L}, \mathit{q}}$
+                \ForAll{$\instance{i} \in \Call{\extractNames}{\mathit{text}}$}
+                    \State $\relset{O}' \gets \relset{C} \cup \relset{P} \cup \relset{X}'$
+                    \State $\relset{X}' \gets \Call{\addToClass}{\relset{O}', \instance{i}, \concept{R}}$
+                \EndFor
+            \EndFor
+            \State \Return $\relset{X}'$
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}

@@ -1,0 +1,14 @@
+\begin{algorithm}
+    \caption{Weighted Disparate Impact (returns $wdi$)}
+    \label{alg:wdi}
+    \begin{algorithmic}[1]
+        \Require $h$, $A$, $batch$ \hfill as in \Cref{alg:wdp}
+        \State $wdi \leftarrow 0$
+        \ForAll{$a$ in $A$}
+            \State $est\_a \leftarrow \mathbb{E}[h(batch) \mid A = a]$
+            \State $est\_not\_a \leftarrow \mathbb{E}[h(batch) \mid A \neq a]$
+            \State $p\_a \leftarrow \mathbb{P}[A = a]$
+            \State $wdi \leftarrow wdi + \left( \min\left\{ \frac{est\_a}{est\_not\_a}, \frac{est\_not\_a}{est\_a} \right\} \cdot p\_a \right)$
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
