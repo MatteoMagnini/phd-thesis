@@ -1,0 +1,23 @@
+\begin{table}
+    \caption{
+        Size (number of parameters) and experiments setup of the different LLMs used in \llmfkg{}.
+        Values reported with $^{\ast}$ are an educated estimate
+        -- not confirmed --,
+        as the corresponding models have not be fully disclosed to the public.
+    }
+    \resizebox{\columnwidth}{!}{
+    \centering
+    \begin{tabular}{l | c c c c c} \toprule
+        LLM & size [B] & max tokens & max retries & back-off time [s] & temperature \\ \midrule
+        GPT 3.5 Turbo \cite{gpt3-2020} & 375$^{\ast}$ & 1000 & 2 & 30 & 0.7 \\
+        GPT 4 Turbo \cite{gpt4} & 1500$^{\ast}$ & 1000 & 2 & 30 & 0.7 \\ \midrule
+        Openchat \cite{wang2023openchat} & 13 & 1000 & 2 & 30 & 0.1 \\
+        Llama2 \cite{llama2-2023} & 70 & 1000 & 2 & 30 & 0.1 \\
+        Mistral \cite{mistral} & 7 & 1000 & 2 & 30 & 0.1 \\
+        Gemma \cite{gemini} & 7 & 1000 & 2 & 30 & 0.1 \\ \midrule
+        Mixtral \cite{mixtral} & 56 & 1000 & 2 & 30 & 0.1 \\
+        Nous Hermes & 56 & 1000 & 2 & 30 & 0.1 \\ \bottomrule
+    \end{tabular}
+    }
+    \label{tab:llms_sizes}
+\end{table}

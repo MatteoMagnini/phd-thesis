@@ -567,4 +567,202 @@ To detect and merge all duplicated individuals in an ontology $\relset{O}$, the 
 This ensures that all classes in $\relset{O}$ are systematically visited, and any semantic duplicates are resolved.
 
 
+\paragraph{Remarks}
+%
+\Cref{alg:merge} employs a post-order exploration strategy.
+%
+However, the choice of exploration strategy is \emph{not} critical for the merging phase.
+%
+Alternative strategies can be used, provided they visit all direct and indirect subclasses of $\concept{R}$.
+
+%
+The \synSimilar{} function plays a crucial role in determining whether two instances, $\instance{i}$ and $\instance{j}$, are sufficiently similar to be considered for merging.
+%
+Its implementation significantly impacts the overall performance of the \merge{} function~\cite{placeholder}.
+%
+% For example, one could define similarity based on shared substrings longer than a threshold $\lambda$.
+% %
+% Empirically, $\lambda$ can be set to 4 characters.
+
+%
+Regarding the merging phase, one might question why entity alignment approaches~\cite{ZhaoTkde2022} are not used.
+%
+While effective for identifying similar instances across different \glspl{KG}, these methods typically require additional domain-specific data~\cite{ChenIjcai2018,XuAcl2019}.
+%
+This is because entity alignment systems rely on ad-hoc \gls{ML} models trained for the alignment task, introducing extra complexity.
+
+%
+In contrast, our approach leverages the same \gls{LLM} oracle for both ontology population and duplicate identification.
+%
+Although not entirely error-free, this method avoids additional computational overhead during the population phase.
+%
+It also eliminates the need for users to provide extra domain-specific data or train additional models, simplifying the overall process.
+%
+
+
+
+\subsection{Case Study and Experiments}
+\label{subsec:case-study}
+
+This section presents a case study designed to empirically validate \llmfkg{}.
+
+%
+\subsubsection{Experimental Setup}
+\label{subsubsec:experimental-setup}
+%
+The experimental setup involves designing a non-trivial ontology, as detailed in \Cref{ssec:ontology}.
+%
+The ontology includes a class hierarchy and a set of properties, which are populated using \llmfkg{}.
+%
+We fine-tune specific query templates (\Cref{ssec:query-templates}) and utilize various \glspl{LLM} from different families and technologies (\Cref{ssec:llms-oracles}).
+%
+This process generates a set of populated ontologies, all sharing the same structure but differing in their content.
+%
+The populated ontologies are analyzed and compared to evaluate the performance of \llmfkg{} and the impact of the chosen \gls{LLM} on the quality of the population process.
+%
+To achieve this, we define a taxonomy of errors and a set of metrics (\Cref{ssec:performance-metrics}) to measure the quality of the generated ontologies.
+%
+The evaluation is performed through a manual inspection of the populated ontologies, examining each individual and relationship (\Cref{ssec:results}).
+
+%
+Testing \llmfkg{} on a custom ontology, rather than a publicly available one, offers several advantages.
+%
+First, it allows precise control over the experiment's complexity and content.
+%
+Second, it avoids potential biases where \glspl{LLM} perform well due to prior exposure to the ontology during training.
+%
+However, this approach lacks ground truth data, making automatic validation infeasible.
+%
+Thus, manual inspection is necessary to identify errors and ensure the correctness of the algorithm's output.
+
+%
+\subsubsection{Code and Data}
+\label{subsubsec:code-and-data}
+%
+The experiments are conducted using a Python implementation of \llmfkg{}, which is publicly available on GitHub\footnote{\url{https://github.com/Chistera4-Expectation/kg-filler}}.
+%
+The experimental results are also available on a dedicated repository\footnote{\url{https://github.com/Chistera4-Expectation/knowledge-graphs/branches}}, where each Git branch corresponds to a specific experiment.
+%
+The \texttt{main} branch contains the initial ontology, which includes only class and property definitions without any individuals.
+
+%
+For reproducibility, each experiment branch includes the populated ontology and the cache of query--response pairs from the \gls{LLM}.
+%
+This allows others to inspect the exact queries and responses and reproduce the experiments deterministically.
+%
+Additionally, the experiments are automated, with each commit in the branch corresponding to a single operation performed by \llmfkg{} (e.g., populating a class or property).
+%
+This commit history provides a detailed sequence of operations for each experiment.
+
+%
+\subsubsection{Ontology}
+\label{subsubsec:kgfiller-ontology}
+%
+The ontology is designed in the \emph{nutritional} domain, as required by the \expectation{} project~\cite{expectation-extraamas2021}.
+%
+In \expectation{}, the ontology serves as the foundation for a nutritional recommender system, which suggests recipes based on users' dietary needs and preferences~\cite{skerecommender-cmbp235}.
+%
+Although the recommender system is outside the scope of this work, this context helps clarify the ontology design choices.
+
+%
+The ontology focuses on representing \emph{recipes} and their \emph{ingredients}.
+%
+It categorizes \emph{edible} items into several subclasses to accommodate diverse dietary requirements and preferences.
+%
+\Cref{fig:onto} illustrates the class hierarchy, which is structured as a directed acyclic graph (DAG).
+%
+The root class is \concept{Edible}, with subclasses such as \concept{Recipe}, which further branches into various cuisines (e.g., \concept{Italian}, \concept{Chinese}).
+
+%
+Some classes include an annotation property, \relation{fancyName}, to provide a more descriptive label for the class (\Cref{par:fancyname}).
+%
+Another key property is $\relation{ingredientOf} : \concept{Edible} \times \concept{Recipe}$, which links recipes to their ingredients.
+%
+Initially, the ontology is a skeleton containing no individuals.
+
+%
+\subsubsection{Query Templates}
+\label{subsubsec:query-templates}
+%
+To query the \gls{LLM} oracle, we define and fine-tune specific query templates.
+
+%
+The set of individual-seeking templates, $\relset{T}_{I}$, is defined as:
+%
+\str{$ ( $instances$ \mid $examples$ ) $ list for class $\var{class} ( $, names only$ )? $}.
+%
+Here, $(A|B)$ denotes two template variants, one with $A$ and one with $B$, while $(A)?$ indicates optional inclusion of $A$.
+
+%
+The set of relation-seeking templates, $\relset{T}_{R}$, includes:
+%
+\str{ingredient list for $\var{individual}$, names only}.
+%
+This template uses a hard-coded property name for natural phrasing.
+
+%
+The set of best-match templates, $\relset{T}_{B}$, is defined as:
+%
+\str{most adequate class for $\var{individual}$ among: $\var{classes}$. concise}.
+
+%
+Finally, the set of individual-merging templates, $\relset{T}_{M}$, is:
+%
+\str{in the $\var{class}$ class, should instances $\var{ind_1}$ and $\var{ind_2}$ be merged together as semantic and ontologic duplicates? yes or no answer only}.
+
+%
+\subsubsection{\gls{LLM} Oracles}
+\label{subsubsec:llms-oracles}
+%
+To evaluate the impact of \gls{LLM} quality on \llmfkg{}, we integrate several state-of-the-art \glspl{LLM}.
+%
+These include both open-source models (e.g., OpenChat, Llama) and closed-source models (e.g., GPT), as well as \gls{MoE} models like Mixtral.
+
+%
+Open-source models are queried using the Hugging Chat API\footnote{\url{https://github.com/Soulter/hugging-chat-api}}, a third-party library for the HuggingFace platform\footnote{\url{https://huggingface.co}}.
+%
+This API supports multiple simultaneous conversations with different \glspl{LLM}.
+%
+The selected open-source models include:
+%
+\begin{description}
+    \item[Llama 2:] A family of open-source \glspl{LLM}, with the 70 billion parameters model used in our experiments~\cite{llama2-2023}.
+    %
+    \item[OpenChat 3.5:] A 13 billion parameters model fine-tuned from the Llama family, optimized for mixed-quality data~\cite{wang2023openchat}.
+    %
+    \item[Mistral 7B:] A 7 billion parameters model, designed for high performance relative to its size~\cite{mistral}.
+    %
+    \item[Gemma:] A lightweight model from Google, based on the Gemini research~\cite{gemini}.
+\end{description}
+
+%
+For \gls{MoE} models, we include:
+%
+\begin{description}
+    \item[Mixtral:] A sparse \gls{MoE} aggregating eight 7 billion parameters models~\cite{mixtral}.
+    %
+    \item[Nous Hermes:] A flagship model trained on high-quality data, including GPT-4 outputs.
+\end{description}
+
+%
+Closed-source models are queried using the OpenAI API\footnote{\url{https://openai.com/blog/openai-api}}.
+%
+The selected models include:
+%
+\begin{description}
+    \item[GPT 3.5 Turbo:] A widely used model with significant performance improvements~\cite{gpt3-2020}.
+    %
+    \item[GPT 4 Turbo:] The latest version, reported to be a \gls{MoE}~\cite{gpt4}.
+\end{description}
+
+%
+\Cref{tab:llms_sizes} summarizes the \glspl{LLM} used, their sizes, and relevant hyperparameters.
+%
+The size of the \gls{LLM} significantly impacts its performance, with GPT-4 being nearly 200 times larger than the largest open-source model (Llama 2).
+%
+This size difference is expected to influence the quality of the constructed ontology, as discussed in \Cref{ssec:results}.
+
+\input{tables/kgfiller-llms-size}
+
+
 \section{Actively learning ontologies from \glspl{LLM}}\label{sec:actively-learning-ontologies}
