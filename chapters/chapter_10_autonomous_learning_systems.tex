@@ -224,7 +224,7 @@ Additionally, they often require prompt engineering or specific training phases,
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{figures/kgfiller/roadmap}
-    \caption{
+    \caption[Overview of \llmfkg{}]{%
         Overview of \llmfkg{}, illustrated with a running example.
         %
         The example assumes an ontology about animals, including classes such as $\concept{Cat}$, $\concept{Dog}$, and $\concept{Mouse}$, which are subclasses of $\concept{Animal}$, itself a subclass of $\concept{Thing}$ (\(\top\)).
@@ -610,19 +610,19 @@ This section presents a case study designed to empirically validate \llmfkg{}.
 \subsubsection{Experimental Setup}
 \label{subsubsec:experimental-setup}
 %
-The experimental setup involves designing a non-trivial ontology, as detailed in \Cref{ssec:ontology}.
+The experimental setup involves designing a non-trivial ontology, as detailed in \Cref{subsec:ontology}.
 %
 The ontology includes a class hierarchy and a set of properties, which are populated using \llmfkg{}.
 %
-We fine-tune specific query templates (\Cref{ssec:query-templates}) and utilize various \glspl{LLM} from different families and technologies (\Cref{ssec:llms-oracles}).
+We fine-tune specific query templates (\Cref{subsec:query-templates}) and utilize various \glspl{LLM} from different families and technologies (\Cref{subsec:llms-oracles}).
 %
 This process generates a set of populated ontologies, all sharing the same structure but differing in their content.
 %
 The populated ontologies are analyzed and compared to evaluate the performance of \llmfkg{} and the impact of the chosen \gls{LLM} on the quality of the population process.
 %
-To achieve this, we define a taxonomy of errors and a set of metrics (\Cref{ssec:performance-metrics}) to measure the quality of the generated ontologies.
+To achieve this, we define a taxonomy of errors and a set of metrics (\Cref{subsec:performance-metrics}) to measure the quality of the generated ontologies.
 %
-The evaluation is performed through a manual inspection of the populated ontologies, examining each individual and relationship (\Cref{ssec:results}).
+The evaluation is performed through a manual inspection of the populated ontologies, examining each individual and relationship (\Cref{subsec:results}).
 
 %
 Testing \llmfkg{} on a custom ontology, rather than a publicly available one, offers several advantages.
@@ -760,9 +760,581 @@ The selected models include:
 %
 The size of the \gls{LLM} significantly impacts its performance, with GPT-4 being nearly 200 times larger than the largest open-source model (Llama 2).
 %
-This size difference is expected to influence the quality of the constructed ontology, as discussed in \Cref{ssec:results}.
+This size difference is expected to influence the quality of the constructed ontology, as discussed in \Cref{subsec:results}.
 
 \input{tables/kgfiller-llms-size}
+
+
+\subsection{Performance Metrics}
+\label{subsec:performance-metrics}
+%
+Evaluating the quality of ontology construction and population processes is challenging.
+%
+This is due to the interplay of various factors, such as the quality of the generated instances and the validity of the relationships.
+%
+In this section, we outline the potential issues in the \llmfkg{} framework and define corresponding quantitative performance metrics.
+
+
+\subsubsection{Types of Errors}
+\label{subsubsec:error_types}
+%
+When using sub-symbolic black-box models, such as \glspl{LLM}, for ontology population, several types of errors may arise.
+%
+These errors depend on the quality of the oracle's output and the robustness of the post-processing procedure.
+%
+\glspl{LLM} are prone to hallucinations, which can lead to unreliable suggestions.
+%
+Additionally, the structure of their output is often unpredictable, making post-processing complex and error-prone.
+%
+We categorize the errors as follows:
+
+%
+\paragraph{Misplacement Error (\(E_{\text{mis}}\))}
+
+This error occurs when an individual is added to the ontology but assigned to the wrong class.
+%
+It is common in large ontologies with many classes.
+%
+We distinguish between two cases:
+%
+\begin{inlinelist}
+    \item the individual is assigned to a class that is too general, where a more specific subclass exists, and
+    %
+    \item the individual is assigned to a semantically incorrect class.
+\end{inlinelist}
+%
+While both cases are treated equally in our analysis, the first represents a lack of precision, whereas the second is a more severe semantic issue.
+
+%
+\paragraph{Incorrect Individual (\(E_{\text{ii}}\))}
+
+This error arises when an individual is added to the ontology but is irrelevant to its context, despite having a meaningful name.
+%
+Such errors may result from:
+%
+\begin{inlinelist}
+    \item hallucinated responses from the \gls{LLM}, suggesting out-of-scope instances, or
+    %
+    \item incorrect post-processing of valid \gls{LLM} outputs.
+\end{inlinelist}
+%
+For example, the \gls{LLM} might suggest that ``\emph{dog}'' is an instance of the class ``\emph{Edible meat}''.
+
+%
+\paragraph{Meaningless Individual (\(E_{\text{mi}}\))}
+
+This error occurs when the name of an individual is nonsensical and should not be part of the ontology.
+%
+It often results from the failure to interpret negative responses or to correctly extract valid instances from the \gls{LLM} output.
+%
+For instance, failing to recognize a response like ``\emph{I do not have access to such data}'' as negative could lead to meaningless entries.
+
+%
+\paragraph{Class-Like Individuals (\(E_{\text{ci}}\))}
+
+These errors occur when an individual has the same or a very similar semantic meaning as the class it belongs to.
+%
+This often happens due to overly broad responses from the \gls{LLM}.
+%
+For example, querying for ``\emph{meat}'' instances might result in the \gls{LLM} suggesting ``\emph{meat}'' as an individual of the class ``\emph{Meat}''.
+
+%
+\paragraph{Duplicate Individuals (\(E_{\text{di}}\))}
+
+Duplicate individuals are semantically identical or very similar entries in the ontology.
+%
+They may arise from:
+%
+\begin{inlinelist}
+    \item repeated suggestions by the \gls{LLM}, or
+    %
+    \item errors in post-processing.
+\end{inlinelist}
+%
+The iterative nature of the ontology population process can also lead to duplicates.
+%
+The \emph{merge phase} of \llmfkg{} aims to address this issue by identifying and merging duplicates, but errors may still persist.
+
+%
+\paragraph{Wrong Relation (\(E_{\text{wr}}\))}
+
+This error occurs when a relationship between two individuals is invalid.
+%
+During the relation phase, \llmfkg{} queries the \gls{LLM} to populate relationships.
+%
+However, hallucinated responses can lead to incorrect relationships.
+%
+For example, the \gls{LLM} might suggest that ``\emph{onions}'' are an ingredient of ``\emph{carbonara spaghetti},'' which is inconsistent with the ontology.
+
+%
+\paragraph*{On Subjectivity}
+
+The identification of these errors involves a degree of subjectivity, particularly for \(E_{\text{ii}}\) and \(E_{\text{wr}}\).
+%
+To mitigate this, multiple evaluators independently assess the ontology, and disagreements are resolved through majority voting.
+
+%
+\subsubsection{Measures}
+\label{subsubsec:measures}
+
+To assess the quality of the ontology population process, we define the following metrics:
+
+%
+\begin{enumerate}
+    \item The total number of generated individuals, \(\mathit{TI}\), which evaluates the ability of \llmfkg{} to generate diverse instances.
+    %
+    \item The minimum and maximum class weights, \(\mathit{minCW}\) and \(\mathit{maxCW}\), representing the smallest and largest number of individuals per class, respectively.
+    %
+    \item The total number of individuals in leaf classes, \(\mathit{TL}\), which measures the specificity of the generated instances.
+    %
+    \item The total number of individuals affected by errors, \(\mathit{TE}\), where each individual is counted once, regardless of the number of errors.
+    %
+    \item The relative individual error, \(\mathit{RIE}\), defined as:
+    %
+    \begin{equation}
+        \mathit{RIE} = \frac{\mathit{TE}}{\mathit{TI}}.
+    \end{equation}
+    %
+    \item The total number of errors for each error type, as defined in \Cref{subsubsec:error_types}.
+    %
+    \item The total number of generated relationships, \(\mathit{TR}\).
+    %
+    \item The relative relation error, \(\mathit{RRE}\), defined as:
+    %
+    \begin{equation}
+        \mathit{RRE} = \frac{E_{\text{wr}}}{\mathit{TR}}.
+    \end{equation}
+\end{enumerate}
+
+%
+Finally, we define an overall quality metric, \(Q\), which summarizes the correctness of the ontology:
+%
+\begin{equation}
+    Q = \frac{\mathit{TI} - \mathit{TE} + \mathit{TR} - E_{\text{wr}}}{\mathit{TI} + \mathit{TR}}.
+\end{equation}
+%
+This metric ranges from 0 (all data is invalid) to 1 (all data is valid).
+
+%
+\subsubsection{Quality of Service}
+
+To evaluate the quality of service (QoS) of the \gls{LLM} oracle, we consider the following metrics:
+
+%
+\begin{itemize}
+    \item The time required to populate the ontology, \(\Delta t\), measured as the difference between the first and last query timestamps.
+    %
+    \item The total number of queries, \(N\), submitted to the \gls{LLM}, including inconclusive ones.
+    %
+    \item The total cost, \(\$\), in USD, of a single \llmfkg{} run, considering cached queries.
+\end{itemize}
+
+%
+These metrics are influenced by factors such as network latency, response length, and the pricing scheme of the \gls{LLM} provider.
+%
+At the time of writing, Hugging Face models are free but rate-limited, while OpenAI models have the following costs:
+%
+\begin{description}
+    \item[GPT 3.5 Turbo:] \$0.5 (input) and \$1.5 (output) per million tokens.
+    %
+    \item[GPT 4 Turbo:] \$10 (input) and \$30 (output) per million tokens.
+\end{description}
+%
+
+
+\subsection{Results}
+\label{ssec:results}
+%
+\input{tables/kgfiller-results}
+%
+\Cref{tab:performance} summarizes the results obtained from different runs of \llmfkg{}, supported by the various \glspl{LLM} discussed in \Cref{sssec:llms}.
+%
+Overall, the results demonstrate the feasibility of constructing ontologies by leveraging the implicit knowledge embedded in \glspl{LLM} during their training.
+%
+Focusing on the quality metric \(Q\), at least \(75\%\) of the instances and relations added to the initial empty ontology are valid for most of the evaluated \glspl{LLM}.
+%
+For instance, GPT 3.5 Turbo achieves \(92.4\%\) valid instances and relations, while its successor, GPT 4 Turbo, achieves a comparable performance with \(Q = 89.6\%\).
+%
+These findings highlight the reliability of the proposed approach.
+
+The analysis of error types during the ontology population phase provides additional insights.
+%
+Most errors are related to the relative positioning of added instances rather than the inclusion of nonsensical entries.
+%
+This observation reinforces the potential of \glspl{LLM} to extract structured and precise knowledge for specific domains, such as the food domain in this case study.
+
+Different models excel in different performance metrics.
+%
+For example, the \emph{Mistral} model constructs one of the largest ontologies, adding 1176 instances and 1211 relations.
+%
+However, the large size of the ontology introduces quality issues, resulting in a high relative error rate.
+%
+In contrast, GPT-based models achieve lower relative error rates, with GPT 3.5 Turbo achieving a relative individual error of \(0.0861\) and a relative relation error of \(0.0693\).
+%
+Despite this, GPT-based models tend to produce smaller ontologies, with the GPT 3.5 Turbo version containing nearly half the instances of other models.
+
+When minimizing erroneous instances and relations, GPT-based solutions, particularly GPT 3.5, emerge as the most effective.
+%
+The significant size difference between GPT-based models and their counterparts provides an advantage in handling complex tasks, such as classifying instances into semantic classes or listing recipe ingredients without hallucinations or inaccuracies.
+%
+Ontologies constructed using the GPT family exhibit the fewest critical mistakes or hallucinations (see \Cref{sssec:interesting_samples}).
+
+Nevertheless, the results also indicate that closed-source models are not the only viable option.
+%
+Some open-source models achieve comparable performance levels.
+%
+For instance, the \emph{Llama 2} model constructs a smaller but effective ontology, maintaining low counts of incorrect (\(E_{\text{ii}}\)) and meaningless (\(E_{\text{mi}}\)) individuals, thereby demonstrating its potential.
+
+Additionally, the \emph{Nous Hermes} model, leveraging the \gls{MoE} process, constructs a large ontology—nearly twice the size of the GPT 3.5 version.
+%
+It achieves nearly \(90\%\) correctness for added individuals, surpassing GPT 4 Turbo, with an overall quality metric of \(Q = 85.1\%\).
+%
+These results confirm the correlation between the dimensionality of \glspl{LLM} and the quality of the constructed ontology, as \emph{Llama 2} and \emph{Nous Hermes} are among the largest open-source models (see \Cref{tab:llms_sizes}).
+
+A strong proportionality is observed between the relative individual error (\(\mathit{RIE}\)) and the relative relation error (\(\mathit{RRE}\)).
+%
+Models achieving low \(\mathit{RIE}\) also tend to achieve low \(\mathit{RRE}\).
+%
+This suggests that the ability of \glspl{LLM} to suggest instances for specific classes or classify random instances correctly is proportional to their ability to establish valid relationships between instances without proposing meaningless associations.
+%
+This finding underscores the general capability of \glspl{LLM} to handle both instances and relationships in ontology construction.
+
+
+\paragraph{\Gls{QoS}-Related Remarks}
+%
+\input{tables/kgfiller-qos}
+%
+\Cref{tab:qos} summarizes the \gls{QoS} measurements from the experiments.
+%
+GPT-based models generally exhibit faster execution times (\(\Delta t\)), primarily due to the looser rate limitations applied by OpenAI for paying users.
+%
+However, this comes at the cost of moderate expenses in USD (\(\$\)).
+%
+In contrast, models accessible via the Hugging Face API are free to use but subject to stricter rate limitations, resulting in longer execution times for \llmfkg{}.
+
+The total number of queries (\(N\)) varies significantly across runs, depending on the \gls{LLM} model.
+%
+Given that all models were subject to the same length limitations, this variability likely stems from differences in the verbosity of the \glspl{LLM}'s responses, which depend on their training data and architecture.
+
+\subsubsection{Mistakes and Hallucinations Examples}
+\label{sssec:interesting_samples}
+%
+This section presents and analyzes notable examples of mistakes and hallucinations encountered during the investigation.
+%
+The examples are ranked from least to most significant to provide insights into the shortcomings of \llmfkg{}.
+
+\paragraph{Minor Mistakes}
+%
+Most models, particularly smaller open-source ones, struggle with identifying the correct spices for recipes.
+%
+These errors are not considered hallucinations, as they remain within the recipe context and are not blatantly incorrect.
+%
+For instance, the concept of a recipe varies based on personal preferences.
+%
+Such mistakes, including misclassifying sauces as toppings or vice versa, are minor and can be easily corrected after the ontology is populated.
+%
+An example of a fuzzy classification is whether \emph{peanut butter} qualifies as \emph{butter}.
+
+\paragraph{Mistakes Due to Ontology Structure}
+%
+The completeness of the initial empty ontology skeleton significantly impacts the classification of fuzzy instances.
+%
+Uncommon suggestions or peculiar items may not fit neatly into predefined classes.
+%
+For example, the \emph{Nous Hermes} model classified \emph{crocodile} and \emph{alligator} as instances of the \emph{poultry-derived food} class.
+%
+While these are valid food items in some contexts, their classification highlights the need for a rigorous and complete ontology structure.
+%
+The boundary between reasonable and unreasonable suggestions is often tight, requiring careful consideration during ontology population.
+
+\paragraph{\Gls{LLM} Hallucinations}
+%
+\glspl{LLM} are prone to hallucinations, which can lead to the inclusion of irrelevant or factually incorrect instances in the ontology.
+%
+For example, the \emph{Mistral} model suggested \emph{chemotherapy infusion} as an instance of the \emph{infusion} class in the food domain.
+%
+Although grammatically and semantically valid, this suggestion is contextually incorrect.
+%
+Similarly, the \emph{Mixtral} model confidently classified \emph{pizza} as an American recipe, despite its Italian origin.
+%
+Addressing such issues is challenging, as verifying the validity of all suggestions would require multiple queries, significantly increasing inefficiency.
+
+\paragraph{Worrying Hallucinations}
+%
+In some cases, hallucinations result in factually incorrect but contextually plausible suggestions, posing a significant challenge.
+%
+For instance, the \emph{Gemma} model suggested \emph{Amanita muscaria}, a poisonous mushroom, as an instance of the \emph{edible mushrooms} class.
+%
+While the suggestion aligns with the context, it introduces dangerous misinformation.
+%
+Interestingly, the \emph{Gemma} model correctly identified \emph{Amanita muscaria} as poisonous when queried separately.
+%
+Such cases highlight the complexity of detecting and addressing hallucinations in ontology construction.
+
+
+\subsection{Comparison with Related Works}
+\label{ssec:comparison}
+
+This section compares \llmfkg{} with other methods for \gls{LLM}-augmented knowledge graph (\gls{KG}) construction, as surveyed in \Cref{ssec:llm-kg}.
+%
+The comparison is conducted in two phases.
+%
+First, we perform a feature-based analysis to identify key characteristics of an ideal ontology population method.
+%
+Next, we filter out methods that differ significantly in their approach, retaining only those suitable for a performance-based comparison with \llmfkg{}.
+
+\subsubsection{Feature-Based Comparison}
+\label{sssec:comparison-features}
+
+An ideal ontology population method should satisfy the following features:
+%
+\begin{featurelist}
+    \item\label{item:f1} It should adopt a \emph{document-free} approach, relying solely on the knowledge embedded in the \gls{LLM} oracle during training, without requiring textual input for instance or relation extraction.
+    %
+    \item\label{item:f2} It should be \emph{training-free}, avoiding the need for additional training or fine-tuning of the \gls{LLM} oracle.
+    %
+    \item\label{item:f3} It should support the \emph{construction} of the entire ontology, encompassing both entities and relationships.
+    %
+    \item\label{item:f4} It should allow user-defined \emph{prompt templates} to customize \gls{LLM} queries for the specific domain.
+    %
+    \item\label{item:f5} It must ensure \emph{consistency} in the generated ontology, preserving its structural integrity throughout the population process.
+\end{featurelist}
+%
+\Cref{tab:compare-features} summarizes the feature-based comparison of \llmfkg{} and other methods discussed in \Cref{ssec:llm-kg}.
+%
+Most surveyed approaches either depend on user-provided textual data or require costly model training.
+%
+Additionally, they often fail to guarantee the structural integrity of the generated ontology, as they primarily target \glspl{KG} without considering ontological constraints.
+%
+In contrast, \llmfkg{} satisfies all the above features, offering a document- and training-free approach that ensures consistency through prompt templating and the use of the \gls{LLM} as an oracle.
+%
+Harvest~\cite{HaoTTNSZXH23} emerges as the second-best approach in terms of feature satisfaction.
+
+Given this, Harvest is the only method suitable for a fair performance-based comparison with \llmfkg{}.
+%
+The next section evaluates their empirical performance.
+
+\input{tables/kgfiller-comparison}
+
+\subsubsection{Performance-Based Comparison}
+\label{sssec:comparison-performance}
+
+The performance comparison focuses on populating the ontology schema described in \Cref{ssec:ontology}.
+%
+We evaluate Harvest using the same metrics defined in \Cref{ssec:performance-metrics}, replicating the experiments on the \gls{LLM} families tested in the original paper~\cite{HaoTTNSZXH23}.
+%
+The selected models include:
+%
+\begin{description}
+    \item[RoBERTa base:] A 12-layer, 768-hidden, 12-heads model with 125M parameters~\cite{roberta-2019}.
+    %
+    \item[RoBERTa large:] A larger version with 24 layers, 1024 hidden dimensions, 16 heads, and 355M parameters.
+    %
+    \item[BERT large cased:] A 24-layer, 1024-hidden, 16-heads model with 340M parameters, trained on cased English text~\cite{bert-2019}.
+\end{description}
+%
+The terms \emph{heads} and \emph{hidden} refer to the number of attention heads and the hidden dimension of each transformer block, respectively\footnote{\url{https://huggingface.co/transformers/v3.3.1/pretrained_models.html}}.
+
+The results of these experiments are presented in \Cref{tab:compare-performance}.
+%
+The source code for the comparison is publicly available\footnote{\url{https://github.com/Chistera4-Expectation/experiments-knowledge-harvest-from-llm}}.
+%
+To facilitate comparison, \Cref{fig:compare-performance} highlights the best-performing runs of both \llmfkg{} and Harvest.
+%
+As shown, \llmfkg{} outperforms Harvest across all metrics.
+%
+The quality metric of the generated ontology is up to five times higher with \llmfkg{}, while the relative individual error (\(RIE\)) and relative relation error (\(RRE\)) are up to ten times lower.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/kgfiller/comparison}
+    \caption{
+        Performance comparison of Harvest~\cite{HaoTTNSZXH23} and \llmfkg{} for populating the food ontology (\Cref{ssec:ontology}).
+        The best-performing closed-source and open-source \gls{LLM} models are considered: GPT 3.5 Turbo and Nous Hermes, respectively.
+    }
+    \label{fig:compare-performance}
+\end{figure}
+
+
+
+\subsection{Discussion and \gls{SWOT} Analysis}
+\label{subsec:discussion}
+
+To the best of our knowledge, this work introduces a novel methodology for ontology population, enabling the generation of structured knowledge tailored to specific domains or schemas.
+%
+This section provides a \gls{SWOT} analysis, highlighting the \textit{Strengths}, \textit{Weaknesses}, \textit{Opportunities}, and \textit{Threats} of \llmfkg{}.
+%
+The discussion transitions from technical aspects to strategic considerations, including potential applications, limitations, and future directions.
+
+\subsubsection{Strengths}
+\label{subsubsec:strengths}
+
+\paragraph{Automation}
+%
+\llmfkg{} leverages \glspl{LLM} trained on extensive general-knowledge datasets.
+%
+This eliminates the need for large \emph{corpora} of textual documents and makes it the first fully automatic ontology population method.
+%
+No prior domain knowledge representation is required from the user.
+
+\paragraph{Generality}
+%
+\glspl{LLM} enable \llmfkg{} to operate across virtually any domain, irrespective of the availability of domain-specific data.
+%
+Unlike traditional methods, which rely on potentially incomplete or biased document collections, \llmfkg{} benefits from the broad and diverse knowledge embedded in \glspl{LLM}.
+
+\paragraph{Incrementality}
+%
+\llmfkg{} supports both ontology population and refinement.
+%
+It can be applied iteratively to enrich existing ontologies, allowing for incremental improvements over multiple runs.
+%
+This flexibility contrasts with traditional methods, which are often constrained by predefined input datasets.
+
+\paragraph{Future Potential}
+
+As \glspl{LLM} continue to evolve, their emergent capabilities are expected to enhance the quality of ontology population.
+%
+Future advancements may enable \llmfkg{} to extract knowledge beyond the explicit content of training data.
+
+\subsubsection{Weaknesses}
+\label{subsubsec:weaknesses}
+%
+\paragraph{Completeness}
+%
+\llmfkg{} does not guarantee completeness in the populated ontology.
+%
+Instances or relations may be missing, as the method is not designed to extract all knowledge from the \gls{LLM}.
+%
+This limitation is inherent to any (semi-)automatic data-driven approach.
+
+\paragraph{Sampling Bias}
+%
+The reliance on \glspl{LLM} trained on web data introduces potential sampling biases.
+%
+Underrepresented topics on the web may result in unbalanced or biased ontologies.
+%
+Further research is needed to mitigate these biases in \glspl{LLM}.
+
+\paragraph{Correctness}
+%
+\llmfkg{} cannot ensure the correctness of extracted information.
+%
+\glspl{LLM} are prone to hallucinations, which may lead to the inclusion of false or misleading data in the ontology~\cite{placeholder}.
+%
+Careful validation of the populated ontology is necessary to address this limitation.
+
+
+\subsubsection{Opportunities}
+\label{subsubsec:opportunities}
+%
+\paragraph{Cold Start}
+%
+\llmfkg{} addresses the cold start problem in knowledge-based systems by providing a quick and cost-effective way to generate domain-specific data.
+%
+This capability is particularly valuable in early-stage projects where data availability is limited.
+
+\paragraph{Automatic Hierarchy Construction}
+%
+Extensions of \llmfkg{} could enable the automatic construction of ontology schemas, a task often referred to as \emph{hierarchy construction}~\cite{placeholder}.
+%
+Such advancements could automate the entire ontology creation process, combining schema construction with population.
+
+
+\paragraph{Zero-Shot Ontology Creation}
+%
+Building on the idea of hierarchy construction, \llmfkg{} could be adapted to create ontologies from scratch.
+%
+This would involve generating both the schema and instances based on a natural-language description of the domain.
+
+\paragraph{Procedural Knowledge Extraction}
+%
+\llmfkg{} could be extended to extract procedural knowledge, representing structured steps to achieve specific goals.
+%
+This application has potential in fields like automated planning and \glspl{MAS}, where agents require executable plans to perform tasks.
+
+
+\subsubsection{Threats}
+\label{subsubsec:threats}
+%
+\paragraph{Dependence on \glspl{LLM}}
+%
+The effectiveness of \llmfkg{} is tied to the quality and capabilities of the underlying \glspl{LLM}.
+%
+Limitations in \glspl{LLM}, such as biases or inaccuracies, directly impact the quality of the populated ontology.
+
+\paragraph{Cost and Efficiency}
+%
+The computational and financial costs of querying \glspl{LLM} may pose challenges, especially for large-scale ontology population tasks.
+%
+Optimizing the process to balance cost and quality remains an open research question.
+
+\paragraph{Ethical Concerns}
+%
+The use of \glspl{LLM} trained on web data raises ethical concerns, including data privacy and the propagation of biases.
+%
+Addressing these issues is critical to ensure responsible deployment of \llmfkg{}.
+
+% The SWOT analysis highlights the potential and limitations of \llmfkg{},
+% providing a roadmap for future research and development.
+
+
+\subsection{Conclusion}
+\label{sec:kgfiller-conclusion}
+%
+Ontologies provide a structured framework to define concepts, relationships, and properties within a specific domain.
+%
+This ensures an unambiguous and comprehensible representation of domain-specific knowledge.
+%
+However, the process of ontology population is often meticulous, time-consuming, and prone to human errors and biases.
+%
+
+In this work, we hypothesize that \glspl{LLM}\footnote{Defined in \texttt{my\_acronyms.sty}} embed a significant amount of domain-specific knowledge.
+%
+This knowledge is acquired during their domain-agnostic training on vast datasets collected from the Web.
+%
+Based on this hypothesis, we propose \llmfkg{}, a novel approach for automatic ontology population leveraging \glspl{LLM}.
+%
+
+The proposed method starts with:
+%
+\begin{inlinelist}
+    \item an initial schema consisting of interrelated classes and properties, and
+    %
+    \item a set of query templates.
+\end{inlinelist}
+%
+\llmfkg{} queries the \gls{LLM} multiple times to generate instances for classes, relationships, and properties based on its responses.
+%
+Additional queries are performed to refine the ontology, ensuring balanced class hierarchies and avoiding duplicate entries.
+%
+
+The validity of \llmfkg{} is demonstrated through a case study in the food domain.
+%
+This domain requires the population of an ontology with food ingredients, categorized across multiple classes, and recipes.
+%
+We evaluate \llmfkg{} using various state-of-the-art \glspl{LLM}, including open-source, closed-source, and \glspl{MoE}.
+%
+The evaluation employs a range of metrics to assess the quality of the constructed ontology.
+%
+
+Our results show that \llmfkg{} reliably populates ontologies across different \glspl{LLM}.
+%
+For instance, the GPT 3.5 model achieves accuracies of up to \(0.91\) for instances and \(0.93\) for relations.
+%
+As expected, larger \glspl{LLM} generally perform better.
+%
+We also observe a correlation between erroneous instances and misplaced relations, highlighting areas for improvement.
+%
+
+Finally, we analyze the severity of errors, emphasizing how hallucinations from \glspl{LLM} can negatively impact the ontology population process.
+%
+Despite these challenges, the results are promising.
+%
+They demonstrate that the complex task of ontology construction can be partially automated, requiring only minor post-processing efforts.
+%
+
+
 
 
 \section{Actively learning ontologies from \glspl{LLM}}\label{sec:actively-learning-ontologies}

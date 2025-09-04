@@ -1,0 +1,45 @@
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\newcommand{\ok}{{\color{darkgreen}\cmark}}
+\newcommand{\ko}{{\color{red}\xmark}}
+
+\begin{table}
+    \caption[\llmfkg{} feature-based comparison]{%
+        Feature-based comparison between \llmfkg{} and state-of-the-art KG construction methods.
+        %
+        The arrow ($\rightarrow$) denotes the best-featured method from the literature,
+        namely Harvest,
+        which we compare with \llmfkg{} under a performance-based perspective.
+    }
+    \resizebox{\columnwidth}{!}{
+    \centering
+    \begin{tabular}{c | c c c c c} \toprule
+        \textbf{Method} & \makecell{\textbf{Document}\\\textbf{Free \ref{item:f1}}} & \makecell{\textbf{Training}\\\textbf{Free \ref{item:f2}}} & \makecell{\textbf{Construction}\\\textbf{\ref{item:f3}}} & \makecell{\textbf{Prompt}\\\textbf{Templating \ref{item:f4}}} & \makecell{\textbf{Consistency}\\\textbf{\ref{item:f5}}} \\
+        \midrule
+        \cite{LuanEmnlp2018} & \ko & \ko & \ok & \ko & \ko \\
+        \cite{comet-2019} & \ko & \ko & \ok & \ko & \ko \\
+        \cite{end-to-end-kg-kumar-2020} & \ko & \ko & \ok & \ko & \ko \\
+        \midrule
+        \cite{llm-as-encoders-choi-2021} & \ko & \ko & \ko & \ko & \ko \\
+        \cite{llm-as-encoders-wang-2021} & \ko & \ko & \ko & \ko & \ko \\
+        \cite{entity-discovery-decao-2021} & \ko & \ko & \ok & \ko & \ko \\
+        \cite{end-tp-end-kg-melnyk-2021} & \ko & \ko & \ok & \ko & \ko \\
+        \midrule
+        \cite{kg-complenion-saxena-2022} & \ko & \ko & \ko & \ko & \ko \\
+        \cite{kg-complenion-chen-2022} & \ko & \ko & \ko & \ko & \ko \\
+        \cite{kg-complenion-xin-2022} & \ko & \ko & \ko & \ko & \ko \\
+        \cite{entity-discovery-ayoola-2022} & \ko & \ok & \ok & \ko & \ko \\
+        \midrule
+        \cite{llm-as-encoders-shen-2023} & \ko & \ko & \ko & \ko & \ko \\
+        \cite{end-to-end-kg-han-2023} & \ko & \ok & \ok & \ok & \ko \\
+        $\rightarrow$\cite{HaoTTNSZXH23} & \ok & \ok & \ok & \ok & \ko \\
+        \midrule
+        \cite{LieEacl2024} & \ok & \ko & \ok & \ok & \ko \\
+        \cite{FanIpm2024} & \ok & \ko & \ok & \ok & \ko \\
+        \midrule
+        \midrule
+        \makecell{\textbf{Ours}\\(\llmfkg)} & \ok & \ok & \ok & \ok & \ok \\
+        \bottomrule
+    \end{tabular}
+    }
+    \label{tab:compare-features}
+\end{table}

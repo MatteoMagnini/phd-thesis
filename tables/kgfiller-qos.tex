@@ -1,0 +1,30 @@
+\begin{table}
+    \caption[\llmfkg{} \gls{QoS} measurements]{%
+        \Gls{QoS} measurements (duration, number of queries, cost) of \llmfkg{} over different state-of-the-art LLMs.
+        Each line describes the \gls{QoS} of the experiment corresponding to the same line in \Cref{tab:performance}.
+    }
+    % \resizebox{\linewidth}{!}{
+    \centering
+    \begin{tabular}{l | c c c} \toprule
+        LLM & $\mathit{\Delta t}$ & $\mathit{N}$ & $\$$
+        \\ \midrule
+        GPT 3.5 Turbo~\cite{gpt3-2020} & 15m 39s & 1236 & 0.06
+        \\
+        GPT 4 Turbo~\cite{gpt4} & 58m 43s & 2414 & 2.16
+        \\ \midrule
+        Openchat~\cite{wang2023openchat} & 11h 50m 25s & 4710 & n.a.
+        \\
+        Llama2~\cite{llama2-2023} & 5h 8m28s & 1990 & n.a.
+        \\
+        Mistral~\cite{mistral} & 2h 19m 40s & 907 & n.a.
+        \\
+        Gemma~\cite{gemini} & 4h 55m 2s & 1141 & n.a.
+        \\ \midrule
+        Mixtral~\cite{mixtral} & 12h 51m 2s & 2620 & n.a.
+        \\
+        Nous Hermes & 14h 40m 3s & 6083 & n.a.
+        \\ \bottomrule
+    \end{tabular}
+    % }
+    \label{tab:kgfiller-qos}
+\end{table}

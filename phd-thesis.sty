@@ -30,6 +30,11 @@
 \RequirePackage[font={small},labelfont=bf]{caption}
 \RequirePackage{algorithm}
 \RequirePackage{algpseudocode}
+\RequirePackage{color}
+\RequirePackage{xcolor}
+\RequirePackage{pifont}% http://ctan.org/pkg/pifont
+
+
 
 \lstset{breaklines=true}
 
@@ -68,6 +73,9 @@
 \newcommand{\algCodeSize}{\scriptsize}
 \setlist{noitemsep} % or \setlist{noitemsep} to leave space around whole list
 
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
 
 \newtheorem{definition}{Definition}[chapter]
 \crefname{definition}{definition}{definitions}
@@ -102,6 +110,8 @@
 \setlist[prescriptions,2]{label=\alph*,ref=\thepropertiesi\alph*}
 \crefname{prescriptionsi}{}{}
 \Crefname{prescriptionsi}{}{}
+
+\newenvironment{featurelist}{\begin{enumerate*}[label=\emph{(F\arabic*)}]}{\end{enumerate*}}
 
 \setcounter{secnumdepth}{3}
 
