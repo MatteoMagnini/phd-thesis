@@ -52,7 +52,7 @@ Explainable approaches, such as explanation ontologies and multi-agent architect
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{figures/ske-recommender-workflow}
-  \caption{
+  \caption[Data-flow perspective of a nutritional recommender system]{%
     Data-flow perspective of a nutritional \gls{RS}.
     %
     The user interacts -- via some smart/wearable device -- with a sub-symbolic AI predictor, continuously trained to predict whether the user likes a given recipe or not.
@@ -765,7 +765,7 @@ The content and structure of the exchanged messages depend on the type of explan
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{figures/pyxmas/user-agent-protocol}
-    \caption{
+    \caption[Message communication diagram between an explainer agent and an explainee]{%
       Message communication diagram between an explainer agent (blue boxes) and an explainee (green boxes).
       %
       Each box represents a message.
@@ -1014,7 +1014,7 @@ Motivations for disapproval can include predefined facts, such as:
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{figures/pyxmas/architecture}
-    \caption{
+    \caption[Modular architecture of \textsc{PyXMas}]{%
         Modular architecture of \textsc{PyXMas}.
         %
         The library provides parametric behaviours that can be customized by implementing specific components.
@@ -1663,8 +1663,8 @@ By selecting the appropriate fine-tuning method, models can be optimized for spe
 \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{figures/rag-architecture}
-    \caption{
-        \gls{RAG} architecture.
+    \caption[\Gls{RAG} architecture]{
+        \Gls{RAG} architecture.
         %
         The retriever identifies relevant information from a knowledge base, which the generator uses to produce a contextually appropriate response.
     }
@@ -1860,7 +1860,7 @@ Higher scores indicate greater factual consistency.
         \caption{Answer Relevancy}
         \label{fig:ragvsnorag_relevancy}
     \end{subfigure}
-    \caption{
+    \caption[Performance comparison of \gls{RAG}-based systems against plain \gls{LLM} systems]{
       Performance comparison of \gls{RAG}-based systems against plain \gls{LLM} systems.
       %
       (a) Answer Correctness, (b) Answer Relevancy.
@@ -1890,7 +1890,7 @@ The performance boost was particularly significant for models trained on medical
     \includegraphics[width=\textwidth]{figures/heatmap_Multi}
     \caption{MultiQuery Retriever}
   \end{subfigure}
-  \caption{
+  \caption[Performance comparison of different retrieval strategies]{
       Performance comparison of different retrieval strategies: (a) Base Retriever, (b) Ensemble Retriever, (c) MultiQuery Retriever.
       %
       Each strategy demonstrates strengths and weaknesses across various evaluation metrics, highlighting the need for careful selection based on the specific task and model.
