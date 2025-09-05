@@ -183,11 +183,11 @@ Poor incrementality implies that once an ontology is populated, adding new insta
 \paragraph{\glspl{LLM} and Knowledge Graphs}
 \label{par:related-works-on-llm-and-knowledge-graphs}
 %
-In recent years, \glspl{LLM} have been applied to (semi-)automatic manipulation of \glspl{KG}~\cite{roadmap-kg-2024,ZhuWCQOYDCZ24}.
+In recent years, \glspl{LLM} have been applied to (semi-)automatic manipulation of \glspl{KG}~\cite{roadmap-kg-2024,ZhuWCQOYDCZ24,PanRKSCDJO0LBMB23}.
 %
 \glspl{KG} represent knowledge as structured triplets of the form \((s, p, o)\), where \(s\) is the subject, \(p\) the predicate, and \(o\) the object.
 %
-Unlike ontologies, \glspl{KG} do not impose strict schema constraints, making them more flexible but less amenable to automated reasoning~\cite{placeholder}.
+Unlike ontologies, \glspl{KG} do not impose strict schema constraints, making them more flexible but less amenable to automated reasoning~\cite{kg-vs-ontology-2016}.
 %
 Conversely, ontologies use a well-defined set of axioms, ensuring compliance with the original schema.
 %
@@ -196,22 +196,22 @@ Applications of \glspl{LLM} to \glspl{KG} can be categorized into \emph{\gls{KG}
 
 \Gls{KG} completion involves predicting missing facts, where \glspl{LLM} act as either \emph{encoders} or \emph{generators}.
 %
-As encoders, \glspl{LLM} encode textual information to assist another model in predicting missing facts~\cite{placeholder}.
+As encoders, \glspl{LLM} encode textual information to assist another model in predicting missing facts~\cite{llm-as-encoders-choi-2021,llm-as-encoders-wang-2021,llm-as-encoders-shen-2023}.
 %
-As generators, they directly extract missing facts~\cite{placeholder}.
+As generators, they directly extract missing facts~\cite{kg-complenion-saxena-2022,kg-complenion-chen-2022,kg-complenion-xin-2022,ZhuWCQOYDCZ24}.
 %
 However, these methods often require input text or ad-hoc training, which our approach does not.
 
 
 \Gls{KG} construction involves building a \gls{KG} from scratch, including tasks like entity discovery, end-to-end construction, and KG distillation.
 %
-Entity discovery identifies entities in text data and links them to form a \gls{KG}~\cite{placeholder}.
+Entity discovery identifies entities in text data and links them to form a \gls{KG}~\cite{entity-discovery-ayoola-2022,entity-discovery-decao-2021}.
 %
-End-to-end methods generate \glspl{KG} directly but rely on domain-specific textual data~\cite{placeholder}.
+End-to-end methods generate \glspl{KG} directly but rely on domain-specific textual data~\cite{end-to-end-kg-kumar-2020,end-tp-end-kg-melnyk-2021,end-to-end-kg-han-2023}.
 %
-\Gls{KG} distillation uses \glspl{LLM} as oracles to generate triplets~\cite{placeholder}.
+\Gls{KG} distillation uses \glspl{LLM} as oracles to generate triplets.
 %
-Notable examples include \texttt{Comet}~\cite{placeholder} and \texttt{Harvest}~\cite{placeholder}, which generate triplets based on prompts.
+Notable examples include \texttt{Comet}~\cite{comet-2019} and \texttt{Harvest}~\cite{HaoTTNSZXH23}, which generate triplets based on prompts.
 %
 While similar to our method, these approaches are not tailored for ontologies and may produce inconsistent \glspl{KG}.
 %
@@ -220,7 +220,7 @@ Additionally, they often require prompt engineering or specific training phases,
 
 \subsection{Filling Ontologies with \llmfkg}
 \label{subsec:filling-ontologies-kgfiller}
-
+%
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{figures/kgfiller/roadmap}
@@ -240,7 +240,9 @@ Additionally, they often require prompt engineering or specific training phases,
 
 The \llmfkg{} framework is designed for semi-automatic ontology population, leveraging \glspl{LLM} as oracles.
 %
-This section provides a concise yet general description of the framework, with technical details discussed in Appendix~A.2.
+An overview of the \llmfkg{} framework is depicted in \Cref{fig:roadmap}.
+%
+This section provides a concise yet general description of the framework.
 
 %
 \paragraph{Core Functionality}
@@ -281,7 +283,7 @@ These use cases can be combined, allowing iterative rounds of population and man
 %
 Templates are text strings containing placeholders, which are replaced with actual values during execution.
 %
-For example, the template \(t = \text{``What is the capital of \(\langle c \rangle\)?''}\) can be instantiated with the substitution \(\sigma = \{\langle c \rangle \mapsto \text{``Italy''}\}\), resulting in \(t / \sigma = \text{``What is the capital of Italy?''}\).
+For example, the template \(t = \)\text{``What is the capital of \(\langle c \rangle\)?''} can be instantiated with the substitution \(\sigma = \{\langle c \rangle \mapsto \text{``Italy''}\}\), resulting in \(t / \sigma = \text{``What is the capital of Italy?''}\).
 
 %
 We define four types of query templates:
@@ -414,7 +416,7 @@ For each subclass $\concept{C} \sqsubseteq \concept{R}$, the function generates 
 %
 These queries are then submitted to the \gls{LLM} oracle $\relset{L}$, and the responses are processed to extract the names of the individuals.
 %
-The number of individuals generated per query is unbounded and depends on the capabilities of the \gls{LLM} oracle $\relset{L}$ and other implementation-specific factors~\cite{placeholder}.
+The number of individuals generated per query is unbounded and depends on the capabilities of the \gls{LLM} oracle $\relset{L}$ and other implementation-specific factors.
 
 
 It is possible for the same individual to be generated by multiple queries or for multiple subclasses of $\concept{R}$.
@@ -578,7 +580,7 @@ Alternative strategies can be used, provided they visit all direct and indirect 
 %
 The \synSimilar{} function plays a crucial role in determining whether two instances, $\instance{i}$ and $\instance{j}$, are sufficiently similar to be considered for merging.
 %
-Its implementation significantly impacts the overall performance of the \merge{} function~\cite{placeholder}.
+Its implementation significantly impacts the overall performance of the \merge{} function.
 %
 % For example, one could define similarity based on shared substrings longer than a threshold $\lambda$.
 % %
@@ -610,11 +612,11 @@ This section presents a case study designed to empirically validate \llmfkg{}.
 \subsubsection{Experimental Setup}
 \label{subsubsec:experimental-setup}
 %
-The experimental setup involves designing a non-trivial ontology, as detailed in \Cref{subsec:ontology}.
+The experimental setup involves designing a non-trivial ontology, as detailed in \Cref{subsubsec:kgfiller-ontology}.
 %
 The ontology includes a class hierarchy and a set of properties, which are populated using \llmfkg{}.
 %
-We fine-tune specific query templates (\Cref{subsec:query-templates}) and utilize various \glspl{LLM} from different families and technologies (\Cref{subsec:llms-oracles}).
+We fine-tune specific query templates (\Cref{subsubsec:query-templates}) and utilize various \glspl{LLM} from different families and technologies (\Cref{subsubsec:llms-oracles}).
 %
 This process generates a set of populated ontologies, all sharing the same structure but differing in their content.
 %
@@ -658,6 +660,20 @@ This commit history provides a detailed sequence of operations for each experime
 \subsubsection{Ontology}
 \label{subsubsec:kgfiller-ontology}
 %
+\begin{figure*}
+    \centering
+    \includegraphics[width=\linewidth]{figures/kgfiller/ontology-skeleton}
+    \caption[Class hierarchy of the ontology used in the experiments]{
+        %
+        Class hierarchy of the case study ontology.
+        %
+        Notice that the hierarchy is not really a tree, but rather a \gls{DAG}.
+        %
+        The asterisk (*) denotes classes having multiple super-classes (they are depicted once per super-class for the sake of readability).
+    }
+    \label{fig:ontology}
+\end{figure*}
+%
 The ontology is designed in the \emph{nutritional} domain, as required by the \expectation{} project~\cite{expectation-extraamas2021}.
 %
 In \expectation{}, the ontology serves as the foundation for a nutritional recommender system, which suggests recipes based on users' dietary needs and preferences~\cite{DBLP:journals/cmpb/MagniniCCAO23}.
@@ -669,12 +685,12 @@ The ontology focuses on representing \emph{recipes} and their \emph{ingredients}
 %
 It categorizes \emph{edible} items into several subclasses to accommodate diverse dietary requirements and preferences.
 %
-\Cref{fig:onto} illustrates the class hierarchy, which is structured as a directed acyclic graph (DAG).
+\Cref{fig:ontology} illustrates the class hierarchy, which is structured as a directed acyclic graph (DAG).
 %
 The root class is \concept{Edible}, with subclasses such as \concept{Recipe}, which further branches into various cuisines (e.g., \concept{Italian}, \concept{Chinese}).
 
 %
-Some classes include an annotation property, \relation{fancyName}, to provide a more descriptive label for the class (\Cref{par:fancyname}).
+Some classes include an annotation property, \relation{fancyName}, to provide a more descriptive label for the class.
 %
 Another key property is $\relation{ingredientOf} : \concept{Edible} \times \concept{Recipe}$, which links recipes to their ingredients.
 %
@@ -892,6 +908,7 @@ To assess the quality of the ontology population process, we define the followin
     \item The relative individual error, \(\mathit{RIE}\), defined as:
     %
     \begin{equation}
+        \label{eq:relative_individual_error}
         \mathit{RIE} = \frac{\mathit{TE}}{\mathit{TI}}.
     \end{equation}
     %
@@ -902,6 +919,7 @@ To assess the quality of the ontology population process, we define the followin
     \item The relative relation error, \(\mathit{RRE}\), defined as:
     %
     \begin{equation}
+        \label{eq:relative_relation_error}
         \mathit{RRE} = \frac{E_{\text{wr}}}{\mathit{TR}}.
     \end{equation}
 \end{enumerate}
@@ -910,6 +928,7 @@ To assess the quality of the ontology population process, we define the followin
 Finally, we define an overall quality metric, \(Q\), which summarizes the correctness of the ontology:
 %
 \begin{equation}
+    \label{eq:quality_metric}
     Q = \frac{\mathit{TI} - \mathit{TE} + \mathit{TR} - E_{\text{wr}}}{\mathit{TI} + \mathit{TR}}.
 \end{equation}
 %
@@ -943,11 +962,11 @@ At the time of writing, Hugging Face models are free but rate-limited, while Ope
 
 
 \subsection{Results}
-\label{ssec:results}
+\label{subsec:results}
 %
 \input{tables/kgfiller-results}
 %
-\Cref{tab:performance} summarizes the results obtained from different runs of \llmfkg{}, supported by the various \glspl{LLM} discussed in \Cref{sssec:llms}.
+\Cref{tab:performance} summarizes the results obtained from different runs of \llmfkg{}, supported by the various \glspl{LLM} discussed in \Cref{subsubsec:llms-oracles}.
 %
 Overall, the results demonstrate the feasibility of constructing ontologies by leveraging the implicit knowledge embedded in \glspl{LLM} during their training.
 %
@@ -977,7 +996,7 @@ When minimizing erroneous instances and relations, GPT-based solutions, particul
 %
 The significant size difference between GPT-based models and their counterparts provides an advantage in handling complex tasks, such as classifying instances into semantic classes or listing recipe ingredients without hallucinations or inaccuracies.
 %
-Ontologies constructed using the GPT family exhibit the fewest critical mistakes or hallucinations (see \Cref{sssec:interesting_samples}).
+Ontologies constructed using the GPT family exhibit the fewest critical mistakes or hallucinations (see \Cref{subsubsec:interesting_samples}).
 
 Nevertheless, the results also indicate that closed-source models are not the only viable option.
 %
@@ -1004,7 +1023,7 @@ This finding underscores the general capability of \glspl{LLM} to handle both in
 %
 \input{tables/kgfiller-qos}
 %
-\Cref{tab:qos} summarizes the \gls{QoS} measurements from the experiments.
+\Cref{tab:kgfiller-qos} summarizes the \gls{QoS} measurements from the experiments.
 %
 GPT-based models generally exhibit faster execution times (\(\Delta t\)), primarily due to the looser rate limitations applied by OpenAI for paying users.
 %
@@ -1017,7 +1036,7 @@ The total number of queries (\(N\)) varies significantly across runs, depending 
 Given that all models were subject to the same length limitations, this variability likely stems from differences in the verbosity of the \glspl{LLM}'s responses, which depend on their training data and architecture.
 
 \subsubsection{Mistakes and Hallucinations Examples}
-\label{sssec:interesting_samples}
+\label{subsubsec:interesting_samples}
 %
 This section presents and analyzes notable examples of mistakes and hallucinations encountered during the investigation.
 %
@@ -1073,9 +1092,9 @@ Such cases highlight the complexity of detecting and addressing hallucinations i
 
 
 \subsection{Comparison with Related Works}
-\label{ssec:comparison}
-
-This section compares \llmfkg{} with other methods for \gls{LLM}-augmented knowledge graph (\gls{KG}) construction, as surveyed in \Cref{ssec:llm-kg}.
+\label{subsec:comparison}
+%
+This section compares \llmfkg{} with other methods for \gls{LLM}-augmented \gls{KG} construction, as surveyed in \Cref{subsec:related-work-kgfiller}.
 %
 The comparison is conducted in two phases.
 %
@@ -1083,24 +1102,27 @@ First, we perform a feature-based analysis to identify key characteristics of an
 %
 Next, we filter out methods that differ significantly in their approach, retaining only those suitable for a performance-based comparison with \llmfkg{}.
 
-\subsubsection{Feature-Based Comparison}
-\label{sssec:comparison-features}
 
+\subsubsection{Feature-Based Comparison}
+\label{subsubsec:comparison-features}
+%
+\input{tables/kgfiller-comparison}
+%
 An ideal ontology population method should satisfy the following features:
 %
 \begin{featurelist}
-    \item\label{item:f1} It should adopt a \emph{document-free} approach, relying solely on the knowledge embedded in the \gls{LLM} oracle during training, without requiring textual input for instance or relation extraction.
+    \item\label{itm:f1} It should adopt a \emph{document-free} approach, relying solely on the knowledge embedded in the \gls{LLM} oracle during training, without requiring textual input for instance or relation extraction.
     %
-    \item\label{item:f2} It should be \emph{training-free}, avoiding the need for additional training or fine-tuning of the \gls{LLM} oracle.
+    \item\label{itm:f2} It should be \emph{training-free}, avoiding the need for additional training or fine-tuning of the \gls{LLM} oracle.
     %
-    \item\label{item:f3} It should support the \emph{construction} of the entire ontology, encompassing both entities and relationships.
+    \item\label{itm:f3} It should support the \emph{construction} of the entire ontology, encompassing both entities and relationships.
     %
-    \item\label{item:f4} It should allow user-defined \emph{prompt templates} to customize \gls{LLM} queries for the specific domain.
+    \item\label{itm:f4} It should allow user-defined \emph{prompt templates} to customize \gls{LLM} queries for the specific domain.
     %
-    \item\label{item:f5} It must ensure \emph{consistency} in the generated ontology, preserving its structural integrity throughout the population process.
+    \item\label{itm:f5} It must ensure \emph{consistency} in the generated ontology, preserving its structural integrity throughout the population process.
 \end{featurelist}
 %
-\Cref{tab:compare-features} summarizes the feature-based comparison of \llmfkg{} and other methods discussed in \Cref{ssec:llm-kg}.
+\Cref{tab:compare-features} summarizes the feature-based comparison of \llmfkg{} and other methods discussed in \Cref{subsec:related-work-kgfiller}.
 %
 Most surveyed approaches either depend on user-provided textual data or require costly model training.
 %
@@ -1114,14 +1136,16 @@ Given this, Harvest is the only method suitable for a fair performance-based com
 %
 The next section evaluates their empirical performance.
 
-\input{tables/kgfiller-comparison}
+
 
 \subsubsection{Performance-Based Comparison}
-\label{sssec:comparison-performance}
-
-The performance comparison focuses on populating the ontology schema described in \Cref{ssec:ontology}.
+\label{subsubsec:comparison-performance}
 %
-We evaluate Harvest using the same metrics defined in \Cref{ssec:performance-metrics}, replicating the experiments on the \gls{LLM} families tested in the original paper~\cite{HaoTTNSZXH23}.
+\input{tables/kgfiller-performance}
+
+The performance comparison focuses on populating the ontology schema described in \Cref{subsubsec:kgfiller-ontology}.
+%
+We evaluate Harvest using the same metrics defined in \Cref{subsubsec:performance-metrics}, replicating the experiments on the \gls{LLM} families tested in the original paper~\cite{HaoTTNSZXH23}.
 %
 The selected models include:
 %
@@ -1149,7 +1173,7 @@ The quality metric of the generated ontology is up to five times higher with \ll
     \centering
     \includegraphics[width=\linewidth]{figures/kgfiller/comparison}
     \caption[Performance Comparison of Harvest and \llmfkg{}]{
-        Performance comparison of Harvest~\cite{HaoTTNSZXH23} and \llmfkg{} for populating the food ontology (\Cref{ssec:ontology}).
+        Performance comparison of Harvest~\cite{HaoTTNSZXH23} and \llmfkg{} for populating the food ontology (\Cref{subsubsec:kgfiller-ontology}).
         %
         The best-performing closed-source and open-source \gls{LLM} models are considered: GPT 3.5 Turbo and Nous Hermes, respectively.
     }
@@ -1221,7 +1245,7 @@ Further research is needed to mitigate these biases in \glspl{LLM}.
 %
 \llmfkg{} cannot ensure the correctness of extracted information.
 %
-\glspl{LLM} are prone to hallucinations, which may lead to the inclusion of false or misleading data in the ontology~\cite{placeholder}.
+\glspl{LLM} are prone to hallucinations, which may lead to the inclusion of false or misleading data in the ontology~\cite{hallucination-2023}.
 %
 Careful validation of the populated ontology is necessary to address this limitation.
 
@@ -1237,7 +1261,7 @@ This capability is particularly valuable in early-stage projects where data avai
 
 \paragraph{Automatic Hierarchy Construction}
 %
-Extensions of \llmfkg{} could enable the automatic construction of ontology schemas, a task often referred to as \emph{hierarchy construction}~\cite{placeholder}.
+Extensions of \llmfkg{} could enable the automatic construction of ontology schemas, a task often referred to as \emph{hierarchy construction}~\cite{funk2023ontology}.
 %
 Such advancements could automate the entire ontology creation process, combining schema construction with population.
 
@@ -1281,7 +1305,7 @@ Addressing these issues is critical to ensure responsible deployment of \llmfkg{
 
 
 \subsection{Conclusion}
-\label{sec:kgfiller-conclusion}
+\label{subsec:kgfiller-conclusion}
 %
 Ontologies provide a structured framework to define concepts, relationships, and properties within a specific domain.
 %
