@@ -73,7 +73,7 @@ Ontologies are formal, extensional representations of knowledge based on the pri
 They define concepts, relationships, and properties in a structured, machine-readable format, enabling computational systems to reason about the world in a manner akin to human cognition.
 
 
-Unlike sub-symbolic approaches, which rely on distributed or loosely organized data~\cite{placeholder}, ontologies provide a structured framework.
+Unlike sub-symbolic approaches, which rely on distributed or loosely organized data~\cite{DBLP:journals/csur/CiattoSAMO24}, ontologies provide a structured framework.
 %
 This framework bridges the \emph{semantic gap}, allowing \gls{AI} systems to move beyond superficial pattern recognition and grasp the underlying meaning of data.
 %
@@ -82,7 +82,7 @@ From a human perspective, ontologies offer a shared vocabulary and an unambiguou
 However, creating ontologies is a meticulous and time-consuming process, requiring adherence to the real-world domain they represent.
 
 
-Currently, ontology population is performed either manually by domain experts or communities, or through semi-automatic extraction from data~\cite{placeholder}.
+Currently, ontology population is performed either manually by domain experts or communities, or through semi-automatic extraction from data~\cite{petasis-2011}.
 %
 Manual population, while time-intensive and prone to human error, can yield high-quality results if the process is thorough and inclusive.
 %
@@ -137,23 +137,23 @@ To further analyze the strengths, weaknesses, opportunities, and threats of our 
 \paragraph{Ontology Population}
 \label{par:related-workd-ontology-population}
 %
-The task of populating ontologies with instances, commonly referred to as \emph{ontology population}, is well-established in the semantic web community~\cite{placeholder}.
+The task of populating ontologies with instances, commonly referred to as \emph{ontology population}, is well-established in the semantic web community~\cite{lubani-2019}.
 %
 This process involves expanding an ontology with additional assertions, also known as \emph{ABox axioms}, while ensuring compliance with the concepts and properties defined in the \emph{TBox axioms}.
 %
-Some authors use the term \emph{ontology learning} to emphasize the (semi-)automatic inference of the entire ontology, including TBox axioms~\cite{placeholder}.
+Some authors use the term \emph{ontology learning} to emphasize the (semi-)automatic inference of the entire ontology, including TBox axioms.
 %
 However, in this work, we adhere to the term \emph{ontology population}.
 
 
-The need for (semi-)automatic ontology population arises from the limitations of manual methods, which are time-consuming, error-prone, and inherently costly~\cite{placeholder}.
+The need for (semi-)automatic ontology population arises from the limitations of manual methods, which are time-consuming, error-prone, and inherently costly~\cite{cherifa-2021}.
 %
 To address these challenges, various methods for structured data extraction from text have been proposed.
 %
-These methods can be broadly categorized into \emph{linguistics-based} and \gls{ML} approaches~\cite{placeholder}.
+These methods can be broadly categorized into \emph{linguistics-based} and \gls{ML} approaches.
 
 
-Linguistics-based approaches~\cite{placeholder} include techniques such as syntactic analysis, pattern-based extraction, part-of-speech tagging, and the use of dictionaries.
+Linguistics-based approaches~\cite{finkestein-1999,morin-1999,harith-2003} include techniques such as syntactic analysis, pattern-based extraction, part-of-speech tagging, and the use of dictionaries.
 %
 While effective, these methods require significant human effort for tasks like corpus selection, supervision, and parameter fine-tuning.
 %
@@ -162,11 +162,11 @@ Additionally, they are often domain-specific, as different corpora may yield var
 
 ML-based approaches can be further divided into \emph{shallow \gls{ML}} and \emph{deep learning} techniques.
 %
-Shallow ML methods rely on classical \gls{NLP} techniques, such as term frequency-inverse document frequency (TF-IDF), to convert text into numerical data, which is then processed by algorithms like decision trees~\cite{placeholder}.
+Shallow \gls{ML} methods rely on classical \gls{NLP} techniques, such as \gls{TF-IDF}, to convert text into numerical data, which is then processed by algorithms like decision trees~\cite{tanev-2006,yoon-2007,maynard-2008,celjuska-2004,etzioni-2005,jiang-2011,souili-2015}.
 %
 However, these methods often struggle to capture contextual information.
 %
-In contrast, deep learning approaches automatically learn representations from data, enabling them to better capture contextual nuances~\cite{placeholder}.
+In contrast, deep learning approaches automatically learn representations from data, enabling them to better capture contextual nuances~\cite{liu-2013,zeng-2014,ayadi-2019}.
 
 
 Despite their advancements, all these methods require a large corpus of textual documents for extracting concepts, instances, and properties.
@@ -183,7 +183,7 @@ Poor incrementality implies that once an ontology is populated, adding new insta
 \paragraph{\glspl{LLM} and Knowledge Graphs}
 \label{par:related-works-on-llm-and-knowledge-graphs}
 %
-In recent years, \glspl{LLM} have been applied to (semi-)automatic manipulation of \glspl{KG}~\cite{placeholder}.
+In recent years, \glspl{LLM} have been applied to (semi-)automatic manipulation of \glspl{KG}~\cite{roadmap-kg-2024,ZhuWCQOYDCZ24}.
 %
 \glspl{KG} represent knowledge as structured triplets of the form \((s, p, o)\), where \(s\) is the subject, \(p\) the predicate, and \(o\) the object.
 %
