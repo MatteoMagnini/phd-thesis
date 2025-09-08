@@ -1773,21 +1773,18 @@ We evaluated a range of state-of-the-art open-source \glspl{LLM}, both general-p
 %
 The evaluation employed the following prompt:
 %
-\begin{center}
-  \fcolorbox{black}{gray!30}{
-    \begin{minipage}{0.96\textwidth}
-      \textit{You are an AI medical assistant specializing in hypertension.
-      Provide detailed and evidence-based answers, using clear and accessible language. Always respect patient privacy, and if you are unsure of the answer,
-      state ``I am not sure of the answer.''
-      Base your response on the provided context to answer accurately.
-      Include current recommendations and explain medical concepts in an understandable way.}
+\begin{promptbox}[Medical system prompt]
+    \scriptsize
+    You are an AI medical assistant specializing in hypertension.
+    Provide detailed and evidence-based answers, using clear and accessible language. Always respect patient privacy, and if you are unsure of the answer,
+    state ``I am not sure of the answer.''
+    Base your response on the provided context to answer accurately.
+    Include current recommendations and explain medical concepts in an understandable way.
 
-      \textit{**Context:**} \{ \textit{context} \}
+    **Context:** { context }
 
-      \textit{**Question:**} \{ \textit{question} \}
-    \end{minipage}
-  }
-\end{center}
+    **Question:** { question }
+\end{promptbox}
 %
 In the case of \gls{RAG}, the context was the retrieved information from the knowledge base.
 %

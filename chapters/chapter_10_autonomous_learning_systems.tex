@@ -10,19 +10,20 @@
 
 This is arguably the most important chapter of the thesis, the crucial moment when all the bricks come together.
 %
-In the following sections, we will present key contributions of the PhD towards the development of autonomous learning systems exploiting \gls{SKI} and \gls{SKE}.
+Here we present key contributions of the PhD towards the development of autonomous learning systems exploiting \gls{SKI} and \gls{SKE}.
 %
+In particular, we make use of \gls{SKE} to systematically extract symbolic knowledge from a trained sub-symbolic model, and conversely, we exploit \gls{SKI} to provide the sub-symbolic model with relevant context information.
+%
+This cycle between \gls{SKI} and \gls{SKE} is an early idea of my PhD, and it is presented in~\Cref{sec:cycle-ski-ske}.
 
 
-
-\section{Goals and challenges}\label{sec:goals-and-challenges}
 \note{Add references for this section}
 %
 The goal of autonomous learning systems is straightforward: to create systems that can learn -- and possibly adapt -- independently, without requiring constant human intervention.
 %
 The knowledge that is learnt can be presented in many forms.
 %
-We discussed in details about the differences between symbolic and sub-symbolic representations in ~\Cref{ch:ai} and also the many forms of symbolic knowledge that can be used to represent knowledge, such as rules, ontologies, and knowledge graphs~\Cref{sec:symbolic-ai}.
+We discussed in details about the differences between symbolic and sub-symbolic representations in~\Cref{ch:ai} and also the many forms of symbolic knowledge that can be used to represent knowledge, such as rules, ontologies, and knowledge graphs~\Cref{sec:symbolic-ai}.
 %
 We believe that the knowledge learnt by autonomous learning systems should be represented symbolically.
 %
@@ -31,11 +32,17 @@ The advantages of symbolic representations are many, as we discussed in~\Cref{se
 Here, we recall the most important ones:
 %
 \begin{inlinelist}
+    %
     \item interpretability: symbolic knowledge is human-readable, which makes it easier to understand and verify;
+    %
     \item reasoning: symbolic knowledge can be used to perform logical reasoning;
+    %
     \item transferability: symbolic knowledge can be easily transferred between different systems and domains, which makes it more versatile;
+    %
     \item model compression: symbolic knowledge can be more compact than sub-symbolic representations, which makes it more efficient;
+    %
     \item model checking: symbolic knowledge can be formally verified, which makes it more reliable.
+    %
 \end{inlinelist}
 
 
@@ -50,15 +57,22 @@ Many \glspl{LLM} are so good at understanding and generating natural language th
 Still, limitations exist, and the possibility to generate hallucinations is always present.
 
 
-In the following sections, we will present two main contributions of this PhD towards the development of autonomous learning systems.
+In the following sections, we will present first the conceptual \gls{SKE}-\gls{SKI} cycle, and then two main contributions towards the development of autonomous learning systems.
 %
 Both contributions exploit \glspl{LLM} to generate or finetune symbolic knowledge about specific domains.
+
+
+\section{Bridging symbolic and sub-symbolic \gls{AI}}
+\label{sec:cycle-ski-ske}
+\note{todo}
 
 
 
 \section{\Glspl{LLM} as oracles for instantiating ontologies with domain-specific knowledge}
 \label{sec:llm-as-oracles-for-instantiating-ontologies-with-domain-specific-knowledge}
 %
+In this section we present the paper ``Large language models as oracles for instantiating ontologies with domain-specific knowledge''~\cite{DBLP:journals/kbs/CiattoAMO25}, which is published in the international journal \emph{Knowledge-Based Systems}.
+
 The demand for intelligent systems capable of understanding, reasoning, and interacting with complex information is rapidly increasing.
 %
 The development of such systems relies on the integration of machine-interpretable knowledge representations that can encapsulate human domain-specific knowledge across diverse fields.
@@ -1426,7 +1440,7 @@ However, a major challenge in applying these algorithms is finding a suitable te
 %
 The only known implementation for exact learning of \EL ontologies is the \emph{ExactLearner} tool~\cite{DBLP:conf/kr/DuarteKO18}.
 %
-This tool learns \EL terminologies\footnote{An \EL terminology is an ontology with specific syntactic restrictions (see Sec.~\ref{sec:active-learning-ontologies}).} from a synthetic teacher that can answer membership and equivalence queries.
+This tool learns \EL terminologies\footnote{An \EL terminology is an ontology with specific syntactic restrictions (see~\Cref{subsec:active-learning-ontologies})} from a synthetic teacher that can answer membership and equivalence queries.
 %
 Membership queries verify whether a given concept inclusion is true or false, while equivalence queries check whether the learner's hypothesis matches the teacher's knowledge.
 %
@@ -1461,7 +1475,7 @@ Our results also examine whether there is statistical evidence of correlation be
 
 
 \subsection{Background and related work}
-\label{subsec:actively-learning-background}
+\label{subsec:active-learning-ontologies}
 %
 In this section, we define the concept of an \EL terminology, elaborate on the exact and \gls{PAC} learning frameworks, and describe the algorithm implemented in the \emph{ExactLearner} tool~\cite{DBLP:conf/kr/DuarteKO18}, which is designed to learn \EL terminologies from a teacher capable of answering membership and equivalence queries.
 %
@@ -1470,7 +1484,7 @@ Let \(\NC\) and \(\NR\) be countably infinite and disjoint sets of \emph{concept
 %
 In some cases, we may consider \(\NC\) and \(\NR\) as finite sets, depending on the context.
 %
-An \EL \emph{concept} is defined as \(C, D := C \sqcap D \mid \exists r.C \mid A \mid \top\), where \(A \in \NC\) and \(r \in \NR\).
+An \EL \emph{concept} is defined as \(C, D \coloneqq C \sqcap D \mid \exists r.C \mid A \mid \top\), where \(A \in \NC\) and \(r \in \NR\).
 %
 An \EL \emph{concept inclusion} is an expression of the form \(C \sqsubseteq D\), where \(C\) and \(D\) are \EL concepts.
 %
@@ -1528,7 +1542,7 @@ Under certain conditions, this strategy provides theoretical guarantees within t
 %
 In \gls{PAC} learning, the required sample size is determined by the hypothesis space \(\mathbf{H}\) (in this case, \EL terminologies of a specific size and structure defined by a given signature) and two parameters, \(\epsilon\) and \(\delta\), representing the error tolerance and confidence level, respectively.
 %
-According to \gls{PAC} theory~\cite[Cor. 2.3]{DBLP:books/daglib/0033642}, the sample size must be at least \(\mathsf{ln}(|\mathbf{H}|/\delta)/\epsilon\) for finite \(\mathbf{H}\).
+According to \gls{PAC} theory~\cite[Cor. 2.3]{DBLP:books/daglib/0033642}, the sample size must be at least \(\mathsf{\ln}(|\mathbf{H}|/\delta)/\epsilon\) for finite \(\mathbf{H}\).
 
 
 \paragraph{The Algorithm for \EL Terminologies}
@@ -1708,6 +1722,7 @@ The system was configured with CUDA 12.5 and NVIDIA driver version 535.183.01.
 %
 
 \paragraph{Evaluation Approach}
+\label{par:evaluation-approach}
 \Cref{alg:learn} takes as input the signature, which consists of finite sets of concept and role names, and constructs an \gls{EL} terminology by posing membership and equivalence queries.
 %
 Equivalence queries are simulated using a \emph{\gls{PAC} sample}, which is a set of concept inclusions randomly generated and answered by the \gls{LLM}.
@@ -1728,6 +1743,7 @@ The ability of ExactLearner+LLM to reconstruct existing ontologies is tested by 
 %
 
 \paragraph{Hypotheses}
+\label{par:hypotheses}
 We test the following hypotheses in our experiments:
 %
 \begin{enumerate}
@@ -1739,11 +1755,12 @@ We test the following hypotheses in our experiments:
     %
     \item Ontologies expressing common knowledge, such as family relations, will be easier to learn than those with specialized knowledge, such as medical ontologies.
     %
-    \item Simplifications introduced to reduce query length (see \Cref{sec:probing}) will improve the performance of \glspl{LLM} and, consequently, the ontologies constructed by ExactLearner+LLM.
+    \item Simplifications introduced to reduce query length (see \Cref{subsec:probing}) will improve the performance of \glspl{LLM} and, consequently, the ontologies constructed by ExactLearner+LLM.
 \end{enumerate}
 %
 
 \paragraph{Datasets}
+\label{par:datasets}
 We use two datasets:
 %
 \begin{enumerate}
@@ -1785,7 +1802,7 @@ We randomly select 10 modules, ensuring each has at least one concept and one ro
 \paragraph{LLMs, Query Format, and Prompts}
 We use four open \glspl{LLM}: Mistral~\cite{mistral} (7B parameters), Mixtral~\cite{mixtral} (47B parameters), Llama2 (13B parameters), and Llama3 (8B parameters)~\cite{llama2}, accessed via Ollama's API\footnote{\url{https://github.com/ollama/ollama}}.
 %
-Queries are expressed in either Manchester OWL syntax or controlled natural language (see \Cref{par:format}).
+Queries are expressed in either Manchester OWL syntax or controlled natural language (see \Cref{par:input-format}).
 %
 We use two system prompts:
 %
