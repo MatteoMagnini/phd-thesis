@@ -33,7 +33,12 @@
 \RequirePackage{color}
 \RequirePackage{xcolor}
 \RequirePackage{pifont}% http://ctan.org/pkg/pifont
+\RequirePackage{colortbl}
+\RequirePackage{textcomp}
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{listingsutf8}
 
+\newtheorem{example}{Example}
 
 
 \lstset{breaklines=true}
@@ -76,6 +81,15 @@
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
 
+\newtcolorbox{promptbox}[1][]{
+    enhanced,
+    colback=gray!5!white,
+    colframe=blue!50!black,
+    boxrule=0.8pt,
+    sharp corners,
+    title=#1,
+    breakable
+}
 
 \newtheorem{definition}{Definition}[chapter]
 \crefname{definition}{definition}{definitions}

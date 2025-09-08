@@ -1,0 +1,28 @@
+\begin{algorithm}
+\caption{The learning algorithm for $\mathcal{EL}$~\cite{DBLP:conf/kr/DuarteKO18}}
+\label{alg:learn}
+\begin{algorithmic}[1]
+\State \textbf{Input:} $\NC(\Omc) \cup \NR(\Omc)$ and access to a teacher that can answer membership and equivalence queries (or just membership queries if equivalence queries are simulated in a PAC setting).
+\State \textbf{Output:} An $\mathcal{EL}$ terminology $\Hmc$ such that $\Omc \equiv \Hmc$.
+\Statex
+\State Initialize $\Hmc \gets \{A \sqsubseteq B \mid \Omc \models A \sqsubseteq B, A,B\in \NC(\Omc)\}$
+\While{$\Hmc \not\equiv \Omc$} \label{line:while}
+    \State Let $C \sqsubseteq D$ be a positive counterexample for $\Omc$ relative to $\Hmc$
+    \State Compute $C' \sqsubseteq D'$ with $C'$ or $D'$ in $\NC(\Omc)$
+    \label{line:counterexample}
+    \If{$C' \in \NC(\Omc)$}
+        \State Compute a right $\Omc$-essential $\alpha$ from
+        \[
+        C' \sqsubseteq D' \sqcap \bigsqcap_{C' \sqsubseteq F' \in \Hmc} F'
+        \]
+        \label{line:right-essential}
+    \Else
+        \State Compute a left $\Omc$-essential $\alpha$ from $C' \sqsubseteq D'$
+        \label{line:left-essential}
+    \EndIf
+    \State Add $\alpha$ to $\Hmc$
+    \label{line:add-to-hypothesis}
+\EndWhile
+\State \Return $\Hmc$
+\end{algorithmic}
+\end{algorithm}

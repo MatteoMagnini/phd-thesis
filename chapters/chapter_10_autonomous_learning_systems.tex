@@ -605,7 +605,7 @@ It also eliminates the need for users to provide extra domain-specific data or t
 
 \subsection{Case Study and Experiments}
 \label{subsec:case-study}
-
+%
 This section presents a case study designed to empirically validate \llmfkg{}.
 
 %
@@ -1361,5 +1361,463 @@ They demonstrate that the complex task of ontology construction can be partially
 
 
 
+\section{Actively learning \EL terminologies from \glspl{LLM}}\label{sec:actively-learning-ontologies}
+%
+We now present the paper ``Actively Learning \EL Terminologies from Large Language Models'', accepted at the 28th European Conference on Artificial Intelligence (ECAI 2025)\footnote{\url{https://ecai2025.org/}}.
+%
+In active learning, a \emph{learner} attempts to learn from a \emph{teacher} by posing questions.
+%
+The questions made by the learner are called \emph{membership queries} and are answered with `yes' or `no'.
+%
+This kind of query is often studied as part of a communication protocol that also includes \emph{equivalence queries}.
+%
+Intuitively, equivalence queries ask whether the idea of the learner about the knowledge of the teacher is correct or not.
+%
+If not, then the teacher should provide a counterexample showing the difference (or equivalently, with `true' or `false').
+%
+In this work, we consider the teacher as a \gls{LLM} and study the case in which knowledge is expressed as an \EL terminology.
+%
+Membership queries ask whether concept inclusions are true or not.
+%
+Equivalence queries are simulated by a sample with concept inclusions labelled as  positive or negative.
+%
+We present a non-trivial extension of the ExactLearner tool to extract \EL terminologies from \glspl{LLM}.
+%
+The ExactLearner was originally designed to run with a synthetic teacher that answers membership queries together with equivalence queries.
+%
+Given the relevant symbols as input (e.g., algae, plant, etc.), the tool tries to find how these symbols should be logically connected by posing questions to \glspl{LLM}.
+%
+To evaluate the approach, we present performance results of the ExactLearner in the task of reconstructing existing \EL terminologies.
 
-\section{Actively learning ontologies from \glspl{LLM}}\label{sec:actively-learning-ontologies}
+
+\subsection{Introduction}
+\label{subsec:actively-learning-introduction}
+\glspl{LLM} have accumulated vast amounts of information and significantly improved their question-answering capabilities.
+%
+This has led to the development of methods to interact with and extract knowledge from these models.
+%
+Prompts to \glspl{LLM} range from general knowledge questions, such as definitions and historical events, to domain-specific queries, such as scientific facts in health and medicine.
+%
+Recent efforts have focused on automating the extraction of knowledge from \glspl{LLM}, often representing this knowledge in the form of an \emph{ontology}~\cite{10.1093/bioinformatics/btae104,DBLP:journals/kbs/CiattoAMO25,DBLP:conf/ekaw/DurantiGMRR24,DBLP:conf/kbclm/2023,DBLP:conf/ontobras/SoaresW24}.
+%
+Ontologies, a cornerstone of \gls{KR}, provide a structured representation of the conceptual knowledge within a domain.
+%
+The most widely used formalism for specifying ontologies is \emph{description logic}~\cite{DBLP:books/daglib/0041477}.
+%
+In life sciences, ontologies are extensively used for tasks such as data integration, information retrieval, and automated reasoning~\cite{DBLP:conf/semweb/NoySDDGJMRYM08}.
+
+%
+A key question arises: \emph{What can we learn from \glspl{LLM}?}
+%
+Moreover, given that \glspl{LLM} can produce incorrect or inconsistent information, is there an automated way to identify such inaccuracies?
+%
+To address these questions, this work explores an active learning approach to construct \emph{description logic ontologies} from \glspl{LLM}.
+%
+Our approach is grounded in Angluin's exact learning framework~\cite{DBLP:journals/ml/Angluin87}, where a \emph{learner} acquires knowledge from a \emph{teacher} by posing queries.
+%
+This method, known as \emph{active learning}~\cite{DBLP:conf/stoc/Angluin92}, involves two types of queries: \emph{membership queries} and \emph{equivalence queries}.
+%
+Here, we consider the \gls{LLM} as the teacher and aim to learn ontologies formulated in the \EL description logic~\cite{DBLP:conf/ijcai/BaaderBL05}.
+
+%
+Exact learning of lightweight description logic ontologies has been studied extensively for theoretical purposes~\cite{DBLP:conf/ijcai/FunkJLPW19,DBLP:conf/ijcai/FunkJL21,DBLP:conf/aaai/KonevOW16,DBLP:journals/jmlr/KonevLOW17,DBLP:conf/dlog/OzakiPM20}.
+%
+However, a major challenge in applying these algorithms is finding a suitable teacher capable of answering the required queries.
+%
+The only known implementation for exact learning of \EL ontologies is the \emph{ExactLearner} tool~\cite{DBLP:conf/kr/DuarteKO18}.
+%
+This tool learns \EL terminologies\footnote{An \EL terminology is an ontology with specific syntactic restrictions (see Sec.~\ref{sec:active-learning-ontologies}).} from a synthetic teacher that can answer membership and equivalence queries.
+%
+Membership queries verify whether a given concept inclusion is true or false, while equivalence queries check whether the learner's hypothesis matches the teacher's knowledge.
+%
+If the hypothesis is incorrect, the teacher provides a counterexample.
+
+%
+The synthetic teacher in \emph{ExactLearner} was designed to test the tool using ontologies from the Oxford Ontology Repository\footnote{\url{https://www.cs.ox.ac.uk/isg/ontologies/}}.
+%
+Given a set of relevant symbols, referred to as the \emph{vocabulary} or \emph{signature} (e.g., algae, plant), the tool determines how these symbols are logically connected by posing queries to the teacher.
+
+%
+In this work, we extend the \emph{ExactLearner} tool to interact with \glspl{LLM} as teachers, naming the extended version \emph{ExactLearner+LLM}.
+%
+We use the Manchester OWL Syntax~\cite{DBLP:conf/owled/HorridgeDGRSW06} and a custom parsing function to translate concept inclusions from description logic into natural language.
+%
+While membership queries can be directly mapped to a question-answering setting with \glspl{LLM}, equivalence queries are more challenging~\cite{DBLP:journals/ml/WeissGY24,DBLP:journals/ijar/BlumKOT24}.
+%
+To address this, we simulate equivalence queries using a sample of randomly generated concept inclusions classified as true or false by the \gls{LLM}.
+%
+This approach aligns with the theoretical analysis of Angluin's framework within the \gls{PAC} learning paradigm~\cite{DBLP:journals/ml/Angluin87}.
+
+%
+To evaluate our approach, we conducted experiments using \emph{ExactLearner+LLM} with open-source \glspl{LLM}.
+%
+The tool was provided with a signature and tasked with reconstructing existing ontologies.
+%
+We tested it on small ontologies from the original \emph{ExactLearner} benchmark and modules extracted from the GALEN ontology~\cite{Rector2008TheGH}, which contains medical terms.
+%
+Our results also examine whether there is statistical evidence of correlation between the concept inclusions extracted by \emph{ExactLearner+LLM} and those in the original ontologies created by human engineers.
+%
+% This highlights the potential of \glspl{LLM} in ontology construction.
+
+
+\subsection{Background and related work}
+\label{subsec:actively-learning-background}
+%
+In this section, we define the concept of an \EL terminology, elaborate on the exact and \gls{PAC} learning frameworks, and describe the algorithm implemented in the \emph{ExactLearner} tool~\cite{DBLP:conf/kr/DuarteKO18}, which is designed to learn \EL terminologies from a teacher capable of answering membership and equivalence queries.
+%
+\paragraph{The \EL Description Logic}
+Let \(\NC\) and \(\NR\) be countably infinite and disjoint sets of \emph{concept names} and \emph{role names}, respectively.
+%
+In some cases, we may consider \(\NC\) and \(\NR\) as finite sets, depending on the context.
+%
+An \EL \emph{concept} is defined as \(C, D := C \sqcap D \mid \exists r.C \mid A \mid \top\), where \(A \in \NC\) and \(r \in \NR\).
+%
+An \EL \emph{concept inclusion} is an expression of the form \(C \sqsubseteq D\), where \(C\) and \(D\) are \EL concepts.
+%
+An \EL \emph{equivalence} is expressed as \(C \equiv D\), which is equivalent to \(C \sqsubseteq D\) and \(D \sqsubseteq C\).
+%
+An \EL \emph{ontology} is a finite set of \EL concept inclusions \(C \sqsubseteq D\).
+%
+For a given ontology \(\Omc\), we denote the sets of concept names and role names occurring in \(\Omc\) as \(\NC(\Omc)\) and \(\NR(\Omc)\), respectively.
+%
+These sets are also referred to as the \emph{signature} of \(\Omc\).
+%
+If, for all concept inclusions \(C \sqsubseteq D\) in \(\Omc\), at least one of \(C\) or \(D\) belongs to \(\NC\), and there is at most one inclusion of the form \(A \sqsubseteq C\) for every \(A \in \NC\), then \(\Omc\) is called a \emph{terminology}\footnote{This definition is slightly more flexible than the standard one in the description logic literature~\cite{DBLP:books/daglib/0041477}.}.
+%
+The semantics of \EL is defined using interpretations, as described in~\cite{DBLP:books/daglib/0041477}.
+%
+Given an ontology \(\Omc\) and a concept inclusion \(C \sqsubseteq D\), we say that \(\Omc\) \emph{entails} \(C \sqsubseteq D\), denoted as \(\Omc \models C \sqsubseteq D\), if every interpretation satisfying \(\Omc\) also satisfies \(C \sqsubseteq D\).
+%
+Two ontologies \(\Omc\) and \(\Hmc\) are \emph{equivalent}, denoted as \(\Omc \equiv \Hmc\), if they are satisfied by the same interpretations.
+%
+This means that, for all concept inclusions \(C \sqsubseteq D\), \(\Omc \models C \sqsubseteq D \iff \Hmc \models C \sqsubseteq D\).
+
+
+\paragraph{Exact Learning}
+The exact learning framework, introduced by Angluin~\cite{DBLP:journals/ml/Angluin87}, involves a \emph{learner} attempting to acquire a target concept, which in this work is an \EL terminology, from a \emph{teacher}.
+%
+The communication protocol between the learner and the teacher includes two types of queries:
+%
+\begin{itemize}
+    \item \emph{Membership queries}, where the learner asks whether a specific statement is true or false.
+    %
+    \item \emph{Equivalence queries}, where the learner proposes a hypothesis and receives either confirmation that the hypothesis matches the target or a counterexample highlighting the difference~\cite{DBLP:journals/ml/Angluin87}.
+\end{itemize}
+%
+In our context, membership queries verify whether an \EL concept inclusion \(C \sqsubseteq D\) is true or false.
+%
+For example, the learner may ask whether \(\mathsf{Algae} \sqsubseteq \mathsf{Plant}\) holds true.
+
+
+\paragraph{Simulating Equivalence Queries}
+To simulate equivalence queries, we adopt a \emph{sampling} strategy.
+%
+Instead of directly asking the \gls{LLM} to evaluate the hypothesis and provide a counterexample, we generate a random set of \EL concept inclusions and query the \gls{LLM} to classify them as true or false.
+%
+We then verify whether the learner's hypothesis is consistent with the \gls{LLM}'s classification.
+%
+Consistency is achieved if all true concept inclusions are logical consequences of the hypothesis and all false inclusions are not.
+%
+If the hypothesis is consistent, the learning process terminates.
+%
+Otherwise, a counterexample is identified, and the process continues as if the \gls{LLM} had returned a counterexample in response to an equivalence query.
+%
+This approach has been used in prior work to simulate equivalence queries~\cite{DBLP:journals/ml/WeissGY24,DBLP:journals/ijar/BlumKOT24}.
+%
+Under certain conditions, this strategy provides theoretical guarantees within the \gls{PAC} learning framework~\cite{DBLP:journals/ml/Angluin87,DBLP:journals/cacm/Valiant84}.
+%
+In \gls{PAC} learning, the required sample size is determined by the hypothesis space \(\mathbf{H}\) (in this case, \EL terminologies of a specific size and structure defined by a given signature) and two parameters, \(\epsilon\) and \(\delta\), representing the error tolerance and confidence level, respectively.
+%
+According to \gls{PAC} theory~\cite[Cor. 2.3]{DBLP:books/daglib/0033642}, the sample size must be at least \(\mathsf{ln}(|\mathbf{H}|/\delta)/\epsilon\) for finite \(\mathbf{H}\).
+
+
+\paragraph{The Algorithm for \EL Terminologies}
+%
+\input{algorithms/active-learning-el-terminologies}
+%
+The \emph{ExactLearner} tool~\cite{DBLP:conf/kr/DuarteKO18} is designed to learn \EL terminologies by interacting with a synthetic teacher that answers membership and equivalence queries.
+%
+The teacher's responses are logically consistent with a target \EL terminology, and the communication is conducted in \gls{OWL} rather than natural language.
+%
+The main steps of the learning procedure are outlined in \Cref{alg:learn}.
+%
+The algorithm performs equivalence queries in line~\ref{line:while} and membership queries in lines~\ref{line:counterexample},~\ref{line:right-essential}, and~\ref{line:left-essential}.
+%
+In line~\ref{line:counterexample}, a counterexample \(C' \sqsubseteq D'\) is extracted from \(C \sqsubseteq D\), ensuring that one of the sides belongs to \(\NC(\Omc)\).
+%
+This step is guaranteed to find a counterexample because \(\Omc\) is a terminology~\cite{DBLP:conf/kr/DuarteKO18}.
+%
+The algorithm applies various operations using membership queries, including \emph{concept saturation for \(\Omc\)}, \emph{sibling merging}, \emph{decomposition on the right}, and \emph{decomposition on the left}.
+%
+Additionally, two heuristics, \emph{desaturation} and \emph{branching}, are employed.
+%
+These operations aim to maximize the informativeness of concept inclusions while minimizing their size.
+%
+The resulting concept inclusions, referred to as \(\Omc\)-essential, are added to the hypothesis in line~\ref{line:add-to-hypothesis}.
+
+
+\subsection{\glspl{LLM} as teachers}
+\label{subsec:probing}
+%
+\glspl{LLM} present significant opportunities for acquiring knowledge in the form of ontologies.
+%
+However, several challenges must be addressed to effectively employ them as teachers in an active learning framework.
+%
+The main challenges are as follows:
+%
+\begin{itemize}
+    \item Membership queries in the \emph{ExactLearner} tool are expressed in \gls{OWL}, whereas \glspl{LLM} are designed to process natural language inputs.
+    %
+    \item Responses from \glspl{LLM} may deviate from the expected format, even when explicitly instructed to answer with `yes' or `no'.
+    %
+    \item Queries generated by the \emph{ExactLearner} can be lengthy and complex, involving multiple logical operators, which may hinder the ability of \glspl{LLM} to provide accurate answers.
+    %
+    \item Even when responses are concise and well-formatted, they may be logically inconsistent with previous answers or incorrect, and they may vary if the same query is repeated.
+    %
+    \item The expressivity of the ontology language used (\EL) limits the scope of the knowledge that can be extracted.
+\end{itemize}
+%
+Below, we discuss how these challenges are addressed.
+
+
+\paragraph{Input Format}
+\label{par:input-format}
+%
+The format of the queries plays a crucial role in ensuring effective communication with \glspl{LLM}.
+%
+We use both the Manchester \gls{OWL} syntax~\cite{DBLP:conf/owled/HorridgeDGRSW06} and controlled natural language to standardize the queries.
+%
+Queries in Manchester \gls{OWL} syntax take the form \texttt{[A] SubClassOf [B]}.
+%
+In natural language, these are translated into questions such as:
+%
+\begin{center}
+    ``Can \texttt{[A]} be considered a subcategory of \texttt{[B]}? Answer only with yes or no.''
+\end{center}
+%
+Here, \texttt{[A]} and \texttt{[B]} are placeholders for the left-hand and right-hand sides of the concept inclusion.
+%
+This approach aligns with the third formulation proposed by Funk et al.~\cite{DBLP:conf/kbclm/2023}, which is well-suited to our setting.
+%
+The translation of \gls{OWL} concept expressions into natural language is applied recursively:
+%
+\begin{enumerate}
+    \item Expressions of the form \texttt{[A] and [B]} are replaced with ``\texttt{[A]} that is also \texttt{[B]}''.
+    %
+    \item Expressions of the form \texttt{[r] some [A]}, where \texttt{[r]} is a role name, are replaced with ``something that \texttt{[r]} \texttt{[A]}''.
+\end{enumerate}
+%
+\begin{example}\upshape
+    The concept inclusion \texttt{Person SubClassOf Human} is translated into:
+    %
+    ``Can Person be considered a subcategory of Human?''
+    %
+    Similarly, \texttt{Carnivore SubClassOf Animal and eats some Meat} becomes:
+    %
+    ``Can Carnivore be considered a subcategory of Animal that is also something that eats Meat?''
+    %
+    Finally, \texttt{(Bird and Fish) SubClassOf Animal} is translated to:
+    %
+    ``Can Bird that is also Fish be considered a subcategory of Animal?''
+\end{example}
+
+
+\paragraph{Unexpected Responses}
+\label{par:unexpected-responses}
+%
+\glspl{LLM} may return arbitrary responses, even when the expected answer is a single word such as `true' or `false'.
+%
+To mitigate this, we explicitly instruct the \gls{LLM} to answer with `true' or `false' by appending this requirement to the query.
+%
+Alternatively, we use system prompts or adjust hyperparameters, such as temperature, to guide the model's responses.
+%
+Despite these precautions, unexpected responses may still occur:
+%
+\begin{enumerate}
+    \item The response may include additional text beyond `true' or `false'.
+    %
+    \item Both `true' and `false' may appear in the response.
+    %
+    \item Neither `true' nor `false' may be present in the response.
+\end{enumerate}
+%
+To address these issues, we limit the maximum number of tokens in the response.
+%
+If the response does not contain `true' or `false', we treat it as `false'.
+
+
+\paragraph{Length of Queries}
+\label{par:length-of-queries}
+%
+Long and complex queries can lead to biased responses from \glspl{LLM}, such as always answering `true'.
+%
+To address this, we modify the \emph{ExactLearner} tool as follows:
+%
+\begin{itemize}
+    \item \emph{Simplification:} Concept expressions are simplified by removing redundant concept names.
+    %
+    For example, if $A \sqcap B$ is a concept expression and $A \sqsubseteq B$ is entailed by the hypothesis, $B$ is omitted.
+    %
+    \item \emph{Splitting:} Long queries with multiple conjuncts are split into smaller queries.
+    %
+    For instance, instead of asking whether $C \sqsubseteq D_1 \sqcap \ldots \sqcap D_n$, we ask whether $C \sqsubseteq D_1$, $C \sqsubseteq D_2$, and so on.
+\end{itemize}
+%
+These modifications reduce the likelihood of biased responses and improve the accuracy of the \gls{LLM}.
+
+
+\paragraph{Correctness and Logical Consistency}
+\label{par:correctness-and-consistency}
+%
+Responses from \glspl{LLM} may not always reflect the truth or be logically consistent with an \EL ontology.
+%
+Errors can occur in the following cases:
+%
+\begin{enumerate}
+    \item A false inclusion $C \sqsubseteq D$ is incorrectly answered as `true'.
+    %
+    \item A true inclusion $C \sqsubseteq D$ is incorrectly answered as `false'.
+    %
+    \item The \gls{LLM} answers `true' for all inclusions in an ontology $\Omc$, but answers `false' for a logical consequence of $\Omc$.
+\end{enumerate}
+%
+To handle logical inconsistencies, we compute the \emph{closure} under logical consequence~\cite{BLUM2023109026}.
+%
+Additionally, we use a caching mechanism to store the first response to each query, ensuring consistency across repeated queries.
+
+%
+\paragraph{Expressivity}
+\label{par:expressivity}
+%
+The algorithm focuses on extracting \EL terminologies, which may not fully capture knowledge better expressed in more expressive languages.
+%
+However, \EL is widely used in real-world ontologies, particularly in the medical domain~\cite{Rector2008TheGH,bioportal}.
+%
+Its polynomial-time reasoning complexity~\cite{DBLP:conf/ijcai/BaaderBL05} and the availability of efficient reasoning tools~\cite{DBLP:journals/jar/KazakovKS14} make it a practical choice for ontology construction.
+
+
+
+\subsection{Experiments}
+\label{subsec:experiments}
+
+The code for the experiments is publicly available on GitHub\footnote{\url{https://github.com/MatteoMagnini/ExactLearner-LLM/}}.
+%
+All experiments were conducted on a workstation equipped with two NVIDIA Tesla V100S-PCIE-32GB GPUs and dual Intel\textcopyright~Xeon\textcopyright~Gold 6226R CPUs, providing a total of 64 threads.
+%
+The system was configured with CUDA 12.5 and NVIDIA driver version 535.183.01.
+%
+
+\paragraph{Evaluation Approach}
+\Cref{alg:learn} takes as input the signature, which consists of finite sets of concept and role names, and constructs an \gls{EL} terminology by posing membership and equivalence queries.
+%
+Equivalence queries are simulated using a \emph{\gls{PAC} sample}, which is a set of concept inclusions randomly generated and answered by the \gls{LLM}.
+%
+For an ontology \(\Omc\) with \(n\) logical axioms, the \gls{PAC} sample size is computed as:
+\[
+\frac{\ln(A^n / \delta)}{\epsilon},
+\]
+where \(\delta = 0.1\), \(\epsilon = 0.2\), and \(A\) is the number of all possible axioms of the form:
+\[
+A \sqsubseteq B, \quad A \sqcap B \sqsubseteq C, \quad B \sqsubseteq \exists r.A, \quad \text{and} \quad \exists r.A \sqsubseteq B,
+\]
+with \(A, B, C \in \NC\) and \(r \in \NR\), formulated using the signature of \(\Omc\).
+%
+We refer to these axioms as \emph{normalized}.
+%
+The ability of ExactLearner+LLM to reconstruct existing ontologies is tested by posing queries to the \gls{LLM}.
+%
+
+\paragraph{Hypotheses}
+We test the following hypotheses in our experiments:
+%
+\begin{enumerate}
+    \item Even though \glspl{LLM} may make mistakes and the simulation strategy does not guarantee exact learnability, we expect a correlation between the ontologies built by ExactLearner+LLM and the original ontologies.
+    %
+    \item Queries expressed in controlled natural language using our parsing function will yield better results than those using the OWL Manchester syntax.
+    %
+    \item Larger \glspl{LLM} will perform better than smaller ones.
+    %
+    \item Ontologies expressing common knowledge, such as family relations, will be easier to learn than those with specialized knowledge, such as medical ontologies.
+    %
+    \item Simplifications introduced to reduce query length (see \Cref{sec:probing}) will improve the performance of \glspl{LLM} and, consequently, the ontologies constructed by ExactLearner+LLM.
+\end{enumerate}
+%
+
+\paragraph{Datasets}
+We use two datasets:
+%
+\begin{enumerate}
+    \item Five small ontologies from the ExactLearner benchmark~\cite{DBLP:conf/kr/DuarteKO18}.
+    %
+    \item Ten modules extracted from the GALEN ontology~\cite{Rector2008TheGH}, which contains medical information.
+\end{enumerate}
+%
+The small ontologies include:
+%
+\begin{itemize}
+    \item \emph{Animals}, which describes the animal realm, including subphyla, classes, and orders.
+    %
+    \item \emph{Cell}, which provides information about cells based on type, development stage, and organism.
+    %
+    \item \emph{Football}, a minimal ontology describing relations between football games, teams, players, and managers.
+    %
+    \item \emph{Generations}, which describes family members and their relations.
+    %
+    \item \emph{University}, focusing on the professor role.
+\end{itemize}
+%
+\Cref{tab:small-ontologies} summarizes the size of the signature, logical axioms, \gls{PAC} sample size, and possible normalized axioms for these ontologies.
+\input{tables/small-ontologies}
+%
+
+The GALEN ontology is a large medical ontology with \(22,286\) concept names, \(950\) role names, and \(46,558\) logical axioms.
+%
+Since not all axioms are connected, we modularize GALEN using the bottom locality strategy~\cite{DBLP:journals/jair/GrauHKS08}\footnote{\url{https://github.com/ernestojimenezruiz/locality-module-extractor}}.
+%
+This method generates \(22,286\) modules, one for each concept name.
+%
+We randomly select 10 modules, ensuring each has at least one concept and one role name, and no more than 50 concept or role names.
+%
+\Cref{tab:modules-ontologies} lists the selected modules.
+\input{tables/modules-ontologies}
+%
+
+\paragraph{LLMs, Query Format, and Prompts}
+We use four open \glspl{LLM}: Mistral~\cite{mistral} (7B parameters), Mixtral~\cite{mixtral} (47B parameters), Llama2 (13B parameters), and Llama3 (8B parameters)~\cite{llama2}, accessed via Ollama's API\footnote{\url{https://github.com/ollama/ollama}}.
+%
+Queries are expressed in either Manchester OWL syntax or controlled natural language (see \Cref{par:format}).
+%
+We use two system prompts:
+%
+\begin{promptbox}[Simple system prompt]
+    \scriptsize
+    Answer with only True or False.
+\end{promptbox}
+%
+\begin{promptbox}[Advanced system prompt]
+    \scriptsize
+    You need to classify the following statements as True or False. The statement will be provided in either Manchester OWL syntax or natural language. Strictly follow these guidelines:
+
+    1. Answer with only True or False.
+
+    2. Entities with \texttt{has part} relations are not in a subclass relation.
+
+    3. Statements containing numerous entities are most probably False.
+
+    4. Take a deep breath before answering.
+
+    5. If unsure, answer False.
+\end{promptbox}
+%
+The advanced prompt provides additional contextual information and guidelines to improve \gls{LLM} performance.
+%
+For instance, it emphasizes that entities with \texttt{has part} relations should not be in a subclass relation~\cite{DBLP:conf/kbclm/2023}.
+%
+It also mitigates the tendency of \glspl{LLM} to answer ``True'' to long queries, which may arise during the computation of \(\Omc\)-essential concept inclusions (\Cref{subsec:active-learning-ontologies}).
+%
+
+\paragraph{Experimental Details}
+To constrain \gls{LLM} responses, we limit the maximum number of tokens to 2, ensuring answers are either ``True'' or ``False''\footnote{A token is a unit of text, typically corresponding to a few characters. For example, ``False'' requires 2 tokens. See \url{https://help.openai.com/en/articles/4936856}.}.
+%
+We also employ a caching mechanism to store \gls{LLM} responses, reducing computation time and ensuring consistency when the same query is posed multiple times.
+%
