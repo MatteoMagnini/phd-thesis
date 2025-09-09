@@ -1837,4 +1837,166 @@ It also mitigates the tendency of \glspl{LLM} to answer ``True'' to long queries
 To constrain \gls{LLM} responses, we limit the maximum number of tokens to 2, ensuring answers are either ``True'' or ``False''\footnote{A token is a unit of text, typically corresponding to a few characters. For example, ``False'' requires 2 tokens. See \url{https://help.openai.com/en/articles/4936856}.}.
 %
 We also employ a caching mechanism to store \gls{LLM} responses, reducing computation time and ensuring consistency when the same query is posed multiple times.
+
+
+
+\subsection{Evaluation and Results}
+\label{subsec:evaluation-and-results}
 %
+We evaluate the experimental results by computing the following metrics: accuracy, precision, recall, and F1-score.
+%
+These metrics are calculated considering all possible axioms of the form:
+%
+\[
+A \sqsubseteq B, \quad A \sqcap B \sqsubseteq C, \quad B \sqsubseteq \exists r.A, \quad \text{and} \quad \exists r.A \sqsubseteq B,
+\]
+%
+where \(A, B, C \in \NC\) and \(r \in \NR\), formulated using a finite signature.
+%
+Tautologies, such as \(A \sqsubseteq A\), \(A \sqcap B \sqsubseteq B\), and \(A \sqcap B \sqsubseteq A\), are excluded to avoid artificially inflating the number of true positives.
+%
+Our language does not allow for the expression of contradictions.
+
+%
+Axioms entailed by both the original and the learned ontology are labeled as true positives.
+%
+Those not entailed by either are labeled as true negatives.
+%
+Axioms entailed by the original ontology but not by the learned one are labeled as false negatives, and vice versa for false positives.
+
+%
+\subsubsection{Learning Performance}
+\label{subsubsec:learning-performance}
+%
+\input{tables/results-summary}
+%
+\input{tables/animal}
+%
+\input{tables/cell}
+%
+\input{tables/modules}
+%
+For the Animals ontology learned using the Mistral model, the learner correctly inferred that ``Carnivore is an animal that eats some meat,'' consistent with the original ontology.
+%
+However, it also inferred that ``Carnivore is a mammal,'' which is incorrect as some carnivores are not mammals.
+%
+Additionally, it inferred that ``Carnivore is an animal that eats some animal,'' which aligns with real-world knowledge but is not entailed by the dataset ontology.
+%
+To provide a comprehensive analysis, we present aggregated results in \Cref{tab:results-small-ontologies,tab:results-small-models,tab:results-small-prompt}.
+
+%
+\Cref{tab:results-small-ontologies} summarizes the results grouped by ontology.
+%
+Ontologies in technical domains, such as the Cell ontology, exhibit lower average F1-scores (e.g., 0.284), while non-technical domains, such as Animals (0.428), Football (0.477), and Generations (0.476), perform better.
+%
+This supports \textbf{hypothesis (4)}.
+
+%
+\Cref{tab:results-small-models} shows the aggregated results by \gls{LLM}.
+%
+The Mistral model achieves the highest average F1-score (0.49), outperforming larger models like Mixtral.
+%
+This contradicts \textbf{hypothesis (3)}.
+
+%
+\Cref{tab:results-small-prompt} compares query formats and prompt types.
+%
+Natural language prompts yield significantly higher F1-scores (0.511 and 0.454) compared to Manchester OWL syntax (0.262 and 0.347), confirming \textbf{hypothesis (2)}.
+
+%
+\paragraph{Results on GALEN Modules}
+\label{par:results-on-galen-modules}
+%
+For experiments on GALEN ontology modules, we used the best-performing \gls{LLM} from \Cref{tab:results-small-models} with the advanced natural language prompt.
+%
+Due to the larger size of these modules, we limited experiments to one \gls{LLM}.
+%
+\Cref{tab:result-modules} shows heterogeneous F1-scores, ranging from 0.253 (Neon) to 0.434 (Prostaglandin Drug).
+%
+This variability is attributed to the lack of fine-tuning for medical domains.
+%
+Nevertheless, all experiments passed a Chi-Square correlation test, confirming \textbf{hypothesis (1)}.
+
+%
+\paragraph{Synthetic Teacher Evaluation}
+\label{par:synthetic-teacher-evaluation}
+%
+\input{tables/synthetic}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/combined_models}
+    \caption[Learner operations by teacher type]{%
+        Aggregated results of the operations performed by the learner during the \gls{PAC} learning of all the ontologies grouped by teacher type (\glspl{LLM} and synthetic).
+    }
+    \label{fig:learner-operations-models}
+\end{figure}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/query_counts_by_model}
+    \caption[Queries by \gls{LLM}]{%
+        Average number of membership and (simulated) equivalence queries grouped by \gls{LLM}.
+        %
+        Each equivalence query is simulated by a batch of randomly generated queries.
+    }
+    \label{fig:queries}
+\end{figure}
+%
+To validate our implementation, we tested ExactLearner+LLM with a synthetic teacher capable of perfectly answering membership queries.
+%
+\Cref{tab:results-synthetic} reports the results.
+%
+Precision is always 1, as the synthetic teacher has full knowledge of the target ontology.
+%
+Other metrics may not reach 1 due to the PAC stopping criterion with \(\epsilon = 0.2\) and \(\delta = 0.1\).
+
+%
+\paragraph{Learner Behavior Analysis}
+\label{par:learner-behavior-analysis}
+%
+\Cref{fig:learner-operations-models} illustrates the operations performed by the learner, grouped by teacher type.
+%
+For \glspl{LLM}, saturation is the most frequent operation, followed by right decomposition, left decomposition, and desaturation.
+%
+In contrast, the synthetic teacher primarily involves saturation and right decomposition.
+
+%
+\Cref{fig:queries} shows the average number of membership and simulated equivalence queries per \gls{LLM}.
+%
+The choice of \gls{LLM} significantly impacts the number of queries posed during learning.
+
+%
+Simplification and splitting operations improved F1-scores across most \gls{LLM} and prompt combinations, confirming \textbf{hypothesis (5)}.
+%
+For instance, the Mistral model with natural language prompts saw an F1-score increase from approximately 0.5 to 0.7.
+
+%
+\subsection{Conclusion and Discussion}
+\label{subsec:actively-learning-conclusion}
+%
+We introduced \emph{ExactLearner+LLM}, an extension of the ExactLearner tool that leverages \glspl{LLM} as teachers to learn \EL ontologies.
+%
+The tool addresses challenges such as query input format, unexpected responses, and logical consistency.
+%
+Mechanisms like query simplification and splitting were implemented to adapt to \gls{LLM} behavior.
+
+%
+Experimental results demonstrate statistical evidence of correlation between learned and original ontologies.
+%
+Key findings include:
+%
+\begin{enumerate}
+    \item Concept inclusions of the form \(A \sqsubseteq B\) are easier to learn than \(A \sqsubseteq \exists r.B\) or \(\exists r.B \sqsubseteq A\), leading to worse results for ontologies with more of the latter types.
+    %
+    \item Operations such as saturation, desaturation, and right decomposition were successfully applied.
+    %
+    \item The Mistral model outperformed larger models like Mixtral.
+    %
+    \item Natural language prompts significantly improved performance compared to Manchester OWL syntax.
+\end{enumerate}
+
+%
+Our approach guarantees the construction of \EL terminologies with a specified vocabulary, even in a zero-shot setting.
+%
+Future work includes exploring efficient counterexample generation, enhancing ontology language expressivity, and fine-tuning \glspl{LLM} for technical domains like medicine.

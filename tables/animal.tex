@@ -6,30 +6,30 @@
     All the results have been analysed with the Chi-Squared test. The null hypothesis is that there is no correlation between the ontology constructed by ExactLearner+LLM and the Animals ontology. They all have p-value lower than 0.05 (i.e., refused null hypothesis).
 }
 \label{tab:results-animal}
-\resizebox{0.48\textwidth}{!}{
+\resizebox{\textwidth}{!}{
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
 \multicolumn{1}{|c|}{\textbf{Model}} & \multicolumn{1}{|c|}{\textbf{Prompt \& Query}} & \multicolumn{1}{c|}{\textbf{Accuracy}} & \multicolumn{1}{c|}{\textbf{Recall}} & \multicolumn{1}{c|}{\textbf{Precision}} & \multicolumn{1}{c|}{\textbf{F1-Score}} \\
 \hline
-\multirow{4}{*}{Llama2 (13b)} 
+\multirow{4}{*}{Llama2 (13b)}
  & \cellcolor[HTML]{EFEFEF} M. OWL Syntax         & \cellcolor[HTML]{EFEFEF} 0.276 & \cellcolor[HTML]{EFEFEF} 0.982 & \cellcolor[HTML]{EFEFEF} 0.074 & \cellcolor[HTML]{EFEFEF} 0.138 \\ \cline{2-6}
  & Natural Language                               & 0.859 & 0.930 & 0.286 & 0.437 \\ \cline{2-6}
  & \cellcolor[HTML]{EFEFEF} E. M. OWL Syntax      & \cellcolor[HTML]{EFEFEF} 0.380 & \cellcolor[HTML]{EFEFEF} 0.945 & \cellcolor[HTML]{EFEFEF} 0.083 & \cellcolor[HTML]{EFEFEF} 0.152 \\ \cline{2-6}
  & E. Natural Language                            & 0.970 & 0.651 & 0.801 & 0.718 \\ \cline{1-6}
 \hline
-\multirow{4}{*}{Llama3 (8b)} 
+\multirow{4}{*}{Llama3 (8b)}
  & \cellcolor[HTML]{EFEFEF} M. OWL Syntax         & \cellcolor[HTML]{EFEFEF} 0.309 & \cellcolor[HTML]{EFEFEF} 1.000 & \cellcolor[HTML]{EFEFEF} 0.078 & \cellcolor[HTML]{EFEFEF} 0.145 \\ \cline{2-6}
  & Natural Language                               & 0.920 & 0.890 & 0.414 & 0.565 \\ \cline{2-6}
  & \cellcolor[HTML]{EFEFEF} E. M. OWL Syntax      & \cellcolor[HTML]{EFEFEF} 0.314 & \cellcolor[HTML]{EFEFEF} 0.985 & \cellcolor[HTML]{EFEFEF} 0.078 & \cellcolor[HTML]{EFEFEF} 0.145 \\ \cline{2-6}
  & E. Natural Language                            & 0.894 & 0.842 & 0.339 & 0.483 \\ \cline{1-6}
 \hline
-\multirow{4}{*}{Mistral (7b)} 
+\multirow{4}{*}{Mistral (7b)}
  & \cellcolor[HTML]{EFEFEF} M. OWL Syntax         & \cellcolor[HTML]{EFEFEF} 0.552 & \cellcolor[HTML]{EFEFEF} 0.996 & \cellcolor[HTML]{EFEFEF} 0.116 & \cellcolor[HTML]{EFEFEF} 0.207 \\ \cline{2-6}
  & Natural Language                               & 0.955 & 0.912 & 0.575 & 0.706 \\ \cline{2-6}
  & \cellcolor[HTML]{EFEFEF} E. M. OWL Syntax      & \cellcolor[HTML]{EFEFEF} 0.830 & \cellcolor[HTML]{EFEFEF} 0.945 & \cellcolor[HTML]{EFEFEF} 0.250 & \cellcolor[HTML]{EFEFEF} 0.396 \\ \cline{2-6}
  & E. Natural Language                            & 0.943 & 0.890 & 0.511 & 0.649 \\ \cline{1-6}
 \hline
-\multirow{4}{*}{Mixtral (47b)} 
+\multirow{4}{*}{Mixtral (47b)}
  & \cellcolor[HTML]{EFEFEF} M. OWL Syntax         & \cellcolor[HTML]{EFEFEF} 0.712 & \cellcolor[HTML]{EFEFEF} 0.904 & \cellcolor[HTML]{EFEFEF} 0.158 & \cellcolor[HTML]{EFEFEF} 0.269 \\ \cline{2-6}
  & Natural Language                               & 0.970 & 0.893 & 0.690 & 0.779 \\ \cline{2-6}
  & \cellcolor[HTML]{EFEFEF} E. M. OWL Syntax      & \cellcolor[HTML]{EFEFEF} 0.960 & \cellcolor[HTML]{EFEFEF} 0.739 & \cellcolor[HTML]{EFEFEF} 0.636 & \cellcolor[HTML]{EFEFEF} 0.684 \\ \cline{2-6}
