@@ -57,14 +57,310 @@ Many \glspl{LLM} are so good at understanding and generating natural language th
 Still, limitations exist, and the possibility to generate hallucinations is always present.
 
 
-In the following sections, we will present first the conceptual \gls{SKE}-\gls{SKI} cycle, and then two main contributions towards the development of autonomous learning systems.
+In the following sections, we will present first the conceptual \gls{SKI}-\gls{SKE} loop, and then two main contributions towards the development of autonomous learning systems.
 %
 Both contributions exploit \glspl{LLM} to generate or finetune symbolic knowledge about specific domains.
 
 
-\section{Bridging symbolic and sub-symbolic \gls{AI}}
+\section{Bridging Symbolic and Sub-symbolic \gls{AI}}
 \label{sec:cycle-ski-ske}
-\note{todo}
+%
+In the discussion paper ``Bridging Symbolic and Sub-symbolic AI: Towards Cooperative Transfer Learning in Multi-Agent Systems''~\cite{DBLP:conf/aiia/MagniniCO22} presented at the 22nd International Conference of the Italian Association for Artificial Intelligence (AIxIA 2022), we introduced the ideas of a loop between \gls{SKI} and \gls{SKE} processes in the context of \glspl{MAS}.
+%
+For computational agents, algorithms exist to mimic basic cognitive capabilities such as induction, communication, knowledge representation, and reasoning.
+%
+These capabilities are developed under the domains of symbolic \gls{AI} and \gls{ML}.
+%
+However, unlike humans, symbolic \gls{AI} and \gls{ML} algorithms are typically designed to solve specific tasks and do not inherently support interaction, cooperation, or knowledge exchange.
+
+
+This work proposes that \gls{ML}-based intelligent systems can benefit from symbolic knowledge exchange to enhance their learning capabilities~\cite{imagination-extraamas2021,not-just-for-humans-omicini-2020,expectation-extraamas2021}.
+%
+We argue that symbolic knowledge exchange can play a crucial role in enabling software agents to achieve the ability to \emph{learn to learn} new tasks.
+
+
+We introduce two types of intelligent systems: \gls{CoL} and \gls{CoTL}.
+%
+\Gls{CoL} systems are \glspl{MAS} in which agents can retrieve or provide knowledge about specific tasks to or from other agents.
+%
+This knowledge can be used during learning or inference.
+%
+\gls{CoTL} systems extend \gls{CoL} systems by enabling agents to acquire, exploit, and combine knowledge about related tasks to learn novel tasks they were not explicitly designed for.
+%
+Both systems aim to mimic the learning processes of human societies, albeit to varying extents.
+%
+Agents in these systems collaborate by sharing symbolic and, potentially, sub-symbolic knowledge about their tasks, similar to human interactions.
+
+This chapter outlines a roadmap for leveraging knowledge representation and sharing to achieve higher levels of artificial intelligence through \gls{CoL} and \gls{CoTL} systems.
+%
+We analyze the requirements of these systems in relation to the state of the art and discuss their potential implementation.
+%
+
+\subsection{Background}
+\label{subsec:background}
+
+\subsubsection{Symbolic and Sub-symbolic}
+\label{subsubsec:symbolic-and-sub-symbolic}
+%
+Symbolic and sub-symbolic representations are two fundamental paradigms for knowledge representation, extensively discussed in~\Cref{ch:ai,sec:symbolic-ai}.
+%
+Symbolic representations, such as propositional logic, \glspl{KG}, and \gls{FOL}, are interpretable, compact, and versatile, supporting both intensional and extensional knowledge representation~\cite{DBLP:conf/ogai/Gelder90,DBLP:conf/aiia/CiattoCOC19}.
+%
+These properties make them suitable for tasks requiring reasoning, transferability, and formal verification.
+%
+In contrast, sub-symbolic representations, commonly used in \gls{ML} and \glspl{NN}, encode knowledge as numerical arrays and functions, often treated as black-box models due to their complexity~\cite{interpretability-lipton-2018}.
+%
+Despite their lack of interpretability, they excel in performance across various tasks.
+%
+The interplay between these paradigms is explored through \gls{SKE} and \gls{SKI}, as introduced in~\Cref{sec:ske,sec:ski}.
+%
+\gls{SKE} extracts symbolic knowledge from sub-symbolic models, aiding interpretability and training, while \gls{SKI} injects symbolic knowledge into sub-symbolic models to enhance their efficiency and accuracy~\cite{survey-ske-andrews-1995,survey-ski-besold-2017}.
+%
+
+\subsubsection{Transfer vs.\ Multi-Task Learning}
+\label{subsubsec:tl-mtl}
+%
+A \emph{task} in \gls{ML} refers to any supervised learning problem.
+%
+\Gls{TL} enables a predictor \(P\) trained on a task \(T'\) to transfer knowledge \(K\) to another predictor \(P'\) targeting a related task \(T\).
+%
+The primary goals of \gls{TL} are to:
+%
+\begin{inlinelist}
+    \item reduce the data required to train \(P'\),
+    %
+    \item accelerate training, and
+    %
+    \item improve predictive performance.
+    %
+\end{inlinelist}
+
+\Gls{TL} methods vary in \emph{what}, \emph{how}, and \emph{when} to transfer knowledge~\cite{survey-transfer-learning-sinno-2010}.
+%
+Most \gls{TL} techniques focus on sub-symbolic knowledge transfer, such as reusing shallow layers of a \gls{NN}~\cite{cnn-tl-imagenet-shin-2016}.
+%
+To date, no \gls{TL} methods explicitly leverage symbolic knowledge transfer.
+
+\gls{MTL} extends \gls{TL} by training multiple predictors \(P_1, \dots, P_m\) on a set of related tasks \(\{T_1, \dots, T_m\}\) simultaneously~\cite{multi-task-learning-caruana-1997}.
+%
+This approach allows each predictor to benefit from the knowledge shared across tasks~\cite{survey-multi-task-learning-zhang-2021}.
+%
+Unlike \gls{TL}, where knowledge flows in one direction, \gls{MTL} facilitates bidirectional knowledge transfer.
+
+\gls{MTL} techniques are classified based on whether they target \emph{homogeneous} or \emph{heterogeneous} tasks~\cite{survey-heterogeneous-transfer-learning-day-2017}.
+%
+Homogeneous tasks share the same input and output attributes, differing only in data distribution.
+%
+Heterogeneous tasks, on the other hand, have distinct attributes with little or no overlap.
+
+In \gls{MTL}, determining task similarity remains an open challenge, particularly for heterogeneous tasks.
+%
+Empirical methods, such as testing performance improvements with \gls{MTL}, are often used to assess task relatedness.
+
+
+\subsection{Contributions}
+\label{subsec:contributions}
+
+\subsubsection{\gls{CoL}}
+\label{subsubsec:col}
+%
+\input{figures/architectures}
+%
+A \gls{CoL} system is a \gls{MAS} where agents can exchange knowledge about specific tasks.
+%
+This exchange includes both retrieving knowledge from other agents and providing knowledge when requested.
+%
+Symbolic knowledge sharing is particularly crucial, as it enables effective agent-to-agent communication and transfer~\cite{not-just-for-humans-omicini-2020}.
+%
+% Symbolic knowledge is preferred due to its interpretability and transferability.
+
+To enable \gls{CoL}, agents must possess the following capabilities:
+%
+\begin{enumerate}
+    \item\label{capability:learning} learning from experience and adapting their behavior accordingly,
+    %
+    \item\label{capability:extraction} representing their internal behavior in a symbolic format,
+    %
+    \item\label{capability:injection} updating their behavior based on symbolic specifications,
+    %
+    \item\label{capability:interaction} interacting with other agents to exchange symbolic knowledge.
+\end{enumerate}
+%
+Capabilities~\ref{capability:extraction} and~\ref{capability:injection} are complementary.
+%
+When combined with~\ref{capability:interaction}, they facilitate cooperative learning through interaction.
+%
+Capability~\ref{capability:learning} ensures that agents can independently acquire new behaviors.
+
+In practice, \gls{CoL} systems often rely on sub-symbolic \gls{ML} to support capability~\ref{capability:learning}.
+%
+Each agent is typically equipped with an \gls{ML} predictor to learn from local data.
+%
+Since \glspl{MAS} often consist of heterogeneous agents with diverse purposes, multiple types of predictors may coexist within the same system.
+
+To support capability~\ref{capability:interaction}, agents must agree on a shared symbolic representation for describing and exchanging behavioral specifications.
+%
+\gls{SKE} and \gls{SKI} techniques are instrumental in enabling capabilities~\ref{capability:extraction} and~\ref{capability:injection}, respectively.
+
+%
+\Cref{fig:cl-agent-architecture} illustrates the architecture of a \gls{CoL} agent.
+%
+Each agent is equipped with one or more \gls{SKE} and \gls{SKI} algorithms to handle symbolic knowledge input and output.
+%
+When queried, an agent extracts symbolic knowledge from its internal \gls{ML} predictor using \gls{SKE} and shares it with the requesting agent.
+%
+The recipient agent can then update its predictor by injecting the received knowledge using \gls{SKI}.
+%
+Pre- and post-processing steps, such as pruning or merging formulas, may be applied to regulate the transferred knowledge.
+
+Key design considerations for \gls{CoL} systems include:
+%
+\begin{inlinelist}
+    \item\label{itm:logic-formalism} selecting appropriate formalisms for knowledge representation, and
+    %
+    \item\label{itm:arsenal} choosing suitable \gls{SKI}/\gls{SKE} techniques based on the predictors' knowledge representation.
+\end{inlinelist}
+%
+For~\ref{itm:logic-formalism}, while \gls{FOL} offers high expressiveness, it may limit the availability of compatible techniques.
+%
+Less expressive logics, such as propositional logic, may also be considered for practical reasons.
+
+Agents can be trained without prior knowledge.
+%
+During training, they can extract knowledge, combine it with knowledge from other agents, inject it back, and continue training.
+%
+This iterative process, known as the train-extract-fix-inject cycle, improves the agent's performance over time.
+%
+With each cycle, the extracted knowledge becomes increasingly accurate, as the predictor itself improves.
+
+
+\subsubsection{\gls{CoTL}}
+\label{subsubsec:cotl}
+%
+A \gls{CoTL} system extends \gls{CoL} by enabling agents to leverage knowledge from related tasks to learn \emph{novel} tasks.
+%
+The ultimate goal of \gls{CoTL} systems is to enable agents to ``learn to learn.''
+
+The concept of learning to learn builds on the definition of \gls{ML}~\cite{DBLP:books/daglib/0087929} and was introduced in~\cite{learning-to-learn-thrun-1998}.
+%
+Formally, given:
+%
+\begin{itemize}
+    \item a set of tasks \(\mathcal{T} = \{T_{1}, \dots, T_{n}\}\),
+    %
+    \item trainable experience for each task \(\mathcal{E} = \{E_{1}, \dots, E_{n}\}\), such as \gls{ML} predictors or symbolic knowledge bases, and
+    %
+    \item a performance measure \(f_i : \mathcal{T} \times \mathcal{E} \rightarrow \mathbb{R}\) for each task,
+\end{itemize}
+%
+an agent is capable of learning to learn if \(f_i\) improves as a function of all items in \(\mathcal{E}\) and the number of tasks \(n\).
+
+Practical aspects of \gls{CoTL} include determining \emph{when} and \emph{how} to transfer experience.
+%
+For the `when,' agents must autonomously compute task similarity, as manual intervention is infeasible.
+%
+Similarity measures, such as distance-based or learning-based methods, can be employed~\cite{multi-task-learning-caruana-1997}.
+
+For the `how,' the approach depends on whether tasks are \emph{homogeneous} or \emph{heterogeneous}.
+%
+Homogeneous tasks share input and output spaces but differ in data distribution, allowing straightforward knowledge transfer.
+%
+Heterogeneous tasks, however, differ in both input and output features, requiring more complex strategies.
+
+Consider two heterogeneous classification tasks \(T_1\) and \(T_2\) with knowledge bases \(K_1\) and \(K_2\) composed of Horn clauses.
+%
+Knowledge transfer can proceed as follows:
+%
+\begin{enumerate}
+    \item\label{itm:overlap-rule} If a rule \(r \in K_1 \cup K_2\) refers only to shared input features and classes, it can be used as-is.
+    %
+    \item\label{itm:quasi-overlap-rule} If \(r\)'s body refers to shared features but its head targets task-specific classes, \gls{SKI} techniques or class mappings may be required.
+    %
+    \item If \(r\) involves both shared and task-specific features:
+    %
+    \begin{enumerate}
+        \item Relax the rule to include only shared features, then apply step~\ref{itm:overlap-rule}.
+        %
+        \item Map task-specific features between tasks~\cite{survey-heterogeneous-transfer-learning-day-2017}, then apply step~\ref{itm:overlap-rule}.
+        %
+        \item If neither is possible, discard the rule.
+    \end{enumerate}
+\end{enumerate}
+%
+This procedure can be adapted for other tasks, such as regression, and other knowledge representations.
+
+%
+\Cref{fig:ctl-agent-architecture} depicts the architecture of a \gls{CoTL} agent.
+%
+In addition to \gls{SKE} and \gls{SKI} algorithms, \gls{CoTL} agents require a task similarity function \(\sigma : \mathcal{T}^2 \rightarrow \mathbb{R}_{\geq 0}\) to evaluate task relatedness.
+
+Another design consideration is the criterion for selecting knowledge from related tasks.
+%
+For example, designers may use a threshold-based approach, selecting knowledge from tasks with a similarity score above a certain threshold.
+%
+Alternatively, the \(k\) most similar tasks can be chosen.
+
+
+\subsection{Discussion and conclusions}
+\label{subsec:discussion-conclusions}
+
+The integration of symbolic and sub-symbolic knowledge representations, along with knowledge manipulation tools, represents a promising direction for advancing \glspl{MAS}.
+%
+This approach aims to mimic the knowledge-sharing capabilities of human societies.
+%
+It has the potential to address several limitations in the current state of the art.
+%
+For instance, \gls{TL} focuses exclusively on sub-symbolic knowledge, which lacks human interpretability.
+%
+Similarly, \gls{MTL} requires simultaneous training on related tasks, posing scalability challenges.
+%
+Moreover, \gls{MTL} is currently limited to sub-symbolic knowledge alone.
+%
+
+\gls{CoL} and \gls{CoTL} systems offer significant opportunities for the development of intelligent systems.
+%
+Some of their key advantages include:
+%
+\begin{inlinelist}
+    \item providing more accurate and human-interpretable explanations for tasks;
+    %
+    \item improving the performance of agents or predictors in solving individual tasks;
+    %
+    \item enabling improvements in one agent to positively influence others;
+    %
+    \item facilitating knowledge transfer between tasks, leading to improvements across multiple domains;
+    %
+    \item supporting continuous and automated learning without human intervention.
+\end{inlinelist}
+%
+
+Despite these advantages, several challenges remain.
+%
+First, while many \gls{SKE} and \gls{SKI} algorithms have been proposed, their practical implementations are still rare.
+%
+Second, determining task similarity in \gls{CoTL} systems is non-trivial and can significantly impact system performance.
+%
+Third, trust mechanisms must be considered.
+%
+For example, how reliable is the knowledge received by an agent?
+%
+What is the reputation of the knowledge source?
+%
+Finally, there is a need for datasets -- likely smaller than those required for systems without \gls{CoL} and \gls{CoTL} -- to train predictors effectively on new tasks.
+%
+Humans, for instance, can perform new tasks with minimal training, often relying solely on explanations (e.g., learning to play a new game).
+%
+Achieving such capabilities would mark a significant step toward artificial general intelligence.
+%
+
+In summary, this work introduces the novel concepts of \gls{CoL} and \gls{CoTL} within the scope of \glspl{MAS}.
+%
+These systems integrate symbolic and sub-symbolic knowledge representations and manipulation tools to emulate the learning processes of human societies.
+%
+We propose a general agent architecture for both \gls{CoL} and \gls{CoTL}, highlighting their advantages and limitations.
+%
+
+
 
 
 
@@ -131,7 +427,6 @@ Second, it supports both ontology population and refinement, making it increment
 %
 Finally, it is general-purpose, suitable for various domains and different \glspl{LLM}.
 
-%
 
 To validate our approach, we implemented \llmfkg{} in Python and used it to populate a custom \gls{OWL} ontology.
 %
@@ -392,13 +687,13 @@ The redistribution phase ensures all individuals are placed in the most specific
 %
 The next section introduces several auxiliary functions used throughout the framework.
 %
-The function \texttt{GetRange} (resp. \texttt{GetDomain}) retrieves the range (resp. domain) of a given property.
+The function \texttt{GetRange} (resp., \texttt{GetDomain}) retrieves the range (resp., domain) of a given property.
 %
 The function \texttt{AskOracle} models queries to the \gls{LLM} oracle, accepting and returning arbitrary strings.
 %
-The function \texttt{ExtractBinary} (resp. \texttt{ExtractNames}) extracts binary values (resp. relevant names of individuals or concepts) from the textual responses of the \gls{LLM}.
+The function \texttt{ExtractBinary} (resp., \texttt{ExtractNames}) extracts binary values (resp., relevant names of individuals or concepts) from the textual responses of the \gls{LLM}.
 %
-It returns a Boolean value (resp. a list of names) and accepts a string as input.
+It returns a Boolean value (resp., a list of names) and accepts a string as input.
 %
 Finally, the function \texttt{AddToClass} assigns an individual to a class.
 %
@@ -756,7 +1051,7 @@ This API supports multiple simultaneous conversations with different \glspl{LLM}
 The selected open-source models include:
 %
 \begin{description}
-    \item[Llama 2:] A family of open-source \glspl{LLM}, with the 70 billion parameters model used in our experiments~\cite{llama2-2023}.
+    \item[Llama 2:] A family of open-source \glspl{LLM}, with the 70 billion parameters model used in our experiments~\cite{llama2}.
     %
     \item[OpenChat 3.5:] A 13 billion parameters model fine-tuned from the Llama family, optimized for mixed-quality data~\cite{wang2023openchat}.
     %
@@ -1412,7 +1707,7 @@ This has led to the development of methods to interact with and extract knowledg
 %
 Prompts to \glspl{LLM} range from general knowledge questions, such as definitions and historical events, to domain-specific queries, such as scientific facts in health and medicine.
 %
-Recent efforts have focused on automating the extraction of knowledge from \glspl{LLM}, often representing this knowledge in the form of an \emph{ontology}~\cite{10.1093/bioinformatics/btae104,DBLP:journals/kbs/CiattoAMO25,DBLP:conf/ekaw/DurantiGMRR24,DBLP:conf/kbclm/2023,DBLP:conf/ontobras/SoaresW24}.
+Recent efforts have focused on automating the extraction of knowledge from \glspl{LLM}, often representing this knowledge in the form of an \emph{ontology}~\cite{10.1093/bioinformatics/btae104,DBLP:journals/kbs/CiattoAMO25,DBLP:conf/ekaw/DurantiGMRR24,funk2023ontology,DBLP:conf/ontobras/SoaresW24}.
 %
 Ontologies, a cornerstone of \gls{KR}, provide a structured representation of the conceptual knowledge within a domain.
 %
@@ -1456,7 +1751,7 @@ In this work, we extend the \emph{ExactLearner} tool to interact with \glspl{LLM
 %
 We use the Manchester OWL Syntax~\cite{DBLP:conf/owled/HorridgeDGRSW06} and a custom parsing function to translate concept inclusions from description logic into natural language.
 %
-While membership queries can be directly mapped to a question-answering setting with \glspl{LLM}, equivalence queries are more challenging~\cite{DBLP:journals/ml/WeissGY24,DBLP:journals/ijar/BlumKOT24}.
+While membership queries can be directly mapped to a question-answering setting with \glspl{LLM}, equivalence queries are more challenging~\cite{DBLP:journals/ml/WeissGY24,BLUM2023109026}.
 %
 To address this, we simulate equivalence queries using a sample of randomly generated concept inclusions classified as true or false by the \gls{LLM}.
 %
@@ -1536,7 +1831,7 @@ If the hypothesis is consistent, the learning process terminates.
 %
 Otherwise, a counterexample is identified, and the process continues as if the \gls{LLM} had returned a counterexample in response to an equivalence query.
 %
-This approach has been used in prior work to simulate equivalence queries~\cite{DBLP:journals/ml/WeissGY24,DBLP:journals/ijar/BlumKOT24}.
+This approach has been used in prior work to simulate equivalence queries~\cite{DBLP:journals/ml/WeissGY24,BLUM2023109026}.
 %
 Under certain conditions, this strategy provides theoretical guarantees within the \gls{PAC} learning framework~\cite{DBLP:journals/ml/Angluin87,DBLP:journals/cacm/Valiant84}.
 %
@@ -1611,7 +1906,7 @@ In natural language, these are translated into questions such as:
 %
 Here, \texttt{[A]} and \texttt{[B]} are placeholders for the left-hand and right-hand sides of the concept inclusion.
 %
-This approach aligns with the third formulation proposed by Funk et al.~\cite{DBLP:conf/kbclm/2023}, which is well-suited to our setting.
+This approach aligns with the third formulation proposed by Funk et al.~\cite{funk2023ontology}, which is well-suited to our setting.
 %
 The translation of \gls{OWL} concept expressions into natural language is applied recursively:
 %
@@ -1828,7 +2123,7 @@ We use two system prompts:
 %
 The advanced prompt provides additional contextual information and guidelines to improve \gls{LLM} performance.
 %
-For instance, it emphasizes that entities with \texttt{has part} relations should not be in a subclass relation~\cite{DBLP:conf/kbclm/2023}.
+For instance, it emphasizes that entities with \texttt{has part} relations should not be in a subclass relation~\cite{funk2023ontology}.
 %
 It also mitigates the tendency of \glspl{LLM} to answer ``True'' to long queries, which may arise during the computation of \(\Omc\)-essential concept inclusions (\Cref{subsec:active-learning-ontologies}).
 %
