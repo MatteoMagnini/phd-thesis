@@ -15,7 +15,7 @@ We then introduce intelligence in computer science with insights on reasoning, l
 %
 Then, we focus on the core background of this thesis: \gls{AI} (\Cref{sec:ai}) by providing all the necessary notions the reader needs to understand the rest of the thesis.
 %
-Finally, we discuss the impact and implications of \gls{AI} in modern society (\Cref{sec:ai-in-society}).
+Finally, we discuss the impact and implications of \gls{AI} in modern society (\Cref{sec:ai-and-society}).
 
 %----------------------------------------------------------------------------------------
 %-------------------------------------- Intelligence ------------------------------------
@@ -52,13 +52,13 @@ Indeed, it is said that \emph{``intelligence is in the eye of the beholder''}.
 In this sense, we can say that intelligence is not an absolute concept, but it should be considered under a relative perspective.
 
 
-Giving a rigorous definition of intelligence is not a trivial task.
+Giving a single rigorous definition of intelligence is not a trivial task.
 %
 Furthermore, there is not one single shape of intelligence, but it can be declined in many different ways (e.g., \emph{emotional intelligence}, \emph{social intelligence}, \emph{spatial intelligence}, etc.).
 %
 In this thesis we do not stay strictly to a specific definition of intelligence, nevertheless we give a broad definition to help the reader to get more familiar some concepts that will be introduced later.
 %
-We adopt a definition inspired by a notorious satirical essay by Carlo Cipolla~\cite{cipolla2013allegro}.
+We adopt a definition inspired by a notorious satirical essay by Cipolla~\cite{cipolla2013allegro}.
 %
 In \emph{``The basic laws of human stupidity''}, the author classifies individuals into four categories based on the result of their actions:
 %
@@ -79,6 +79,10 @@ With this respect we can state that:
     \label{def:intelligence}
     an individual (or a group) has an intelligent behaviour if it is able to \textbf{perform actions} that lead to the \textbf{achievement} of a given \textbf{goal}.
 \end{definition}
+%
+This definition is quite broad, and it can be applied to both natural and artificial systems.
+%
+It is also similar to the definitions of intelligence collected in the work of Legg and Hutter~\cite{DBLP:journals/mima/LeggH07} (e.g, \emph{``The capacity to learn or to profit by experience''}~\cite{sternberg2000handbook}).
 
 
 \subsection{Natural intelligence}\label{subsec:intelligence-in-nature}
@@ -99,15 +103,11 @@ All animals are able to keep themselves alive (\emph{self-sufficiency}) until na
 In addition to self-sufficiency, animals contribute to the survival of their species generating offspring.
 %
 To do so, they need to navigate the environment, find food, avoid predators, reproduce, and so on.
-%
-\note{TODO: add more and also examples}
 
 
-%\subsection{Intelligence in humans}\label{subsec:intelligence-in-humans}
-%
 Humans have developed two main characteristics about intelligence that are no match for any other animals: \emph{reasoning} and \emph{learning}.
-
-\subsubsection{Reasoning}\label{subsubsec:reasoning-human}
+%
+\paragraph{Reasoning}
 %
 Logical reasoning, or simply reasoning, is a process of drawing conclusions from premises.
 %
@@ -138,10 +138,36 @@ There exists three main ways of reasoning:
     Abduction also requires the use of statistics and probabilities, and therefore it deals with uncertainty (\emph{``Once you eliminate the impossible, whatever remains, no matter how improbable, must be the truth''---Arthur Conan Doyle}).
 \end{itemize}
 
-\subsubsection{Learning}\label{subsubsec:learning}
-%
-\note{TODO: talk about Learning. Experience, reinforcement, share of knowledge.}
 
+\paragraph{Learning}
+%
+Human beings can perform a vast array of tasks, and their ability to learn new ones is a cornerstone of their intelligence.
+%
+Learning is a process that allows individuals to \emph{model reality}, adapt to their environment, and share knowledge with others.
+%
+Broadly speaking, humans acquire new skills and knowledge in two primary ways: by generalising experience -- e.g., via \emph{inductive} reasoning --, or by \emph{deductively} inferring new knowledge from what they already hold or can obtain from others---e.g., through direct communication (talking) or indirect communication (reading)~\cite{human-reasoning-1994}.
+%
+In the former case, novel knowledge is formed in the learner's mind by interacting with the environment and interpreting sensory input.
+%
+In the latter case, knowledge is represented symbolically (e.g., through words, gestures, or diagrams), enabling communication and the transfer of meaning between individuals.
+%
+This symbolic representation is crucial for sharing complex ideas and building upon the collective knowledge of a society.
+
+Animals, too, exhibit learning abilities, though the mechanisms and extent vary widely across species.
+%
+For instance, many animals rely on experience to adapt to their environment, such as learning to navigate, find food, or avoid predators.
+%
+Some species, like primates and certain birds, demonstrate the ability to use symbols or tools, which suggests a rudimentary form of modeling reality and reasoning about their surroundings~\cite{shettleworth2010cognition}.
+%
+In both humans and animals, learning is deeply tied to the interaction with the environment, where experiences shape the internal models of reality that guide future actions.
+
+In humans, the ability to reason about acquired knowledge is particularly advanced.
+%
+This reasoning allows individuals to not only apply learned concepts but also to refine and expand them, often by integrating new information with existing symbolic representations.
+%
+Such reasoning processes are essential for problem-solving, planning, and innovation, which are hallmarks of human intelligence~\cite{DBLP:journals/mima/LeggH07}.
+%
+Moreover, the ability to share knowledge through symbolic means, such as language, has enabled humans to build complex societies and advance technologically.
 
 
 \subsection{Intelligence in computer science}
@@ -152,6 +178,7 @@ Since the automation of computation with the invention of the computer, intellig
 Officially, the field of \gls{AI} was born in 1956 at the Dartmouth Conference, where a group of researchers gathered to discuss the possibility of \emph{computing towards intelligence}.
 %
 In this section, we present how machines can perform intelligent tasks, focussing in particular on reasoning and learning.
+
 
 \subsubsection{Reasoning}\label{subsubsec:reasoning-cs}
 %
@@ -210,20 +237,51 @@ Depending on the type of learning algorithm, the learning process can be \emph{s
 
 \paragraph{Supervised}
 %
-A \gls{ML} process is \emph{supervised} if it is trained on a labelled dataset.
+A \gls{ML} process is \emph{supervised} if it is trained on a labelled dataset, where each data point is associated with a corresponding label that represents the desired output.
 %
 The training set is made of pairs $(x_i, y_i)$, where $x_i$ is the input data and $y_i$ is the corresponding label.
 %
-The goal of the learning process is to learn a function $f$ that maps the input data $x_i$ to the corresponding label $y_i$.
+The goal of the learning process is to learn a function $f$ that maps the input data $x_i$ to the corresponding label $y_i$, such that $f(x_i) \approx y_i$ for all training examples.
 %
-The function $f$ is usually a mathematical model that is trained on the training set.
+The function $f$ is usually a mathematical model that is trained on the training set by minimizing a loss function, which quantifies the error between the predicted output $\hat{y}_i = f(x_i)$ and the true label $y_i$.
 %
-
+For example, in a binary classification task, the loss function could be the binary cross-entropy, while in a regression task, it could be the mean squared error.
+%
+Once trained, the model can generalize to unseen data, predicting labels for new inputs based on the patterns it has learned from the training set.
+%
+An example of supervised learning is email spam detection, where the input $x_i$ could be the content of an email, and the label $y_i$ could be either \emph{spam} or \emph{not spam}.
+%
+The model learns to classify emails by analyzing a dataset of labelled examples and can then predict whether a new email is spam or not.
+%
 
 \paragraph{Unsupervised}
+%
+In unsupervised learning, the learning task consists of discovering patterns, structures, or relationships within a dataset without relying on labeled outputs.
+%
+The goal is to find an optimal representation or grouping of the data based on an objective criterion, such as minimizing intra-cluster distances or maximizing data variance.
+%
+Common tasks in unsupervised learning include \emph{clustering}, where data points are grouped into clusters based on similarity, and \emph{dimensionality reduction}, where the data is transformed into a lower-dimensional space while preserving its essential structure.
+%
+For example, in clustering, the \emph{k-means} algorithm partitions a dataset into \(k\) clusters by iteratively assigning data points to the nearest cluster centroid and updating the centroids to minimize the total intra-cluster variance~\cite{lloyd1982least}.
+%
+Another example is \gls{PCA}, a dimensionality reduction technique that identifies the directions (principal components) in which the data varies the most, enabling efficient data compression and visualization~\cite{pearson1901lines}.
 
 
 \paragraph{\Glsentrylong{RL}}
+%
+In reinforcement learning, the learning task consists of letting an agent estimate \emph{optimal plans or policies} by interacting with an environment and receiving feedback in the form of rewards or penalties.
+%
+The agent's goal is to maximize the cumulative reward over time by learning which actions to take in different states of the environment.
+%
+This process is typically modeled as a \gls{MDP}, which is defined by a set of states, a set of actions, a transition function that describes the probabilities of moving between states, and a reward function that assigns a numerical value to each state-action pair~\cite{DBLP:books/lib/SuttonB98}.
+%
+For example, consider a ground robot that performs phototaxis, i.e., it moves towards a light source.
+%
+The robot can perceive its environment through sensors that detect the light intensity and can perform actions such as moving forward, turning left, or turning right.
+%
+When the robot moves closer to the light source, it receives a positive reward, while moving away results in a negative reward.
+%
+Over time, the robot learns a policy that maps states to actions, allowing it to navigate effectively towards the light source by maximizing its cumulative reward.
 
 
 \subsubsection{Agents}\label{subsubsec:agents}
