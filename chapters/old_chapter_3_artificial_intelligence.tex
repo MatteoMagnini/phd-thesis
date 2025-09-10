@@ -81,7 +81,7 @@ Consequently, while the exact location of values is largely irrelevant in local 
 Notably, distributed representations violate \Cref{itm:symbolic-req-3}, and for this reason, recent literature often labels as \emph{sub-symbolic} those predictors that rely on distributed encoding of data.
 
 
-\section[Symbolic AI]{Symbolic \Gls{AI}}\label{sec:symbolic-ai}
+\section[Symbolic AI]{Symbolic \Gls{AI}}\label{subsec:symbolic-ai}
 %
 Symbolic \gls{AI} has been regarded as crucial since \gls{AI}'s inception.
 %
@@ -142,7 +142,7 @@ To mitigate this issue, various fragments and extensions of \gls{FOL} have been 
 \Cref{fig:venn-diagram-logics} illustrates the relationships among different logic families, highlighting the trade-off between expressiveness and tractability.
 
 
-\subsection[First-order logic]{\Glsentrylong{FOL}}\label{subsec:first-order-logic}
+\subsection[First-order logic]{\Glsentrylong{FOL}}\label{subsubsec:first-order-logic}
 %
 \Gls{FOL} is a general-purpose formalism that underpins most symbolic \gls{KR} systems.
 %
@@ -157,7 +157,7 @@ Recursive intensional definitions, in particular, are powerful, enabling finite 
 Despite its flexibility, \gls{FOL} is semi-decidable in general: there is no algorithm that can determine the truth of every \gls{FOL} formula in finite time, which limits its use in systems requiring guaranteed termination~\cite{DBLP:conf/dlog/2003handbook}.
 
 
-\subsection{Horn logic}\label{subsec:horn-logic}
+\subsection{Horn logic}\label{subsubsec:horn-logic}
 %
 Horn logic is a significant subset of \gls{FOL}, offering a balanced trade-off between theoretical expressiveness and practical tractability~\cite{DBLP:journals/jcss/Makowsky87}.
 %
@@ -184,11 +184,11 @@ In essence, Horn logic is a constrained subset of \gls{FOL} characterized by the
 \end{inlinelist}
 
 
-\subsection{Datalog}\label{subsec:datalog}
+\subsection{Datalog}\label{subsubsec:datalog}
 %
 Datalog is a declarative query language and a restricted subset of \gls{FOL}, designed for deductive databases and knowledge representation~\cite{DBLP:journals/jcss/AjtaiG94}.
 %
-It represents knowledge using function-free Horn clauses, as defined in \Cref{subsec:horn-logic}.
+It represents knowledge using function-free Horn clauses, as defined in \Cref{subsubsec:horn-logic}.
 %
 This restriction eliminates the use of function symbols, thereby forbidding structured terms such as recursive data structures.
 %
@@ -205,7 +205,7 @@ Datalog is widely used in areas such as \glspl{KG}, semantic web technologies, a
 Its simplicity and computational efficiency make it a practical choice for symbolic \gls{AI} tasks that demand tractable reasoning.
 
 
-\subsection[Description logic]{\Glsentrylong{DL}}\label{subsec:dl}
+\subsection[Description logic]{\Glsentrylong{DL}}\label{subsubsec:dl}
 %
 \Gls{DL} are a family of subsets of \gls{FOL}, typically involving limited or no quantifiers, no structured terms, and no \textit{n}-ary predicates where \(n \geq 3\)~\cite{DBLP:books/daglib/0041477}.
 %
@@ -248,7 +248,7 @@ Collections of such triplets form \glspl{KG}, which are directed graphs where ve
 Their ability to balance expressiveness and computational efficiency makes them a cornerstone of symbolic reasoning systems.
 
 
-\subsection[Ontologies and knowledge graph]{Ontologies and \glsentrylong{KG}}\label{subsec:ontologies-and-kg}
+\subsection[Ontologies and knowledge graph]{Ontologies and \glsentrylong{KG}}\label{subsubsec:ontologies-and-kg}
 %
 An ontology is a formal and explicit specification of a shared conceptualisation of a domain~\cite{DBLP:books/daglib/p/Grimm10}.
 %
@@ -317,7 +317,7 @@ In summary, ontologies and knowledge graphs both aim to formally capture structu
 Ontologies provide formal semantics and enable logical reasoning, while knowledge graphs emphasise scalability and flexibility in representing factual data.
 
 
-\subsection{Propositional Logic}\label{subsec:propositional-logic}
+\subsection{Propositional Logic}\label{subsubsec:propositional-logic}
 %
 Propositional logic is a restricted subset of \gls{FOL} in which quantifiers, terms, and non-atomic predicates are absent.  
 %
@@ -354,12 +354,12 @@ Expressions involving numerical constants, variables, and comparisons (e.g., $x 
 This reduction allows the use of propositional logic in settings where the original problem does not explicitly involve logical variables or quantifiers, but can be decomposed into atomic truth conditions.
 
 
-\subsection[Limits of symbolic AI]{Limits of symbolic \Gls{AI}}\label{subsec:limits-of-symbolic-ai}
+\subsection[Limits of symbolic AI]{Limits of symbolic \Gls{AI}}\label{subsubsec:limits-of-symbolic-ai}
 %
 
 
 
-\section[Sub-symbolic AI]{Sub-symbolic \Gls{AI}}\label{sec:sub-symbolic-ai}
+\section[Sub-symbolic AI]{Sub-symbolic \Gls{AI}}\label{subsec:sub-symbolic-ai}
 %
 Sub-symbolic \gls{AI} encompasses a wide range of techniques that rely on numerical representations.
 %
@@ -402,7 +402,7 @@ The definition of interpretability is not univocal, and it lacks measures that a
 Despite that, \Cref{fig:performance-vs-interpretability} illustrates in an informal way the trade-off between predictive performance and interpretability in sub-symbolic predictors.
 
 
-\subsection[Decision trees]{\Glsentrylongpl{DT}}\label{subsec:decision-trees}
+\subsection[Decision trees]{\Glsentrylongpl{DT}}\label{subsubsec:non-neural-models}
 %
 \Glspl{DT} are a family of predictors that support both classification and regression tasks.
 %
@@ -424,14 +424,14 @@ This property is particularly valuable when the internal workings of an automati
 %
 \Glspl{DT} are often used in applications where interpretability is crucial, as their structure provides clear insights into the decision-making process.
 %
-For further details on the advantages and limitations of \glspl{DT}, refer to \Cref{subsec:limits-of-sub-symbolic-ai}.
+For further details on the advantages and limitations of \glspl{DT}, refer to \Cref{subsubsec:limits-of-sub-symbolic-ai}.
 
 
 \subsection[Random forests]{\Glsentrylongpl{RF}}\label{subsec:random-forests}
 
 \subsection[Support vector machines]{\Glsentrylongpl{SVM}}\label{subsec:svm}
 
-\subsection[Neural networks]{\Glsentrylongpl{NN}}\label{subsec:neural-networks}
+\subsection[Neural networks]{\Glsentrylongpl{NN}}\label{subsubsec:neural-networks}
 \note{Todo: add figures representing the architectures and how it works.}
 %
 \Glspl{NN} are a family of predictors inspired by the structure and function of biological neural networks.
@@ -491,11 +491,11 @@ However, standard \glspl{RNN} suffer from the vanishing and exploding gradient p
 To address these issues, more sophisticated variants were developed, notably \glspl{LSTM} (Long Short-Term Memory)~\cite{hochreiter1997long} and \glspl{GRU} (Gated Recurrent Units)~\cite{cho2014learning}, which introduce gating mechanisms to regulate information flow and preserve long-term context.
 
 
-\subsection[Limits of sub-symbolic AI]{Limits of sub-symbolic \Gls{AI}}\label{subsec:limits-of-sub-symbolic-ai}
+\subsection[Limits of sub-symbolic AI]{Limits of sub-symbolic \Gls{AI}}\label{subsubsec:limits-of-sub-symbolic-ai}
 
 
 
-\section[Explainable AI]{\Glsentrylong{XAI}}\label{sec:xai}
+\section[Explainable AI]{\Glsentrylong{XAI}}\label{subsec:xai}
 %
 Modern intelligent systems increasingly rely on sub-symbolic predictive models to support their intelligent behaviour.
 %
@@ -594,6 +594,6 @@ Methods in this category include:
 
 
 \section[Fairness in AI]{Fairness in \gls{AI}}
-\label{sec:fairness-in-ai}
+\label{subsec:fairness-in-ai}
 
 \note{TODO: introduction to fairness in AI, why it is important, and how it relates to this work.}
