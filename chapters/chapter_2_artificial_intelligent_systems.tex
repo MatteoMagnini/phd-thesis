@@ -56,11 +56,13 @@ Giving a single rigorous definition of intelligence is not a trivial task.
 %
 Furthermore, there is not one single shape of intelligence, but it can be declined in many different ways (e.g., \emph{emotional intelligence}, \emph{social intelligence}, \emph{spatial intelligence}, etc.).
 %
-In this thesis we do not stay strictly to a specific definition of intelligence, nevertheless we give a broad definition to help the reader to get more familiar some concepts that will be introduced later.
+In this thesis we do not want to stay strictly dependant to a specific definition of intelligence, nevertheless it would be useful to provide a one.
 %
-We adopt a definition inspired by a notorious satirical essay by Cipolla~\cite{cipolla2013allegro}.
+We give a broad definition to help the reader to get more familiar with recurrent concepts that will appear later.
 %
-In \emph{``The basic laws of human stupidity''}, the author classifies individuals into four categories based on the result of their actions:
+We choose to adopt a definition inspired by a notorious satirical essay by Cipolla~\cite{cipolla2013allegro}.
+%
+In \emph{``The basic laws of human stupidity''}, the author classifies \emph{individuals} into four categories based on the \emph{result} of their \emph{actions}:
 %
 \begin{itemize}
     \item \textbf{Stupid} $\rightarrow$ losses for others and for themselves;
@@ -75,14 +77,29 @@ We can see losses and benefits as the failure or success in -- fully or partiall
 %
 With this respect we can state that:
 %
-\begin{definition}[Intelligent behaviour]
+\begin{definition}[Intelligence]
     \label{def:intelligence}
     an individual (or a group) has an intelligent behaviour if it is able to \textbf{perform actions} that lead to the \textbf{achievement} of a given \textbf{goal}.
 \end{definition}
 %
 This definition is quite broad, and it can be applied to both natural and artificial systems.
+
+
+It is also similar to the definitions of intelligence collected in the work of Legg and Hutter~\cite{DBLP:journals/mima/LeggH07}, such as the definition \emph{``The capacity to learn or to profit by experience''}~\cite{sternberg2000handbook}.
 %
-It is also similar to the definitions of intelligence collected in the work of Legg and Hutter~\cite{DBLP:journals/mima/LeggH07} (e.g, \emph{``The capacity to learn or to profit by experience''}~\cite{sternberg2000handbook}).
+Broadly speaking, a common feature of these definitions is that intelligence is seen as a property of an individual \emph{interacting} with an external \emph{environment}, problem, or situation.
+%
+This interaction is fundamental to practically all proposed definitions of intelligence.
+%
+Another shared characteristic is the relationship between intelligence and the ability to succeed or \emph{profit} in achieving \emph{objectives}.
+%
+The notion of success or profit implies the existence of a specific \emph{goal}, although the exact nature of the goal may vary across individuals or contexts.
+%
+What matters is the capacity of the individual to carefully select actions that lead to the accomplishment of these goals.
+%
+The greater this capacity to succeed across a variety of goals, the greater the individual's intelligence.
+%
+This perspective aligns with the idea that intelligence is not a fixed attribute but rather a dynamic ability to adapt and perform effectively in diverse scenarios.
 
 
 \subsection{Natural intelligence}\label{subsec:intelligence-in-nature}
@@ -135,7 +152,7 @@ There exists three main ways of reasoning:
     %
     This kind of reasoning is the same that is adopted by detectives to solve crimes.
     %
-    Abduction also requires the use of statistics and probabilities, and therefore it deals with uncertainty (\emph{``Once you eliminate the impossible, whatever remains, no matter how improbable, must be the truth''---Arthur Conan Doyle}).
+    Abduction also requires the use of statistics and probabilities, and therefore it deals with uncertainty (\emph{``Once you eliminate the impossible, whatever remains, no matter how improbable, must be the truth''---Arthur Conan Doyle}\footnote{a person must be aware of all the possibilities in order to not fall into a deductive error.}).
 \end{itemize}
 
 
@@ -177,24 +194,67 @@ Since the automation of computation with the invention of the computer, intellig
 %
 Officially, the field of \gls{AI} was born in 1956 at the Dartmouth Conference, where a group of researchers gathered to discuss the possibility of \emph{computing towards intelligence}.
 %
-In this section, we present how machines can perform intelligent tasks, focussing in particular on reasoning and learning.
+In this section, we provide a high-level introduction of how machines can mimic the processes of reasoning and learning that we find in natural intelligence.
+%
+Later, in \Cref{sec:ai} we give a detailed background on \gls{AI}.
 
 
 \subsubsection{Reasoning}\label{subsubsec:reasoning-cs}
 %
-\note{TODO: fill the section}
+Every form of reasoning presupposes a structured connection between \emph{reality} and its \emph{representation}.
+%
+In symbolic approaches to \gls{KR}, this connection is mediated through \emph{symbols}, where the interplay between \emph{signifier} and \emph{signified} enables the encoding of meaning.
+%
+Symbols thus act as the bridge between the external world and computational processes, allowing reasoning systems to manipulate abstract entities while still preserving a link to the underlying semantics of the domain.
+%
+In this sense, reasoning is not only the mechanical application of rules, but also the interpretative activity that derives new knowledge by operating on representations whose significance is grounded in the symbolic layer of \gls{KR}.
+
+
+Symbolic \gls{KR} has always been regarded as a key issue since the early days of \gls{AI}, as no intelligence can exist without knowledge, and no computation can occur in lack of representation.
+%
+When compared to arrays of numbers, symbolic \gls{KR} is far more flexible and expressive, and, in particular, more intelligible---both machine- and human-interpretable.
+%
+Historically, most \gls{KR} formalisms and technologies have been designed on top of \emph{computational logic}~\cite{lloyd1990computational}, that is, the exploitation of formal logic in computer science.
+%
+Consider, for instance, \emph{deductive databases}~\cite{green1968}, \emph{description logics}~\cite{DBLP:conf/dlog/2003handbook}, \emph{ontologies}~\cite{cimiano2006-ontologies}, \emph{Horn} logic~\cite{Mcnulty1977}, \emph{higher-order} logic~\cite{VanBenthem2001}.
+
+
+Reasoning in computer science involves the process of deriving conclusions from a set of premises or facts, often encoded in a formal language.
+%
+Logic reasoners, such as Prolog-based systems like tuProlog~\cite{DBLP:conf/padl/DentiOR01}, play a central role in automating this process.
+%
+These reasoners typically follow a sequence of steps:
+%
+\begin{itemize}
+    \item \textbf{Parsing}, the reasoner first parses the input knowledge base, which consists of facts, rules, and queries, into an internal representation;
+    %
+    \item \textbf{Inference}, using inference rules, such as \emph{modus ponens}~\cite{DBLP:books/daglib/0076838}, the reasoner derives new facts or verifies the truth of a query.
+    %
+    \item \textbf{Unification}, a key operation in logic reasoning is unification, where variables in predicates are matched with constants or other variables to satisfy logical constraints;
+    %
+    \item \textbf{Search}: the reasoner explores the search space of possible solutions, often using strategies like depth-first search or breadth-first search, depending on the implementation;
+    %
+    \item \textbf{Result generation}, finally, the reasoner provides the results of the reasoning process, which could be a solution to the query, a proof, or a set of derived facts.
+\end{itemize}
+%
+For example, in a Prolog-based system, a query is resolved by attempting to unify it with facts or the heads of rules in the knowledge base, recursively applying the rules' bodies until a solution is found or all possibilities are exhausted.
+%
+Logic reasoners are widely used in various applications, including expert systems, semantic web technologies, and automated theorem proving, due to their ability to handle complex symbolic reasoning tasks efficiently.
+
+
 
 \subsubsection{Learning}\label{subsubsec:machine-learning-cs}
 %
-The learning process performed by machines is called \gls{ML}.
+The learning process performed by machines is called \glsfull{ML}.
 %
 \gls{ML} is a wide umbrella term that encompasses a variety of different ways of learning and different learning tasks.
 %
 A widely adopted definition of \gls{ML} is the one given by Tom Mitchell in 1997~\cite{DBLP:books/daglib/0087929}:
 %
-\begin{quote}
-    \emph{``A computer program is said to learn from experience $E$ with respect to some class of tasks $T$ and performance measure $P$ if its performance at tasks in $T$, as measured by $P$, improves with experience $E$''}.
-\end{quote}
+\begin{definition}[Machine Learning]
+    \label{def:ml}
+    a computer program is said to learn from experience $E$ with respect to some class of tasks $T$ and performance measure $P$ if its performance at tasks in $T$, as measured by $P$, improves with experience $E$.
+\end{definition}
 %
 The software component deputed to learning is referred as \emph{model}, \emph{learner} or \emph{predictor} (and possibly other names).
 %
@@ -283,27 +343,27 @@ When the robot moves closer to the light source, it receives a positive reward, 
 %
 Over time, the robot learns a policy that maps states to actions, allowing it to navigate effectively towards the light source by maximizing its cumulative reward.
 
-
-\subsubsection{Agents}\label{subsubsec:agents}
 %
-We will use the term software \emph{agent} (just \emph{agent} for simplicity) from now on to refer to a software process that has particular characteristics.
+%\subsubsection{Agents}\label{subsubsec:agents}
+%%
+%We will use the term software \emph{agent} (just \emph{agent} for simplicity) from now on to refer to a software process that has particular characteristics.
+%%
+%One of these is \emph{autonomy}.
+%%
+%Autonomy is the ability of an agent to act without the direct control of humans or other agents.
+%%
+%Technically speaking, an agent encapsulates its own thread of control.
+%%
+%Autonomy is not absolute, but it is a matter of degree; e.g., self-sufficiency increases the degree of autonomy of an agent.
+%%
+%Autonomy -- \emph{per se} -- does not imply intelligence.
+%%
+%For example, from a biological perspective, a cell has some degree of autonomy (e.g., it has boundaries, it interacts with the environment, etc.), but certainly we do not consider it an intelligent entity.
+%%
+%However, it is a fundamental trait of living systems and life evolved towards more and more autonomous systems.
 %
-One of these is \emph{autonomy}.
 %
-Autonomy is the ability of an agent to act without the direct control of humans or other agents.
-%
-Technically speaking, an agent encapsulates its own thread of control.
-%
-Autonomy is not absolute, but it is a matter of degree; e.g., self-sufficiency increases the degree of autonomy of an agent.
-%
-Autonomy -- \emph{per se} -- does not imply intelligence.
-%
-For example, from a biological perspective, a cell has some degree of autonomy (e.g., it has boundaries, it interacts with the environment, etc.), but certainly we do not consider it an intelligent entity.
-%
-However, it is a fundamental trait of living systems and life evolved towards more and more autonomous systems.
-
-
-A \emph{robot} -- i.e., an \emph{embodied agent} -- that is able to recognise when its battery is low and to recharge itself is more autonomous than a robot that needs to be recharged by a human.
+%A \emph{robot} -- i.e., an \emph{embodied agent} -- that is able to recognise when its battery is low and to recharge itself is more autonomous than a robot that needs to be recharged by a human.
 
 
 
@@ -345,7 +405,6 @@ According to Van Gelder~\cite{DBLP:conf/ogai/Gelder90}, in order to be considere
 %
 \begin{figure}
     \centering
-%    \includegraphics[angle=90, height=0.9\textheight]{figures/ai-map2}
     \includegraphics[width=\textwidth]{figures/ai-map2}
     \caption[Overview of the field of artificial intelligence]{
         \Gls{AI} map (not exhaustive) illustrating the main subfields with a focus on symbolic and sub-symbolic approaches.
@@ -662,6 +721,7 @@ This reduction allows the use of propositional logic in settings where the origi
 
 
 \subsubsection[Limits of symbolic AI]{Limits of symbolic \Gls{AI}}\label{subsubsec:limits-of-symbolic-ai}
+\note{Todo: fill this section}
 
 
 %-----------------------------------------------------------------------------------------
@@ -711,9 +771,22 @@ The definition of interpretability is not univocal, and it lacks measures that a
 Despite that, \Cref{fig:performance-vs-interpretability} illustrates in an informal way the trade-off between predictive performance and interpretability in sub-symbolic predictors.
 
 
-\subsubsection[Non-neural models]{\Glsentrylongpl{DT}}\label{subsubsec:non-neural-models}
+\paragraph{Sort of \gls{ML} predictors}
 %
-\paragraph{Decision trees}
+There exist many sub-symbolic models in the literature.
+%
+Some of them are relatively simple and easy to interpret, while others are more complex and difficult to understand.
+%
+Among them, \gls{DT} are relatively simple, interpretable and popular models.
+%
+On the other hand, \glspl{NN} are more complex and difficult to interpret, but they can capture highly non-linear relationships in the data.
+%
+In between these two extremes, there are many other models, such as \glspl{RF} and \glspl{SVM}, that offer a balance between interpretability and predictive performance.
+%
+For the sake of conciseness, we will focus only on the models that are relevant for the rest of the thesis.
+
+
+\subsubsection{Decision trees}\label{subsubsec:decision-trees}
 %
 \Glspl{DT} are a family of predictors that support both classification and regression tasks.
 %
@@ -738,18 +811,24 @@ This property is particularly valuable when the internal workings of an automati
 For further details on the advantages and limitations of \glspl{DT}, refer to \Cref{subsubsec:limits-of-sub-symbolic-ai}.
 
 
-\paragraph[Random forests]{\Glsentrylongpl{RF}}
-
-
-\paragraph[Support vector machines]{\Glsentrylongpl{SVM}}
-
-
 \subsubsection[Neural networks]{\Glsentrylongpl{NN}}\label{subsubsec:neural-networks}
-\note{Todo: add figures representing the architectures and how it works.}
+%
+\begin{figure}
+    \centering
+    \includegraphics[height=0.9\textheight]
+    {figures/neural-network-architectures}
+    \caption[Common neural network architectures]{
+        %
+        Overview of common \gls{NN} architectures.
+        %
+        Each architecture is designed to handle different types of data and tasks, leveraging specific structural features to improve performance.
+    }
+    \label{fig:nn-architectures}
+\end{figure}
 %
 \Glspl{NN} are a family of predictors inspired by the structure and function of biological neural networks.
 %
-They consist of interconnected nodes (neurons) interconnected into a \gls{DAG} and organized into layers, where each neuron receives inputs, applies a non-linear activation function, and produces an output.
+They consist of interconnected nodes -- a.k.a., neurons -- interconnected into a \gls{DAG} and organized into layers, where each neuron receives inputs, applies a non-linear activation function, and produces an output.
 %
 Despite being very popular nowadays, the first idea of a \gls{NN} has been proposed back in 1943~\cite{mcculloch1943logical}.
 %
@@ -767,9 +846,12 @@ This innovation enabled \glspl{MLP} to learn complex non-linear functions and ma
 
 Many different architectures have been proposed since then, including fully connected \glspl{NN}, \glspl{CNN}, \glspl{RNN}, and more.
 %
-These architectures are designed specifically to handle different types of data and tasks, such as image classification, natural language processing, and time series analysis.
+\Cref{fig:nn-architectures} provides an overview of some common \gls{NN} architectures.
+%
+These architectures are designed specifically to handle different types of data and tasks, such as image classification, \gls{NLP}, and time series analysis.
 
-\paragraph{Feedforward Neural Networks.}
+
+\paragraph{Feedforward Neural Networks}
 %
 The simplest class of \glspl{NN} is the family of feedforward networks, in which information flows unidirectional from the input layer through one or more hidden layers to the output layer, without forming cycles.
 %
@@ -779,7 +861,7 @@ Given sufficient capacity, \glspl{MLP} are universal function approximators~\cit
 %
 Despite their theoretical expressiveness, \glspl{MLP} are inefficient when processing structured inputs such as images or sequences, as they fail to exploit the inherent inductive biases of the data.
 
-\paragraph{Convolutional Neural Networks.}
+\paragraph{Convolutional Neural Networks}
 %
 To overcome the limitations of \glspl{MLP} on grid-like data such as images, \glspl{CNN} were introduced.
 %
@@ -791,7 +873,7 @@ Pooling layers further promote translation invariance by down sampling intermedi
 %
 These properties make \glspl{CNN} particularly well-suited for tasks involving visual perception.
 
-\paragraph{Recurrent Neural Networks.}
+\paragraph{Recurrent Neural Networks}
 %
 In contrast, \glspl{RNN} are designed for processing sequential data by incorporating temporal recurrence.
 %
@@ -804,8 +886,15 @@ However, standard \glspl{RNN} suffer from the vanishing and exploding gradient p
 To address these issues, more sophisticated variants were developed, notably \glspl{LSTM} (Long Short-Term Memory)~\cite{hochreiter1997long} and \glspl{GRU} (Gated Recurrent Units)~\cite{cho2014learning}, which introduce gating mechanisms to regulate information flow and preserve long-term context.
 
 
-\subsubsection[Limits of sub-symbolic AI]{Limits of sub-symbolic \Gls{AI}}\label{subsubsec:limits-of-sub-symbolic-ai}
+\subsubsection{\glsentrylong{LLM}}\label{subsubsec:llm}
+%
+\note{Todo: fill this section.}
 
+
+
+\subsubsection[Limits of sub-symbolic AI]{Limits of sub-symbolic \Gls{AI}}\label{subsubsec:limits-of-sub-symbolic-ai}
+%
+\note{Todo: fill this section.}
 
 %-----------------------------------------------------------------------------------------
 %----------------------------------- AI and society --------------------------------------
