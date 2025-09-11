@@ -886,10 +886,129 @@ However, standard \glspl{RNN} suffer from the vanishing and exploding gradient p
 To address these issues, more sophisticated variants were developed, notably \glspl{LSTM} (Long Short-Term Memory)~\cite{hochreiter1997long} and \glspl{GRU} (Gated Recurrent Units)~\cite{cho2014learning}, which introduce gating mechanisms to regulate information flow and preserve long-term context.
 
 
-\subsubsection{\glsentrylong{LLM}}\label{subsubsec:llm}
+\subsubsection{\Glsentrylong{LLM}}\label{subsubsec:llm}
 %
-\note{Todo: fill this section.}
+Pre-trained \glspl{LLM}, such as the GPT models developed by OpenAI~\cite{radford2018improving}, have achieved remarkable success in various \gls{NLP} tasks.
+%
+These models, based on the \emph{transformer} architecture~\cite{DBLP:conf/nips/VaswaniSPUJGKP17}, are trained on vast amounts of textual data, enabling them to encode extensive knowledge about real-world entities, such as historical events and geographical facts~\cite{DBLP:journals/tacl/JiangXAN20}.
+%
+They can perform tasks like lexical operations, common-sense reasoning, and solving mathematical problems~\cite{DBLP:conf/emnlp/MadasuS22,DBLP:journals/tacl/GevaKSKRB21,DBLP:conf/nips/Wei0SBIXCLZ22}.
+%
+However, the extent to which \glspl{LLM} exhibit genuine reasoning abilities remains a topic of debate~\cite{DBLP:journals/ethicsit/HicksHS24}.
+%
+Some studies suggest that these models often rely on statistical patterns in the data to simulate reasoning, rather than truly understanding the underlying concepts~\cite{DBLP:conf/fat/BenderGMS21}.
+%
+% This debate highlights the need for further research into the interpretability and reasoning capabilities of \glspl{LLM}.
 
+The transformer architecture, introduced by Vaswani et al.~\cite{DBLP:conf/nips/VaswaniSPUJGKP17}, was originally designed for machine translation.
+%
+Over time, it has become the foundation for state-of-the-art \gls{NLP} models.
+%
+A transformer consists of two main components: the \emph{Encoder}, which converts a text sequence into an embedded representation, and the \emph{Decoder}, which generates output sequences in an autoregressive manner.
+%
+Both components are composed of multiple layers, with each layer incorporating mechanisms like self-attention and feed-forward neural networks.
+
+The self-attention mechanism is a key innovation of the transformer.
+%
+It allows the model to focus on different parts of a sentence, capturing contextual relationships between words.
+%
+Formally, given an embedded representation \(E\), the model computes three vectors: \emph{key} (\(K\)), \emph{query} (\(Q\)), and \emph{value} (\(V\)), using weight matrices \(W_k\), \(W_q\), and \(W_v\).
+%
+The output is then calculated as:
+%
+\[
+Z = \text{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}\right)V,
+\]
+%
+where \(d_k\) is the dimensionality of the key vectors.
+%
+This mechanism is extended to multiple attention heads in the \emph{Multi-Head Attention} module, enhancing the model's ability to capture diverse relationships.
+
+Two prominent transformer-based models are BERT and GPT.
+%
+BERT, introduced in~\cite{DBLP:conf/naacl/DevlinCLT19}, is an encoder-based model trained using \emph{masked language modeling}, where certain words in the input are masked, and the model predicts them.
+%
+In contrast, GPT~\cite{radford2018improving} is a decoder-based model trained with \emph{causal language modeling}, generating text sequentially from a given prefix.
+%
+These models have set benchmarks in various \gls{NLP} tasks, demonstrating the versatility and power of transformer architectures.
+
+
+\paragraph{Learning from the Web}
+
+\glspl{LLM} can be viewed as extensive \emph{knowledge bases}~\cite{PetroniRRLBWM19}.
+%
+They store the textual data they were trained on and enable efficient information retrieval through free-text queries.
+%
+The training data for these models is typically sourced from a wide range of publicly available Web content.
+
+%
+For example, the early BERT model~\cite{DBLP:conf/naacl/DevlinCLT19} was trained on the BooksCorpus dataset~\cite{ZhuKZSUTF15}, a collection of over 11,000 books, and a snapshot of the English Wikipedia.
+%
+Similarly, GPT~\cite{gpt2,gpt3} were trained on datasets scraped from the public Internet, using Reddit as an entry point for identifying high-quality content~\cite{training-data-attack-2021}.
+%
+The RoBERTa model~\cite{roberta-2019} extended this approach by incorporating additional datasets, such as:
+%
+\begin{inlinelist}
+    \item the Common~Crawl News dataset\footnote{\url{https://commoncrawl.org}},
+    %
+    \item the OpenWebTextCorpus~\cite{Gokaslan2019OpenWeb}, and
+    %
+    \item the Stories dataset~\cite{TrieuQuoc2018}.
+\end{inlinelist}
+
+%
+The LLAMA family of models~\cite{llama1,llama2} utilized a combination of datasets, including the colossal clean crawled corpus (C4)~\cite{RaffelSRLNMZLL20}, English Wikipedia, and other sources.
+%
+Finally, the Mixtral-of-Experts model by MistralAI is also pre-trained on data extracted from the open Web\footnote{\url{https://mistral.ai/news/mixtral-of-experts}}.
+
+
+\paragraph{Oracles for Data Generation}
+%
+Web-based pre-training allows \glspl{LLM} to accumulate substantial domain-specific knowledge across a wide range of topics.
+%
+This knowledge can be extracted by crafting appropriate prompts, enabling \glspl{LLM} to act as \emph{oracles} for information retrieval tasks.
+%
+Such capabilities are particularly useful for generating synthetic data that incorporates domain-specific knowledge.
+%
+In these cases, users can design prompts to guide the \gls{LLM} in generating the desired content, which can then be converted into the required format.
+
+
+\paragraph{Hallucinations}
+%
+It is important to note that \glspl{LLM} are not perfect oracles.
+%
+They may produce text that is factually incorrect or inconsistent with the context, a phenomenon known as \emph{hallucination}~\cite{hallucination-2023}.
+%
+This limitation highlights the need for careful evaluation of the outputs generated by \glspl{LLM}, as they cannot be blindly trusted.
+
+%
+\paragraph{Temperature}
+%
+To mitigate hallucinations, \glspl{LLM} often include a parameter called \emph{temperature}, which controls the randomness of their responses.
+%
+The temperature parameter is a real value in the range \([0, 1]\).
+%
+A lower temperature results in more deterministic outputs, as the model selects the most probable next word.
+%
+Conversely, a higher temperature introduces more randomness by sampling from the probability distribution of possible next words.
+%
+This mechanism allows users to balance the \emph{creativity} of the model with the need for accuracy\footnote{
+    %
+    A language model predicts the next word in a sequence based on a probability distribution.
+    %
+    Setting the temperature to 0 ensures deterministic outputs by always selecting the most likely word, while a temperature of 1 introduces randomness by sampling from the distribution.
+}.
+
+
+\paragraph{The Role of Prompts}
+
+Another approach to address hallucinations is \emph{prompt engineering}.
+%
+Clear and unambiguous prompts can help align the \gls{LLM}'s output with user expectations.
+%
+For instance, explicitly instructing the \gls{LLM} to adopt the perspective of a domain expert has been shown to improve the accuracy of its responses~\cite{MemmertCB24}.
+%
+Additionally, asking the model to ``work step-by-step'' can enhance the quality of procedural descriptions~\cite{YangWLLZC23}.
 
 
 \subsubsection[Limits of sub-symbolic AI]{Limits of sub-symbolic \Gls{AI}}\label{subsubsec:limits-of-sub-symbolic-ai}
