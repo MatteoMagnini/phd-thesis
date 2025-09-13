@@ -721,7 +721,37 @@ This reduction allows the use of propositional logic in settings where the origi
 
 
 \subsubsection[Limits of symbolic AI]{Limits of symbolic \Gls{AI}}\label{subsubsec:limits-of-symbolic-ai}
-\note{Todo: fill this section}
+%
+Symbolic \gls{AI} has been a foundational approach in the field of \gls{AI}, providing a structured way to represent and reason about knowledge.
+%
+However, it also has several limitations.
+
+
+Symbolic systems can be \emph{delicate}, meaning they may fail to handle unexpected situations or incomplete information~\cite{DBLP:books/ox/90/McDermott90}.
+%
+This is because symbolic systems rely on predefined rules and representations, which may not cover all possible scenarios.
+
+
+As the complexity of the domain increases, the number of rules and symbols required to represent knowledge can grow significantly.
+%
+This can make it difficult to manage and maintain large symbolic systems; they do not \emph{scale} easily~\cite{DBLP:journals/ai/LenatF91}.
+
+
+Symbolic systems typically require \emph{manual encoding} of knowledge, which can be time-consuming and error-prone.
+%
+This makes it challenging to adapt to new information or learn from experience.
+%
+This limitation is usually referred in the literature as the \emph{knowledge engineering bottleneck}~\cite{DBLP:books/aw/RN2020}.
+
+
+Moreover, symbolic systems often struggle to handle \emph{uncertainty} and probabilistic reasoning.
+%
+This is because symbolic representations are typically deterministic, making it difficult to model real-world situations that involve uncertainty.
+
+
+To sum up, symbolic models struggle to capture the nuances and complexities of real-world data, particularly when dealing with noisy or ambiguous information.
+%
+Also, they struggle when the domain is \emph{dynamic} and constantly changing, as they may require frequent updates to the rules and representations.
 
 
 %-----------------------------------------------------------------------------------------
@@ -1013,7 +1043,32 @@ Additionally, asking the model to ``work step-by-step'' can enhance the quality 
 
 \subsubsection[Limits of sub-symbolic AI]{Limits of sub-symbolic \Gls{AI}}\label{subsubsec:limits-of-sub-symbolic-ai}
 %
-\note{Todo: fill this section.}
+Sub-symbolic \gls{AI} has achieved remarkable success in various domains and scenarios, but it also has limitations.
+
+
+One of the main limitations is the need for \emph{large amounts} of training data if the predictive task is not trivial (e.g., easy to linearly separate).
+%
+Sub-symbolic models, especially deep learning models, often require vast amounts of labeled data to learn effectively~\cite{DBLP:journals/nature/LeCunBH15}.
+%
+This can be a significant challenge in domains where data is scarce or expensive to obtain.
+
+
+Another limitation is the \emph{lack of interpretability}.
+%
+Sub-symbolic models, particularly deep learning models, are often considered black boxes because their internal workings are not easily understandable by humans~\cite{DBLP:journals/natmi/Rudin19,interpretability-lipton-2018}.
+%
+This is a significant drawback in applications where transparency and explainability are crucial, such as healthcare and finance.
+
+
+Sub-symbolic models can also be sensitive to \emph{adversarial attacks}, where small perturbations to the input data can lead to incorrect predictions~\cite{DBLP:journals/corr/SzegedyZSBEGF13}.
+%
+This vulnerability raises concerns about the robustness and security of sub-symbolic \gls{AI} systems.
+
+
+Additionally, sub-symbolic models may struggle to \emph{generalize to out-of-distribution data}, meaning they may perform poorly when faced with inputs that differ significantly from the training data~\cite{DBLP:conf/icml/RechtRSS19}.
+%
+Finally, sub-symbolic models often lack common-sense reasoning abilities, making it difficult for them to understand and reason about the world in a way that humans do.
+
 
 %-----------------------------------------------------------------------------------------
 %----------------------------------- AI and society --------------------------------------
