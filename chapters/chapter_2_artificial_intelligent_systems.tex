@@ -560,7 +560,7 @@ This restriction eliminates the use of function symbols, thereby forbidding stru
 %
 As a result, Datalog is well-suited for applications requiring finite and decidable reasoning, as the absence of function symbols ensures termination of inference algorithms.
 %
-Similar to Horn logic, Datalog’s knowledge bases consist of sets of function-free Horn clauses, which are interpreted as rules and facts.
+Similar to Horn logic, Datalog's knowledge bases consist of sets of function-free Horn clauses, which are interpreted as rules and facts.
 %
 Rules in Datalog follow the form \(h \gets b_1, \dots, b_n\), where \(h\) is the head of the rule and \(b_1, \dots, b_n\) are the body predicates.
 %
@@ -602,7 +602,7 @@ Using this nomenclature, knowledge in \gls{DL} can be represented by associating
 %
 Binary predicates are particularly significant as they enable the connection of pairs of entities.
 %
-This is typically achieved through subject–predicate–object triplets, represented as ground binary predicates of the form \(\langle a \, f \, b\rangle\) or \(f(a, b)\), where \(a\) is the subject, \(f\) is the predicate, and \(b\) is the object.
+This is typically achieved through subject-predicate-object triplets, represented as ground binary predicates of the form \(\langle a \, f \, b\rangle\) or \(f(a, b)\), where \(a\) is the subject, \(f\) is the predicate, and \(b\) is the object.
 
 Collections of such triplets form \glspl{KG}, which are directed graphs where vertices represent individuals and arcs represent binary properties connecting these individuals.
 %
@@ -687,7 +687,7 @@ Ontologies provide formal semantics and enable logical reasoning, while knowledg
 %
 Propositional logic is a restricted subset of \gls{FOL} in which quantifiers, terms, and non-atomic predicates are absent.
 %
-Its language consists solely of atomic propositions—also called 0-ary predicates—combined using standard logical connectives such as conjunction ($\land$), disjunction ($\lor$), negation ($\lnot$), and implication ($\rightarrow$).
+Its language consists solely of atomic propositions -- also called 0-ary predicates -- combined using standard logical connectives such as conjunction ($\land$), disjunction ($\lor$), negation ($\lnot$), and implication ($\rightarrow$).
 %
 Each proposition can be interpreted as a Boolean variable that takes a truth value in \{\texttt{true}, \texttt{false}\}.
 %
@@ -974,7 +974,7 @@ The training data for these models is typically sourced from a wide range of pub
 %
 For example, the early BERT model~\cite{DBLP:conf/naacl/DevlinCLT19} was trained on the BooksCorpus dataset~\cite{ZhuKZSUTF15}, a collection of over 11,000 books, and a snapshot of the English Wikipedia.
 %
-Similarly, GPT~\cite{gpt2,gpt3} were trained on datasets scraped from the public Internet, using Reddit as an entry point for identifying high-quality content~\cite{training-data-attack-2021}.
+Similarly, GPT~\cite{gpt2-2019,gpt3-2020} were trained on datasets scraped from the public Internet, using Reddit as an entry point for identifying high-quality content~\cite{training-data-attack-2021}.
 %
 The RoBERTa model~\cite{roberta-2019} extended this approach by incorporating additional datasets, such as:
 %
@@ -1076,6 +1076,11 @@ Finally, sub-symbolic models often lack common-sense reasoning abilities, making
 
 \section{AI and society}\label{sec:ai-and-society}
 %
+This last section of the chapter is needed to introduce \gls{AI} sub-fields that have become increasingly important in recent years.
+%
+In particular, the consequences of the wide adoption of \gls{AI} systems in everyday life have raised concerns about their trustworthiness, fairness, and accountability.
+%
+
 \subsection[Explainable AI]{\Glsentrylong{XAI}}\label{subsec:xai}
 %
 Modern intelligent systems increasingly rely on sub-symbolic predictive models to support their intelligent behaviour.
@@ -1176,11 +1181,90 @@ Methods in this category include:
 
 \subsection[Fairness in AI]{Fairness in \gls{AI}}
 \label{subsec:fairness-in-ai}
+%
+\Gls{ML} models can inherit and amplify biases present in the dataset \(D\).
+%
+For instance, if \(D\) contains features related to gender or race, and the data is not equally distributed across these groups, biases may arise.
+%
+This often occurs in datasets about hiring decisions, where historical data may reflect fewer non-male or non-white candidates.
+%
+A supervised model \(H\), trained on such a dataset to predict a target feature \(Y\), might incorrectly learn that gender or race influences the prediction.
+%
+If the predictions of \(H\) are used for decision-making, such as hiring or loan approvals, the model may discriminate against certain groups.
+%
+In this case, the model is said to be biased, as it replicates patterns of past discrimination.
 
-\note{TODO: introduction to fairness in AI, why it is important, and how it relates to this work.}
+%
+Fairness interventions can mitigate these biases and are applied at different stages of the \gls{ML} workflow.
+%
+In the literature, these methods are categorized as:
+%
+\begin{itemize}
+    \item \textit{Pre-processing methods}, which modify the dataset \(D\) to reduce bias before training;
+    %
+    \item \textit{In-processing methods}, which adjust the learning algorithm \(A\) to enforce fairness during training;
+    %
+    \item \textit{Post-processing methods}, which modify the predictions of the model \(H\) to achieve fairness after training.
+\end{itemize}
+
+%
+A critical prerequisite for fairness interventions is the ability to measure fairness.
+%
+Fairness metrics quantify the extent of bias in a dataset or model and evaluate the effectiveness of mitigation techniques.
+%
+Formally, a fairness metric is a function that takes data as input and returns a numerical score.
+%
+The input data can be a dataset \(D = (X, Y)\) or the predictions \(h(X)\) of a model on \(D\).
+%
+A lower score typically indicates higher bias, while a higher score reflects greater fairness.
+
+%
+Numerous fairness metrics have been proposed, differing in the type of data they accept and their interpretation of fairness or bias.
+%
+These metrics are often categorized based on the fairness notion they adhere to~\cite{DBLP:journals/csur/MehrabiMSLG21}.
+%
+The two most common notions are \textit{group fairness} and \textit{individual fairness}.
 
 
-\subsection{Data protection and privacy}
-\label{subsec:data-protection-and-privacy}
+\paragraph{Group fairness}\label{par:group-fairness}
+%
+Group fairness ensures that distinct groups of individuals, defined by sensitive attributes, are treated equally.
+%
+Sensitive attributes, denoted as \( S \subset X \), are features such as \emph{gender}, \emph{race}, \emph{age}, or social status, which partition the dataset \( D \) into protected groups.
+%
+These groups can be defined by a single sensitive attribute, e.g., the group of women identified by a specific value of the \textit{gender} feature, or by a combination of attributes, e.g., the group of Black women identified by both \textit{gender} and \textit{race}.
+%
+The principle of group fairness is commonly evaluated by measuring the correlation between sensitive attributes \( S \) and the target variable \( Y \).
+%
+For instance, if \( Y \) represents loan approval outcomes and \( S \) represents the applicant's race, group fairness metrics assess whether the approval rates are consistent across racial groups.
+%
+Such metrics are crucial for identifying and addressing biases in decision-making processes.
 
-\note{TODO: introduction to data protection and privacy, why it is important, and how it relates to this work.}
+
+\paragraph{Individual fairness}\label{par:individual-fairness}
+%
+Individual fairness ensures that similar individuals receive similar treatment.
+%
+The simplest approach to individual fairness is \emph{fairness through awareness}.
+%
+This method relies on a distance metric \(\delta : X \times X \to \mathbb{R}\) in the input space (e.g., Euclidean distance).
+%
+It requires that if two individuals \(x_1\) and \(x_2\) are similar up to a threshold \(\epsilon\), i.e., \(\delta(x_1, x_2) < \epsilon\), then their corresponding target values \(y_1\) and \(y_2\) should also be similar.
+%
+In practice, model predictions \(h(x_1)\) and \(h(x_2)\) are compared instead of true labels, and fairness scores are computed by averaging the differences in predictions for similar instances.
+%
+Another approach is \emph{fairness through unawareness}, which requires that sensitive attributes are not used by the model during training or prediction.
+%
+This can be achieved by removing sensitive features from the dataset or ensuring the model does not rely on them.
+%
+Fairness scores in this case measure the extent to which the model depends on sensitive attributes and penalize such reliance.
+%
+A more advanced formulation is \emph{counterfactual fairness}.
+%
+This requires that a model's prediction for an individual \(x\) remains the same, regardless of whether \(x\) belongs to a group \(s\) in the actual dataset or to a counterfactual group \(s' \neq s\).
+%
+Counterfactual fairness ensures that predictions are invariant to changes in sensitive attributes across hypothetical scenarios.
+%
+As individual fairness is not the primary focus of this work, we do not delve into the specific metrics used to evaluate it.
+%
+For a detailed discussion, the reader is referred to~\cite{DBLP:journals/csur/MehrabiMSLG21}.

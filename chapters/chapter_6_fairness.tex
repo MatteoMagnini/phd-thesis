@@ -34,103 +34,13 @@ We provide a brief but comprehensive overview of fairness in \gls{ML} to underst
 %
 The section is organised as follows.
 %
-In \Cref{subsec:fairness-motivations}, we discuss the motivations for fairness in \gls{ML} and how it is related to \gls{SKI}.
+In \Cref{subsec:fairness-in-ai}, we discussed the motivations for fairness in \gls{ML}.
 %
 In \Cref{subsec:fairness-metrics}, we introduce common group fairness metrics used in the literature, along with some of their limitations that motivate the development novel metrics.
 %
 We conclude the background section with a presentation of related works in \Cref{subsec:fairness-ski}.
 %
 Finally, in \Cref{sec:fauci}, we present our contributions to fairness in \gls{ML}.
-
-
-\subsection{Motivations}\label{subsec:fairness-motivations}
-%
-\Gls{ML} models can inherit and amplify biases present in the dataset \(D\).
-%
-For instance, if \(D\) contains features related to gender or race, and the data is not equally distributed across these groups, biases may arise.
-%
-This often occurs in datasets about hiring decisions, where historical data may reflect fewer non-male or non-white candidates.
-%
-A supervised model \(H\), trained on such a dataset to predict a target feature \(Y\), might incorrectly learn that gender or race influences the prediction.
-%
-If the predictions of \(H\) are used for decision-making, such as hiring or loan approvals, the model may discriminate against certain groups.
-%
-In this case, the model is said to be biased, as it replicates patterns of past discrimination.
-
-%
-Fairness interventions can mitigate these biases and are applied at different stages of the \gls{ML} workflow.
-%
-In the literature, these methods are categorized as:
-%
-\begin{itemize}
-    \item \textit{Pre-processing methods}, which modify the dataset \(D\) to reduce bias before training;
-    %
-    \item \textit{In-processing methods}, which adjust the learning algorithm \(A\) to enforce fairness during training;
-    %
-    \item \textit{Post-processing methods}, which modify the predictions of the model \(H\) to achieve fairness after training.
-\end{itemize}
-
-%
-A critical prerequisite for fairness interventions is the ability to measure fairness.
-%
-Fairness metrics quantify the extent of bias in a dataset or model and evaluate the effectiveness of mitigation techniques.
-%
-Formally, a fairness metric is a function that takes data as input and returns a numerical score.
-%
-The input data can be a dataset \(D = (X, Y)\) or the predictions \(h(X)\) of a model on \(D\).
-%
-A lower score typically indicates higher bias, while a higher score reflects greater fairness.
-
-%
-Numerous fairness metrics have been proposed, differing in the type of data they accept and their interpretation of fairness or bias.
-%
-These metrics are often categorized based on the fairness notion they adhere to~\cite{DBLP:journals/csur/MehrabiMSLG21}.
-%
-The two most common notions are \textit{group fairness} and \textit{individual fairness}.
-
-
-\paragraph{Group fairness}\label{par:group-fairness}
-%
-Group fairness ensures that distinct groups of individuals, defined by sensitive attributes, are treated equally.
-%
-Sensitive attributes, denoted as \( S \subset X \), are features such as \emph{gender}, \emph{race}, \emph{age}, or social status, which partition the dataset \( D \) into protected groups.
-%
-These groups can be defined by a single sensitive attribute, e.g., the group of women identified by a specific value of the \textit{gender} feature, or by a combination of attributes, e.g., the group of Black women identified by both \textit{gender} and \textit{race}.
-%
-The principle of group fairness is commonly evaluated by measuring the correlation between sensitive attributes \( S \) and the target variable \( Y \).
-%
-For instance, if \( Y \) represents loan approval outcomes and \( S \) represents the applicant's race, group fairness metrics assess whether the approval rates are consistent across racial groups.
-%
-Such metrics are crucial for identifying and addressing biases in decision-making processes.
-
-
-\paragraph{Individual fairness}\label{par:individual-fairness}
-%
-Individual fairness ensures that similar individuals receive similar treatment.
-%
-The simplest approach to individual fairness is \emph{fairness through awareness}.
-%
-This method relies on a distance metric \(\delta : X \times X \to \mathbb{R}\) in the input space (e.g., Euclidean distance).
-%
-It requires that if two individuals \(x_1\) and \(x_2\) are similar up to a threshold \(\epsilon\), i.e., \(\delta(x_1, x_2) < \epsilon\), then their corresponding target values \(y_1\) and \(y_2\) should also be similar.
-%
-In practice, model predictions \(h(x_1)\) and \(h(x_2)\) are compared instead of true labels, and fairness scores are computed by averaging the differences in predictions for similar instances.
-%
-Another approach is \emph{fairness through unawareness}, which requires that sensitive attributes are not used by the model during training or prediction.
-%
-This can be achieved by removing sensitive features from the dataset or ensuring the model does not rely on them.
-%
-Fairness scores in this case measure the extent to which the model depends on sensitive attributes and penalize such reliance.
-%
-A more advanced formulation is \emph{counterfactual fairness}.
-%
-This requires that a model's prediction for an individual \(x\) remains the same, regardless of whether \(x\) belongs to a group \(s\) in the actual dataset or to a counterfactual group \(s' \neq s\).
-%
-Counterfactual fairness ensures that predictions are invariant to changes in sensitive attributes across hypothetical scenarios.
-%
-As individual fairness is not the primary focus of this work, we do not delve into the specific metrics used to evaluate it.
-%
-For a detailed discussion, the reader is referred to~\cite{DBLP:journals/csur/MehrabiMSLG21}.
 
 
 \subsection{Fairness metrics}\label{subsec:fairness-metrics}
