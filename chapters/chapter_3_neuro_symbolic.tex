@@ -70,7 +70,9 @@ Approaches to \gls{NeSy} can be categorised w.r.t. how the connectionist and sym
     %
 \end{enumerate}
 
-In the rest of this chapter, we focus on two sub-fields of \gls{NeSy} \gls{AI} -- namely \gls{SKI} and \gls{SKE} -- that cannot be mapped into a fixed one-to-one correspondence with the six types of integration above.
+In the rest of this chapter, we focus on two sub-fields of \gls{NeSy} \gls{AI} -- namely \gls{SKI} and \gls{SKE} -- that can be partially mapped into some of the aforementioned types of integration.
+%
+In particular, \gls{SKI} can be mapped into Type 4, 5 and 6, whereas \gls{SKE} can be mapped into Type 2 and Type 3.
 %
 \Gls{SKI} and \gls{SKE} are two popular way to integrate symbolic \gls{AI} and sub-symbolic \gls{ML} predictors.
 %
@@ -79,8 +81,6 @@ In the literature, there are hundreds of works that propose methods for these tw
 Here, we present both \gls{SKI} and \gls{SKE} in a unified way, providing a clear taxonomy of the methods, their properties, and their limitations.
 %
 What follows is a re-elaboration of the result of an \gls{SLR} that we conducted on the two topics: \emph{Symbolic Knowledge Extraction and Injection with Sub-symbolic Predictors: A Systematic Literature Review}~\cite{DBLP:journals/csur/CiattoSAMO24}.
-%
-\note{TODO: consider to add a brief explanation about in which type of integration \gls{SKI} and \gls{SKE} fit.}
 
 
 \section[Symbolic knowledge injection]{\Glsentrylong{SKI}}\label{sec:ski}
@@ -190,13 +190,9 @@ These \gls{QoS} metrics are presented in the work ``Symbolic Knowledge Injection
     \includegraphics[width=.6\linewidth]{figures/ski-logic}
     \caption[Venn diagram categorising SKI methods w.r.t. the input knowledge]{
         Venn diagram categorising SKI methods w.r.t.\ the \emph{input knowledge} type: knowledge graphs (KG), propositional logic (P), first-order logic (FOL), expert knowledge (E), Datalog (D), Horn logic (H), or modal logic (M).
-        %
-        The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 117 surveyed \gls{SKI} methods.
     }
     \label{fig:pie-ski-logic}
 \end{figure}
-%
-\note{ERROR: there is an inconsistency between this image and \Cref{fig:venn-diagram-logics}. P here is subset of D, there it is not.}
 %
 A key distinction in \gls{SKI} methods lies in whether the chosen formalism is \emph{machine interpretable}, \emph{human interpretable}, or both.
 %
@@ -272,7 +268,6 @@ whereas the second statement can be encoded as:
     \caption[Venn diagram categorising SKI methods w.r.t. the predictor type]{
         Venn diagram categorising \gls{SKI} methods w.r.t.\ the type of sub-symbolic predictor: feed-forward (FF), convolutional (CNN), graph (GNN) or recurrent (RNN) neural networks, Boltzmann machines (BM), Markov chains (MC), transformers (TR), auto-encoders (AE), deep belief networks (DBN), denoising auto-encoders (DAE), kernel machines (KM).
         %
-        The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 117 surveyed \gls{SKI} methods.
     }
     \label{fig:pie-ski-predictors}
 \end{figure}
@@ -328,7 +323,6 @@ Finally, \glspl{NN} are highly flexible and easy to manipulate, making them idea
     \caption[Venn diagram categorising SKI methods]{
         Venn diagram categorising SKI methods w.r.t.\ the \emph{injection} strategy type: structuring (S), embedding (E), or guided learning (L).
         %
-        The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 117 surveyed \gls{SKI} methods.
     }
     \label{fig:pie-ski-injection}
 \end{SCfigure}
@@ -576,7 +570,6 @@ It also facilitates the merging of knowledge extracted from various predictors, 
         %
         Venn diagram categorising \gls{SKE} methods w.r.t.\ the \emph{shape} of the extracted symbolic knowledge: rule lists (L), decision trees (DT), decision tables (TA), or knowledge graphs (KG).
         %
-        The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 132 surveyed \gls{SKE} methods.
     }
     \label{fig:pie-ski-shape}
 \end{figure}
@@ -588,7 +581,6 @@ It also facilitates the merging of knowledge extracted from various predictors, 
         %
         Pie chart categorising \gls{SKE} methods w.r.t.\ the semantic \emph{expressiveness} of the extracted symbolic knowledge: propositional rules (P), fuzzy rules (F), oblique rules (O), m-of-n rules (MN), or triplets (T).
         %
-        The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 132 surveyed \gls{SKE} methods.
     }
     \label{fig:pie-ski-expressiveness}
 \end{figure}
@@ -675,7 +667,6 @@ They allow a divide-and-conquer approach, focusing on one input feature at a tim
         %
         For decompositional methods, we report the target predictor type: ANN<n> = artificial \gls{NN} (possibly having exactly <n> layers), CNN = convolutional \gls{NN}, GNN = graph \gls{NN}, FNN = fuzzy \gls{NN}, SVM = support vector machines, DTE = decision tree ensembles, LC = linear classifiers.
         %
-        The image is taken from~\cite{DBLP:journals/csur/CiattoSAMO24} and it refers to 132 surveyed \gls{SKE} methods.
     }
     \label{fig:pie-ske-translucency}
 \end{figure}
@@ -707,19 +698,15 @@ Therefore, in general \gls{SKE} methods can be applied to any type of predictor,
 
 \subsection{How to extract}\label{subsec:how-to-extract}
 %
-The way \gls{SKE} methods extract symbolic knowledge highly depends on the translucency of the method itself.
+The way \gls{SKE} methods extract symbolic knowledge highly depends on the translucency of the method itself~\cite{DBLP:journals/csur/CiattoSAMO24}.
 %
-Pedagogical methods treat the underlying predictor as an oracle to be queries for predictions the symbolic knowledge should mimic.
-%
-\note{TODO: add citations}
+\emph{Pedagogical} methods treat the underlying predictor as an oracle to be queries for predictions the symbolic knowledge should mimic.
 %
 In most of these cases, the \gls{SKE} method exploits a \emph{surrogate} model, which is a simpler, more interpretable model that approximates the behavior of the original predictor.
 %
 This model can be used as the final output of the \gls{SKE} process if it is already in a symbolic or interpretable (e.g., a linear model) format, or it can be further processed to extract symbolic knowledge.
 %
-Decompositional methods, on the other hand, require access to the internal structure of the predictor and each method has its own way of extracting symbolic knowledge.
-%
-\note{TODO: does it make sense to talk about this here?}
+\emph{Decompositional} methods, on the other hand, require access to the internal structure of the predictor and each method has its own way of extracting symbolic knowledge.
 %
 Another important aspect of \gls{SKE} methods when it comes to how symbolic knowledge is extracted is the \emph{granularity} of the extraction.
 
@@ -740,7 +727,6 @@ Another important aspect of \gls{SKE} methods when it comes to how symbolic know
         %
         The dashed line is the trained interpretable model that is locally faithful to the sub-symbolic model.
         %
-        The image is taken from~\cite{DBLP:conf/kdd/Ribeiro0G16}.
     }
     \label{fig:local-explanations}
 \end{figure}
