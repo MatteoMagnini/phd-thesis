@@ -752,4 +752,46 @@ However, instead of using the labels of the training set, the surrogate model is
 
 
 \subsection[Limitations and challenges of SKE]{Limitations and challenges of \Gls{SKE}}\label{subsec:limitations-and-challenges-of-ske}
-\note{TODO}
+%
+\Gls{SKE} methods predominantly focus on supervised learning tasks, such as classification and regression.
+%
+However, they do not yet address unsupervised learning tasks, like clustering, or reinforcement learning tasks, such as optimal policy search.
+%
+This limitation restricts their applicability to a broader range of \gls{ML} paradigms.
+
+%
+One might argue that certain clustering algorithms, such as \(k\)-nearest neighbors, are inherently interpretable.
+%
+Despite this, they still operate on numerical data, which can obscure the underlying decision-making process.
+%
+\emph{Pedagogical} \gls{SKE} methods could potentially be adapted to clustering predictors with minimal adjustments.
+%
+This is because trained clustering predictors can be treated as classifiers over anonymous classes.
+
+%
+Similarly, it is conceivable to apply \gls{SKE} techniques to predictors trained using reinforcement learning.
+%
+For instance, symbolic knowledge could be extracted to explain the learned policies or value functions.
+%
+This would provide insights into the decision-making process of reinforcement learning agents.
+
+%
+Future research should explore the extension of \gls{SKE} methods to unsupervised and reinforcement learning tasks.
+%
+Such advancements would significantly broaden the scope and utility of \gls{SKE} in \gls{AI} systems.
+%
+
+The majority of \gls{SKI} algorithms rely on symbolic knowledge represented as \glspl{KG} or propositional logic (\Cref{fig:pie-ski-logic}).
+%
+While these representations are widely used, they are significantly less expressive compared to \gls{FOL}.
+%
+In particular, they lack support for recursion and function symbols, which limits the complexity and depth of the knowledge that can be injected into sub-symbolic predictors.
+%
+This limitation arises because most \gls{ML} predictors, such as \glspl{NN}, are inherently acyclic structures.
+%
+As a result, integrating recursive logic or arbitrarily deep data structures into these predictors is challenging and often leads to severe information loss due to approximations.
+%
+Addressing these limitations requires innovative approaches to enable the injection of more expressive logics, such as recursive clauses or function symbols, into sub-symbolic models.
+%
+Future research should explore methods to overcome these challenges, potentially by designing predictors capable of handling recursive structures or by developing advanced approximation techniques.
+%
