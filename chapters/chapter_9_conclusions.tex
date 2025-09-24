@@ -63,9 +63,63 @@ Regarding translucency, \gls{SKE} methods are fairly evenly distributed among \e
 
 
 \subsection*{Measuring the effectiveness of \gls{SKI} and \gls{SKE} techniques}
+%
+Accuracy, precision, recall, and F1-score are the most commonly used metrics to evaluate \gls{ML} models, but these metrics do not capture the full spectrum of qualities of \gls{SKI} and \gls{SKE} techniques.
+%
+To answer the research question \Cref{itm:rq2}, we proposed \gls{QoS} metrics specifically designed to assess other aspects beyond traditional performance metrics (\Cref{ch:ski-methods-and-contributions}).
+%
+In particular, in \Cref{sec:ski-meets-intelligent-agents} four different \gls{QoS} metrics were proposed: \emph{memory footprint}, \emph{energy consumption}, \emph{latency}, and \emph{data efficiency}.
+%
+Additionally, in \Cref{sec:empirical-study-on-the-robustness-of-ski-methods}, we introduced a \emph{robustness} metric to evaluate the resilience of \gls{SKI} methods against different types of data degradation.
+%
+All the metrics were rigorously defined and empirically validated through experiments.
+%
+Finally, the fairness dimension was explored in \Cref{ch:fairness-through-ski}, where we demonstrated how \gls{SKI} techniques can mitigate the bias of \gls{ML} models, quantifiable through established fairness metrics.
 
 
-\subsection*{On the use of \gls{SKI} and \gls{SKE} techniques to design \gls{NeSy} \gls{AI} systems}
+\subsection*{When and where to use \gls{SKI} and \gls{SKE} techniques}
+%
+In the context of real-world applications, we addressed the research question \Cref{itm:rq3} by exploring various domains and purposes where \gls{SKI} and \gls{SKE} techniques have been successfully applied (\Cref{ch:nesy-ai-for-real-world-applications}).
+%
+Specifically:
+%
+\begin{inlinelist}
+    %
+    \item we mitigated bias in \gls{AI} systems (\Cref{sec:fauci}) using \gls{SKI} techniques to enhance fairness,
+    %
+    \item we examined applications in healthcare (\Cref{sec:ske-for-explainable-nutritional-recommenders}) using \gls{SKE} to enhance explainability and customization of nutritional recommendations,
+    %
+    \item we introduced a protocol for multi-agent based explanations in \gls{AI} systems (\Cref{sec:a-general-purpose-protocol-for-multi-agent-based-explanations}) to improve transparency and user trust,
+    %
+    \item again in the healthcare domain (\Cref{sec:nesy-ai-for-supporting-chronic-disease-diagnosis-and-monitoring}), we used \gls{SKI} to provide established domain knowledge to \gls{ML} predictors in the context of chronic diseases,
+    %
+    \item finally, we explored the use of \gls{RAG} -- that falls into our \gls{SKI} definition -- by providing contextual prior knowledge to \glspl{LLM}.
+    %
+\end{inlinelist}
+
+
+\subsection*{\gls{SKI} and \gls{SKE} techniques for designing \gls{NeSy} \gls{AI} systems}
+%
+The last research question \Cref{itm:rq4} was addressed in both \Cref{ch:nesy-ai-for-real-world-applications} (already summarised in the previous paragraph) and \Cref{ch:autonomous-learning-systems}.
+%
+Because the ultimate goal of this thesis is to design and implement intelligent systems that can autonomously learn, in \Cref{ch:autonomous-learning-systems} we focused entirely on this aspect.
+%
+In \Cref{sec:cycle-ski-ske} we proposed a conceptual architecture for autonomous learning systems that leverage \gls{SKI} and \gls{SKE} techniques to continuously acquire, integrate, and refine knowledge.
+%
+The idea consists in cycle of \gls{SKI} and \gls{SKE} steps, where knowledge is injected into sub-symbolic models, which are then used to extract new knowledge that can be reintegrated.
+%
+Concrete systems that automatically learn knowledge are presented in \Cref{sec:llm-as-oracles-for-instantiating-ontologies-with-domain-specific-knowledge,sec:actively-learning-ontologies}.
+%
+The first work (\Cref{sec:llm-as-oracles-for-instantiating-ontologies-with-domain-specific-knowledge}) uses \glspl{LLM} as oracles to populate ontologies starting from a predefined schema (the schema itself can be asked to the \gls{LLM}).
+%
+One can perform multiple iterations to refine the ontology at will.
+%
+The second work (\Cref{sec:actively-learning-ontologies}) instead consists in an active-learning framework that exploits \glspl{LLM} as a teacher and the student learns the target ontology by posing queries to the teacher.
+%
+Membership queries are directly answered by the \gls{LLM}, while equivalence queries are simulated through the \gls{PAC} framework.
+%
+These contributions demonstrate the feasibility of designing autonomous learning systems.
+
 
 
 \section{Future work}\label{sec:future-work}
