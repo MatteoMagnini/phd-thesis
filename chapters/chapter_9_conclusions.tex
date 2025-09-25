@@ -33,6 +33,8 @@ The \gls{SLR} investigated \emph{249} relevant papers, identifying \emph{117} di
 These high numbers, along with the increasing trend of publications in recent years, indicate that \gls{SKI} and \gls{SKE} are active research areas within the \gls{AI} community.
 %
 In the course of other chapters -- e.g., when presenting the possibility to use \gls{SKI} techniques to enhance the fairness of \gls{AI} systems in \Cref{ch:fairness-through-ski} and when showing real-world applications in \Cref{ch:nesy-ai-for-real-world-applications} -- we further demonstrated the relevance of \gls{SKI} and \gls{SKE} techniques in addressing contemporary challenges in \gls{AI}.
+%
+In \Cref{ch:ski-methods-and-contributions} we also presented several novel \gls{SKI} methods and in \Cref{ch:psyki} a new framework (\gls{PSyKI}) to facilitate the application of \gls{SKI} techniques.
 
 
 \subsection*{About the characteristics of \gls{SKI} and \gls{SKE} techniques}
@@ -123,3 +125,58 @@ These contributions demonstrate the feasibility of designing autonomous learning
 
 
 \section{Future work}\label{sec:future-work}
+
+\subsection*{Universal \gls{SKI} language}
+%
+The vast majority of the existing \gls{SKI} methods in the literature suffer from a lack of implementations and standardization.
+%
+The techniques that actually have an implementation often rely on hard-coded rules and procedures that make them difficult to adapt to different contexts.
+%
+Moreover, the use of logic programming formalism is often required, which can be a barrier for practitioners not familiar with it.
+%
+\Gls{PSyKI} (\Cref{sec:psyki}) partially addresses these issues by providing a simpler interface to apply \gls{SKI} techniques, but it still requires the user to know logic programming to define the input knowledge.
+%
+To address these issues and make \gls{SKI} accessible to a broader audience of users, a simplified and universal \gls{SKI} language could be developed.
+
+
+\subsection*{Practical implementation of the \gls{SKI}-\gls{SKE} cycle}
+%
+The conceptual architecture for extracting and refining knowledge through a cycle of \gls{SKI} and \gls{SKE} steps was proposed in \Cref{sec:cycle-ski-ske}.
+%
+However, a practical implementation of this architecture is still missing in the literature to the best of our knowledge.
+%
+Developing a concrete system that embodies this cycle, possibly involving multiple intelligent agents sharing knowledge between each others, would be of great interest.
+
+
+\subsection*{Social implication of \gls{SKI} and \gls{SKE}}
+%
+Both \gls{SKI} and \gls{SKE} can affect the social implications of \gls{AI} systems.
+%
+Concerning \gls{SKI}, we demonstrated in \Cref{ch:fairness-through-ski} how these techniques can be used to mitigate bias in \gls{AI} systems.
+%
+Moreover, they can be used to enhance the transparency and explainability -- by design -- of \gls{AI} models, which are crucial for user trust and acceptance (\Cref{ch:ski-methods-and-contributions}).
+%
+\Gls{SKE} techniques can also contribute to explainability by providing human-understandable representations of the knowledge learned by sub-symbolic models (\Cref{sec:nesy-ai-for-supporting-chronic-disease-diagnosis-and-monitoring,sec:a-general-purpose-protocol-for-multi-agent-based-explanations}).
+
+Despite having these positive aspects, a measurement of the social impact of \gls{SKI} and \gls{SKE} in real-world applications among the users is still missing.
+%
+Moreover, \gls{SKI} methods and in particular the most recent techniques that involve the use of \glspl{LLM} raise concerns about data privacy and \gls{AI} safety.
+%
+Indeed, if the knowledge used to inject into a sub-symbolic model contains sensitive information, and this knowledge is sent to a third party, there is a risk that this information could be inadvertently exposed or misused.
+%
+Finally, whenever \glspl{LLM} are used, there is always a chance of having hallucinated or biased information that could compromise the integrity of the knowledge being injected.
+%
+We believe that these aspects should be further investigated in future studies.
+
+
+\subsection*{Autonomous learning in the real world}
+%
+Knowledge and data are just a representation of the real world.
+%
+The best way to learn about the real world is to interact with it, like animals and humans did in millions of years of evolution (billions for the life in general).
+%
+We believe that the next step for autonomous learning systems -- and ultimately \gls{AGI} -- is to be embodied in the real world, through robots and other physical agents that can perceive and act in the environment.
+%
+When this will take place, it will be of paramount importance to guarantee human and environmental safety, as well as ethical behavior of the agents.
+%
+This will require a multidisciplinary approach -- involving computer science, robotics, ethics, lawmakers, and social sciences -- and a strong collaboration between academia, industry, and the society at large.
