@@ -433,6 +433,12 @@ According to Van Gelder~\cite{DBLP:conf/ogai/Gelder90}, in order to be considere
         On the left side, symbolic \gls{AI} is represented by search algorithms, \glspl{KR}, and reasoning.
         %
         On the right side, sub-symbolic \gls{AI} is represented by learning technique families, such as unsupervised learning, supervised learning, and reinforcement learning.
+        %
+        The figure is a simplified representation to give the reader a general idea of the landscape of \gls{AI}.
+        %
+        Notably, learning-based approaches are not necessarily subsymbolic.
+        %
+        For instance, \gls{ILP} and \glsentryshort{DT} learning induce explicit symbolic structures whose components retain a well-defined and compositional semantics, despite being learned from data.
     }
     \label{fig:ai-map}
 \end{figure}
@@ -741,6 +747,31 @@ Expressions involving numerical constants, variables, and comparisons (e.g., $x 
 This reduction allows the use of propositional logic in settings where the original problem does not explicitly involve logical variables or quantifiers, but can be decomposed into atomic truth conditions.
 
 
+\subsubsection{Decision trees}\label{subsubsec:decision-trees}
+%
+\Glspl{DT} are a family of predictors that support both classification and regression tasks.
+%
+During the learning phase, the input space is recursively partitioned into multiple regions through a series of splits (i.e., decisions) based on the input data \(X\).
+%
+Each region is associated with a constant prediction, and the splits are designed to minimize the error with respect to the expected outputs \(Y\), while keeping the total number of regions low.
+%
+The learning process synthesizes a hierarchical structure of decision rules, which are followed to compute predictions for any \(x \in X\).
+%
+In the inference phase, these decision rules are evaluated sequentially, starting from the root of the tree and proceeding to a leaf node.
+%
+Each leaf corresponds to a specific region of the input space, resulting in a single prediction for each \(x\).
+
+Unlike other predictor families, \glspl{DT} produce a tree of decision rules as the outcome of the learning process.
+%
+This tree is straightforwardly interpretable by humans and can be graphically represented in two-dimensional charts.
+%
+This property is particularly valuable when the internal workings of an automatic predictor need to be understood by a human agent.
+%
+\Glspl{DT} are often used in applications where interpretability is crucial, as their structure provides clear insights into the decision-making process.
+%
+They are often transformed into sets of logical rules for easier comprehension and analysis.
+
+
 \subsubsection[Limits of symbolic AI]{Limits of symbolic \Gls{AI}}\label{subsubsec:limits-of-symbolic-ai}
 %
 Symbolic \gls{AI} has been a foundational approach in the field of \gls{AI}, providing a structured way to represent and reason about knowledge.
@@ -837,31 +868,6 @@ In between these two extremes, there are many other models, such as \glspl{RF} a
 For the sake of conciseness, we will focus only on the models that are relevant for the rest of the thesis.
 
 
-\subsubsection{Decision trees}\label{subsubsec:decision-trees}
-%
-\Glspl{DT} are a family of predictors that support both classification and regression tasks.
-%
-During the learning phase, the input space is recursively partitioned into multiple regions through a series of splits (i.e., decisions) based on the input data \(X\).
-%
-Each region is associated with a constant prediction, and the splits are designed to minimize the error with respect to the expected outputs \(Y\), while keeping the total number of regions low.
-%
-The learning process synthesizes a hierarchical structure of decision rules, which are followed to compute predictions for any \(x \in X\).
-%
-In the inference phase, these decision rules are evaluated sequentially, starting from the root of the tree and proceeding to a leaf node.
-%
-Each leaf corresponds to a specific region of the input space, resulting in a single prediction for each \(x\).
-
-Unlike other predictor families, \glspl{DT} produce a tree of decision rules as the outcome of the learning process.
-%
-This tree is straightforwardly interpretable by humans and can be graphically represented in two-dimensional charts.
-%
-This property is particularly valuable when the internal workings of an automatic predictor need to be understood by a human agent.
-%
-\Glspl{DT} are often used in applications where interpretability is crucial, as their structure provides clear insights into the decision-making process.
-%
-For further details on the advantages and limitations of \glspl{DT}, refer to \Cref{subsubsec:limits-of-sub-symbolic-ai}.
-
-
 \subsubsection[Neural networks]{\Glsentrylongpl{NN}}\label{subsubsec:neural-networks}
 %
 \begin{figure}
@@ -926,15 +932,17 @@ These properties make \glspl{CNN} particularly well-suited for tasks involving v
 
 \paragraph{Recurrent Neural Networks}
 %
-In contrast, \glspl{RNN} are designed for processing sequential data by incorporating temporal recurrence.
+\Glspl{RNN} are designed to process sequential data by incorporating recurrence in the form of feedback connections.
 %
-Each unit in an \gls{RNN} receives input not only from the current time step but also from its own past activations, effectively providing a form of memory across time.
+More generally, recurrence in neural networks refers to the presence of cyclic connections that give rise to an internal state evolving over time, allowing the network to be interpreted as a discrete-time dynamical system.
 %
-This architecture allows \glspl{RNN} to model temporal dependencies and variable-length input sequences.
+From this perspective, the current state of the network depends not only on the current input but also on its previous state, enabling the modelling of temporal dependencies and variable-length input sequences.
 %
-However, standard \glspl{RNN} suffer from the vanishing and exploding gradient problems~\cite{bengio1994learning}, which hinder their ability to learn long-range dependencies.
+In standard \glspl{RNN} architectures, this recurrent behaviour is typically implemented by units that receive input both from the current time step and from their own past activations, effectively providing a form of memory across time.
 %
-To address these issues, more sophisticated variants were developed, notably \glspl{LSTM} (Long Short-Term Memory)~\cite{hochreiter1997long} and \glspl{GRU} (Gated Recurrent Units)~\cite{cho2014learning}, which introduce gating mechanisms to regulate information flow and preserve long-term context.
+Despite their expressive power, standard \glspl{RNN} suffer from the vanishing and exploding gradient problems~\cite{bengio1994learning}, which hinder their ability to learn long-range dependencies.
+%
+To address these issues, more sophisticated variants have been developed, notably \glspl{LSTM}~\cite{hochreiter1997long} and \glspl{GRU}~\cite{cho2014learning}, which introduce gating mechanisms to regulate information flow and preserve long-term context.
 
 
 \subsubsection{\Glsentrylong{LLM}}\label{subsubsec:llm}
