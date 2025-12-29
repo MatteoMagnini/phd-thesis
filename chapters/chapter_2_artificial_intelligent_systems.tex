@@ -95,10 +95,16 @@ With this respect we can state that:
     an individual (or a group) has an intelligent behaviour if it is able to \textbf{perform actions} that lead to the \textbf{achievement} of a given \textbf{goal}.
 \end{definition}
 %
-This definition is quite broad, and it can be applied to both natural and artificial systems.
+\Cref{def:intelligence} intentionally adopts a broad notion of intelligent behaviour.
+%
+Under this formulation, the ability to select actions that achieve a goal may also characterize simple reactive or feedback-based systems, as well as biological processes such as homeostasis.
+%
+For this reason, the definition should not be interpreted as a comprehensive or exclusive account of intelligence.
+%
+Rather, it serves as an operational definition, sufficient to delimit the class of systems considered in this work, namely artificial agents whose behaviour is guided by internal representations and decision mechanisms.
 
 
-It is also similar to the definitions of intelligence collected in the work of Legg and Hutter~\cite{DBLP:journals/mima/LeggH07}, such as the definition \emph{``The capacity to learn or to profit by experience''}~\cite{sternberg2000handbook}.
+\Cref{def:intelligence} is also similar to the definitions of intelligence collected in the work of Legg and Hutter~\cite{DBLP:journals/mima/LeggH07}, such as the definition \emph{``The capacity to learn or to profit by experience''}~\cite{sternberg2000handbook}.
 %
 Broadly speaking, a common feature of these definitions is that intelligence is seen as a property of an individual \emph{interacting} with an external \emph{environment}, problem, or situation.
 %
@@ -158,6 +164,8 @@ There exists three main ways of reasoning:
     For example, if we observe that \emph{the sun rises every day}, we can conclude that \emph{the sun will rise tomorrow}.
     %
     Inductive reasoning can be mapped in the \emph{System 1} -- i.e., \emph{fast thinking} -- of Kahneman, which is automatic, effortless, intuitive and emotional.
+    %
+    However, this mapping should be interpreted as partial: while some forms of inductive reasoning may rely on rapid, intuitive mechanisms, \emph{System 1} also includes innate or pre-attentive processes that are not the result of learning, and more complex inductive inferences may involve deliberative components typically associated with \emph{System 2}.
     %
     \item \textbf{Abductive reasoning} $\rightarrow$ it is a form of reasoning that starts from an observation and seeks the simplest and most likely explanation (i.e., \emph{Occam's razor}).
     %
@@ -223,7 +231,7 @@ Symbols thus act as the bridge between the external world and computational proc
 In this sense, reasoning is not only the mechanical application of rules, but also the interpretative activity that derives new knowledge by operating on representations whose significance is grounded in the symbolic layer of \gls{KR}.
 
 
-Symbolic \gls{KR} has always been regarded as a key issue since the early days of \gls{AI}, as no intelligence can exist without knowledge, and no computation can occur in lack of representation.
+Symbolic \gls{KR} has always been regarded as a key issue since the early days of \gls{AI}, under the assumption that intelligent behavior requires explicit forms of knowledge and mechanisms to represent and manipulate it~\cite{DBLP:journals/cacm/NewellS76,BRACHMAN2004327}.
 %
 When compared to arrays of numbers, symbolic \gls{KR} is far more flexible and expressive, and, in particular, more intelligible---both machine- and human-interpretable.
 %
@@ -314,7 +322,7 @@ A \gls{ML} process is \emph{supervised} if it is trained on a labelled dataset, 
 %
 The training set is made of pairs $(x_i, y_i)$, where $x_i$ is the input data and $y_i$ is the corresponding label.
 %
-The goal of the learning process is to learn a function $f$ that maps the input data $x_i$ to the corresponding label $y_i$, such that $f(x_i) \approx y_i$ for all training examples.
+The goal of the learning process is to learn a function $f$ that maps the input data $x_i$ to the corresponding label $y_i$, such that $f(x_i) \approx y_i$ for almost all training examples~\footnote{the learning process can sacrifice accuracy on some training examples to improve generalization on unseen data.}.
 %
 The function $f$ is usually a mathematical model that is trained on the training set by minimizing a loss function, which quantifies the error between the predicted output $\hat{y}_i = f(x_i)$ and the true label $y_i$.
 %
