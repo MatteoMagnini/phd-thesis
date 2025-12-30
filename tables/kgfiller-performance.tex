@@ -1,19 +1,30 @@
-\begin{table*}
+\begin{table*}[ht]
     \caption[Performance of Harvest over different LLMs]{%
         Performance of Harvest~\cite{HaoTTNSZXH23} over different state-of-the-art pre-trained models.
+        Each row is a metric, and each column is a model.
     }
-    \resizebox{\textwidth}{!}{
     \centering
-    \begin{tabular}{l | c c c c c c c c c c c c c c | c} \toprule
-        LLM                                 & $\mathit{TI}$        & $\mathit{minCW}$     & $\mathit{maxCW}$    & $\mathit{TL}$        & $\mathit{TE}$          & $\mathit{RIE}$         & $E_{mis}$       & $E_{ii}$      & $E_{mi}$      & $E_{ci}$      & $E_{di}$      & $\mathit{TR}$       & $E_{wr}$       & $\mathit{RRE}$      & $Q$
-        \\ \midrule
-        RoBERTa base                        & 812	               & 2                    & 36                  & 682                  & 617                    & 0.7599                 & 391             & 118           & 84            & 70            & 20            & 40                  & 25             & 0.6250              & 0.2465
-        \\
-        RoBERTa large                       & 580                  & 0                    & 36                  & 867                  & 440                    & 0.7586                 & 479             & 126           & 54            & 30            & 25            & 55                  & 27             & 0.4909              & 0.2646
-        \\
-        BERT large cased                    & 1086                 & 22                   & 61                  & 942                  & 909                    & 0.8370                 & 734             & 153           & 45            & 97            & 125           & 51                  & 37             & 0.7255              & 0.1680
-        \\ \bottomrule
+    \begin{tabular}{l | c c c}
+        \toprule
+        Metric & RoBERTa base & RoBERTa large & BERT large cased \\
+        \midrule
+        $\mathit{TI}$       & 812   & 580   & 1086 \\
+        $\mathit{minCW}$    & 2     & 0     & 22   \\
+        $\mathit{maxCW}$    & 36    & 36    & 61   \\
+        $\mathit{TL}$       & 682   & 867   & 942  \\
+        $\mathit{TE}$       & 617   & 440   & 909  \\
+        $\mathit{RIE}$      & 0.7599 & 0.7586 & 0.8370 \\
+        $E_{mis}$           & 391   & 479   & 734  \\
+        $E_{ii}$            & 118   & 126   & 153  \\
+        $E_{mi}$            & 84    & 54    & 45   \\
+        $E_{ci}$            & 70    & 30    & 97   \\
+        $E_{di}$            & 20    & 25    & 125  \\
+        $\mathit{TR}$       & 40    & 55    & 51   \\
+        $E_{wr}$            & 25    & 27    & 37   \\
+        $\mathit{RRE}$      & 0.6250 & 0.4909 & 0.7255 \\
+        \hline
+        $Q$                 & 0.2465 & 0.2646 & 0.1680 \\
+        \bottomrule
     \end{tabular}
-    }
     \label{tab:compare-performance}
 \end{table*}
