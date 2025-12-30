@@ -1,77 +1,72 @@
-
-\begin{table}[]
+\begin{table}[ht]
 \centering
-\caption{Results of ExactLearner+LLM grouped by ontologies.}
+\caption[Results of ExactLearner+LLM grouped by ontologies]{%
+    Results of ExactLearner+LLM grouped by ontologies.
+}
 \label{tab:results-small-ontologies}
-\resizebox{\columnwidth}{!}{
+\small
+\setlength{\tabcolsep}{6pt} % compatta le colonne
 \begin{tabular}{|l|c|c|c|c|}
 \hline
 \textbf{Ontology} & \textbf{Accuracy} & \textbf{Recall} & \textbf{Precision} & \textbf{F1-Score} \\
 \hline
-\rowcolor[HTML]{EFEFEF}
-Animals & 0.737 & 0.858 & 0.381 & 0.428 \\
+\rowcolor[HTML]{EFEFEF} Animals & 0.737 & 0.858 & 0.381 & 0.428 \\
 \hline
-\rowcolor[HTML]{FFFFFF}
-Cell & 0.391 & 0.733 & 0.206 & 0.284 \\
+\rowcolor[HTML]{FFFFFF} Cell & 0.391 & 0.733 & 0.206 & 0.284 \\
 \hline
-\rowcolor[HTML]{EFEFEF}
-Football & 0.553 & 0.89 & 0.422 & 0.477 \\
+\rowcolor[HTML]{EFEFEF} Football & 0.553 & 0.890 & 0.422 & 0.477 \\
 \hline
-\rowcolor[HTML]{FFFFFF}
-Generations & 0.691 & 0.658 & 0.564 & 0.476 \\
+\rowcolor[HTML]{FFFFFF} Generations & 0.691 & 0.658 & 0.564 & 0.476 \\
 \hline
-\rowcolor[HTML]{EFEFEF}
-University & 0.622 & 0.629 & 0.313 & 0.302 \\
+\rowcolor[HTML]{EFEFEF} University & 0.622 & 0.629 & 0.313 & 0.302 \\
 \hline
-\end{tabular}}
+\end{tabular}
 \end{table}
 
 
-\begin{table}[]
+\begin{table}[ht]
 \centering
-\caption{Results of ExactLearner+LLM grouped by models.}
+\caption[Results of ExactLearner+LLM grouped by models]{%
+    Results of ExactLearner+LLM grouped by models.
+}
 \label{tab:results-small-models}
-\resizebox{\columnwidth}{!}{
+\small
+\setlength{\tabcolsep}{6pt}
 \begin{tabular}{|l|c|c|c|c|}
 \hline
 \textbf{Model} & \textbf{Accuracy} & \textbf{Recall} & \textbf{Precision} & \textbf{F1-Score} \\
 \hline
-\rowcolor[HTML]{EFEFEF}
-Llama2 (13b) & 0.521 & 0.71 & 0.294 & 0.314 \\
+\rowcolor[HTML]{EFEFEF} Llama2 (13b) & 0.521 & 0.710 & 0.294 & 0.314 \\
 \hline
-\rowcolor[HTML]{FFFFFF}
-Llama3 (8b) & 0.43 & 0.947 & 0.218 & 0.333 \\
+\rowcolor[HTML]{FFFFFF} Llama3 (8b) & 0.430 & 0.947 & 0.218 & 0.333 \\
 \hline
-\rowcolor[HTML]{EFEFEF}
-Mistral (7b) & 0.741 & 0.747 & 0.45 & 0.49 \\
+\rowcolor[HTML]{EFEFEF} Mistral (7b) & 0.741 & 0.747 & 0.450 & 0.490 \\
 \hline
-\rowcolor[HTML]{FFFFFF}
-Mixtral (47b) & 0.705 & 0.611 & 0.547 & 0.436 \\
+\rowcolor[HTML]{FFFFFF} Mixtral (47b) & 0.705 & 0.611 & 0.547 & 0.436 \\
 \hline
-\end{tabular}}
+\end{tabular}
 \end{table}
 
 
-\begin{table}[]
+\begin{table}[ht]
 \centering
-\caption{Results of  ExactLearner+LLM grouped by prompts.}
+\caption[Results of ExactLearner+LLM grouped by prompts]{%
+    Results of ExactLearner+LLM grouped by prompt types.
+}
 \label{tab:results-small-prompt}
-\resizebox{\columnwidth}{!}{
+\small
+\setlength{\tabcolsep}{6pt}
 \begin{tabular}{|l|c|c|c|c|}
 \hline
 \textbf{Prompt Type} & \textbf{Accuracy} & \textbf{Recall} & \textbf{Precision} & \textbf{F1-Score} \\
 \hline
-\rowcolor[HTML]{EFEFEF}
-M. OWL Syntax & 0.34 & 0.93 & 0.165 & 0.262 \\
+\rowcolor[HTML]{EFEFEF} M. OWL Syntax & 0.340 & 0.930 & 0.165 & 0.262 \\
 \hline
-\rowcolor[HTML]{FFFFFF}
-Natural Language & 0.751 & 0.811 & 0.414 & 0.511 \\
+\rowcolor[HTML]{FFFFFF} Natural Language & 0.751 & 0.811 & 0.414 & 0.511 \\
 \hline
-\rowcolor[HTML]{EFEFEF}
-A. M. OWL Syntax & 0.537 & 0.767 & 0.326 & 0.347 \\
+\rowcolor[HTML]{EFEFEF} A. M. OWL Syntax & 0.537 & 0.767 & 0.326 & 0.347 \\
 \hline
-\rowcolor[HTML]{FFFFFF}
-A. Natural Language & 0.767 & 0.506 & 0.603 & 0.454 \\
+\rowcolor[HTML]{FFFFFF} A. Natural Language & 0.767 & 0.506 & 0.603 & 0.454 \\
 \hline
-\end{tabular}}
+\end{tabular}
 \end{table}

@@ -1,46 +1,41 @@
 \begin{table}[ht]
-\centering
-\caption[Results on the Cell ontology]{
-    Individual results of ExactLearner+LLM on the Cell ontology.
-    %
-    All the results have been analysed with the Chi-Squared test.
-    %
-    The null hypothesis is that there is no correlation between the ontology constructed by ExactLearner+LLM and the Cell ontology.
-    %
-    A yellow line means that the p-value is greater than 0.05 (i.e., the null hypothesis cannot be refused).
-    %
-    The red line means that no axiom has been learnt (i.e., empty ontology).
-}
-\label{tab:results-cell}
-\resizebox{\textwidth}{!}{
-\begin{tabular}{|l|l|l|l|l|l|}
-\hline
-\multicolumn{1}{|c|}{\textbf{Model}} & \multicolumn{1}{|c|}{\textbf{Prompt \& Query}} & \multicolumn{1}{c|}{\textbf{Accuracy}} & \multicolumn{1}{c|}{\textbf{Recall}} & \multicolumn{1}{c|}{\textbf{Precision}} & \multicolumn{1}{c|}{\textbf{F1-Score}} \\
-\hline
-\multirow{4}{*}{Llama2 (13b)}
- & \cellcolor[HTML]{FFFF00} M. OWL Syntax       & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 1.0 & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 0.280 \\ \cline{2-6}
- & Natural Language                               & 0.586 & 0.715 & 0.241 & 0.360 \\ \cline{2-6}
- & \cellcolor[HTML]{FFFF00} E. M. OWL Syntax    & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 1.0 & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 0.280 \\ \cline{2-6}
- & E. Natural Language                            & 0.830 & 0.002 & 0.049 & 0.005 \\ \cline{1-6}
-\hline
-\multirow{4}{*}{Llama3 (8b)}
- & \cellcolor[HTML]{FFFF00} M. OWL Syntax       & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 1.0 & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 0.280 \\ \cline{2-6}
- & Natural Language                               & 0.208 & 1.0 & 0.171 & 0.292 \\ \cline{2-6}
- & \cellcolor[HTML]{EFEFEF} E. M. OWL Syntax    & \cellcolor[HTML]{EFEFEF} 0.208 & \cellcolor[HTML]{EFEFEF} 1.0 & \cellcolor[HTML]{EFEFEF} 0.171 & \cellcolor[HTML]{EFEFEF} 0.292 \\ \cline{2-6}
- & E. Natural Language                            & 0.254 & 1.0 & 0.179 & 0.304 \\ \cline{1-6}
-\hline
-\multirow{4}{*}{Mistral (7b)}
- & \cellcolor[HTML]{EFEFEF} M. OWL Syntax       & \cellcolor[HTML]{EFEFEF} 0.254 & \cellcolor[HTML]{EFEFEF} 1.0 & \cellcolor[HTML]{EFEFEF} 0.179 & \cellcolor[HTML]{EFEFEF} 0.304 \\ \cline{2-6}
- & Natural Language                               & 0.779 & 0.432 & 0.354 & 0.390 \\ \cline{2-6}
- & \cellcolor[HTML]{EFEFEF} E. M. OWL Syntax    & \cellcolor[HTML]{EFEFEF} 0.224 & \cellcolor[HTML]{EFEFEF} 0.946 & \cellcolor[HTML]{EFEFEF} 0.167 & \cellcolor[HTML]{EFEFEF} 0.284 \\ \cline{2-6}
- & E. Natural Language                            & 0.769 & 0.337 & 0.308 & 0.322 \\ \cline{1-6}
-\hline
-\multirow{4}{*}{Mixtral (47b)}
- & \cellcolor[HTML]{FFFF00} M. OWL Syntax       & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 1.0 & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 0.280 \\ \cline{2-6}
- & Natural Language                               & 0.654 & 0.970 & 0.317 & 0.477 \\ \cline{2-6}
- & \cellcolor[HTML]{EFEFEF} E. M. OWL Syntax    & \cellcolor[HTML]{EFEFEF} 0.840 & \cellcolor[HTML]{EFEFEF} 0.320 & \cellcolor[HTML]{EFEFEF} 0.514 & \cellcolor[HTML]{EFEFEF} 0.394 \\ \cline{2-6}
- & \cellcolor[HTML]{FF0000} E. Natural Language & \cellcolor[HTML]{FF0000} - & \cellcolor[HTML]{FF0000} - & \cellcolor[HTML]{FF0000} - & \cellcolor[HTML]{FF0000} - \\ \cline{1-6}
-\hline
-\end{tabular}
-}
+    \centering
+    \caption[Results on the Cell ontology]{%
+        Individual results of ExactLearner+LLM on the Cell ontology.
+        All results have been analysed with the Chi-Squared test.
+        A yellow line means p-value $\ge$ 0.05 (null hypothesis cannot be refused).
+        A red line means no axiom has been learnt (empty ontology).
+    }
+    \label{tab:results-cell}
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{|l|l|c|c|c|c|}
+        \hline
+        \textbf{Model} & \textbf{Prompt \& Query} & \textbf{Accuracy} & \textbf{Recall} & \textbf{Precision} & \textbf{F1-Score} \\
+        \hline
+        \multirow{4}{*}{Llama2 (13b)}
+         & \cellcolor[HTML]{FFFF00} M. OWL Syntax       & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 1.0 & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 0.280 \\ \cline{2-6}
+         & Natural Language                               & 0.586 & 0.715 & 0.241 & 0.360 \\ \cline{2-6}
+         & \cellcolor[HTML]{FFFF00} E. M. OWL Syntax    & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 1.0 & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 0.280 \\ \cline{2-6}
+         & E. Natural Language                            & 0.830 & 0.002 & 0.049 & 0.005 \\ \cline{1-6}
+        \hline
+        \multirow{4}{*}{Llama3 (8b)}
+         & \cellcolor[HTML]{FFFF00} M. OWL Syntax       & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 1.0 & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 0.280 \\ \cline{2-6}
+         & Natural Language                               & 0.208 & 1.0 & 0.171 & 0.292 \\ \cline{2-6}
+         & \cellcolor[HTML]{EFEFEF} E. M. OWL Syntax    & \cellcolor[HTML]{EFEFEF} 0.208 & \cellcolor[HTML]{EFEFEF} 1.0 & \cellcolor[HTML]{EFEFEF} 0.171 & \cellcolor[HTML]{EFEFEF} 0.292 \\ \cline{2-6}
+         & E. Natural Language                            & 0.254 & 1.0 & 0.179 & 0.304 \\ \cline{1-6}
+        \hline
+        \multirow{4}{*}{Mistral (7b)}
+         & \cellcolor[HTML]{EFEFEF} M. OWL Syntax       & \cellcolor[HTML]{EFEFEF} 0.254 & \cellcolor[HTML]{EFEFEF} 1.0 & \cellcolor[HTML]{EFEFEF} 0.179 & \cellcolor[HTML]{EFEFEF} 0.304 \\ \cline{2-6}
+         & Natural Language                               & 0.779 & 0.432 & 0.354 & 0.390 \\ \cline{2-6}
+         & \cellcolor[HTML]{EFEFEF} E. M. OWL Syntax    & \cellcolor[HTML]{EFEFEF} 0.224 & \cellcolor[HTML]{EFEFEF} 0.946 & \cellcolor[HTML]{EFEFEF} 0.167 & \cellcolor[HTML]{EFEFEF} 0.284 \\ \cline{2-6}
+         & E. Natural Language                            & 0.769 & 0.337 & 0.308 & 0.322 \\ \cline{1-6}
+        \hline
+        \multirow{4}{*}{Mixtral (47b)}
+         & \cellcolor[HTML]{FFFF00} M. OWL Syntax       & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 1.0 & \cellcolor[HTML]{FFFF00} 0.163 & \cellcolor[HTML]{FFFF00} 0.280 \\ \cline{2-6}
+         & Natural Language                               & 0.654 & 0.970 & 0.317 & 0.477 \\ \cline{2-6}
+         & \cellcolor[HTML]{EFEFEF} E. M. OWL Syntax    & \cellcolor[HTML]{EFEFEF} 0.840 & \cellcolor[HTML]{EFEFEF} 0.320 & \cellcolor[HTML]{EFEFEF} 0.514 & \cellcolor[HTML]{EFEFEF} 0.394 \\ \cline{2-6}
+         & \cellcolor[HTML]{FF0000} E. Natural Language & \cellcolor[HTML]{FF0000} - & \cellcolor[HTML]{FF0000} - & \cellcolor[HTML]{FF0000} - & \cellcolor[HTML]{FF0000} - \\ \cline{1-6}
+        \hline
+    \end{tabular}
 \end{table}
