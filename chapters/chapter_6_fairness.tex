@@ -567,7 +567,7 @@ We successfully reproduced the code for two state-of-the-art methods~\cite{DBLP:
 %
 \paragraph{Demographic Parity Results}
 %
-\Cref{fig:dp} illustrates the trade-off between accuracy and \gls{DP} for \gls{FaUCI}, \gls{KDE}, \gls{GDP}, \gls{FNNC}, and \gls{NSIF} methods.
+\Cref{fig:dp-sex,fig:dp-ethnicity,fig:dp-age} illustrates the trade-off between accuracy and \gls{DP} for \gls{FaUCI}, \gls{KDE}, \gls{GDP}, \gls{FNNC}, and \gls{NSIF} methods.
 %
 For \emph{sex} as a binary sensitive attribute, \gls{FaUCI} achieves an accuracy of \(85.27\%\) with \(\text{DP} \leq 0.01\), outperforming \gls{KDE} and matching \gls{GDP}'s performance.
 %
@@ -582,7 +582,7 @@ Overall, \gls{FaUCI} demonstrates superior performance across all sensitive attr
 %
 \paragraph{Disparate Impact Results}
 %
-\Cref{fig:di} shows the trade-off between accuracy and \gls{DI}.
+\Cref{fig:di-sex,fig:di-ethnicity,fig:di-age} shows the trade-off between accuracy and \gls{DI}.
 %
 For \emph{sex}, \gls{FaUCI} achieves \(\text{DI} \geq 0.8\) with an accuracy of \(85.6\%\), surpassing \gls{FNNC} (\(82.2\%\)) and matching \gls{NSIF} (\(87.7\%\)).
 %
@@ -595,7 +595,7 @@ These results highlight \gls{FaUCI}'s ability to enhance \gls{DI} while preservi
 %
 \paragraph{Equalized Odds Results}
 %
-\Cref{fig:eo} presents the trade-off between accuracy and \gls{EO}.
+\Cref{fig:eo-sex,fig:eo-ethnicity,fig:eo-age} presents the trade-off between accuracy and \gls{EO}.
 %
 For \emph{sex}, \gls{FaUCI} achieves \(\text{EO} \leq 0.02\) with an accuracy of \(\geq 85.9\%\), outperforming \gls{KDE} and \gls{FNNC} (\(83.9\%\)).
 %
