@@ -139,6 +139,7 @@
 \mainmatter
 \glsresetall
 
+\begin{refsection}
 \input{chapters/chapter_1_introduction}
 
 %----------------------------------------------------------------------------------------
@@ -148,13 +149,13 @@
 \part{Background}
 \label{part:background}
 
-\begin{refsection}
+%\begin{refsection}
 \input{chapters/chapter_2_artificial_intelligent_systems}
 %\input{chapters/chapter_3_artificial_intelligence}
 \input{chapters/chapter_3_neuro_symbolic}
 %\input{chapters/chapter_5_llm}
-\printbibliography[title=References,heading=bibintoc]
-\end{refsection}
+%\printbibliography[title=References,heading=bibintoc]
+%\end{refsection}
 
 %----------------------------------------------------------------------------------------
 %-------------------------------------- PART II -----------------------------------------
@@ -163,12 +164,12 @@
 \part{Methods, Metrics and Platform for SKI \& SKE}
 \label{part:engineering-of-ski-ske}
 
-\begin{refsection}
+%\begin{refsection}
 \input{chapters/chapter_4_ski_methods}
 \input{chapters/chapter_5_psyki}
 \input{chapters/chapter_6_fairness}
-\printbibliography[title=References,heading=bibintoc]
-\end{refsection}
+%\printbibliography[title=References,heading=bibintoc]
+%\end{refsection}
 
 %----------------------------------------------------------------------------------------
 %------------------------------------- PART III -----------------------------------------
@@ -176,13 +177,17 @@
 
 \part{Engineering of intelligent systems}\label{part:engineering-of-intelligent-systems}
 
-\begin{refsection}
+%\begin{refsection}
 \input{chapters/chapter_7_nesy_applications}
 \input{chapters/chapter_8_autonomous_learning_systems}
-\printbibliography[title=References,heading=bibintoc]
-\end{refsection}
+%\printbibliography[title=References,heading=bibintoc]
+%\end{refsection}
 
 \input{chapters/chapter_9_conclusions}
+
+\printbibliography[title=Reference,heading=bibintoc]
+\end{refsection}
+
 \adjustmtc
 
 \end{document}
