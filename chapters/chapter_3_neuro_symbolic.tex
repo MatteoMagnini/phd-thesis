@@ -378,7 +378,7 @@ The main entities involved in the \gls{SKI} process -- and that are common to vi
         %
         The symbolic knowledge is parsed and used to create a sub-symbolic predictor -- or part of it -- that mimics the symbolic knowledge.
         %
-        The resulting predictor is then trained on data, if needed.
+        The resulting predictor can then either be trained on data as is, or combined with an uneducated predictor to create a new educated predictor that is then trained on data.
     }
     \label{fig:workflow-structuring}
 \end{figure}
@@ -393,7 +393,7 @@ For instance, when the predictors are \glspl{NN}, their internal structure is cr
 %
 Usually, in the structuring strategy, the symbolic knowledge is in the form of logic formulas ($\phi$) (e.g., subsets of \gls{FOL}).
 %
-The formulas are then parsed into a syntactic structure (e.g., \gls{AST}).
+The formulas are then parsed ($\Pi$) into a syntactic structure (e.g., \gls{AST}).
 %
 At this point, a \emph{fuzzification} ($\zeta$) step is performed to convert the \emph{boolean} (also the term \emph{crisp} is used in the literature) -- because a logic predicate is either \emph{true} or \emph{false} -- symbolic knowledge into a \emph{fuzzy} interpretation of it, which is more suitable for sub-symbolic predictors.
 %
@@ -403,9 +403,13 @@ The property of continuity is a key requirement for training sub-symbolic struct
 %
 In practice, $\zeta$ is implemented as a mapping function that transforms logic operators into continuous functions (e.g., see \Cref{subsec:kill-fuzzifier,subsec:kins-fuzzifier}).
 %
-The result of the fuzzification process is an \emph{uneducated} predictor ($P$) that is then trained on the training set.
+The result of the fuzzification process is an \emph{educated} predictor ($P'$) that mimics the symbolic knowledge $\phi$.
 %
-After the training, the predictor is now \emph{educated} ($P'$) and can be used to make predictions on the test set or in production.
+At this point, $P'$ can be used as is to make predictions, or it can be further trained ($\tau$) to improve its predictive performance ($P'''$).
+%
+Another option is to combine $P'$ with an \emph{uneducated} predictor ($P$) to create a new predictor $P''$ that embodies both the symbolic knowledge and the \emph{uneducated} predictor's capabilities.
+%
+After $\tau$, the predictor is now both \emph{educated} $P'''$ with knowledge and trained on data.
 %
 
 \paragraph{Guided learning}\label{par:guided-learning}
