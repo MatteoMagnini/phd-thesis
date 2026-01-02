@@ -67,6 +67,12 @@ Concerning the last point mentioned in \Cref{subsec:limitations-and-challenges-o
 %
 It is expressive enough to represent a wide range of symbolic knowledge, while being simple enough to be easily translated into a format suitable for injection into sub-symbolic predictors.
 
+This work differs from previous recent efforts in the area of \gls{SKI} software -- e.g., \gls{LTN}~\cite{BadreddineGSS22} and DeepProbLog~\cite{ski-deepproblog-robin-2021} -- because our platform is not designed to support just one injection method, but it is meant to be an extendable library of \gls{SKI} methods.
+%
+Moreover, \gls{PSyKI} provides a set of tools to evaluate the performance of \gls{SKI} methods, including metrics for measuring the quality of the injected knowledge and the performance of the resulting models.
+%
+Arguably, the most similar work -- \emph{but it came one year after the publication of \gls{PSyKI}} -- is Scallop~\cite{DBLP:journals/pacmpl/LiHN23}, a DataLog-based framework that supports differentiable logical and relational reasoning.
+
 
 \subsection{Design}\label{subsec:design-and-implementation}
 %
@@ -1138,7 +1144,7 @@ A p-value \(\geq 0.05\) indicates no significant difference between the average 
 
 \paragraph{Data Drop}
 %
-In the \emph{data drop} experiments (~\Cref{fig:bcw-drop,fig:psjgs-drop,fig:ci-drop}), \gls{KBANN} is the only predictor showing significant improvements compared to the uneducated model.
+In the \emph{data drop} experiments (\Cref{fig:bcw-drop,fig:psjgs-drop,fig:ci-drop}), \gls{KBANN} is the only predictor showing significant improvements compared to the uneducated model.
 %
 It performs better on the \gls{BCW} (\Cref{fig:bcw-drop}) and \gls{CI} (\Cref{fig:ci-drop}) datasets but exhibits a sharp decline on the \gls{PSJGS} dataset (\Cref{fig:psjgs-drop}) when 60\% of the data is removed (\(d = 0.6\)).
 %

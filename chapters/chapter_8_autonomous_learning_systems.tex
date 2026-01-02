@@ -21,6 +21,12 @@
 
 This is arguably the most important chapter of the thesis, the crucial moment when all the bricks come together.
 %
+We choose to place this chapter at towards the end of the thesis mainly for two reasons.
+%
+First of all, the works described in this chapter build upon the concepts and previous contributions on \gls{NeSy} \gls{AI}, presented in the rest of the thesis.
+%
+Second, from a chronological perspective, these works were carried out in the last part of the PhD and this thesis tries to follow a logical and temporal order.
+
 Here we present key contributions of the PhD towards the development of autonomous learning systems exploiting \gls{SKI} and \gls{SKE}.
 %
 In particular, we make use of \gls{SKE} to systematically extract symbolic knowledge from a trained sub-symbolic model, and conversely, we exploit \gls{SKI} to provide the sub-symbolic model with relevant context information.
@@ -28,7 +34,6 @@ In particular, we make use of \gls{SKE} to systematically extract symbolic knowl
 This cycle between \gls{SKI} and \gls{SKE} is an early idea of my PhD, and it is presented in~\Cref{sec:cycle-ski-ske}.
 
 
-\note{Add references for this section}
 %
 The goal of autonomous learning systems is straightforward: to create systems that can learn -- and possibly adapt -- independently, without requiring constant human intervention.
 %
@@ -110,23 +115,11 @@ We analyze the requirements of these systems in relation to the state of the art
 \subsection{Background}
 \label{subsec:background}
 
-\subsubsection{Symbolic and Sub-symbolic}
-\label{subsubsec:symbolic-and-sub-symbolic}
+We assume the understanding of symbolic and sub-symbolic representations as given, as these concepts have been extensively discussed in~\Cref{sec:ai,subsec:symbolic-ai} and throughout the thesis.
 %
-Symbolic and sub-symbolic representations are two fundamental paradigms for knowledge representation, extensively discussed in~\Cref{sec:ai,subsec:symbolic-ai}.
+Symbolic representations, characterized by their interpretability and reasoning capabilities, contrast with sub-symbolic models, which excel in pattern recognition and scalability.
 %
-Symbolic representations, such as propositional logic, \glspl{KG}, and \gls{FOL}, are interpretable, compact, and versatile, supporting both intensional and extensional knowledge representation~\cite{DBLP:conf/ogai/Gelder90,DBLP:conf/aiia/CiattoCOC19}.
-%
-These properties make them suitable for tasks requiring reasoning, transferability, and formal verification.
-%
-In contrast, sub-symbolic representations, commonly used in \gls{ML} and \glspl{NN}, encode knowledge as numerical arrays and functions, often treated as black-box models due to their complexity~\cite{interpretability-lipton-2018}.
-%
-Despite their lack of interpretability, they excel in performance across various tasks.
-%
-The interplay between these paradigms is explored through \gls{SKE} and \gls{SKI}, as introduced in~\Cref{sec:ske,sec:ski}.
-%
-\gls{SKE} extracts symbolic knowledge from sub-symbolic models, aiding interpretability and training, while \gls{SKI} injects symbolic knowledge into sub-symbolic models to enhance their efficiency and accuracy~\cite{survey-ske-andrews-1995,survey-ski-besold-2017}.
-%
+This duality forms the foundation for the integration of these paradigms, which is central to the development of autonomous learning systems.
 
 \subsubsection{Transfer vs.\ Multi-Task Learning}
 \label{subsubsec:tl-mtl}

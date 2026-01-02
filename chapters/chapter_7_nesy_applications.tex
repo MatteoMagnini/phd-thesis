@@ -187,7 +187,7 @@ Details on the use of logic formulas for dietary prescriptions are provided in t
 
 \paragraph{The role of logic formulas}\label{par:the-role-of-logic-formulas}
 
-The proposed architecture utilizes Horn clauses to represent both user preferences and expert prescriptions.
+The proposed architecture utilizes Horn clauses (see \Cref{subsubsec:horn-logic}) to represent both user preferences and expert prescriptions.
 %
 Horn logic provides a clear and computationally tractable framework for expressing dietary prescriptions.
 %
@@ -396,7 +396,7 @@ These rules approximate the decision-making process of the neural network, enabl
 
 We constrain the output rules for two main reasons.
 %
-First, limiting the growth of the decision tree (\gls{DT}) reduces computational complexity.
+First, limiting the growth of the \gls{DT} reduces computational complexity.
 %
 Given \(N\) binary features, such as ingredients, the maximum depth of the \gls{DT} is \(N + 1\), and the maximum number of leaves is \(2^N\).
 %
@@ -1541,7 +1541,16 @@ These findings underscore the advantages of knowledge injection via the \gls{LTN
 
 %\subsection{Open-source small language models for personal medical assistant chatbots}\label{subsec:open-source-small-language-models-for-personal-medical-assistant-chatbots}
 
-\section[RAG on open LLM for medical chatbot]{Applying \glsentryshort{RAG} on open \glspl{LLM} for a medical chatbot supporting hypertensive patients}\label{sec:applying-rag-on-open-llm-for-a-medical-chatbot-supporting-hypertensive-patients}
+\section[RAG on open LLM for medical chatbot]{Applying \glsentryshort{RAG} on open \glspl{LLM} for a medical chatbot supporting hypertensive patients}
+\label{sec:applying-rag-on-open-llm-for-a-medical-chatbot-supporting-hypertensive-patients}
+
+In this section, we report the contribution of the paper ``Applying Retrieval-Augmented Generation on Open LLMs for a Medical Chatbot Supporting Hypertensive Patients'', presented at the 3rd Workshop on Artificial Intelligence for Healthcare (HC@AIxIA 2024), co-located with the 23rd International Conference of the Italian Association for Artificial Intelligence (AIxIA 2024)~\cite{DBLP:conf/hc/AguzziMFSM24}.
+%
+The paper explores the use of \gls{RAG} with open-source large language models to develop a medical chatbot for supporting hypertensive patients.
+%
+By integrating external, domain-specific medical knowledge into the generation process, the proposed approach aims to improve factual accuracy and reduce hallucinations.
+%
+The study provides empirical evidence on the feasibility of RAG-based architectures for safe and reliable patient-oriented digital health applications.
 
 \subsection{Motivations and Background}
 \label{subsec:motivations-and-background-rag}
