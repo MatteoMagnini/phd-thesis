@@ -117,7 +117,7 @@ Regarding the inputs of \gls{SKI} procedures, the primary requirement is that th
 %
 Additionally, since the knowledge must be processed algorithmically, it is implicitly required to be machine interpretable.
 %
-This necessitates the use of formal languages, such as \gls{FOL} or decision trees, for knowledge representation, while avoiding free text or natural language.
+This necessitates the use of formal languages, such as \gls{FOL} or \glspl{DT}, for knowledge representation, while avoiding free text or natural language.
 
 Another implicit requirement is that the input knowledge must align functionally with the task of the predictor undergoing injection.
 %
@@ -214,7 +214,7 @@ A key distinction in \gls{SKI} methods lies in whether the chosen formalism is \
 \begin{itemize}
     \item \textbf{Logic formulas or \glspl{KB}:} These adhere to \gls{FOL} or its subsets, making them interpretable by both humans and machines.
     %
-    The sub-categories, ordered by decreasing expressiveness, include:
+    The sub-categories (most of them already introduced in \Cref{subsec:symbolic-ai}), ordered by decreasing expressiveness, include:
     %
     \begin{itemize}
         %
@@ -293,7 +293,7 @@ Among \glspl{NN}, there are different kinds of architectures that one can use to
 %
 In addition to \glspl{NN}, \gls{SKI} methods can also target other types of sub-symbolic predictors.
 %
-The predictors targeted by the surveyed \gls{SKI} methods are:
+The predictors targeted by the surveyed \gls{SKI} methods (most of them already introduced in \Cref{subsec:sub-symbolic-ai}) include:
 %
 \begin{itemize}
     \item \textbf{feed-forward NNs} multi-layered \glspl{NN} in which neurons from layer i are only connected with layer i + 1, and multiple ($\ge$ 2) layers may exist;
