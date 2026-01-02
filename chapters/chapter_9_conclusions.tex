@@ -36,6 +36,17 @@ In the course of other chapters -- e.g., when presenting the possibility to use 
 %
 In \Cref{ch:ski-methods-and-contributions} we also presented several novel \gls{SKI} methods and in \Cref{ch:psyki} a new framework (\gls{PSyKI}) to facilitate the application of \gls{SKI} techniques.
 
+\begin{rqabox}
+    \textbf{\Cref{itm:rq0}:}
+    \emph{are \gls{SKI} and \gls{SKE} relevant in the context of modern \gls{AI}?}
+
+    \textbf{Answer:}
+    %
+    not only \gls{SKI} and \gls{SKE} are relevant, but they are arguably one of the leading areas of research in \gls{AI} today, especially considering the recent advancements and integration with \gls{LLM} technologies.
+    %
+    In the near future, we expect many contributions in this area, both from a theoretical and practical standpoint, further solidifying the importance of \gls{SKI} and \gls{SKE} in the broader \gls{AI} landscape.
+    %
+\end{rqabox}
 
 \subsection*{About the characteristics of \gls{SKI} and \gls{SKE} techniques}
 %
@@ -43,25 +54,34 @@ The \gls{SLR} also provided insights into the characteristics of existing \gls{S
 %
 A comprehensive taxonomy was developed to categorize the techniques based on various dimensions.
 
+\begin{rqabox}
+    \textbf{\Cref{itm:rq1}:}
+    \emph{what are the characteristics of \gls{SKI} and \gls{SKE} techniques?}
 
-For \gls{SKI}, the dimensions that characterise most the methods are \emph{input knowledge type}, \emph{sub-symbolic model target}, and \emph{injection strategy}.
-%
-We observed that \gls{SKI} techniques predominantly utilize structured knowledge representations, such as ontologies and knowledge graphs, to inject knowledge into sub-symbolic models.
-%
-Also logic rules are widely used.
-%
-Regarding the target sub-symbolic models, \gls{SKI} methods mainly focus on \glspl{NN} of any kind, with a predominance of feed-forward architectures.
-%
-Finally, the injection strategies are quite balanced among the three main categories: \emph{structuring}, \emph{embedding}, and \emph{guided learning}.
+    \textbf{Answer:}
+    %
+    for \gls{SKI}, the dimensions that characterise most the methods are \emph{input knowledge type}, \emph{sub-symbolic model target}, and \emph{injection strategy}.
+    %
+    We observed that \gls{SKI} techniques predominantly utilize structured knowledge representations, such as ontologies and knowledge graphs, to inject knowledge into sub-symbolic models.
+    %
+    Also logic rules are widely used.
+    %
+    Regarding the target sub-symbolic models, \gls{SKI} methods mainly focus on \glspl{NN} of any kind, with a predominance of feed-forward architectures.
+    %
+    Finally, the injection strategies are quite balanced among the three main categories: \emph{structuring}, \emph{embedding}, and \emph{guided learning}.
 
+    For \gls{SKE}, the most characterising dimensions are \emph{output knowledge shape}, \emph{output knowledge expressiveness}, and \emph{translucency}.
+    %
+    \gls{SKE} techniques predominantly generate knowledge in the form of logic rules, with \gls{DT} being the second most common shape.
+    %
+    The expressiveness of the extracted knowledge is often limited to propositional logic, with fewer methods producing first-order logic or more complex representations.
+    %
+    Regarding translucency, \gls{SKE} methods are fairly evenly distributed among \emph{pedagogical} and \emph{decompositional} approaches.
 
-For \gls{SKE}, the most characterising dimensions are \emph{output knowledge shape}, \emph{output knowledge expressiveness}, and \emph{translucency}.
-%
-\gls{SKE} techniques predominantly generate knowledge in the form of logic rules, with \gls{DT} being the second most common shape.
-%
-The expressiveness of the extracted knowledge is often limited to propositional logic, with fewer methods producing first-order logic or more complex representations.
-%
-Regarding translucency, \gls{SKE} methods are fairly evenly distributed among \emph{pedagogical} and \emph{decompositional} approaches.
+    We believe that future contributions in the field of \gls{SKI} and \gls{SKE} will further diversify the characteristics of the techniques.
+    %
+    In particular, we expect more methods to leverage unstructured knowledge sources (e.g., text documents) for \gls{SKI}, and more expressive knowledge representations (e.g., ontologies with rich semantics, natural language) for \gls{SKE}.
+\end{rqabox}
 
 
 \subsection*{Measuring the effectiveness of \gls{SKI} and \gls{SKE} techniques}
@@ -78,6 +98,17 @@ All the metrics were rigorously defined and empirically validated through experi
 %
 Finally, the fairness dimension was explored in \Cref{ch:fairness-through-ski}, where we demonstrated how \gls{SKI} techniques can mitigate the bias of \gls{ML} models, quantifiable through established fairness metrics.
 
+\begin{rqabox}
+    \textbf{\Cref{itm:rq2}:}
+    \emph{how can the effects of \gls{SKI} and \gls{SKE} be measured?}
+
+    \textbf{Answer:}
+    classical \gls{ML} metrics are still relevant to measure the performance of \gls{SKI} and \gls{SKE} techniques, but they are not sufficient to capture all the relevant aspects involved.
+    %
+    They should be complemented with additional metrics that capture other important aspects such as resource efficiency, robustness, and fairness depending on the context of application.
+    %
+    We acknowledge that the research on this topic is still in its early stages, and we believe that future researches will further refine and expand the set of metrics available to evaluate \gls{SKI} and \gls{SKE} techniques.
+\end{rqabox}
 
 \subsection*{When and where to use \gls{SKI} and \gls{SKE} techniques}
 %
@@ -98,6 +129,17 @@ Specifically:
     \item finally, we explored the use of \gls{RAG} -- that falls into our \gls{SKI} definition -- by providing contextual prior knowledge to \glspl{LLM}.
     %
 \end{inlinelist}
+
+\begin{rqabox}
+    \textbf{\Cref{itm:rq3}:}
+    \emph{when and where should \gls{SKI} and \gls{SKE} be used?}
+
+    \textbf{Answer:}
+    %
+    \gls{SKI} techniques are particularly beneficial in scenarios where well established domain knowledge exists and can be leveraged to enhance the performance or other qualities of sub-symbolic models, including fairness and robustness.
+    %
+    On the other hand, \gls{SKE} techniques should be employed when there is a need to extract human-understandable knowledge, especially in domains where explainability and transparency are critical, such as healthcare.
+\end{rqabox}
 
 
 \subsection*{\gls{SKI} and \gls{SKE} techniques for designing \gls{NeSy} \gls{AI} systems}
@@ -122,6 +164,24 @@ Membership queries are directly answered by the \gls{LLM}, while equivalence que
 %
 These contributions demonstrate the feasibility of designing autonomous learning systems.
 
+\begin{rqabox}
+    \textbf{\Cref{itm:rq4}:}
+    \emph{how to design and develop \gls{NeSy} \gls{AI} systems that leverage \gls{SKI} and \gls{SKE}?}
+
+    \textbf{Answer:}
+    \gls{SKI} and \gls{SKE} are fundamental components in the design and development of \gls{NeSy} \gls{AI} systems.
+    %
+    There are various ways to integrate these techniques, depending on the specific requirements and constraints of the application domain.
+    %
+    Generally speaking, these techniques should be employed whenever the \gls{AI} system deals with both symbolic and sub-symbolic knowledge representations or requirements (e.g., explainability, transparency, fairness).
+    %
+    For more advanced \gls{AI} systems, such as autonomous learning agents, \gls{SKI} and \gls{SKE} can be combined in many ways.
+    %
+    We suggest to use them in a cyclic manner to continuously acquire, integrate, and refine knowledge about the environment and the tasks at hand.
+    %
+    Also, the conjoint use of \glspl{LLM} and \gls{SKI}/\gls{SKE} techniques appears to be the promising direction for future research and applications.
+    %
+\end{rqabox}
 
 
 \section{Future work}\label{sec:future-work}
