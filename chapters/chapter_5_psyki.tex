@@ -37,13 +37,15 @@ and in \Cref{sec:empirical-study-on-the-robustness-of-ski-methods} the paper ``\
 which studies the robustness of \gls{SKI} methods against data degradation.
 
 
-\section{PSyKI}\label{sec:psyki}
+\section{One Platform to Bring Them All}\label{sec:psyki}
 %
 \Gls{PSyKI} is a (Python) platform for the development and evaluation of \gls{SKI} methods.
 %
 It is designed to provide a unified framework for implementing \gls{SKI} methods, allowing researchers and practitioners to easily develop, test, and compare different approaches.
 %
 In the following, we present a summary of the work ``\emph{On the Design of PSyKI: A Platform for Symbolic Knowledge Injection into Sub-symbolic Predictors}''~\cite{DBLP:conf/atal/MagniniCO22}, presented at the 4th international workshop on \gls{EXTRAAMAS}, 2022\footnote{\url{https://extraamas.ehealth.hevs.ch/archive.html}}.
+%
+The platform is meant to be an open-source library that can be easily extended with new \gls{SKI} methods and evaluation metrics.
 %
 The library is public available on GitLab and PyPi\footnote{\url{https://gitlab.com/psykei/psyki-python} and \url{https://pypi.org/project/psyki/}}.
 
@@ -286,9 +288,9 @@ The current version of \gls{PSyKI} (v. 0.4.3) is implemented in Python 3.9.13, w
 \Cref{lst:psyki-injection} shows a general code snippet for the use of a \gls{SKI} algorithm in \gls{PSyKI} (v. 0.4.3).
 
 
-\section[SKI meets intelligent agents]{\Gls{SKI} meets intelligent agents}\label{sec:ski-meets-intelligent-agents}
+\section[QoS metrics for SKI methods]{\Gls{QoS} metrics for \gls{SKI} methods}\label{sec:ski-meets-intelligent-agents}
 %
-In this and in the next section, we present two works that study the \gls{QoS} of \gls{SKI} methods.
+In this section and in the next one, we present two works that study the \gls{QoS} of \gls{SKI} methods.
 %
 \Gls{QoS} is a crucial aspect of any non-trivial systems, and it is particularly important for \gls{SKI} because the vast majority of the works in this field do not provide any evaluation but the performance of the resulting model.
 %
@@ -887,7 +889,7 @@ By reducing computational requirements and improving data quality, \gls{SKI} app
 Measuring efficiency gains enables the automation of decision-making processes, allowing agents to dynamically optimize their sub-symbolic components to achieve their goals.
 
 
-\section[Empirical study on the robustness of SKI methods]{Empirical study on the robustness of \Gls{SKI} methods}\label{sec:empirical-study-on-the-robustness-of-ski-methods}
+\section{About Robustness}\label{sec:empirical-study-on-the-robustness-of-ski-methods}
 %
 Here we present the work \emph{``An Empirical Study on the Robustness of Knowledge Injection Techniques Against Data Degradation''}~\cite{DBLP:conf/woa/RafanelliMACO24}, presented at the 25th Workshop ``From Objects to Agents'' (WOA 2024)\footnote{\url{https://www.univda.it/woa2024/}}.
 %
