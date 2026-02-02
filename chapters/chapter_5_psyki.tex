@@ -37,7 +37,7 @@ and in \Cref{sec:empirical-study-on-the-robustness-of-ski-methods} the paper ``\
 which studies the robustness of \gls{SKI} methods against data degradation.
 
 
-\section{One Platform to Bring Them All}\label{sec:psyki}
+\section{One platform to bring them all}\label{sec:psyki}
 %
 \Gls{PSyKI} is a (Python) platform for the development and evaluation of \gls{SKI} methods.
 %
@@ -808,7 +808,7 @@ After computing the average accuracy, we evaluate the efficiency metrics for eac
 The results of this procedure are presented in \Cref{tab:qos-results}.
 
 
-\subsection{Results and Discussion}\label{subsec:ski-meets-intelligent-agents-results-and-discussion}
+\subsection{Results and discussion}\label{subsec:ski-meets-intelligent-agents-results-and-discussion}
 %
 \input{tables/qos-results}
 %
@@ -889,7 +889,7 @@ By reducing computational requirements and improving data quality, \gls{SKI} app
 Measuring efficiency gains enables the automation of decision-making processes, allowing agents to dynamically optimize their sub-symbolic components to achieve their goals.
 
 
-\section{About Robustness}\label{sec:empirical-study-on-the-robustness-of-ski-methods}
+\section{About robustness}\label{sec:empirical-study-on-the-robustness-of-ski-methods}
 %
 Here we present the work \emph{``An Empirical Study on the Robustness of Knowledge Injection Techniques Against Data Degradation''}~\cite{DBLP:conf/woa/RafanelliMACO24}, presented at the 25th Workshop ``From Objects to Agents'' (WOA 2024)\footnote{\url{https://www.univda.it/woa2024/}}.
 %
@@ -929,7 +929,7 @@ However, these metrics primarily assess predictive performance and do not captur
 To address this gap, this work introduces a metric to evaluate the robustness of \gls{SKI} mechanisms relative to their uneducated counterparts.
 
 
-\subsection{Robustness of \gls{SKI} Methods}\label{subsec:empirical-study-on-the-robustness-of-ski-methods-robustness-of-ski-methods}
+\subsection{Robustness of \gls{SKI} methods}\label{subsec:empirical-study-on-the-robustness-of-ski-methods-robustness-of-ski-methods}
 %
 In counterfactual analysis~\cite{verma_conuterfactual_2020}, controlled perturbations of training data are commonly used to evaluate the robustness of predictors.
 %
@@ -984,14 +984,14 @@ Conversely, \(R_{N, D}(\mathcal{I}) < 1\) suggests that the educated predictor i
 This metric provides an intuitive measure for analyzing the robustness of \gls{SKI} mechanisms.
 
 
-\subsubsection{Perturbation Strategies}\label{subsubsec:perturbation-strategies}
+\subsubsection{Perturbation strategies}\label{subsubsec:perturbation-strategies}
 %
 This section discusses three primary strategies for perturbing datasets: \emph{sample drop}, \emph{noise addition}, and \emph{label flipping}.
 %
 These strategies simulate common issues that degrade dataset quality, such as missing data, sensor noise, and mislabeling.
 
 %
-\paragraph{Sample Drop}
+\paragraph{Sample drop}
 %
 The \emph{sample drop} strategy models scenarios where an intelligent agent has limited access to training data.
 %
@@ -1012,7 +1012,7 @@ D' = \{d \mid d \in D \text{ and } X_d = 1\}.
 To construct a set of perturbations \(\mathcal{D} = \{\Delta D_1, \ldots, \Delta D_n\}\), the sample drop process is applied \(n\) times with increasing dropping probabilities \(0 < p_1 < \ldots < p_n < 1\).
 
 %
-\paragraph{Noise Addition}
+\paragraph{Noise addition}
 %
 The \emph{noise addition} strategy simulates errors in the data acquisition process, such as sensor noise, to evaluate the robustness of neuro-symbolic methods against unreliable data.
 %
@@ -1033,7 +1033,7 @@ The number of samples remains unchanged, i.e., \(|D| = |D'|\).
 To construct a set of perturbations \(\mathcal{D} = \{\Delta D_1, \ldots, \Delta D_n\}\), the noise addition process is applied \(n\) times with increasing noise intensities \(0 < v_1 < \ldots < v_n\).
 
 %
-\paragraph{Handling Discrete Features}
+\paragraph{Handling discrete features}
 %
 For datasets with ordinal or categorical features, the noise addition process must account for discontinuities.
 %
@@ -1044,7 +1044,7 @@ For ordinal features, the noise is more likely to select values close to the ori
 For categorical features, the noise selects values uniformly, similar to the label flipping strategy described below.
 
 %
-\paragraph{Label Flipping}
+\paragraph{Label flipping}
 %
 The \emph{label flipping} strategy models errors in the labeling process, such as human mislabeling, and is primarily applicable to classification tasks.
 %
@@ -1073,7 +1073,7 @@ D' = \{(x_{d,1}, \ldots, x_{d,m-1}, y'_d) \mid d \in D \text{ and } Y_d = y'_d\}
 To construct a set of perturbations \(\mathcal{D} = \{\Delta D_1, \ldots, \Delta D_n\}\), the label flipping process is applied \(n\) times with increasing flipping probabilities \(0 < f_1 < \ldots < f_n < 1\).
 
 %
-\paragraph{Applicability to Regression Problems}
+\paragraph{Applicability to regression problems}
 %
 Label flipping is not directly applicable to regression tasks, as the output features are continuous.
 %
@@ -1129,7 +1129,7 @@ The only related metric~\cite{RudenGB23} measures generalization capability.
 Thus, we aim to validate the proposed robustness metric by assessing its ability to identify robust \gls{SKI} mechanisms.
 
 
-\subsection{Results and Discussion}\label{subsec:empirical-study-on-the-robustness-of-ski-methods-results-and-discussion}
+\subsection{Results and discussion}\label{subsec:empirical-study-on-the-robustness-of-ski-methods-results-and-discussion}
 %
 \input{figures/robustness-results}
 %
@@ -1144,7 +1144,7 @@ To compare their performance, we use the \emph{Mann-Whitney U Test}~\cite{Mann-W
 A p-value \(\geq 0.05\) indicates no significant difference between the average accuracy distributions, while a p-value \(< 0.05\) suggests otherwise.
 
 
-\paragraph{Data Drop}
+\paragraph{Data drop}
 %
 In the \emph{data drop} experiments (\Cref{fig:bcw-drop,fig:psjgs-drop,fig:ci-drop}), \gls{KBANN} is the only predictor showing significant improvements compared to the uneducated model.
 %
@@ -1155,7 +1155,7 @@ It performs better on the \gls{BCW} (\Cref{fig:bcw-drop}) and \gls{CI} (\Cref{fi
 Overall, educated predictors improve robustness in 6 out of 9 experiments, as shown in \Cref{tab:robustness}.
 
 
-\paragraph{Noise Addition}
+\paragraph{Noise addition}
 %
 The \emph{noise addition} experiments (\Cref{fig:bcw-noise,fig:psjgs-noise,fig:ci-noise}) reveal that \gls{SKI} mechanisms are more sensitive to noise than to missing data.
 %
@@ -1168,7 +1168,7 @@ Interestingly, \gls{KINS} performs worse than \gls{KBANN}, likely due to its tra
 \gls{KILL} shows similar or worse performance compared to the uneducated model, suggesting that its penalty-based approach does not effectively handle noise perturbations.
 
 
-\paragraph{Label Flipping}
+\paragraph{Label flipping}
 %
 In the \emph{label flipping} experiments (\Cref{fig:bcw-label,fig:psjgs-label,fig:ci-label}), predictors exhibit similar behavior on the \gls{BCW} (\Cref{fig:bcw-label}) and \gls{CI} (\Cref{fig:ci-label}) datasets, with no significant differences (p-values close to 1).
 %

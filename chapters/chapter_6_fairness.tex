@@ -162,7 +162,7 @@ These methods incorporate fairness constraints directly into the training proces
 The regularization term penalizes unfair predictions, with variations in its definition leading to differences in effectiveness, efficiency, and scalability.
 %
 
-\paragraph{\Glsfull{KDE}}
+\paragraph{\Gls{KDE}}
 \label{par:kde-fairness}
 %
 \Gls{KDE}~\cite{DBLP:conf/nips/ChoHS20} introduces a non-parametric fairness regularization approach using kernel density estimation.
@@ -201,7 +201,7 @@ To achieve \gls{DP}, the difference in probabilities across sensitive groups is 
 where \( H_\delta(\cdot) \) is the Huber function, a smooth approximation of the absolute value operator~\cite{10.1214/aoms/1177703732}.
 %
 
-\paragraph{\Glsfull{GDP}}
+\paragraph{\Gls{GDP}}
 \label{par:gdp-fairness}
 %
 \Gls{GDP}~\cite{DBLP:conf/iclr/JiangHFYMH22} extends \gls{DP} to continuous sensitive attributes while ensuring differentiability.
@@ -231,7 +231,7 @@ The fairness regulariser is defined as:
 Kernel-based estimation provides smoother results by assigning soft group memberships using a kernel function \( K(\cdot) \), avoiding discontinuities at bin boundaries.
 %
 
-\paragraph{\Glsfull{FNNC}}
+\paragraph{\Gls{FNNC}}
 \label{par:fnnc-fairness}
 %
 \Gls{FNNC}~\cite{DBLP:conf/ijcai/ManishaG20} formulates fairness as a constrained optimization problem.
@@ -257,7 +257,7 @@ The fairness constraint is integrated into the loss function using the Lagrangia
 Optimization is performed using a two-step \gls{SGD} procedure, alternating between minimizing model parameters and maximizing Lagrangian multipliers.
 %
 
-\paragraph{\Glsfull{NSIF}}
+\paragraph{\Gls{NSIF}}
 \label{par:ltn-fairness}
 %
 \Gls{NSIF}~\cite{DBLP:conf/aaaiss/WagnerG21} leverages the \gls{LTN} framework to enforce fairness constraints.
@@ -326,7 +326,7 @@ The definition of the \gls{GDP} has been already introduced in a recent work~\ci
 It is the only metric among the ones presented in this section that was already existing in the literature.
 
 
-\paragraph{Weighted and Generalized Disparate Impact}
+\paragraph{Weighted and generalized disparate impact}
 %
 \Gls{DI} quantifies the disproportionate effect of a classifier on groups defined by a sensitive attribute.
 %
@@ -348,7 +348,7 @@ For continuous attributes, \glsfull{GDI} is defined as:
 \end{equation}
 
 
-\paragraph{Weighted and Generalized Equalized Odds}
+\paragraph{Weighted and generalized equalized odds}
 %
 \Gls{EO} measures whether a classifier predicts equally across sensitive attribute values and ground truth classes.
 %
@@ -424,7 +424,7 @@ Finally, \gls{FaUCI} is extensible to other fairness metrics and can be adapted 
 
 
 
-\subsubsection{Theoretical Analysis}
+\subsubsection{Theoretical analysis}
 \label{subsubsec:theoretical}
 %
 During the training of a \gls{NN}, the training set is divided into batches.
@@ -559,13 +559,13 @@ We successfully reproduced the code for two state-of-the-art methods~\cite{DBLP:
     In the case of~\cite{DBLP:conf/ijcai/ManishaG20}, the source code was not even mentioned in the paper, and we were not able to find it online.
 }.
 
-\subsection{Results and Discussion}\label{subsec:results-fauci}
+\subsection{Results and discussion}\label{subsec:results-fauci}
 %
 \input{figures/fauci/figure}
 %
 \note{Update and improve the figures}
 %
-\paragraph{Demographic Parity Results}
+\paragraph{Demographic parity results}
 %
 \Cref{fig:dp-sex,fig:dp-ethnicity,fig:dp-age} illustrates the trade-off between accuracy and \gls{DP} for \gls{FaUCI}, \gls{KDE}, \gls{GDP}, \gls{FNNC}, and \gls{NSIF} methods.
 %
@@ -580,7 +580,7 @@ For \emph{age}, a continuous sensitive attribute, \gls{FaUCI} and \gls{GDP} perf
 Overall, \gls{FaUCI} demonstrates superior performance across all sensitive attributes.
 
 %
-\paragraph{Disparate Impact Results}
+\paragraph{Disparate impact results}
 %
 \Cref{fig:di-sex,fig:di-ethnicity,fig:di-age} shows the trade-off between accuracy and \gls{DI}.
 %
@@ -593,7 +593,7 @@ For \emph{age}, \gls{FaUCI} improves \(\text{DI}\) to \(0.58\) with an accuracy 
 These results highlight \gls{FaUCI}'s ability to enhance \gls{DI} while preserving high accuracy.
 
 %
-\paragraph{Equalized Odds Results}
+\paragraph{Equalized odds results}
 %
 \Cref{fig:eo-sex,fig:eo-ethnicity,fig:eo-age} presents the trade-off between accuracy and \gls{EO}.
 %

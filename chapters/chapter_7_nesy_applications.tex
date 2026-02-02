@@ -130,7 +130,7 @@ It supports several types of queries, such as:
 These queries are essential for the recommender agent's functionality.
 
 
-\paragraph{Users' Preferences}\label{par:users-preferences}
+\paragraph{Users' preferences}\label{par:users-preferences}
 %
 User preferences are represented sub-symbolically using a \gls{ML} predictor.
 %
@@ -156,7 +156,7 @@ The learning process is continual, ensuring the system adapts to evolving user p
 The sub-symbolic approach enables generalization of user data while leveraging information from the recipes' database.
 
 
-\paragraph{Dietary Prescriptions}\label{par:dietary-prescriptions}
+\paragraph{Dietary prescriptions}\label{par:dietary-prescriptions}
 %
 Dietary prescriptions are structured representations of what a user should eat and when, to achieve specific goals.
 %
@@ -327,13 +327,13 @@ We utilized a public dataset of recipes\footnote{available at \url{https://cosyl
 The recipe dataset consists of four files:
 %
 \begin{itemize}
-  \item \textbf{Recipe Details:} Contains recipe IDs, titles, sources, and cuisines.
+  \item \textbf{Recipe details:} Contains recipe IDs, titles, sources, and cuisines.
   %
   \item \textbf{Ingredients:} Lists basic ingredients with aliases, synonyms, entity IDs, and categories.
   %
-  \item \textbf{Compound Ingredients:} Includes compound ingredients with their constituent components and categories.
+  \item \textbf{Compound ingredients:} Includes compound ingredients with their constituent components and categories.
   %
-  \item \textbf{Recipe-Ingredients Aliases:} Maps recipes to their ingredients using aliases and entity IDs.
+  \item \textbf{Recipe-ingredients aliases:} Maps recipes to their ingredients using aliases and entity IDs.
 \end{itemize}
 %
 The dataset includes 929 unique basic ingredients and 103 compound ingredients, categorized into 21 groups (e.g., additive, bakery, beverage).
@@ -351,7 +351,7 @@ Second, recipe likability labels (like/dislike) were generated based on the like
 The synthesis process ensures no real personal data is used, avoiding ethical or privacy concerns.
 
 
-\subsubsection{Learning User Preferences via Sub-Symbolic Predictors}\label{subsubsec:learning-user-preferences}
+\subsubsection{Learning user preferences via sub-symbolic predictors}\label{subsubsec:learning-user-preferences}
 %
 User preferences were modeled using fully-connected neural networks.
 %
@@ -361,7 +361,7 @@ The activation functions for the input and hidden layers are \gls{ReLU}, while t
 %
 The input to the network is a tensor representing the presence of 1032 ingredients in a recipe, and the output is a scalar indicating the likelihood of user appreciation.
 
-A separate neural network was trained for each of the 12 synthetic users.
+A separate \gls{NN} was trained for each of the 12 synthetic users.
 %
 Training was performed on half of the dataset (22,874 records), while the remaining half was used for testing.
 %
@@ -371,7 +371,7 @@ The average accuracy achieved on the test set was 85.6\%, with precision compute
 %
 Precision is critical for systems where identifying true positives (liked recipes) is more important than minimizing false positives.
 
-\subsubsection{Extracting User Preferences via \Gls{SKE}}\label{subsubsec:extracting-user-preferences}
+\subsubsection{Extracting user preferences via \Gls{SKE}}\label{subsubsec:extracting-user-preferences}
 %
 \input{tables/net-rules-accuracy}
 %
@@ -417,7 +417,7 @@ Fidelity is computed similarly to accuracy but compares the predictions of the e
 In other words, fidelity measures how closely the extracted rules replicate the behavior of the neural networks.
 
 
-\subsubsection{Proposed Recipes}\label{subsubsec:proposed-recipes}
+\subsubsection{Proposed recipes}\label{subsubsec:proposed-recipes}
 %
 \input{tables/proposed-recipes-accuracy}
 %
@@ -512,7 +512,7 @@ Precision is calculated as the ratio of recipes liked by users to the total numb
 Corner cases, where no recipes are recommended due to conflicting preferences and prescriptions, are resolved by adjusting prescriptions to better align with user preferences.
 
 
-\subsection{Results and Discussion}\label{subsec:results-and-discussion}
+\subsection{Results and discussion}\label{subsec:results-and-discussion}
 %
 To ensure realistic experiments, we adopted criteria to generate synthetic datasets representing user preferences.
 %
@@ -766,7 +766,7 @@ The protocol supports both types of explanations, allowing the user to choose th
 The content and structure of the exchanged messages depend on the type of explanation requested.
 
 
-\subsection{Abstract Formulation of the Protocol}
+\subsection{Abstract formulation of the protocol}
 \label{subsec:abstract-formulation-of-the-protocol}
 %
 \begin{figure}
@@ -874,14 +874,14 @@ These include:
 \Cref{fig:protocol-sequence-diagrams} illustrates these scenarios, which are detailed below.
 
 %
-\paragraph{Quick Accept}
+\paragraph{Quick accept}
 %
 In this scenario, depicted in \Cref{fig:quick-accept}, the user accepts the recommendation without requiring an explanation.
 %
 For example, a user requests a restaurant recommendation, and the agent suggests a restaurant that the user finds satisfactory.
 
 %
-\paragraph{Quick Retry}
+\paragraph{Quick retry}
 %
 In \Cref{fig:quick-retry} the user rejects the recommendation without asking for an explanation.
 %
@@ -896,7 +896,7 @@ In both cases, the agent generates a new recommendation.
 The agent is expected to learn from conflicts but not from generic disapprovals.
 
 %
-\paragraph{Ordinary Explanation Loop}
+\paragraph{Ordinary explanation loop}
 %
 In the case shown in \Cref{fig:explanation-loop}, the user requests an explanation for the recommendation.
 %
@@ -921,7 +921,7 @@ If the user asks for an explanation, the agent may state that the restaurant mat
 If further details are requested, the agent may explain its general recommendation strategy, such as prioritizing highly rated restaurants within a certain distance.
 
 %
-\paragraph{Contrastive Explanation Loop}
+\paragraph{Contrastive explanation loop}
 %
 Lastly, in \Cref{fig:contrastive-explanation-loop}, the user requests a contrastive explanation, comparing the given recommendation \(R\) with an alternative \(R'\).
 %
@@ -942,7 +942,7 @@ In either case, the user decides whether to accept the original recommendation o
 The agent learns from overrides to refine future recommendations.
 
 
-\subsubsection{Which Sorts of Explanations and Recommendations?}
+\subsubsection{Which sorts of explanations and recommendations?}
 \label{subsubsec:which-sorts-of-explanations-and-recommendations}
 
 The proposed explanation protocol is agnostic regarding the specific representation of explanations and recommendations.
@@ -1015,7 +1015,7 @@ Motivations for disapproval can include predefined facts, such as:
 \end{itemize}
 
 
-\subsection{From Theory to Practice with \textsc{PyXMas}}
+\subsection{From theory to practice with \textsc{PyXMas}}
 \label{subsec:from-theory-to-practice-with-pyxmas}
 %
 \begin{figure}
@@ -1057,22 +1057,22 @@ The initiator behaviour is designed for the explainee agent, while the responder
 %
 Both behaviours are parametric, allowing users to customize their functionality by implementing specific components.
 
-\paragraph{Explainer Agent}
+\paragraph{Explainer agent}
 %
 The explainer agent requires the following components:
 %
 \begin{itemize}
-    \item \textbf{Recommendation Strategy:} Computes recommendations based on user queries, preferences, and goals (e.g., ``vegetarian'' or ``weight loss'').
+    \item \textbf{Recommendation strategy:} Computes recommendations based on user queries, preferences, and goals (e.g., ``vegetarian'' or ``weight loss'').
     %
     The strategy can adapt over time by learning from user feedback.
     %
-    \item \textbf{Explanation Strategy:} Generates explanations for recommendations, leveraging user profiles and domain knowledge (e.g., ``ingredient X is plant-based'').
+    \item \textbf{Explanation strategy:} Generates explanations for recommendations, leveraging user profiles and domain knowledge (e.g., ``ingredient X is plant-based'').
     %
-    \item \textbf{User Profiler:} Learns user preferences from feedback using heuristic or \gls{ML}-based methods.
+    \item \textbf{User profiler:} Learns user preferences from feedback using heuristic or \gls{ML}-based methods.
     %
     This enables the agent to refine recommendations and explanations dynamically.
     %
-    \item \textbf{Interaction Strategy:} Manages how recommendations and explanations are presented to the explainee.
+    \item \textbf{Interaction strategy:} Manages how recommendations and explanations are presented to the explainee.
     %
     For example, a humanoid robot may use gestures or facial expressions to enhance interaction.
 \end{itemize}
@@ -1087,16 +1087,16 @@ The explainer agent stores two types of data:
 %
 These are maintained in dedicated data stores and updated as needed.
 
-\paragraph{Explainee Agent}
+\paragraph{Explainee agent}
 %
 The explainee agent requires the following components:
 %
 \begin{itemize}
-    \item \textbf{Query Provider:} Generates queries based on the explainee's goals.
+    \item \textbf{Query provider:} Generates queries based on the explainee's goals.
     %
-    \item \textbf{Recommendation Evaluator:} Assesses recommendations and decides whether to accept or reject them.
+    \item \textbf{Recommendation evaluator:} Assesses recommendations and decides whether to accept or reject them.
     %
-    \item \textbf{Explanation Evaluator:} Evaluates explanations and influences the recommendation evaluator accordingly.
+    \item \textbf{Explanation evaluator:} Evaluates explanations and influences the recommendation evaluator accordingly.
 \end{itemize}
 %
 If the explainee is a human user, the agent acts as a proxy, mediating interactions via a \gls{UI} on a device (e.g., a smartphone).
@@ -1104,7 +1104,7 @@ If the explainee is a human user, the agent acts as a proxy, mediating interacti
 In this case, a \textbf{\gls{UX}} component is required to manage the \gls{UI}, process user inputs, and present recommendations and explanations.
 
 
-\subsubsection{PyXMas Design}\label{subsubsec:pyxmas-design}
+\subsubsection{PyXMas design}\label{subsubsec:pyxmas-design}
 %
 \begin{figure}
     \centering
@@ -1129,7 +1129,7 @@ These abstract classes allow developers to extend and customize their functional
 %
 This flexibility enables the creation of tailored explainable \glspl{MAS}.
 %
-\paragraph{Data Types for Message Payloads}
+\paragraph{Data types for message payloads}
 %
 As illustrated in \Cref{fig:types}, \textsc{PyXMas} provides five abstract classes corresponding to the data types defined in \Cref{subsec:abstract-formulation-of-the-protocol}.
 %
@@ -1141,7 +1141,7 @@ Developers can define custom representations for queries, recommendations, expla
 %
 The only requirement is that the serialized data must be both machine- and human-readable.
 %
-\paragraph{Predefined Behaviors}
+\paragraph{Predefined behaviors}
 %
 \begin{figure}
     \centering
@@ -1316,7 +1316,7 @@ These guidelines are encoded into logic formulas as follows:
 \end{align}
 
 %
-\subsubsection{Logic Tensor Network for \gls{SKI}}
+\subsubsection{Logic tensor network for \gls{SKI}}
 \label{subsubsec:ltn-for-ski}
 %
 The \gls{LTN} framework~\cite{BadreddineGSS22} extends \gls{FOL} with fuzzy semantics, where formulas are interpreted as continuous truth values in the interval \([0, 1]\).
@@ -1349,19 +1349,19 @@ The predicates \(\text{glucose}(x)\) and \(\text{bmi}(x)\) are grounded to the a
 To assess the impact of \gls{SKI}, we evaluate both predictive performance and \gls{QoS} metrics.
 
 %
-\paragraph{Performance Metrics}
+\paragraph{Performance metrics}
 %
 Predictive performance is evaluated using standard metrics for binary classification, including accuracy, precision, recall, F1-score, balanced accuracy (BA), and the \gls{MCC}.
 
 %
-\paragraph{Logic Adherence}
+\paragraph{Logic adherence}
 %
 Inspired by fidelity metrics in the \gls{SKE} framework~\cite{DBLP:journals/csur/CiattoSAMO24}, we propose a metric to assess adherence to clinical rules.
 %
 For each rule, we create a test set of instances satisfying the rule, assign labels based on the rule, and compute the model's accuracy on this subset.
 
 %
-\paragraph{Quality of Service}
+\paragraph{Quality of service}
 %
 \gls{QoS} metrics evaluate non-functional aspects such as robustness and complexity.
 %
@@ -1376,7 +1376,7 @@ The robustness gain \(R_{N, D}(I)\) of an injection mechanism \(I\) is computed 
 A value \(R_{N, D}(I) > 1\) indicates improved robustness, while \(R_{N, D}(I) < 1\) indicates reduced robustness.
 
 
-\subsubsection{Experimental Design}
+\subsubsection{Experimental design}
 \label{subsubsec:experimental-design}
 %
 The experiments are designed to evaluate the impact of the \gls{LTN} approach on the performance of \gls{ML} models in a clinical context.
@@ -1436,13 +1436,13 @@ The perturbations include noise addition, sample drop, and label flipping, follo
 The noise magnitude \(\mu\) ranges from 0.1 to 1.0 in steps of 0.1, while the percentages of sample drop and label flipping vary from 0 to 0.9 in steps of 0.1.
 
 
-\subsection{Results and Discussion}
+\subsection{Results and discussion}
 \label{subsec:results-discussion}
 %
 We now present and discuss the results obtained for predictive performance metrics, logical adherence, and robustness.
 
 %
-\subsubsection{Performance Metrics}
+\subsubsection{Performance metrics}
 \label{subsubsec:performance-metrics}
 %
 \input{tables/ski-diabetes-performance-metrics}
@@ -1478,7 +1478,7 @@ The superior recall of the \gls{LTN} can be attributed to its incorporation of l
 By grounding predictions in logical structures, the \gls{LTN} identifies patterns that simpler models may overlook.
 
 %
-\subsubsection{Logical Adherence}
+\subsubsection{Logical adherence}
 \label{subsubsec:logical-adherence}
 %
 \input{tables/ski-diabetes-logic-adherence}
@@ -1500,7 +1500,7 @@ The \gls{LTN} further improves adherence, achieving \(87\%\).
 These results confirm that injecting domain knowledge through the \gls{LTN} modifies the model's structure, aligning it more closely with medical knowledge and clinical protocols.
 
 %
-\subsubsection{Robustness Analysis}
+\subsubsection{Robustness analysis}
 \label{subsubsec:robustness-analysis}
 %
 \begin{figure}
@@ -1552,7 +1552,7 @@ By integrating external, domain-specific medical knowledge into the generation p
 %
 The study provides empirical evidence on the feasibility of RAG-based architectures for safe and reliable patient-oriented digital health applications.
 
-\subsection{Motivations and Background}
+\subsection{Motivations and background}
 \label{subsec:motivations-and-background-rag}
 %
 Managing chronic diseases, such as hypertension, poses significant challenges for both healthcare systems and patients.
@@ -1596,7 +1596,7 @@ This allows for a comprehensive comparison of retrieval strategies and \glspl{LL
 Our findings demonstrate that \gls{RAG} significantly improves model performance, often surpassing specialized models in most tested cases.
 
 %
-\subsubsection{Applications of \Glspl{LLM} in Healthcare}
+\subsubsection{Applications of \Glspl{LLM} in healthcare}
 %
 The adoption of \glspl{LLM} in healthcare has grown exponentially, with applications spanning patient care, research, and education.
 %
@@ -1609,7 +1609,7 @@ In research, \glspl{LLM} can automate tasks such as data analysis, summarization
 In education, they can serve as interactive tutors, providing teaching material and demonstrating strong performance in medical examinations.
 
 %
-\subsubsection{Challenges and Techniques}
+\subsubsection{Challenges and techniques}
 %
 Three key requirements must be addressed for deploying \glspl{LLM} in healthcare.
 %
@@ -1628,7 +1628,7 @@ To address these limitations, two primary techniques are recommended: \gls{RAG} 
 While fine-tuning aligns models with domain-specific datasets, \gls{RAG} dynamically updates the knowledge base, ensuring relevance to recent information.
 
 %
-\subsubsection{\Gls{RAG} in the Medical Domain}
+\subsubsection{\Gls{RAG} in the medical domain}
 %
 \Gls{RAG} represents an innovative integration of information retrieval and generative models, enabling access to a medical knowledge base for generating precise and contextually relevant responses.
 %
@@ -1641,7 +1641,7 @@ However, implementing \gls{RAG} in healthcare requires tailoring solutions to lo
 This flexibility necessitates a modular and configurable architecture.
 
 %
-\subsubsection{Fine-Tuning in the Medical Domain}
+\subsubsection{Fine-tuning in the medical domain}
 %
 Fine-tuning has demonstrated impressive results in specialized medical domains~\cite{Maharjan2024-ScientificReports}.
 %
@@ -1650,10 +1650,10 @@ For instance, Wang et al.~\cite{Wang2023-Jamia} fine-tuned the Llama 2 model usi
 However, due to the limited dataset size in this study, we focus on \gls{RAG}, which allows dynamic updates to the knowledge base, ensuring the model remains relevant with recent information.
 
 
-\subsection{Materials and Methods}
+\subsection{Materials and methods}
 \label{subsec:materials-and-methods-rag}
 
-\subsubsection{Fine-Tuning}
+\subsubsection{Fine-tuning}
 \glspl{LLM} are initially pre-trained on large, general-purpose text corpora to predict the next token in a sequence.
 %
 This process equips the model with a broad understanding of language and serves as a foundation for fine-tuning.
@@ -1720,22 +1720,22 @@ The generator component, a \gls{LLM}, produces the final text response.
 \Cref{fig:rag-architecture} illustrates the \gls{RAG} architecture, highlighting the interaction between the retriever and generator components.
 
 
-\subsubsection{\gls{RAG} vs. Fine-Tuning}
+\subsubsection{\gls{RAG} vs. fine-tuning}
 \gls{RAG} and fine-tuning represent distinct approaches to enhancing \glspl{LLM}, each with unique advantages.
 %
 \begin{itemize}
-    \item \textbf{Knowledge Integration vs. Task Specialization:} \gls{RAG} integrates external knowledge dynamically, enhancing versatility and ensuring up-to-date information.
+    \item \textbf{Knowledge integration vs. task specialization:} \gls{RAG} integrates external knowledge dynamically, enhancing versatility and ensuring up-to-date information.
     %
     Fine-tuning specializes the model for specific tasks, improving task-specific accuracy.
     %
-    \item \textbf{Dynamic vs. Static Learning:} \gls{RAG} allows dynamic access to external data, while fine-tuning updates the model based on a static training cycle.
+    \item \textbf{Dynamic vs. static learning:} \gls{RAG} allows dynamic access to external data, while fine-tuning updates the model based on a static training cycle.
     %
-    \item \textbf{Generalization vs. Customization:} \gls{RAG} preserves the model's generality, making it adaptable across tasks, whereas fine-tuning tailors the model for specific use cases.
+    \item \textbf{Generalization vs. customization:} \gls{RAG} preserves the model's generality, making it adaptable across tasks, whereas fine-tuning tailors the model for specific use cases.
     %
-    \item \textbf{Resource Demands:} \gls{RAG} requires runtime retrieval mechanisms, while fine-tuning is resource-intensive during training but efficient during deployment.
+    \item \textbf{Resource demands:} \gls{RAG} requires runtime retrieval mechanisms, while fine-tuning is resource-intensive during training but efficient during deployment.
 \end{itemize}
 
-\subsubsection{Chosen Approach}
+\subsubsection{Chosen approach}
 %
 \input{tables/llms-rag}
 %
@@ -1751,15 +1751,15 @@ This study employs \gls{RAG} techniques to enhance the performance of open \glsp
     \item \gls{RAG} mitigates issues such as model drift, hallucinations, and biases that can arise during fine-tuning.
 \end{itemize}
 
-\paragraph{Retrieval Strategies}
+\paragraph{Retrieval strategies}
 Three retrieval strategies were tested:
 %
 \begin{itemize}
-    \item \textbf{Base Retriever:} Retrieves information based on vector similarity using maximum marginal relevance~\cite{DBLP:conf/sigir/CarbonellG98}.
+    \item \textbf{Base retriever:} Retrieves information based on vector similarity using maximum marginal relevance~\cite{DBLP:conf/sigir/CarbonellG98}.
     %
-    \item \textbf{Multi-Query Retriever:} Enhances diversity and relevance by generating multiple queries with a \gls{LLM} and retrieving relevant chunks for each query.
+    \item \textbf{Multi-query retriever:} Enhances diversity and relevance by generating multiple queries with a \gls{LLM} and retrieving relevant chunks for each query.
     %
-    \item \textbf{Ensemble Retriever:} Combines outputs from multiple retrievers, such as the base retriever and BM25, using reciprocal rank fusion~\cite{DBLP:conf/sigir/CormackCB09}.
+    \item \textbf{Ensemble retriever:} Combines outputs from multiple retrievers, such as the base retriever and BM25, using reciprocal rank fusion~\cite{DBLP:conf/sigir/CormackCB09}.
 \end{itemize}
 
 The dataset used for \gls{RAG} consists of 1,473 question-answer pairs extracted from medical consultations.
@@ -1776,7 +1776,7 @@ Further details are provided in Table~\ref{tab:evaluated-llms}.
 \subsection{Evaluation}
 \label{subsec:evaluation-rag}
 
-\subsubsection{Experimental Setup}
+\subsubsection{Experimental setup}
 We evaluated the effectiveness of various \gls{RAG} techniques using the RAGAS framework\footnote{\url{https://docs.ragas.io/en/stable/}}.
 %
 This framework provides a comprehensive suite of metrics for assessing retrieval and generation aspects of \gls{LLM}-based systems.
@@ -1812,7 +1812,7 @@ To evaluate the performance of the \gls{RAG} systems, we employed three key metr
 %
 These metrics were computed using a reference \gls{LLM} (GPT-4o) to analyze the quality of the generated responses.
 
-\paragraph{Answer Relevancy}
+\paragraph{Answer relevancy}
 This metric measures the alignment between the generated response and the original question.
 %
 It is computed as the cosine similarity between the embedding of the original question, \(E_o\), and the embeddings of the generated responses, \(E_{g_i}\), for \(i \in \{1, \dots, N\}\):
@@ -1824,7 +1824,7 @@ It is computed as the cosine similarity between the embedding of the original qu
 %
 Higher values indicate greater relevance.
 
-\paragraph{Answer Correctness}
+\paragraph{Answer correctness}
 This metric, denoted as \(AC\), evaluates the factual accuracy of a generated answer \(A\) with respect to a ground truth answer \(G\).
 %
 It combines \textit{Factual Correctness} (\(FC\)) and \textit{Semantic Similarity} (\(SS\)), both ranging from 0 to 1:
@@ -1873,12 +1873,12 @@ Higher scores indicate greater factual consistency.
         \caption{Answer Relevancy}
         \label{fig:ragvsnorag_relevancy}
     \end{subfigure}
-    \caption[Performance comparison of \gls{RAG}-based systems against plain \gls{LLM} systems]{
-      Performance comparison of \gls{RAG}-based systems against plain \gls{LLM} systems.
+    \caption[Performance comparison of \glsentryshort{RAG}-based systems against plain \gls{LLM} systems]{
+      Performance comparison of \glsentryshort{RAG}-based systems against plain \gls{LLM} systems.
       %
       (a) Answer Correctness, (b) Answer Relevancy.
       %
-      The results demonstrate that \gls{RAG} significantly enhances both answer correctness and relevancy across all tested models.
+      The results demonstrate that \glsentryshort{RAG} significantly enhances both answer correctness and relevancy across all tested models.
     }
     \label{fig:ragvsnorag}
 \end{figure}
@@ -1887,7 +1887,7 @@ Our experiments revealed that \gls{RAG}-based systems consistently outperformed 
 %
 The performance boost was particularly significant for models trained on medical data, with improvements of up to 20\% in correctness and 40\% in relevancy.
 
-\paragraph{Impact of Retrieval Strategies}
+\paragraph{Impact of retrieval strategies}
 %
 \begin{figure}[h]
   \centering
@@ -1915,11 +1915,11 @@ The choice of retrieval strategy significantly influenced performance.
 %
 As illustrated in \Cref{fig:retrievers}, each strategy exhibited distinct strengths and weaknesses across the evaluation metrics.
 %
-The \textit{Base Retriever} excelled in correctness and faithfulness, while the \textit{Ensemble Retriever} achieved superior relevancy.
+The \textit{Base retriever} excelled in correctness and faithfulness, while the \textit{Ensemble Retriever} achieved superior relevancy.
 %
-The \textit{Multi-Query Retriever} showed promise in relevancy but struggled with correctness due to the inclusion of irrelevant information.
+The \textit{Multi-query retriever} showed promise in relevancy but struggled with correctness due to the inclusion of irrelevant information.
 
-\paragraph{Domain-Specific Fine-Tuning}
+\paragraph{Domain-specific fine-tuning}
 %
 Specialized models, such as LlamaMed and Qwen2-Med, outperformed their general-purpose counterparts in relevancy (up to 5\%) and correctness (up to 3\%).
 %
